@@ -1,0 +1,232 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE entity PUBLIC "-//UC Berkeley//DTD MoML 1//EN"
+    "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
+<entity name="helloworld" class="ptolemy.actor.TypedCompositeActor">
+    <property name="_createdBy" class="ptolemy.kernel.attributes.VersionAttribute" value="11.0.devel">
+        <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="ef540680-68fd-41c6-880f-a156972612e8">
+        </property>
+    </property>
+    <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="e8c34d03-b0fa-4287-9c80-8bd23fd7ecfc">
+    </property>
+    <property name="SDF director" class="ptolemy.domains.sdf.kernel.SDFDirector">
+        <property name="localClock" class="ptolemy.actor.LocalClock">
+            <property name="globalTimeResolution" class="ptolemy.actor.parameters.SharedParameter" value="1E-10">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="48610276-6010-4b5e-859a-1966cc7b6b50">
+                </property>
+            </property>
+            <property name="clockRate" class="ptolemy.data.expr.Parameter" value="1.0">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="0e347d88-903b-4510-89ea-2b8c14dd0e49">
+                </property>
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="489f292d-b811-4cb7-bcdc-a1348da9161b">
+            </property>
+        </property>
+        <property name="iterations" class="ptolemy.data.expr.Parameter" value="AUTO">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="6837f00b-d110-4e9b-917d-92381df8f92c">
+            </property>
+        </property>
+        <property name="vectorizationFactor" class="ptolemy.data.expr.Parameter" value="1">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="380a989d-7650-4d34-87ff-6a8da6820a09">
+            </property>
+        </property>
+        <property name="allowDisconnectedGraphs" class="ptolemy.data.expr.Parameter" value="false">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="4bcb9b6d-614e-467e-a620-693b637f1a1c">
+            </property>
+        </property>
+        <property name="allowRateChanges" class="ptolemy.data.expr.Parameter" value="false">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="d40e0354-0595-4188-8c10-bacea8559916">
+            </property>
+        </property>
+        <property name="constrainBufferSizes" class="ptolemy.data.expr.Parameter" value="true">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="80040713-3b71-4fec-8975-cbaa1e06f83e">
+            </property>
+        </property>
+        <property name="period" class="ptolemy.data.expr.Parameter" value="0.0">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="faa4b3e7-2a92-47bb-b538-658cd6097e23">
+            </property>
+        </property>
+        <property name="synchronizeToRealTime" class="ptolemy.data.expr.Parameter" value="false">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="62686815-6591-45dd-9ef2-d60b1861976f">
+            </property>
+        </property>
+        <property name="startTime" class="ptolemy.data.expr.Parameter">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="773739f0-664e-462a-84c3-7bf59cf74ead">
+            </property>
+        </property>
+        <property name="stopTime" class="ptolemy.data.expr.Parameter">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="b821a085-e642-4f4d-aca1-64491bcb02e3">
+            </property>
+        </property>
+        <property name="Scheduler" class="ptolemy.domains.sdf.kernel.SDFScheduler">
+            <property name="constrainBufferSizes" class="ptolemy.data.expr.Parameter" value="constrainBufferSizes">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="5d3e0152-02f2-481d-811a-ade63f5984df">
+                </property>
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="ceb17881-731f-4a76-8e2f-aa2c68cb7660">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{670.0, 140.0}">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="b53bd3f7-93eb-4c43-a150-4bdb383752c3">
+            </property>
+        </property>
+        <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="7273a97d-3300-45ef-a1fd-52301222a0b6">
+        </property>
+    </property>
+    <entity name="Const" class="ptolemy.actor.lib.Const">
+        <property name="value" class="ptolemy.data.expr.Parameter" value="1">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="0394f687-6f52-4214-aa95-0bb5ef02cb79">
+            </property>
+        </property>
+        <property name="firingCountLimit" class="ptolemy.data.expr.Parameter" value="NONE">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="fc78044e-4fd7-4a39-9bf5-6672f58f3600">
+            </property>
+        </property>
+        <property name="NONE" class="ptolemy.data.expr.Parameter" value="0">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="0d97a5f4-3337-4025-bad4-0f625cb204d2">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{100.0, 70.0}">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="1b4a0976-a8ec-4bc5-8a74-4dd80366882a">
+            </property>
+        </property>
+        <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="13eaa410-3553-4f05-ae9d-4e79ae40d9b7">
+        </property>
+        <port name="output" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="72b6dd91-f103-42a4-bc3e-f0eb38d98cb8">
+                </property>
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="f693dcfa-a0b7-4a8f-94f3-009d2a93c18c">
+            </property>
+        </port>
+        <port name="trigger" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="cd7a9984-3e13-4a47-9ca5-e37826fd3835">
+                </property>
+            </property>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="2805969f-3dce-46f1-8aa5-c7c0be55817f">
+                </property>
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="621acef0-d643-4413-b974-5d87b983bbee">
+            </property>
+        </port>
+    </entity>
+    <entity name="Counter" class="ptolemy.actor.lib.Counter">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{400.0, 210.0}">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="b4fda3bd-6403-4430-855a-6776add49c88">
+            </property>
+        </property>
+        <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="2ab4fd52-3be3-4c04-bd39-3a98df18119a">
+        </property>
+        <port name="increment" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="c3d65861-9593-4b17-b7bd-0112321185da">
+                </property>
+            </property>
+            <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="0490bf3e-87fd-4f98-8d63-98e527bc6c34">
+                </property>
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="194dd54b-a6bd-4c78-b811-c3ffba3fb8bb">
+            </property>
+        </port>
+        <port name="decrement" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="7d95c1cc-49a1-4b33-96c2-ac11411535b1">
+                </property>
+            </property>
+            <property name="_showName" class="ptolemy.data.expr.Parameter" value="true">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="a7e793dd-dbf9-4c7d-9e8f-5a4ef670ae97">
+                </property>
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="7e616e98-62f5-4016-ab1d-50582f301030">
+            </property>
+        </port>
+        <port name="output" class="ptolemy.actor.TypedIOPort">
+            <property name="output"/>
+            <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="e7903e28-6d20-4d41-b485-77be6f8ac227">
+                </property>
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="375a1862-a43d-4a18-9ecf-3e6627c8d7be">
+            </property>
+        </port>
+        <port name="reset" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="3b61752f-6f31-4532-b523-b9043f29dfeb">
+                </property>
+            </property>
+            <property name="_showName" class="ptolemy.data.expr.SingletonParameter" value="true">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="f32a9b11-5da3-441b-b3fb-ac746f9d3d38">
+                </property>
+            </property>
+            <property name="_cardinal" class="ptolemy.kernel.util.StringAttribute" value="SOUTH">
+                <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="f47ad4a0-a08e-4438-bfd9-9882a50616ad">
+                </property>
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="ea9dd843-7ad4-489b-bcda-a838aff88a5a">
+            </property>
+        </port>
+    </entity>
+    <entity name="Display" class="ptolemy.actor.lib.gui.Display">
+        <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="fb76dc6b-0466-4dfe-adf9-5d4c597c97ca">
+            </property>
+        </property>
+        <property name="_paneSize" class="ptolemy.actor.gui.SizeAttribute">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="62fd5ac5-a3d1-49fd-94c3-b0b8a28c1d68">
+            </property>
+        </property>
+        <property name="rowsDisplayed" class="ptolemy.data.expr.Parameter" value="10">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="4327ab6f-9508-48b3-98bf-34f33ad584bb">
+            </property>
+        </property>
+        <property name="columnsDisplayed" class="ptolemy.data.expr.Parameter" value="40">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="00e57b91-7a60-43be-aad9-f08b98ea4742">
+            </property>
+        </property>
+        <property name="suppressBlankLines" class="ptolemy.data.expr.Parameter" value="false">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="14b8dfd6-2152-40e6-8e68-85c5f8f414ac">
+            </property>
+        </property>
+        <property name="title" class="ptolemy.data.expr.StringParameter" value="Display">
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="22303c33-c87c-4245-9285-b13615c76ba9">
+            </property>
+        </property>
+        <property name="_location" class="ptolemy.kernel.util.Location" value="{720.0, 250.0}">
+        </property>
+        <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="03aee275-b4b9-4d21-af9a-c6412383c0a1">
+        </property>
+        <port name="input" class="ptolemy.actor.TypedIOPort">
+            <property name="input"/>
+            <property name="multiport"/>
+            <property name="defaultValue" class="ptolemy.data.expr.Parameter">
+            </property>
+            <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="08e76bb5-5287-4f18-b4a5-21b5ae86d485">
+            </property>
+        </port>
+    </entity>
+    <relation name="_R" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+        </property>
+        <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="f96568ea-fa45-40c3-8534-45a772e31219">
+        </property>
+    </relation>
+    <relation name="_R2" class="ptolemy.actor.TypedIORelation">
+        <property name="width" class="ptolemy.data.expr.Parameter" value="Auto">
+        </property>
+        <property name="__PASS_UUID" class="ptolemy.kernel.util.StringAttribute" value="5b4e4961-aadb-4ace-8036-b73e81737624">
+        </property>
+    </relation>
+    <link port="Const.output" relation="_R"/>
+    <link port="Counter.increment" relation="_R"/>
+    <link port="Counter.output" relation="_R2"/>
+    <link port="Display.input" relation="_R2"/>
+</entity>

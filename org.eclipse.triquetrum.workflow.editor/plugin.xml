@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!--
+     Copyright (c) 2015 iSencia Belgium NV.
+     All rights reserved. This program and the accompanying materials
+     are made available under the terms of the Eclipse Public License v1.0
+     which accompanies this distribution, and is available at
+     http://www.eclipse.org/legal/epl-v10.html
+     
+     Contributors:
+        Erwin De Ley - initial API and implementation and/or initial documentation
+ -->
+
+<plugin>
+   <extension point="org.eclipse.emf.ecp.view.context.viewServices">
+	<viewService class="org.eclipse.triquetrum.workflow.editor.views.TriqReferenceService"/>
+   </extension>
+   <extension-point id="org.eclipse.triquetrum.workflow.editor.paletteContribution" name="Palette Contribution" schema="schema/org.eclipse.triquetrum.workflow.editor.paletteContribution.exsd"/>
+   <extension point="org.eclipse.graphiti.ui.diagramTypeProviders">
+      <diagramTypeProvider
+            class="org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider"
+            context="org.eclipse.triquetrum.workflow.editor.context"
+            id="org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider"
+            name="Triquetrum Workflow Editor">
+        <diagramType id="org.eclipse.triquetrum.workflow.editor.workflowDiagramType" />
+        <imageProvider id="org.eclipse.triquetrum.workflow.editor.ImageProvider" />
+      </diagramTypeProvider>
+   </extension>
+   <extension point="org.eclipse.graphiti.ui.diagramTypes">
+      <diagramType
+            id="org.eclipse.triquetrum.workflow.editor.workflowDiagramType"
+            name="Triquetrum workflow diagram"
+            type="Triquetrum workflow" />
+   </extension>
+   <extension point="org.eclipse.ui.elementFactories" id="TriqEditorInputFactory" name="Triquetrum editor input factory">
+      <factory class="org.eclipse.triquetrum.workflow.editor.input.TriqEditorInputFactory" 
+      	id="org.eclipse.triquetrum.workflow.editor.input.TriqEditorInputFactory" />
+   </extension>
+   <extension point="org.eclipse.graphiti.ui.imageProviders">
+      <imageProvider class="org.eclipse.triquetrum.workflow.editor.ImageProvider"
+                     id="org.eclipse.triquetrum.workflow.editor.ImageProvider" />
+   </extension>
+   <extension point="org.eclipse.ui.editors">
+ 	  <editor
+          class="org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor"
+          default="true"
+          extensions="tdml"
+          icon="icons/model.gif"
+          id="org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor"
+          matchingStrategy="org.eclipse.graphiti.ui.editor.DiagramEditorMatchingStrategy"
+          name="Triquetrum model editor">
+       <contentTypeBinding contentTypeId="org.eclipse.triquetrum.workflow.model" />
+      </editor>
+   </extension>
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <content-type
+          base-type="org.eclipse.core.runtime.xml"
+          file-extensions="tdml"
+          id="org.eclipse.triquetrum.workflow.model"
+          name="Triquetrum Workflow Model File"
+          priority="normal">
+      </content-type>
+   </extension>
+   <extension point="org.eclipse.ui.newWizards">
+      <category name="Workflows" id="org.eclipse.triquetrum.workflow.editor" />
+      <wizard
+            name="Triquetrum workflow model"
+            icon="icons/model.gif"
+            category="org.eclipse.triquetrum.workflow.editor"
+            class="org.eclipse.triquetrum.workflow.editor.wizard.CreateDiagramWizard"
+            id="org.eclipse.triquetrum.workflow.editor.wizard.CreateDiagramWizard">
+	     <selection class="org.eclipse.core.resources.IContainer" />
+      </wizard>
+   </extension>
+   <extension point="org.eclipse.ui.bindings">
+      <key
+	        commandId="org.eclipse.graphiti.ui.featureExecutionCommand"
+	        contextId="org.eclipse.triquetrum.workflow.editor.context"
+	        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+	        sequence="M1+F11">
+     	<parameter id="org.eclipse.graphiti.ui.featureHint" value="run" />
+  	  </key>
+   </extension>
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar label="Triquetrum toolbar" id="triquetrumToolbar" />
+      </menuContribution>
+      <menuContribution allPopups="false" locationURI="toolbar:triquetrumToolbar">
+         <command
+               commandId="org.eclipse.graphiti.ui.featureExecutionCommand"
+               icon="icons/run_workflow.gif"
+               label="Run"
+               style="push"
+               tooltip="Run workflow">
+            <parameter name="org.eclipse.graphiti.ui.featureHint" value="run" />
+            <visibleWhen checkEnabled="false">
+               <with variable="activeContexts">
+                  <iterate ifEmpty="false" operator="or">
+                     <equals
+                           value="org.eclipse.triquetrum.workflow.editor.context">
+                     </equals>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension point="org.eclipse.ui.contexts">
+      <context
+            id="org.eclipse.triquetrum.workflow.editor.context"
+            name="Triq Editor context"
+            parentId="org.eclipse.graphiti.ui.diagramEditor">
+      </context>
+   </extension>
+   
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
+      <propertyContributor contributorId="Triquetrum workflow.PropertyContributor"> 
+        <propertyCategory category="Triquetrum" /> 
+      </propertyContributor> 
+   </extension>
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+      <propertyTabs contributorId="Triquetrum workflow.PropertyContributor">
+        <propertyTab category="Triquetrum" id="triq.main.tab" label="Main" />
+        <propertyTab category="Triquetrum" id="triq.parameters.tab" afterTab="triq.main.tab" label="Parameters" />
+        <propertyTab category="Triquetrum" id="triq.ports.tab" afterTab="triq.parameters.tab" label="Ports" />
+      </propertyTabs>
+   </extension>
+   <extension point="org.eclipse.ui.views.properties.tabbed.propertySections">
+      <propertySections contributorId="Triquetrum workflow.PropertyContributor">
+        <propertySection
+              class="org.eclipse.triquetrum.workflow.editor.properties.TriqNamedObjSection"
+              filter="org.eclipse.triquetrum.workflow.editor.properties.TriqNamedObjFilter"
+              id="triq.main.tab.actor"
+              tab="triq.main.tab">
+        </propertySection>
+      </propertySections>
+   </extension>
+</plugin>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+     Copyright (c) 2015 iSencia Belgium NV.
+     All rights reserved. This program and the accompanying materials
+     are made available under the terms of the Eclipse Public License v1.0
+     which accompanies this distribution, and is available at
+     http://www.eclipse.org/legal/epl-v10.html
+     
+     Contributors:
+        Erwin De Ley - initial API and implementation and/or initial documentation
+ -->
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated triquetrum -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="org.eclipse.triquetrum.workflow.model.presentation.TriqModelWizardID"
+            name="%_UI_TriqModelWizard_label"
+            class="org.eclipse.triquetrum.workflow.model.presentation.TriqModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/TriqModelFile.gif">
+         <description>%_UI_TriqModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated triquetrum -->
+      <editor
+            id="org.eclipse.triquetrum.workflow.model.presentation.TriqEditorID"
+            name="%_UI_TriqEditor_label"
+            icon="icons/full/obj16/TriqModelFile.gif"
+            extensions="triq"
+            class="org.eclipse.triquetrum.workflow.model.presentation.TriqEditor"
+            contributorClass="org.eclipse.triquetrum.workflow.model.presentation.TriqActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Triquetrum Workflow Execution Api
+Bundle-SymbolicName: org.eclipse.triquetrum.workflow.api
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Eclipse Triquetrum
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Import-Package: org.eclipse.triquetrum;version="1.0.0",
+ org.eclipse.triquetrum.processing.model;version="1.0.0",
+ org.eclipse.triquetrum.workflow;version="1.0.0",
+ org.ptolemy.commons;version="10.1.0",
+ ptolemy.actor;version="10.1.0",
+ ptolemy.kernel.util;version="10.1.0"
+Export-Package: org.eclipse.triquetrum.workflow;version="1.0.0"

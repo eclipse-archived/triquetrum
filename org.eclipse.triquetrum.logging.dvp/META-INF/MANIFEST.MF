@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Dvp logging config
+Bundle-SymbolicName: org.eclipse.triquetrum.logging.dvp
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.apache.log4j;bundle-version="1.2.15"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

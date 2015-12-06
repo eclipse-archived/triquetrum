@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="triq" sequenceNumber="18">
+<locations>
+<location path="${workspace_loc:/org.eclipse.triquetrum.target.platform}/target" type="Directory"/>
+<location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.emf.validation.feature.group" version="1.9.0.201505312255"/>
+<unit id="org.eclipse.platform.source.feature.group" version="4.5.1.v20150904-0015"/>
+<unit id="org.eclipse.equinox.sdk.feature.group" version="3.11.1.v20150831-1342"/>
+<unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.11.1.v20150831-1342"/>
+<unit id="org.eclipse.platform.feature.group" version="4.5.1.v20150904-0015"/>
+<unit id="org.eclipse.rcp.feature.group" version="4.5.1.v20150904-0015"/>
+<unit id="org.eclipse.ocl.all.feature.group" version="5.1.0.v20150525-1635"/>
+<unit id="org.eclipse.rcp.source.feature.group" version="4.5.1.v20150904-0015"/>
+<unit id="org.eclipse.emf.cdo.epp.feature.group" version="4.4.1.v20150916-0832"/>
+<unit id="org.eclipse.pde.source.feature.group" version="3.11.1.v20150904-0345"/>
+<unit id="org.eclipse.emf.ecp.sdk.feature.feature.group" version="1.7.0.20150914-1619"/>
+<unit id="org.eclipse.gef.sdk.feature.group" version="3.10.1.201508170204"/>
+<unit id="org.eclipse.core.runtime.feature.feature.group" version="1.1.101.v20150903-1804"/>
+<unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.9.0.201506010221"/>
+<unit id="org.eclipse.graphiti.feature.feature.group" version="0.12.1.v20150916-0905"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.11.1.v20150806-0404"/>
+<unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.12.1.v20150916-0905"/>
+<unit id="org.eclipse.graphiti.feature.tools.feature.group" version="0.12.1.v20150916-0905"/>
+<unit id="org.eclipse.jdt.source.feature.group" version="3.11.1.v20150904-0015"/>
+<unit id="org.eclipse.graphiti.sdk.feature.feature.group" version="0.12.1.v20150916-0905"/>
+<unit id="org.eclipse.net4j.util.ui.feature.group" version="4.4.1.v20150911-1807"/>
+<unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.9.100.v20150601-1708"/>
+<unit id="org.eclipse.net4j.ui.feature.group" version="4.2.200.v20150911-1807"/>
+<unit id="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group" version="1.7.0.20150914-1619"/>
+<unit id="org.eclipse.graphiti.sdk.plus.feature.feature.group" version="0.12.1.v20150916-0905"/>
+<repository location="http://download.eclipse.org/releases/mars"/>
+</location>
+</locations>
+</target>
