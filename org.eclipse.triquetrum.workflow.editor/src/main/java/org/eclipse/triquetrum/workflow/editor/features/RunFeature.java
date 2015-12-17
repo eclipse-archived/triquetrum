@@ -55,6 +55,8 @@ public class RunFeature extends AbstractCustomFeature {
     try {
       WorkflowExecutionService executionService = TriqEditorPlugin.getDefault().getWorkflowExecutionService();
       if (executionService != null) {
+        // make sure that logging is shown in the console view
+        TriqEditorPlugin.getDefault().initConsoleLogging();
         CompositeActor selection = null;
         try {
           // FIXME we assume that the diagram/editor is the selected gui element, or an entity in there. Is this a robust assumption?
