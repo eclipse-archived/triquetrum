@@ -6,7 +6,7 @@
      are made available under the terms of the Eclipse Public License v1.0
      which accompanies this distribution, and is available at
      http://www.eclipse.org/legal/epl-v10.html
-     
+
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
@@ -21,16 +21,33 @@
             icon="icons/director.gif"
             type="Director">
       </entry>
-      <entry
-            class="ptolemy.actor.lib.Const"
-            displayName="Constant"
-            type="Actor">
-      </entry>
-      <entry
-            class="ptolemy.actor.lib.Discard"
-            displayName="Discard"
-            type="Actor">
-      </entry>
+      <group displayName="Sources"
+                  icon="icons/input.gif">
+	      <entry
+	            class="ptolemy.actor.lib.Const"
+	            displayName="Constant"
+    	        icon="icons/input.gif"
+	            type="Actor">
+	      </entry>
+      </group>
+      <group displayName="Sinks"
+                  icon="icons/output.gif">
+	      <entry
+	            class="ptolemy.actor.lib.Discard"
+	            displayName="Discard"
+	            icon="icons/output.gif"
+	            type="Actor">
+	      </entry>
+      </group>
+      <group displayName="Visualization"
+                  icon="icons/input.gif">
+	      <entry
+	            class="ptolemy.actor.lib.gui.Display"
+	            displayName="Display"
+    	        icon="icons/display.gif"
+	            type="Actor">
+	      </entry>
+      </group>
    </extension>
 
 </plugin>

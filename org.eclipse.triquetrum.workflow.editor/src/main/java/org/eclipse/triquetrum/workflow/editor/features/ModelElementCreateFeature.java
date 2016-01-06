@@ -28,19 +28,26 @@ import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
 /**
  * Creates a new model element based on a drag-n-drop from the palette, after prompting the user for the name.
- * 
+ *
  */
 public class ModelElementCreateFeature extends AbstractCreateFeature {
 
   private String elementClass;
   private String elementName;
   private String wrappedClass;
+  private String imageId;
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String elementClass, String elementName, String wrappedClass) {
+  public ModelElementCreateFeature(IFeatureProvider fp, String elementClass, String elementName, String wrappedClass, String imageId) {
     super(fp, elementName, "Create a " + elementName);
     this.elementClass = elementClass;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
+    this.imageId = imageId;
+  }
+
+  @Override
+  public String getCreateImageId() {
+    return imageId;
   }
 
   public boolean canCreate(ICreateContext context) {

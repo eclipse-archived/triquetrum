@@ -10,17 +10,38 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor;
 
+import java.util.Collection;
+
 import org.eclipse.graphiti.dt.AbstractDiagramTypeProvider;
 import org.eclipse.graphiti.tb.IToolBehaviorProvider;
+import org.eclipse.graphiti.ui.internal.platform.ExtensionManager;
+import org.eclipse.graphiti.ui.platform.IImageProvider;
 
 public class TriqDiagramTypeProvider extends AbstractDiagramTypeProvider {
-  
+
   public static final String ID = "org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider";
 
   private IToolBehaviorProvider[] toolBehaviorProviders;
+  private ImageProvider imageProvider;
 
   public TriqDiagramTypeProvider() {
     setFeatureProvider(new TriqFeatureProvider(this));
+  }
+
+  public ImageProvider getImageProvider() {
+    if (imageProvider != null) {
+      return imageProvider;
+    } else {
+      Collection<IImageProvider> imgProviders = ExtensionManager.getSingleton().getImageProvidersForDiagramTypeProviderId(getProviderId());
+      if (imgProviders != null && !imgProviders.isEmpty()) {
+        for (IImageProvider iImageProvider : imgProviders) {
+          if (iImageProvider instanceof ImageProvider) {
+            imageProvider = (ImageProvider) iImageProvider;
+          }
+        }
+      }
+      return imageProvider;
+    }
   }
 
   @Override

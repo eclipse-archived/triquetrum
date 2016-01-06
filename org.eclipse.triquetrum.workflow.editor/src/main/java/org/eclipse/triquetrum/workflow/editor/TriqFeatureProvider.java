@@ -123,15 +123,18 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     case "entry": {
       String label = cfgElem.getAttribute("displayName");
       String clazz = cfgElem.getAttribute("class");
-//      String iconResource = cfgElem.getAttribute("icon");
+      String iconResource = cfgElem.getAttribute("icon");
       String eClassName = cfgElem.getAttribute("type");
-      ModelElementCreateFeature mecf = new ModelElementCreateFeature(this, eClassName, label, clazz);
+      ModelElementCreateFeature mecf = new ModelElementCreateFeature(this, eClassName, label, clazz, iconResource);
+      if (iconResource != null) {
+        ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(iconResource, iconResource);
+      }
       results.add(mecf);
       break;
     }
     case "group": {
-//      String label = cfgElem.getAttribute("displayName");
-//      String iconResource = cfgElem.getAttribute("icon");
+      // String label = cfgElem.getAttribute("displayName");
+      // String iconResource = cfgElem.getAttribute("icon");
       // TODO store group hierarchy somehow in the features or so?
       for (IConfigurationElement child : cfgElem.getChildren()) {
         handlePaletteEntry(results, child);
