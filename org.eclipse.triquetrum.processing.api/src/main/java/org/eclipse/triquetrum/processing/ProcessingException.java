@@ -19,6 +19,14 @@ import ptolemy.kernel.util.Nameable;
 @SuppressWarnings("serial")
 public class ProcessingException extends TriqException {
 
+  public ProcessingException(ErrorCode errorCode, Throwable rootException) {
+    super(errorCode, rootException);
+  }
+
+  public ProcessingException(ErrorCode errorCode, String message, Throwable rootException) {
+    super(errorCode, message, rootException);
+  }
+
   public ProcessingException(ErrorCode errorCode, Nameable modelElement, Throwable rootException) {
     super(errorCode, modelElement, rootException);
   }
