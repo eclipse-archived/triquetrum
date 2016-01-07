@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.processing.service.impl;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -25,15 +26,17 @@ import org.eclipse.triquetrum.processing.ErrorCode;
 import org.eclipse.triquetrum.processing.ProcessingException;
 import org.eclipse.triquetrum.processing.model.Task;
 import org.eclipse.triquetrum.processing.service.TaskProcessingBroker;
+import org.eclipse.triquetrum.processing.service.TaskProcessingBrokerTracker;
 import org.eclipse.triquetrum.processing.service.TaskProcessingService;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.Version;
+import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A basic implementation of a {@link TaskProcessingBroker}, that maintains a set of all known {@link TaskProcessingService} implementations,
- * and asks them one-by-one if they can process a submitted task, until the first that accepts it.
+ * A basic implementation of a {@link TaskProcessingBroker}, that maintains a set of all known {@link TaskProcessingService} implementations, and asks them
+ * one-by-one if they can process a submitted task, until the first that accepts it.
  */
 public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
   private final static Logger LOGGER = LoggerFactory.getLogger(DefaultTaskProcessingBroker.class);
@@ -42,8 +45,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
   private Map<String, SortedSet<ServiceEntry>> services = new ConcurrentHashMap<String, SortedSet<ServiceEntry>>();
 
   // using a scheduled executor service for timeout handling is more robust and offers better concurrency than a plain java.util.Timer.
-  // TODO make the nr of threads configurable
-  private static ScheduledExecutorService delayTimer = Executors.newScheduledThreadPool(5);
+  private ScheduledExecutorService delayTimer;
 
   @Override
   public CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit) throws ProcessingException {
@@ -52,7 +54,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
     registerTimeOutHandler(task, timeout, unit);
 
     CompletableFuture<Task> futResult = null;
-    for(SortedSet<ServiceEntry> svcSet : services.values()) {
+    for (SortedSet<ServiceEntry> svcSet : services.values()) {
       final ServiceEntry svcEntry = svcSet.last();
       TaskProcessingService service = svcEntry.service;
       if (service.canProcess(task)) {
@@ -80,22 +82,51 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
     }
   }
 
-  public void init() {
-    // TODO complete this
+  /**
+   * Typically invoked by the DS component activation.
+   */
+  public void activate(ComponentContext cContext, Map<String, Object> properties) {
+    modified(properties);
+    TaskProcessingBrokerTracker.setBroker(this);
   }
 
-  public void destroy() {
+  /**
+   * Typically invoked by a reconfiguration of the DS component.
+   */
+  public void modified(Map<String, Object> properties) {
+    short timeoutHandlingThreads = (short) properties.getOrDefault("timeoutHandlingThreads", 1);
+    if (delayTimer != null) {
+      // first shutdown the pending timeout handlers
+      try {
+        List<Runnable> pendingThings = delayTimer.shutdownNow();
+        for (Runnable runnable : pendingThings) {
+          LOGGER.warn("Configuration was modified. Shutdown "+runnable);
+        }
+      } catch (Exception e) {
+        // ignore this one
+      }
+    }
+    // (re)create a thread pool with the configured size
+    delayTimer = Executors.newScheduledThreadPool(timeoutHandlingThreads);
+  }
+
+  /**
+   * Typically invoked by the DS component deactivation.
+   */
+  public void deactivate(ComponentContext cContext, int reason) {
+    TaskProcessingBrokerTracker.unsetBroker(this);
     services.clear();
-    try {
-      delayTimer.shutdownNow();
-    } catch (Exception e) {
-      // ignore this one
+    if (delayTimer != null) {
+      try {
+        delayTimer.shutdownNow();
+      } catch (Exception e) {
+        // ignore this one
+      }
     }
   }
 
   /**
-   * remark that the services are registered typically via OSGi DS,
-   * and the register/remove methods are not expected to be invoked from code.
+   * remark that the services are registered typically via OSGi DS, and the register/remove methods are not expected to be invoked from code.
    */
   @Override
   public boolean registerService(TaskProcessingService service) {
@@ -125,8 +156,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
   }
 
   /**
-   * remark that the services are registered typically via OSGi DS,
-   * and the register/remove methods are not expected to be invoked from code.
+   * remark that the services are registered typically via OSGi DS, and the register/remove methods are not expected to be invoked from code.
    */
   @Override
   public boolean removeService(TaskProcessingService service) {
@@ -154,24 +184,29 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
   }
 
   public static final class TimeoutHandler implements Callable<Void> {
-    private final Long processID;
+    private final String processID;
     private final Long taskID;
 
-    public TimeoutHandler(Long processID, Long taskID) {
+    public TimeoutHandler(String processID, Long taskID) {
       this.processID = processID;
       this.taskID = taskID;
     }
 
     public Void call() {
       // TODO : port this from Passerelle
-//      ProcessManager procMgr = ProcessManagerServiceTracker.getService().getProcessManager(processID);
-//      if (procMgr != null) {
-//        Task task = procMgr.getTask(taskID);
-//        if (task != null && !task.getProcessingContext().isFinished()) {
-//          procMgr.notifyTimeOut(task);
-//        }
-//      }
+      // ProcessManager procMgr = ProcessManagerServiceTracker.getService().getProcessManager(processID);
+      // if (procMgr != null) {
+      // Task task = procMgr.getTask(taskID);
+      // if (task != null && !task.getProcessingContext().isFinished()) {
+      // procMgr.notifyTimeOut(task);
+      // }
+      // }
       return null;
+    }
+
+    @Override
+    public String toString() {
+      return "TimeoutHandler [processID=" + processID + ", taskID=" + taskID + "]";
     }
   }
 
@@ -221,7 +256,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
     @Override
     public int compareTo(ServiceEntry o) {
       int res = service.getName().compareTo(o.service.getName());
-      if(res==0) {
+      if (res == 0) {
         res = version.compareTo(o.version);
       }
       return res;
