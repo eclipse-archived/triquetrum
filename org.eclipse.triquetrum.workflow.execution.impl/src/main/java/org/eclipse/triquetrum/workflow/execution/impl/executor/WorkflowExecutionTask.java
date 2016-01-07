@@ -22,7 +22,7 @@ import java.util.concurrent.RunnableFuture;
 
 import org.eclipse.triquetrum.EventListener;
 import org.eclipse.triquetrum.processing.ProcessingException;
-import org.eclipse.triquetrum.processing.model.ProcessStatus;
+import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService.StartMode;
@@ -47,18 +47,18 @@ import ptolemy.kernel.util.Workspace;
 /**
  * @author erwin
  */
-public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, ExecutionListener {
+public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>, ExecutionListener {
 
   private final static Logger LOGGER = LoggerFactory.getLogger(WorkflowExecutionTask.class);
 
-  private final static Map<State, ProcessStatus> STATUS_MAPPING = new HashMap<State, ProcessStatus>();
+  private final static Map<State, ProcessingStatus> STATUS_MAPPING = new HashMap<State, ProcessingStatus>();
 
   private final ModelHandle modelHandle;
   private final StartMode mode;
   private final Map<String, String> parameterOverrides;
   private final Set<String> breakpointNames;
   private final String processId;
-  private volatile ProcessStatus status;
+  private volatile ProcessingStatus status;
   private volatile boolean canceled;
   private volatile boolean busy;
   private volatile boolean suspended;
@@ -74,13 +74,13 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
       throw new IllegalArgumentException("ModelHandle can not be null");
     this.modelHandle = modelHandle;
     this.processId = processId;
-    status = ProcessStatus.IDLE;
+    status = ProcessingStatus.IDLE;
     this.parameterOverrides = (parameterOverrides != null) ? new HashMap<String, String>(parameterOverrides) : null;
     this.breakpointNames = (breakpointNames != null) ? new HashSet<String>(Arrays.asList(breakpointNames)) : null;
     this.listener = listener;
   }
 
-  public RunnableFuture<ProcessStatus> newFutureTask() {
+  public RunnableFuture<ProcessingStatus> newFutureTask() {
     return new WorkflowExecutionFuture(this);
   }
 
@@ -104,7 +104,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
    * @return the final status after the model execution has terminated
    */
   @Override
-  public ProcessStatus call() throws Exception {
+  public ProcessingStatus call() throws Exception {
     LOGGER.trace("call() - Context {} - Flow {}", processId, modelHandle.getCode());
     try {
       boolean debug = false;
@@ -160,11 +160,11 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
         // we explicitly set the state already here.
         // TODO check if it's not better to override the finish method in our Manager
         // to set the state in there, same as for pause/resume...
-        status = ProcessStatus.STOPPING;
+        status = ProcessingStatus.STOPPING;
         manager.stop();
       } else {
         LOGGER.info("Context {} - Canceling execution of model {} before it started", processId, modelHandle.getCode());
-        status = ProcessStatus.INTERRUPTED;
+        status = ProcessingStatus.INTERRUPTED;
         manager = null;
       }
       if (listener != null) {
@@ -184,7 +184,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
         manager.pause();
       } else {
         LOGGER.info("Context {} - Suspending execution of model {} before it started", processId, modelHandle.getCode());
-        status = ProcessStatus.SUSPENDED;
+        status = ProcessingStatus.SUSPENDED;
       }
       return true;
     } else {
@@ -208,7 +208,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
   /**
    * @return the current model execution status
    */
-  public ProcessStatus getStatus() {
+  public ProcessingStatus getStatus() {
     return status;
   }
 
@@ -230,7 +230,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
   @Override
   public void executionError(ptolemy.actor.Manager manager, Throwable throwable) {
     LOGGER.warn("Context " + processId + " - Execution error of model " + getModelHandle().getCode(), throwable);
-    status = ProcessStatus.ERROR;
+    status = ProcessingStatus.ERROR;
     if (listener != null) {
       listener.handle(new StatusProcessEvent(processId, status, throwable));
     }
@@ -246,10 +246,10 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
     if (status == null || !status.isFinalStatus()) {
       if (!canceled) {
         LOGGER.info("Context {} - Execution finished of model {}", processId, getModelHandle().getCode());
-        status = ProcessStatus.FINISHED;
+        status = ProcessingStatus.FINISHED;
       } else {
         LOGGER.warn("Context {} - Execution interrupted of model {}", processId, getModelHandle().getCode());
-        status = ProcessStatus.INTERRUPTED;
+        status = ProcessingStatus.INTERRUPTED;
       }
       if (listener != null) {
         listener.handle(new StatusProcessEvent(processId, status, null));
@@ -266,16 +266,16 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
     State state = manager.getState();
     LOGGER.trace("Context {} - Manager state change of model {} : {}", new Object[] { processId, getModelHandle().getCode(), state });
     if (status == null || !status.isFinalStatus()) {
-      ProcessStatus oldStatus = status;
+      ProcessingStatus oldStatus = status;
       status = STATUS_MAPPING.get(state);
-      if (canceled && ProcessStatus.IDLE.equals(status)) {
-        status = ProcessStatus.INTERRUPTED;
+      if (canceled && ProcessingStatus.IDLE.equals(status)) {
+        status = ProcessingStatus.INTERRUPTED;
       }
       if (oldStatus != status) {
         LOGGER.info("Context {} - Execution state change of model {} : {}", new Object[] { processId, getModelHandle().getCode(), status });
         // This handles the case where a suspend() call was done right after the (asynch) start,
         // before the actual execution was effectively already started.
-        if (suspended && ProcessStatus.ACTIVE.equals(status)) {
+        if (suspended && ProcessingStatus.ACTIVE.equals(status)) {
           LOGGER.info("Context {} - Suspended at startup for Flow {}", processId, modelHandle.getCode());
           manager.pause();
         }
@@ -375,17 +375,17 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessStatus>, Ex
   }
 
   static {
-    STATUS_MAPPING.put(Manager.CORRUPTED, ProcessStatus.ERROR);
-    STATUS_MAPPING.put(Manager.EXITING, ProcessStatus.STOPPING);
-    STATUS_MAPPING.put(Manager.IDLE, ProcessStatus.IDLE);
-    STATUS_MAPPING.put(Manager.INFERING_WIDTHS, ProcessStatus.STARTING);
-    STATUS_MAPPING.put(Manager.INITIALIZING, ProcessStatus.STARTING);
-    STATUS_MAPPING.put(Manager.ITERATING, ProcessStatus.ACTIVE);
-    STATUS_MAPPING.put(Manager.PAUSED, ProcessStatus.SUSPENDED);
-    STATUS_MAPPING.put(Manager.PAUSED_ON_BREAKPOINT, ProcessStatus.SUSPENDED);
-    STATUS_MAPPING.put(Manager.PREINITIALIZING, ProcessStatus.STARTING);
-    STATUS_MAPPING.put(Manager.RESOLVING_TYPES, ProcessStatus.STARTING);
-    STATUS_MAPPING.put(Manager.THROWING_A_THROWABLE, ProcessStatus.ERROR);
-    STATUS_MAPPING.put(Manager.WRAPPING_UP, ProcessStatus.STOPPING);
+    STATUS_MAPPING.put(Manager.CORRUPTED, ProcessingStatus.ERROR);
+    STATUS_MAPPING.put(Manager.EXITING, ProcessingStatus.STOPPING);
+    STATUS_MAPPING.put(Manager.IDLE, ProcessingStatus.IDLE);
+    STATUS_MAPPING.put(Manager.INFERING_WIDTHS, ProcessingStatus.STARTING);
+    STATUS_MAPPING.put(Manager.INITIALIZING, ProcessingStatus.STARTING);
+    STATUS_MAPPING.put(Manager.ITERATING, ProcessingStatus.ACTIVE);
+    STATUS_MAPPING.put(Manager.PAUSED, ProcessingStatus.SUSPENDED);
+    STATUS_MAPPING.put(Manager.PAUSED_ON_BREAKPOINT, ProcessingStatus.SUSPENDED);
+    STATUS_MAPPING.put(Manager.PREINITIALIZING, ProcessingStatus.STARTING);
+    STATUS_MAPPING.put(Manager.RESOLVING_TYPES, ProcessingStatus.STARTING);
+    STATUS_MAPPING.put(Manager.THROWING_A_THROWABLE, ProcessingStatus.ERROR);
+    STATUS_MAPPING.put(Manager.WRAPPING_UP, ProcessingStatus.STOPPING);
   }
 }

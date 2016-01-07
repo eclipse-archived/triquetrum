@@ -13,7 +13,7 @@ package org.eclipse.triquetrum.processing.model;
 /**
  * @author erwin
  */
-public enum ProcessStatus {
+public enum ProcessingStatus {
 
   IDLE, // when the process is not executing, not even starting to execute
   STARTING, // when the execution has been requested, and the process is going through it's initialization phases
