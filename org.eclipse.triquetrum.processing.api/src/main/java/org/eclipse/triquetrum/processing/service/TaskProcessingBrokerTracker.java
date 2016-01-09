@@ -23,6 +23,8 @@ package org.eclipse.triquetrum.processing.service;
  * </p>
  */
 public class TaskProcessingBrokerTracker {
+
+  // the configured broker instance for active runtime
   private static TaskProcessingBroker broker = null;
 
   /**
@@ -53,6 +55,8 @@ public class TaskProcessingBrokerTracker {
    * This method can be invoked e.g. from a deactivation method of the broker instance,
    * invoked by DS when the instance is destroyed as a DS component.
    * </p>
+   * Post-condition of this method is either a null default broker instance (if the given broker matches the current default one),
+   * or the unchanged instance, if the given broker was not set as the default one.
    *
    * @param broker
    */
