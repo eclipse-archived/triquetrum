@@ -12,9 +12,9 @@ package org.eclipse.triquetrum.processing.model;
 
 public enum DataType {
   ANY,
-  NULL, 
-  BOOLEAN, 
-  STRING, 
+  NULL,
+  BOOLEAN,
+  STRING,
   DOUBLE,
   FLOAT,
   INTEGER,
@@ -22,4 +22,9 @@ public enum DataType {
   DATE,
   MULTI_STRING,
   MAP;
+
+
+  public static DataType fromJavaType(Object value) {
+    return null;
+  }
 }

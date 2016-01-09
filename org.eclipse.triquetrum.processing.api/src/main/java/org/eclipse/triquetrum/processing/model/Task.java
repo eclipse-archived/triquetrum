@@ -11,9 +11,10 @@
 package org.eclipse.triquetrum.processing.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
+import java.util.stream.Stream;
+
+import org.eclipse.triquetrum.processing.ProcessingException;
 
 /**
  * A Task specifies an item of work to be performed. It defines WHAT must be done, not how it must be achieved.
@@ -34,6 +35,17 @@ import java.util.List;
  * </p>
  */
 public interface Task extends Serializable, Identifiable, AttributeHolder {
+
+  /**
+   * A Task can be linked to an external/business entity, e.g. an experiment ID, a customer ticket or a business order etc.
+   * This (optional, non-unique) identifier can refer to this external entity.
+   * <p>
+   * Alternatively, it can just be used to maintain a more-or-less readable key that can be used to refer to related Tasks.
+   * </p>
+   * @return an optional key that can be used to refer to an associated (business) entity, or can serve as a simple (non-unique) readable key,
+   * to refer to this Task.
+   */
+  String getExternalReference();
 
   /**
    * A correlation ID can be specified by the initiator. Triquetrum will then ensure that in any notifications, acknowledgements or other kinds of feedback, the
@@ -71,23 +83,37 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
 
   /**
    *
-   * @param executor
+   * @param executor the party or system component that has been selected to become responsible for the handling of this task.
    */
   void setExecutor(String executor);
 
   /**
-   * @return current status of this context
+   * @return current status of this task
    */
   ProcessingStatus getStatus();
 
   /**
-   * Set the new status of the context. There is currently no formally enforced state transition model. The only assumption is that once a <code>Context</code>
-   * has been set to a "final" state the setter will fail if any more state change is attempted.
-   *
-   * @param status
+   * Set the new status of the task.
+   * <p>
+   * There is currently no formally enforced state transition model.
+   * The only assumption is that once a Task has been set to a "final" state,
+   * the setter will fail if any more state changes are attempted.
+   * </p>
+   * @param status the new Task status
+   * @param extraInfos optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
    * @return true if the state was successfully set, false if not
    */
-  boolean setStatus(ProcessingStatus status);
+  boolean setStatus(ProcessingStatus status, String... extraInfos);
+
+  /**
+   * Tasks may fail for different reasons. If the failure can be represented as an exception, it should be wrapped in a ProcessingException
+   * and passed in here, optionally with some extra info.
+   *
+   * @param cause the (optional) exception that represents the cause of the error in this Task's processing.
+   * @param extraInfos optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
+   * @return true if the state was successfully set, false if not
+   */
+  boolean setErrorStatus(ProcessingException cause, String... extraInfos);
 
   /**
    * @return the end time stamp
@@ -95,20 +121,20 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
   Date getEndTS();
 
   /**
-   * TODO analyse if we can use a Java 8 Stream here?
+   * TODO check if/how we could keep such a stream open infinitely to allow adding new events as they happen.
    *
-   * @return the list of all events that have happened in this context's lifecycle up-to "now"
+   * @return the Stream of all events that have happened in this task's lifecycle
    */
-  List<ProcessingEvent<Task>> getEvents();
+  Stream<ProcessingEvent<Task>> getEvents();
 
   /**
-   * @return the results that have been gathered by this task
+   * @return the Stream of results that have been gathered by this task
    */
-  Collection<ResultBlock> getResults();
+  Stream<ResultBlock> getResults();
 
   /**
    *
-   * @return all associated sub-tasks
+   * @return the Stream of all associated sub-tasks
    */
-  List<Task> getSubTasks();
+  Stream<Task> getSubTasks();
 }

@@ -11,8 +11,7 @@
 package org.eclipse.triquetrum.processing.model;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * A simple container for <code>ResultItem</code>s, that can be given a "type" identifier.
@@ -23,41 +22,33 @@ import java.util.function.Predicate;
 public interface ResultBlock extends Serializable, Identifiable, AttributeHolder {
 
   /**
-   * 
+   *
    * @return The resultblock type
    */
   String getType();
 
   /**
    * Add a result item, potentially replacing an item with a same name in this block.
-   * 
+   *
    * @param item
    * @return the previous item in this block with the same name, if any, or null if no such item was present.
    */
-  ResultItem<?> putItem(ResultItem<?> item);
+  ResultItem<? extends Serializable> putItem(ResultItem<? extends Serializable> item);
 
   /**
-   * @return all the ResultItems
+   * @return all the ResultItems as a Stream.
    */
-  Collection<ResultItem<?>> getAllItems();
+  Stream<ResultItem<? extends Serializable>> getAllItems();
 
-  /**
-   * 
-   * @param predicate
-   * @return all items that match the predicate
-   */
-  Collection<ResultItem<?>> getMatchingItems(Predicate<ResultItem<?>> predicate);
-  
   /**
    * @param name
    * @return the ResultItem with the given name
    */
-  ResultItem<?> getItemForName(String name);
-  
-  
+  ResultItem<? extends Serializable> getItemForName(String name);
+
+
   /**
    * @return parent Task
    */
   Task getTask();
-
 }
