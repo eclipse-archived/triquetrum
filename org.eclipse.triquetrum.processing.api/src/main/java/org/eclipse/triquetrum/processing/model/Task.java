@@ -57,14 +57,6 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
   String getCorrelationId();
 
   /**
-   * Complex Tasks may be processed via the execution of a workflow process. In such cases, each significant step may be represented by a Task, and such Tasks
-   * are aware of the process's Id.
-   *
-   * @return the (optional) Id of the process in which this Task is handled.
-   */
-  String getProcessId();
-
-  /**
    * @return the type of this task, which typically is the main key to determine by which service this task must be processed
    */
   String getType();
@@ -88,6 +80,21 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
   void setExecutor(String executor);
 
   /**
+   * Complex Tasks may be processed via the execution of a workflow process. In such cases, each significant step may be represented by a Task, and such Tasks
+   * are aware of the process's Id.
+   *
+   * @return the (optional) Id of the process in which this Task is handled.
+   */
+  String getProcessId();
+
+  /**
+   * Set the id of the process that is handling this task.
+   *
+   * @param id the (optional) Id of the process in which this Task is handled.
+   */
+  void setProcessId(String id);
+
+  /**
    * @return current status of this task
    */
   ProcessingStatus getStatus();
@@ -101,9 +108,9 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
    * </p>
    * @param status the new Task status
    * @param extraInfos optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
-   * @return true if the state was successfully set, false if not
+   * @throws IllegalStateException if the current status does not allow to set the new status (e.g. the current status is final)
    */
-  boolean setStatus(ProcessingStatus status, String... extraInfos);
+  void setStatus(ProcessingStatus status, String... extraInfos) throws IllegalStateException;
 
   /**
    * Tasks may fail for different reasons. If the failure can be represented as an exception, it should be wrapped in a ProcessingException
@@ -111,9 +118,9 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
    *
    * @param cause the (optional) exception that represents the cause of the error in this Task's processing.
    * @param extraInfos optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
-   * @return true if the state was successfully set, false if not
+   * @throws IllegalStateException if the current status does not allow to set the new status (e.g. the current status is final)
    */
-  boolean setErrorStatus(ProcessingException cause, String... extraInfos);
+  void setErrorStatus(ProcessingException cause, String... extraInfos) throws IllegalStateException;
 
   /**
    * @return the end time stamp
@@ -128,9 +135,34 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
   Stream<ProcessingEvent<Task>> getEvents();
 
   /**
+   * Adds an extra result for this Task.
+   * <p>
+   * Depending on the Task implementation, there may be restrictions on adding results.
+   * E.g. that only one result block with a same type may be present.
+   * For such cases, the method must return a boolean success indicator (cfr. the Java Collection APIs)
+   * </p>
+   * @param resultBlock
+   * @throws IllegalStateException if a result could no longer be added to this Task, e.g. because it's already in a final status.
+   */
+  void addResult(ResultBlock resultBlock) throws IllegalStateException;
+
+  /**
    * @return the Stream of results that have been gathered by this task
    */
   Stream<ResultBlock> getResults();
+
+  /**
+   *
+   * @return the (optional) parent task
+   */
+  Task getParentTask();
+
+  /**
+   *
+   * @param task
+   * @throws IllegalStateException if a subtask could no longer be added to this Task, e.g. because it's already in a final status.
+   */
+  void addSubTask(Task task) throws IllegalStateException;
 
   /**
    *

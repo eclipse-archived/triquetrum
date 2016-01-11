@@ -16,6 +16,7 @@ import java.util.Date;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.triquetrum.processing.model.Attribute;
+import org.eclipse.triquetrum.processing.model.AttributeHolder;
 
 public class AttributeImpl<V extends Serializable> extends NamedValueImpl<V> implements Attribute<V> {
   private static final long serialVersionUID = -7244080822044727139L;
@@ -24,15 +25,19 @@ public class AttributeImpl<V extends Serializable> extends NamedValueImpl<V> imp
   private Date creationTS;
 
   /**
+   * @param attributeHolder
    * @param id
    * @param creationTS
    * @param name
    * @param value
    */
-  public AttributeImpl(Long id, Date creationTS, String name, V value) {
+  public AttributeImpl(AttributeHolder attributeHolder, Long id, Date creationTS, String name, V value) {
     super(name, value);
     this.id = id;
     this.creationTS = creationTS;
+    if (attributeHolder != null) {
+      attributeHolder.putAttribute(this);
+    }
   }
 
   @Override

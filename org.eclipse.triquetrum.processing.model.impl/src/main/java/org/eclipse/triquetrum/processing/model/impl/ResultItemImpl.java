@@ -12,7 +12,7 @@ package org.eclipse.triquetrum.processing.model.impl;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -68,12 +68,12 @@ public class ResultItemImpl<V extends Serializable> extends NamedValueImpl<V> im
   }
 
   @Override
-  public Set<String> getAttributeNames() {
+  public Stream<String> getAttributeNames() {
     return attributeHolder.getAttributeNames();
   }
 
   @Override
-  public Set<Attribute<? extends Serializable>> getAttributes() {
+  public Stream<Attribute<? extends Serializable>> getAttributes() {
     return attributeHolder.getAttributes();
   }
 

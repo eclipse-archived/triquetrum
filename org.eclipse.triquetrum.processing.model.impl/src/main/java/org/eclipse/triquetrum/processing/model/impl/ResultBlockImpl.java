@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2015-2016 iSencia Belgium NV.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Erwin De Ley - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.triquetrum.processing.model.impl;
 
 import java.io.Serializable;
@@ -23,6 +33,23 @@ public class ResultBlockImpl implements ResultBlock {
   private Map<String, ResultItem<? extends Serializable>> items = new ConcurrentHashMap<>();
   private AttributeHolder attributeHolder = new AttributeHolderImpl();
 
+
+  /**
+   * @param task
+   * @param id
+   * @param creationTS
+   * @param type
+   */
+  public ResultBlockImpl(Task task, Long id, Date creationTS, String type) {
+    this.task = task;
+    this.id = id;
+    this.creationTS = creationTS;
+    this.type = type;
+    if(task!=null) {
+      task.addResult(this);
+    }
+  }
+
   @Override
   public Long getId() {
     return id;
@@ -44,12 +71,12 @@ public class ResultBlockImpl implements ResultBlock {
   }
 
   @Override
-  public Set<String> getAttributeNames() {
+  public Stream<String> getAttributeNames() {
     return attributeHolder.getAttributeNames();
   }
 
   @Override
-  public Set<Attribute<? extends Serializable>> getAttributes() {
+  public Stream<Attribute<? extends Serializable>> getAttributes() {
     return attributeHolder.getAttributes();
   }
 

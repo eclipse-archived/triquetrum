@@ -11,6 +11,7 @@
 package org.eclipse.triquetrum.processing.model.impl;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.eclipse.triquetrum.processing.model.Attribute;
 import org.eclipse.triquetrum.processing.model.AttributeHolder;
@@ -22,20 +23,14 @@ import org.eclipse.triquetrum.processing.model.TriqFactory;
 
 public class TriqFactoryImpl implements TriqFactory {
 
-  public TriqFactoryImpl() {
-    // TODO Auto-generated constructor stub
-  }
-
   @Override
   public <V extends Serializable> Attribute<V> createAttribute(AttributeHolder holder, String name, V value) {
-    // TODO Auto-generated method stub
-    return null;
+    return new AttributeImpl<V>(holder, null, new Date(), name, value);
   }
 
   @Override
-  public Task createTask(Task parentTask, String initiator, String type) {
-    // TODO Auto-generated method stub
-    return null;
+  public Task createTask(Task parentTask, String initiator, String type, String correlationId, String externalRef) {
+    return new TaskImpl(parentTask, null, new Date(), initiator, type, correlationId, externalRef);
   }
 
   @Override
@@ -46,14 +41,12 @@ public class TriqFactoryImpl implements TriqFactory {
 
   @Override
   public ResultBlock createResultBlock(Task task, String type) {
-    // TODO Auto-generated method stub
-    return null;
+    return new ResultBlockImpl(task, null, new Date(), type);
   }
 
   @Override
   public <V extends Serializable> ResultItem<V> createResultItem(ResultBlock resultBlock, String name, V value) {
-    // TODO Auto-generated method stub
-    return null;
+    return new ResultItemImpl<V>(resultBlock, null, new Date(), name, value);
   }
 
 }

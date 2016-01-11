@@ -12,7 +12,7 @@
 package org.eclipse.triquetrum.processing.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.stream.Stream;
 
 
 /**
@@ -45,13 +45,13 @@ public interface AttributeHolder {
 
   /**
    *
-   * @return the names of all associated attributes of this holder
+   * @return a Stream with the names of all associated attributes of this holder
    */
-  Set<String> getAttributeNames();
+  Stream<String> getAttributeNames();
 
   /**
    *
-   * @return a read-only set of all associated attributes
+   * @return a Stream of all associated attributes
    */
-  Set<Attribute<? extends Serializable>> getAttributes();
+  Stream<Attribute<? extends Serializable>> getAttributes();
 }

@@ -12,9 +12,8 @@ package org.eclipse.triquetrum.processing.model.impl;
 
 import java.io.Serializable;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
 import org.eclipse.triquetrum.processing.model.Attribute;
 import org.eclipse.triquetrum.processing.model.AttributeHolder;
@@ -34,12 +33,12 @@ class AttributeHolderImpl implements AttributeHolder {
   }
 
   @Override
-  public Set<String> getAttributeNames() {
-    return attributes.keySet();
+  public Stream<String> getAttributeNames() {
+    return attributes.keySet().stream();
   }
 
   @Override
-  public Set<Attribute<? extends Serializable>> getAttributes() {
-    return new TreeSet<>(attributes.values());
+  public Stream<Attribute<? extends Serializable>> getAttributes() {
+    return attributes.values().stream();
   }
 }

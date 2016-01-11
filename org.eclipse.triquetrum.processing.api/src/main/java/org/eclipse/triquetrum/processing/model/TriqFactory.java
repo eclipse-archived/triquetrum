@@ -27,11 +27,40 @@ public interface TriqFactory {
    */
   <V extends Serializable> Attribute<V> createAttribute(AttributeHolder holder, String name, V value);
 
-  Task createTask(Task parentTask, String initiator, String type);
+  /**
+   *
+   * @param parentTask
+   * @param initiator
+   * @param type
+   * @param correlationId
+   * @param externalRef
+   * @return
+   */
+  Task createTask(Task parentTask, String initiator, String type, String correlationId, String externalRef);
 
+  /**
+   *
+   * @param context
+   * @param topic
+   * @param message
+   * @return
+   */
   <T> ProcessingEvent<T> createContextEvent(T context, String topic, String message);
 
+  /**
+   *
+   * @param task
+   * @param type
+   * @return
+   */
   ResultBlock createResultBlock(Task task, String type);
-  <V extends Serializable> ResultItem<V> createResultItem(ResultBlock resultBlock, String name, V value);
 
+  /**
+   *
+   * @param resultBlock
+   * @param name
+   * @param value
+   * @return
+   */
+  <V extends Serializable> ResultItem<V> createResultItem(ResultBlock resultBlock, String name, V value);
 }
