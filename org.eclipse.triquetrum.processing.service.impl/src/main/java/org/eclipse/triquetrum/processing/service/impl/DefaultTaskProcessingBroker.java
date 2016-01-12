@@ -94,7 +94,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
    * Typically invoked by a reconfiguration of the DS component.
    */
   public void modified(Map<String, Object> properties) {
-    short timeoutHandlingThreads = (short) properties.getOrDefault("timeoutHandlingThreads", 1);
+    short timeoutHandlingThreads = (short) properties.getOrDefault("timeoutHandlingThreads", (short)1);
     if (delayTimer != null) {
       // first shutdown the pending timeout handlers
       try {

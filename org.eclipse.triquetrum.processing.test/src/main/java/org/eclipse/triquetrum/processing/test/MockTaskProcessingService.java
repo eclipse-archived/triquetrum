@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.processing.test;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
@@ -28,8 +30,8 @@ import org.eclipse.triquetrum.processing.service.TaskProcessingService;
 /**
  * A trivial implementation of mocked {@link TaskProcessingService}.
  * <p>
- * For {@link Task}s whose type matches the name of this service instance,
- * the service will create one {@link ResultBlock} with the configured set of {@link ResultItem}s.
+ * For {@link Task}s whose type matches the name of this service instance, the service will create one {@link ResultBlock} with the configured set of
+ * {@link ResultItem}s.
  */
 public class MockTaskProcessingService implements TaskProcessingService {
 
@@ -40,16 +42,20 @@ public class MockTaskProcessingService implements TaskProcessingService {
   /**
    * A map containing the key/value pairs that will be used to create the Task's ResultItems.
    */
-  private Map<String, String> resultItems;
+  private Map<String, Serializable> resultItems = new HashMap<>();
 
   /**
    *
-   * @param name the name for this new service instance. If it's null, the service will match all Task types.
-   * @param resultItems map containing the key/value pairs that will be used to create the Task's ResultItems.
+   * @param name
+   *          the name for this new service instance. If it's null, the service will match all Task types.
+   * @param resultItems
+   *          map containing the key/value pairs that will be used to create the Task's ResultItems.
    */
-  public MockTaskProcessingService(String name, Map<String, String> resultItems) {
+  public MockTaskProcessingService(String name, Map<String, Serializable> resultItems) {
     this.name = name;
-    this.resultItems = resultItems;
+    if (resultItems != null) {
+      this.resultItems.putAll(resultItems);
+    }
   }
 
   /**
@@ -57,7 +63,7 @@ public class MockTaskProcessingService implements TaskProcessingService {
    */
   @Override
   public boolean canProcess(Task task) {
-    return task!=null && (name==null || name.equalsIgnoreCase(task.getType()));
+    return task != null && (name == null || name.equalsIgnoreCase(task.getType()));
   }
 
   /**
@@ -72,7 +78,7 @@ public class MockTaskProcessingService implements TaskProcessingService {
       try {
         TriqFactory entityFactory = TriqFactoryTracker.getDefaultFactory();
         ResultBlock rb = entityFactory.createResultBlock(task, name);
-        for (Entry<String, String> item : resultItems.entrySet()) {
+        for (Entry<String, Serializable> item : resultItems.entrySet()) {
           entityFactory.createResultItem(rb, item.getKey(), item.getValue());
         }
         task.setStatus(ProcessingStatus.FINISHED);

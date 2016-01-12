@@ -14,3 +14,4 @@ Import-Package: org.eclipse.triquetrum;version="1.0.0",
  org.slf4j;version="1.7.2",
  ptolemy.kernel.util;version="11.0.0"
 Service-Component: OSGI-INF/TaskProcessingBroker.xml
+Export-Package: org.eclipse.triquetrum.processing.service.impl;version="1.0.0"

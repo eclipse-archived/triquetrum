@@ -40,6 +40,9 @@ public class ResultItemImpl<V extends Serializable> extends NamedValueImpl<V> im
     this.id = id;
     this.creationTS = creationTS;
     this.resultBlock = resultBlock;
+    if(resultBlock!=null) {
+      resultBlock.putItem(this);
+    }
   }
 
   @Override

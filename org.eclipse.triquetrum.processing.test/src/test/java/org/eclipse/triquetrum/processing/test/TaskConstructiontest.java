@@ -1,13 +1,13 @@
 package org.eclipse.triquetrum.processing.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.triquetrum.processing.model.Attribute;
 import org.eclipse.triquetrum.processing.model.Task;
 import org.eclipse.triquetrum.processing.model.TriqFactory;
 import org.eclipse.triquetrum.processing.model.TriqFactoryTracker;
 import org.eclipse.triquetrum.processing.model.impl.TriqFactoryImpl;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,10 +16,6 @@ public class TaskConstructiontest {
   @Before
   public void setUp() throws Exception {
     TriqFactoryTracker.setDefaultFactory(new TriqFactoryImpl());
-  }
-
-  @After
-  public void tearDown() throws Exception {
   }
 
   @Test
