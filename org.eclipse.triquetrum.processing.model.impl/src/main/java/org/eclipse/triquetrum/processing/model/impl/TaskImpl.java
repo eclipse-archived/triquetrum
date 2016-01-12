@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.triquetrum.processing.ProcessingException;
 import org.eclipse.triquetrum.processing.model.Attribute;
 import org.eclipse.triquetrum.processing.model.AttributeHolder;
@@ -24,11 +26,9 @@ import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 import org.eclipse.triquetrum.processing.model.ResultBlock;
 import org.eclipse.triquetrum.processing.model.Task;
 
-public class TaskImpl implements Task {
+public class TaskImpl extends AbstractIdentifiable implements Task {
   private static final long serialVersionUID = 185724688544851359L;
 
-  private Long id;
-  private Date creationTS;
   private Date endTS;
   private String type;
   private String correlationId;
@@ -53,27 +53,16 @@ public class TaskImpl implements Task {
    * @param externalRef
    */
   public TaskImpl(Task parentTask, Long id, Date creationTS, String initiator, String type, String correlationId, String externalRef) {
-    this.id = id;
-    this.creationTS = creationTS;
+    super(id, creationTS);
     this.type = type;
     this.initiator = initiator;
     this.correlationId = correlationId;
     this.externalRef = externalRef;
     this.status = ProcessingStatus.IDLE;
     this.parentTask = parentTask;
-    if(parentTask!=null) {
+    if (parentTask != null) {
       parentTask.addSubTask(this);
     }
-  }
-
-  @Override
-  public Long getId() {
-    return id;
-  }
-
-  @Override
-  public Date getCreationTS() {
-    return creationTS;
   }
 
   @Override
@@ -147,7 +136,7 @@ public class TaskImpl implements Task {
       this.status = status;
       // TODO send out event incl. the extraInfos
     } else {
-      throw new IllegalStateException("Task "+id+" in final status "+status);
+      throw new IllegalStateException("Task " + getId() + " in final status " + status);
     }
   }
 
@@ -157,7 +146,7 @@ public class TaskImpl implements Task {
       this.status = ProcessingStatus.ERROR;
       // TODO send out event incl. the exception info and the extraInfos
     } else {
-      throw new IllegalStateException("Task "+id+" in final status "+status);
+      throw new IllegalStateException("Task " + getId() + " in final status " + status);
     }
   }
 
@@ -177,7 +166,7 @@ public class TaskImpl implements Task {
     if (!this.status.isFinalStatus()) {
       results.add(resultBlock);
     } else {
-      throw new IllegalStateException("Task " + id + " in final status " + status);
+      throw new IllegalStateException("Task " + getId() + " in final status " + status);
     }
   }
 
@@ -196,12 +185,45 @@ public class TaskImpl implements Task {
     if (!this.status.isFinalStatus()) {
       subTasks.add(task);
     } else {
-      throw new IllegalStateException("Task " + id + " in final status " + status);
+      throw new IllegalStateException("Task " + getId() + " in final status " + status);
     }
   }
 
   @Override
   public Stream<Task> getSubTasks() {
     return subTasks.stream();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(19, 23).appendSuper(super.hashCode())
+        .append(type).append(correlationId).append(externalRef).append(status)
+        .append(initiator).append(executor).toHashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    TaskImpl other = (TaskImpl) obj;
+    return new EqualsBuilder().appendSuper(super.equals(obj))
+        .append(type, other.type)
+        .append(correlationId, other.correlationId)
+        .append(externalRef, other.externalRef)
+        .append(status, other.status)
+        .append(initiator, other.initiator)
+        .append(executor, other.executor).isEquals();
+  }
+
+  @Override
+  public String toString() {
+    return "TaskImpl [getId()=" + getId() + ", getCreationTS()=" + getCreationTS()
+        + ", correlationId=" + correlationId + ", externalRef=" + externalRef
+        + ", type=" + type + ", status=" + status + ", initiator=" + initiator
+        + ", executor=" + executor + ", processId=" + processId + ", endTS=" + endTS + "]";
   }
 }

@@ -10,34 +10,24 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.processing.model.impl;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.eclipse.triquetrum.processing.model.Attribute;
-import org.eclipse.triquetrum.processing.model.AttributeHolder;
+import org.eclipse.triquetrum.processing.model.Identifiable;
 
-public class AttributeImpl<V extends Serializable> extends NamedValueImpl<V> implements Attribute<V> {
-  private static final long serialVersionUID = -7244080822044727139L;
+public abstract class AbstractIdentifiable implements Identifiable {
 
   private Long id;
   private Date creationTS;
 
   /**
-   * @param attributeHolder
    * @param id
    * @param creationTS
-   * @param name
-   * @param value
    */
-  public AttributeImpl(AttributeHolder attributeHolder, Long id, Date creationTS, String name, V value) {
-    super(name, value);
+  protected AbstractIdentifiable(Long id, Date creationTS) {
     this.id = id;
     this.creationTS = creationTS;
-    if (attributeHolder != null) {
-      attributeHolder.putAttribute(this);
-    }
   }
 
   @Override
@@ -52,10 +42,9 @@ public class AttributeImpl<V extends Serializable> extends NamedValueImpl<V> imp
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(13, 23).appendSuper(super.hashCode()).append(id).append(creationTS).toHashCode();
+    return new HashCodeBuilder(11, 23).appendSuper(super.hashCode()).append(id).append(creationTS).toHashCode();
   }
 
-  @SuppressWarnings("rawtypes")
   @Override
   public boolean equals(Object obj) {
     if (this == obj)
@@ -64,12 +53,8 @@ public class AttributeImpl<V extends Serializable> extends NamedValueImpl<V> imp
       return false;
     if (getClass() != obj.getClass())
       return false;
-    AttributeImpl other = (AttributeImpl) obj;
-    return new EqualsBuilder().appendSuper(super.equals(obj)).append(id, other.id).append(creationTS, other.creationTS).isEquals();
+    AbstractIdentifiable other = (AbstractIdentifiable) obj;
+    return new EqualsBuilder().append(id, other.id).append(creationTS, other.creationTS).isEquals();
   }
 
-  @Override
-  public String toString() {
-    return "AttributeImpl [id=" + id + ", creationTS=" + creationTS + ", name=" + getName() + ", value=" + getValue() + "]";
-  }
 }
