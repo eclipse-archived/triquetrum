@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.eclipse.triquetrum.processing.ErrorCode;
 import org.eclipse.triquetrum.processing.ProcessingException;
+import org.eclipse.triquetrum.processing.model.Attribute;
 import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 import org.eclipse.triquetrum.processing.model.ResultBlock;
 import org.eclipse.triquetrum.processing.model.ResultItem;
@@ -34,6 +35,8 @@ import org.eclipse.triquetrum.processing.service.TaskProcessingService;
  * {@link ResultItem}s.
  */
 public class MockTaskProcessingService implements TaskProcessingService {
+
+  public static final String EXCEPTION_CLASS_ATTRIBUTE = "exception-class";
 
   /**
    * The name of this service. If it's null, the service will match all Task types.
@@ -74,15 +77,21 @@ public class MockTaskProcessingService implements TaskProcessingService {
     if (!canProcess(task)) {
       return null;
     } else {
-      CompletableFuture<Task> fut = new CompletableFuture<Task>();
+      CompletableFuture<Task> fut = new CompletableFuture<>();
       try {
-        TriqFactory entityFactory = TriqFactoryTracker.getDefaultFactory();
-        ResultBlock rb = entityFactory.createResultBlock(task, name);
-        for (Entry<String, Serializable> item : resultItems.entrySet()) {
-          entityFactory.createResultItem(rb, item.getKey(), item.getValue());
+        @SuppressWarnings("unchecked")
+        Attribute<String> exceptionAttribute = (Attribute<String>) task.getAttribute(EXCEPTION_CLASS_ATTRIBUTE);
+        if (exceptionAttribute == null) {
+          TriqFactory entityFactory = TriqFactoryTracker.getDefaultFactory();
+          ResultBlock rb = entityFactory.createResultBlock(task, name);
+          for (Entry<String, Serializable> item : resultItems.entrySet()) {
+            entityFactory.createResultItem(rb, item.getKey(), item.getValue());
+          }
+          task.setStatus(ProcessingStatus.FINISHED);
+          fut.complete(task);
+        } else {
+          throw (Exception) Class.forName(exceptionAttribute.getValue()).newInstance();
         }
-        task.setStatus(ProcessingStatus.FINISHED);
-        fut.complete(task);
       } catch (Exception e) {
         // Should not happen in this mock implementation, unless there's an issue with the factory or so.
         // Even so, this shows how errors can be handled in code that is using the processing APIs.

@@ -48,7 +48,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
   private ScheduledExecutorService delayTimer;
 
   @Override
-  public CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit) throws ProcessingException {
+  public CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit) {
     // Get timeout handling working before accessing the services
     // to make sure that bad/blocking service implementations don't interfere with it.
     registerTimeOutHandler(task, timeout, unit);
@@ -65,11 +65,11 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
         }
       }
     }
-    if (futResult != null) {
-      return futResult;
-    } else {
-      throw new ProcessingException(ErrorCode.TASK_UNHANDLED, "No service found for " + task, null);
+    if (futResult == null) {
+      futResult = new CompletableFuture<>();
+      futResult.completeExceptionally(new ProcessingException(ErrorCode.TASK_UNHANDLED, "No service found for " + task, null));
     }
+    return futResult;
   }
 
   private void registerTimeOutHandler(final Task task, Long timeout, TimeUnit unit) {

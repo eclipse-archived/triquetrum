@@ -14,6 +14,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.eclipse.triquetrum.processing.model.Attribute;
+import org.eclipse.triquetrum.processing.model.ResultBlock;
+import org.eclipse.triquetrum.processing.model.ResultItem;
 import org.eclipse.triquetrum.processing.model.Task;
 import org.eclipse.triquetrum.processing.model.TriqFactory;
 import org.eclipse.triquetrum.processing.model.TriqFactoryTracker;
@@ -21,6 +23,12 @@ import org.eclipse.triquetrum.processing.model.impl.TriqFactoryImpl;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Some trivial unit tests for the construction of tasks and related entities.
+ * <p>
+ * This also shows some simple code examples for such entity construction.
+ * </p>
+ */
 public class TaskConstructiontest {
 
   @Before
@@ -28,6 +36,9 @@ public class TaskConstructiontest {
     TriqFactoryTracker.setDefaultFactory(new TriqFactoryImpl());
   }
 
+  /**
+   * Test the basic functioning of the TriqFactoryTracker
+   */
   @Test
   public void testTriqFactoryNotNull() {
     TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
@@ -35,6 +46,9 @@ public class TaskConstructiontest {
     assertNotNull("Factory not correctly set in TriqFactoryTracker", triqFactory);
   }
 
+  /**
+   * Test the construction of a main Task with its principal properties
+   */
   @Test
   public void testMainTaskConstruction() {
     TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
@@ -47,6 +61,9 @@ public class TaskConstructiontest {
     assertEquals("ExternalRef not correctly set", "testExternalRef", t.getExternalReference());
   }
 
+  /**
+   * Test the construction of a sub task, linked to a main task.
+   */
   @Test
   public void testSubTaskConstruction() {
     TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
@@ -62,18 +79,24 @@ public class TaskConstructiontest {
     assertEquals("ExternalRef not correctly set", "testExternalRef2", t.getExternalReference());
   }
 
+  /**
+   * Test the construction of a simple string attribute on a task
+   */
   @Test
   public void testStringAttributeConstruction() {
     TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
     Task t = triqFactory.createTask(null, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
     Attribute<String> attr = triqFactory.createAttribute(t, "testName", "testValue");
 
-    assertNotNull("Attribute", attr);
+    assertNotNull("Attribute not correctly created", attr);
     assertEquals("Name not correctly set", "testName", attr.getName());
     assertEquals("Value not correctly set", "testValue", attr.getValue());
     assertEquals("Attribute not found in task", attr, t.getAttribute("testName"));
   }
 
+  /**
+   * Test the construction of a simple double attribute on a task
+   */
   @Test
   public void testDoubleAttributeConstruction() {
     TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
@@ -81,9 +104,48 @@ public class TaskConstructiontest {
     Double value = new Double(1.0);
     Attribute<Double> attr = triqFactory.createAttribute(t, "testName", value);
 
-    assertNotNull("Attribute", attr);
+    assertNotNull("Attribute not correctly created", attr);
     assertEquals("Name not correctly set", "testName", attr.getName());
     assertEquals("Value not correctly set", value, attr.getValue());
     assertEquals("Attribute not found in task", attr, t.getAttribute("testName"));
   }
+
+  // from here on, there are tests related to constructing results of tasks
+
+  @Test
+  public void testResultBlockConstruction() {
+    TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
+    Task t = triqFactory.createTask(null, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    ResultBlock resultBlock = triqFactory.createResultBlock(t, "testType");
+
+    assertNotNull("ResultBlock not correctly created", resultBlock);
+    assertEquals("Type not correctly set", "testType", resultBlock.getType());
+    assertEquals("ResultBlock not found in task", resultBlock, t.getResults().findFirst().orElse(null));
+  }
+
+  @Test
+  public void testStringResultItemConstruction() {
+    TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
+    ResultBlock resultBlock = triqFactory.createResultBlock(null, "testType");
+    ResultItem<String> resultItem = triqFactory.createResultItem(resultBlock, "testName", "testValue");
+
+    assertNotNull("ResultItem not correctly created", resultItem);
+    assertEquals("Name not correctly set", "testName", resultItem.getName());
+    assertEquals("Value not correctly set", "testValue", resultItem.getValue());
+    assertEquals("ResultItem not found in result block", resultItem, resultBlock.getItemForName("testName"));
+  }
+
+  @Test
+  public void testDoubleResultItemConstruction() {
+    TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
+    ResultBlock resultBlock = triqFactory.createResultBlock(null, "testType");
+    Double value = new Double(1.0);
+    ResultItem<Double> resultItem = triqFactory.createResultItem(resultBlock, "testName", value);
+
+    assertNotNull("ResultItem not correctly created", resultItem);
+    assertEquals("Name not correctly set", "testName", resultItem.getName());
+    assertEquals("Value not correctly set", value, resultItem.getValue());
+    assertEquals("ResultItem not found in result block", resultItem, resultBlock.getItemForName("testName"));
+  }
+
 }
