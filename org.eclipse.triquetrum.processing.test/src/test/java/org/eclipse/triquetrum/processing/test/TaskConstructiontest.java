@@ -112,6 +112,9 @@ public class TaskConstructiontest {
 
   // from here on, there are tests related to constructing results of tasks
 
+  /**
+   * Test the construction of a result block for a given task.
+   */
   @Test
   public void testResultBlockConstruction() {
     TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
@@ -123,6 +126,9 @@ public class TaskConstructiontest {
     assertEquals("ResultBlock not found in task", resultBlock, t.getResults().findFirst().orElse(null));
   }
 
+  /**
+   * Test the construction of simple string-based result item in a result block.
+   */
   @Test
   public void testStringResultItemConstruction() {
     TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
@@ -135,6 +141,9 @@ public class TaskConstructiontest {
     assertEquals("ResultItem not found in result block", resultItem, resultBlock.getItemForName("testName"));
   }
 
+  /**
+   * Test the construction of simple double-valued result item in a result block.
+   */
   @Test
   public void testDoubleResultItemConstruction() {
     TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
