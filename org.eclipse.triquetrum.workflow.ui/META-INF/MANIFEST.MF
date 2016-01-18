@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Workflow UI integration
+Bundle-SymbolicName: org.eclipse.triquetrum.workflow.ui
+Bundle-Version: 1.0.0.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Vendor: Eclipse Triquetrum
+Import-Package: org.eclipse.swt,
+ org.eclipse.swt.events,
+ org.eclipse.swt.graphics,
+ org.eclipse.swt.widgets,
+ org.osgi.framework;version="1.8.0",
+ org.ptolemy.commons;version="11.0.0",
+ org.ptolemy.osgi;version="11.0.0",
+ ptolemy.actor;version="11.0.0",
+ ptolemy.actor.injection;version="11.0.0",
+ ptolemy.actor.lib.gui;version="11.0.0",
+ ptolemy.data;version="11.0.0",
+ ptolemy.data.expr;version="11.0.0",
+ ptolemy.kernel.util;version="11.0.0"
+Export-Package: org.eclipse.triquetrum.workflow.ui;version="1.0.0"
+Bundle-Activator: org.eclipse.triquetrum.workflow.ui.activator.Activator
