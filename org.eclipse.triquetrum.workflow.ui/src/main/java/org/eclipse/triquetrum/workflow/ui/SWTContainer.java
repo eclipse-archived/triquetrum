@@ -56,10 +56,10 @@ public class SWTContainer implements PortableContainer {
   }
 
   /**
-   * Return the AWT container that this instance wraps.
+   * Return the SWT container that this instance wraps.
    *
    * @see ptolemy.actor.injection.PortableContainer#getPlatformContainer()
-   * @return the AWT container that this instance wraps.
+   * @return the SWT container that this instance wraps.
    */
   @Override
   public Composite getPlatformContainer() {

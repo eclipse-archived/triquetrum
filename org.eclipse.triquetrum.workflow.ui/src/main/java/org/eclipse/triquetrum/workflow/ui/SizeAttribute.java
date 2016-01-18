@@ -36,13 +36,11 @@ import ptolemy.kernel.util.Workspace;
  * Note that this attribute is typically used to record the size of a control within a shell (a top-level window).
  * To record the size and position of the shell, use WindowPropertiesAttribute.
  *
- * @author Edward A. Lee, Erwin De Ley
- * @version $Id: SizeAttribute.java 70398 2014-10-22 23:44:32Z cxh $
- * @since Ptolemy II 11.0
- * @Pt.ProposedRating Red (eal)
- * @Pt.AcceptedRating Red (johnr)
+ * @author Edward A. Lee,  Contributors: Erwin De Ley
+ * @see ptolemy.actor.gui.SizeAttribute
  * @see WindowPropertiesAttribute
  */
+@SuppressWarnings("restriction")
 public class SizeAttribute extends Parameter implements ControlListener {
   /**
    * Construct an attribute with the given name contained by the specified entity.

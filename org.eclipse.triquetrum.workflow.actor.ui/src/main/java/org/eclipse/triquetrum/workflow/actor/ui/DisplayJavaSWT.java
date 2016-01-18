@@ -33,19 +33,20 @@ import ptolemy.util.MessageHandler;
 
 /**
  * <p>
- * DisplayJavaSWT is the implementation of the DisplayInterface that uses AWT and Swing classes. Values of the tokens arriving on the input channels in a text
+ * DisplayJavaSWT is the implementation of the DisplayInterface that uses SWT classes. Values of the tokens arriving on the input channels are shown in a text
  * area on the screen. Each input token is written on a separate line. The input type can be of any type. Thus, string-valued tokens can be used to generate
  * arbitrary textual output, at one token per line.
  * </p>
  * <p>
- * Note that because of complexities in Swing, if you resize the display window, then, unlike the plotters, the new size will not be persistent. That is, if you
+ * Note that because of complexities in SWT, if you resize the display window, then, unlike the plotters, the new size will not be persistent. That is, if you
  * save the model and then re-open it, the new size is forgotten. To control the size, you should set the <i>rowsDisplayed</i> and <i>columnsDisplayed</i>
  * parameters.
  * </p>
  * <p>
- * Note that this actor internally uses JTextArea, a Java Swing object that is known to consume large amounts of memory. It is not advisable to use this actor
- * to log large output streams.
+ * It is not advisable to use the Display actor to log large output streams.
  * </p>
+ *
+ * @see ptolemy.actor.lib.gui.DisplayJavaSE
  *
  * @author Erwin De Ley
  */

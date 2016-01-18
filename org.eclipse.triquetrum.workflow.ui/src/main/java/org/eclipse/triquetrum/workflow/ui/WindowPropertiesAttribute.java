@@ -39,11 +39,10 @@ import ptolemy.kernel.util.Workspace;
  * NONE, so the user will not see it in parameter editing dialogs.
  *
  * @author Edward A. Lee, Contributors: Jason E. Smith, Christopher Brooks, Erwin De Ley
- * @version $Id: WindowPropertiesAttribute.java 70402 2014-10-23 00:52:20Z cxh $
- * @since Ptolemy II 11.0
- * @Pt.ProposedRating Red (eal)
- * @Pt.AcceptedRating Red (johnr)
+ *
+ * @see ptolemy.actor.gui.WindowPropertiesAttribute
  */
+@SuppressWarnings("restriction")
 public class WindowPropertiesAttribute extends Parameter implements ControlListener {
   /**
    * Construct an attribute with the given name contained by the specified entity. The container argument must not be null, or a NullPointerException will be

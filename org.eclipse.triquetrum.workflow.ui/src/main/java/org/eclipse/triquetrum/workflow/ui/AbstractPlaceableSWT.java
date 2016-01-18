@@ -26,11 +26,14 @@ import ptolemy.kernel.util.NameDuplicationException;
 ////AbstractPlaceableSWT
 
 /**
- * Base class for SWT implementation of actors that implement PortablePlaceable. Based on Ptolemy's ptolemy.actor.gui.AbstractPlaceableJavaSE
+ * Base class for SWT implementation of actors that implement PortablePlaceable.
+ *
+ * @see ptolemy.actor.gui.AbstractPlaceableJavaSE
  *
  * @author Erwin De Ley
  */
 
+@SuppressWarnings("restriction")
 public abstract class AbstractPlaceableSWT {
 
   /**
