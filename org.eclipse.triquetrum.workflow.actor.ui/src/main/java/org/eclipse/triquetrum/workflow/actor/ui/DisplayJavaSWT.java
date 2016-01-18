@@ -12,6 +12,9 @@
 package org.eclipse.triquetrum.workflow.actor.ui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
@@ -20,6 +23,7 @@ import org.eclipse.triquetrum.workflow.ui.AbstractPlaceableSWT;
 import ptolemy.actor.injection.PortableContainer;
 import ptolemy.actor.lib.gui.Display;
 import ptolemy.actor.lib.gui.DisplayInterface;
+import ptolemy.data.IntToken;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.util.MessageHandler;
@@ -134,33 +138,21 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
         if (textArea == null) {
           // No container has been specified for display.
           // Place the text area in its own frame.
-          // Need an effigy and a tableau so that menu ops work properly.
-
-//          Effigy containerEffigy = Configuration.findEffigy(_display.toplevel());
-
           try {
-//            if (containerEffigy == null) {
-//              throw new IllegalActionException("Cannot find effigy for top level \"" + _display.toplevel().getFullName()
-//                  + "\".  This can happen when a is invoked" + " with a non-graphical execution engine" + " such as ptolemy.moml.MoMLSimpleApplication"
-//                  + " but the " + " ptolemy.moml.filter.RemoveGraphicalClasses" + " MoML filter is not replacing the" + " class that extends Display.");
-//            }
-//            TextEffigy textEffigy = TextEffigy.newTextEffigy(containerEffigy, "");
-//
-//            // The default identifier is "Unnamed", which is no good for
-//            // two reasons: Wrong title bar label, and it causes a save-as
-//            // to destroy the original window.
-//
-//            textEffigy.identifier.setExpression(_display.getFullName());
-
             _shell = new Shell();
-            textArea = new Text(_shell, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.WRAP);
-// TODO find a way to set the size of the Text area
-//            int numRows = ((IntToken) _display.rowsDisplayed.getToken()).intValue();
-//            textArea.setRows(numRows);
-//
-//            int numColumns = ((IntToken) _display.columnsDisplayed.getToken()).intValue();
-//
-//            textArea.setColumns(numColumns);
+            _shell.setLayout(new GridLayout());
+
+            int numRows = ((IntToken) _display.rowsDisplayed.getToken()).intValue();
+            int numColumns = ((IntToken) _display.columnsDisplayed.getToken()).intValue();
+
+            textArea = new Text(_shell, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+            GridData gridData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+            gridData.heightHint = numRows * textArea.getLineHeight();
+            GC gc = new GC(textArea);
+            int charWidth = gc.getFontMetrics().getAverageCharWidth();
+            gc.dispose();
+            gridData.widthHint = numColumns * charWidth;
+            textArea.setLayoutData(gridData);
             setShell(_shell);
             _shell.pack();
           } catch (Exception ex) {
@@ -172,10 +164,8 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
         }
 
         if (_shell != null) {
-          // show() used to override manual placement by calling pack.
-          // No more.
-          _shell.setVisible(true);
           _shell.setActive();
+          _shell.open();
         }
       }
     };

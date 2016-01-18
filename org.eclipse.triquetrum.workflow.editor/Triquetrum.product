@@ -350,6 +350,7 @@
       <plugin id="org.eclipse.triquetrum.logging.dvp" fragment="true"/>
       <plugin id="org.eclipse.triquetrum.processing.api"/>
       <plugin id="org.eclipse.triquetrum.validation.api"/>
+      <plugin id="org.eclipse.triquetrum.workflow.actor.ui"/>
       <plugin id="org.eclipse.triquetrum.workflow.api"/>
       <plugin id="org.eclipse.triquetrum.workflow.editor"/>
       <plugin id="org.eclipse.triquetrum.workflow.editor.palette"/>
@@ -358,6 +359,7 @@
       <plugin id="org.eclipse.triquetrum.workflow.model.edit"/>
       <plugin id="org.eclipse.triquetrum.workflow.model.editor"/>
       <plugin id="org.eclipse.triquetrum.workflow.model.viewmodel"/>
+      <plugin id="org.eclipse.triquetrum.workflow.ui"/>
       <plugin id="org.eclipse.ui"/>
       <plugin id="org.eclipse.ui.browser"/>
       <plugin id="org.eclipse.ui.cheatsheets"/>
@@ -411,8 +413,10 @@
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
       <plugin id="org.eclipse.triquetrum.common" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.actor.ui" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.editor" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.execution.impl" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.ui" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="3" />
       <plugin id="org.ptolemy.commons" autoStart="true" startLevel="0" />
       <plugin id="ptolemy.actor.lib" autoStart="true" startLevel="0" />
