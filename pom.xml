@@ -3,10 +3,17 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>triquetrum</groupId>
-  <artifactId>triquetrum</artifactId>
+
+  <!-- Changed artifactId to org.eclipse.triquetrum.build -->
+  <!-- <artifactId>triquetrum</artifactId> -->
+  <artifactId>org.eclipse.triquetrum.build</artifactId>
+
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
+    <!-- Added the dependencies module by hand -->
+    <module>../triquetrumDeps/org.eclipse.triquetrum.dependencies</module>
+
     <module>org.eclipse.triquetrum.common</module>
     <module>org.eclipse.triquetrum.logging.dvp</module>
     <module>org.eclipse.triquetrum.processing.api</module>
