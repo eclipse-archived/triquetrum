@@ -16,6 +16,7 @@ import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
 import org.eclipse.graphiti.features.impl.AbstractCreateConnectionFeature;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
@@ -90,12 +91,12 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
 
   /**
    * Creates a relation between two ports.
-   * 
+   *
    * @throws IllegalActionException
    */
   private Relation createRelation(Port source, Port target) throws IllegalActionException {
     Relation relation = TriqFactory.eINSTANCE.createRelation();
-    relation.setName("new_r");
+    relation.setName(EditorUtils.buildUniqueName(source, "_R"));
 //    relation.setContainer(source.getContainer().getContainer());
     relation.getLinkedPorts().add(source);
     relation.getLinkedPorts().add(target);

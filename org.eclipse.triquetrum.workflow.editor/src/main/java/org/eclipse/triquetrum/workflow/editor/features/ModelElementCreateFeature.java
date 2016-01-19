@@ -28,7 +28,7 @@ import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
 /**
  * Creates a new model element based on a drag-n-drop from the palette, after prompting the user for the name.
- * 
+ *
  */
 public class ModelElementCreateFeature extends AbstractCreateFeature {
 
@@ -72,7 +72,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       // create new model element
       EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(elementClass);
       NamedObj result = (NamedObj) TriqFactory.eINSTANCE.create((EClass) eClassifier);
-      result.setName(elementName);
+      result.setName(EditorUtils.buildUniqueName(model, elementName));
       result.setWrappedType(wrappedClass);
 
       if (result instanceof Director) {
