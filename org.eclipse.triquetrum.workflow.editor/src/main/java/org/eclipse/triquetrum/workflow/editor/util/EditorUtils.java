@@ -18,15 +18,38 @@ import org.eclipse.graphiti.ui.platform.GraphitiShapeEditPart;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.eclipse.triquetrum.workflow.model.CompositeEntity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
-
-import ptolemy.kernel.ComponentEntity;
-import ptolemy.kernel.CompositeEntity;
-import ptolemy.kernel.Port;
-import ptolemy.kernel.util.IllegalActionException;
 
 public class EditorUtils {
 
+  /**
+   * Creates a unique name for a new model element, in its container.
+   * The relatedObj should be either the container or a sibling of the to-be-created element,
+   * i.e. it should be in the same container as the new element.
+   * <p>
+   * This method delegates to ptolemy.kernel.CompositeEntity.uniqueName(String)
+   * </p>
+   * @param relatedObj a model element in the same container as the new element, or the container itself.
+   * @param prefix a prefix for the generated unique name.
+   * @return a unique name constructed from the prefix.
+   */
+  public static String buildUniqueName(NamedObj relatedObj, String prefix) {
+    NamedObj container = relatedObj;
+    while((container != null) && !(container instanceof CompositeEntity)) {
+      container = container.getContainer();
+    }
+    if(container==null) {
+      return prefix;
+    } else {
+      return ((ptolemy.kernel.CompositeEntity)container.getWrappedObject()).uniqueName(prefix);
+    }
+  }
+
+  /**
+   * Find the model from the selected editor part and its contained diagram.
+   * @return the model from the selected diagram editor
+   */
   @SuppressWarnings("restriction")
   public static CompositeActor getSelectedModel() {
     NamedObj result = null;
@@ -60,77 +83,5 @@ public class EditorUtils {
       }
     }
     return result;
-  }
-  
-  public static String findUniqueName(CompositeEntity parentModel, Class clazz, String startName, String actorName) {
-    if (clazz == null) {
-      return findUniqueActorName(parentModel, actorName);
-
-    }
-    if (clazz.getSimpleName().equals("Vertex")) {
-      return generateUniqueVertexName(clazz.getSimpleName(), parentModel, 0, clazz);
-    } else if (clazz.getSimpleName().equals("TextAttribute")) {
-      return generateUniqueTextAttributeName(clazz.getSimpleName(), parentModel, 0, clazz);
-    } else if (clazz.getSimpleName().equals("TypedIOPort")) {
-      return generateUniquePortName(startName, parentModel, 0);
-    } else {
-      return findUniqueActorName(parentModel, actorName != null ? actorName : clazz.getSimpleName());
-    }
-  }
-
-  private static String generateUniquePortName(String name, CompositeEntity parent, int index) {
-    String newName = index != 0 ? (name + "_" + index) : name;
-    boolean contains = false;
-    List<Port> ports = parent.portList();
-    for(Port p : ports) {
-      String portName = p.getName();
-      if (newName.equals(portName)) {
-        contains = true;
-        break;
-      }
-
-    }
-    if (!contains) {
-      return newName;
-    }
-    index++;
-    return generateUniquePortName(name, parent, index);
-
-  }
-
-  public static String findUniqueActorName(CompositeEntity parentModel, String name) {
-    String newName = name;
-    if (parentModel == null)
-      return newName;
-    List entityList = parentModel.entityList();
-    if (entityList == null || entityList.size() == 0)
-      return newName;
-
-    ComponentEntity entity = parentModel.getEntity(newName);
-    int i = 1;
-    while (entity != null) {
-      newName = name + "_" + i++;
-      entity = parentModel.getEntity(newName);
-    }
-
-    return newName;
-  }
-
-  private static String generateUniqueTextAttributeName(String name, ptolemy.kernel.util.NamedObj parent, int index, Class clazz) {
-    try {
-      String newName = index != 0 ? (name + "_" + index) : name;
-      if (parent.getAttribute(newName, clazz) == null) {
-        return newName;
-      } else {
-        index++;
-        return generateUniqueTextAttributeName(name, parent, index, clazz);
-      }
-    } catch (IllegalActionException e) {
-      return name;
-    }
-  }
-
-  private static String generateUniqueVertexName(String name, ptolemy.kernel.util.NamedObj parent, int index, Class clazz) {
-    return "Vertex" + System.currentTimeMillis();
   }
 }
