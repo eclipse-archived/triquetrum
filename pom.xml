@@ -29,6 +29,20 @@
     <module>org.eclipse.triquetrum.workflow.model.viewmodel</module>
     <module>org.eclipse.triquetrum.workflow.ui</module>
   </modules>
+
+  <repositories>
+    <repository>
+      <id>eclipse-mars</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/releases/mars</url>
+    </repository>
+    <repository>
+      <id>eclipse-indigo</id>
+      <url>http://archive.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository</url>
+      <layout>p2</layout>
+    </repository>
+  </repositories>
+  
   <build>
     <plugins>
       <plugin>
@@ -39,4 +53,5 @@
       </plugin>
     </plugins>
   </build>
+  
 </project>
