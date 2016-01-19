@@ -23,6 +23,7 @@ If you don’t, you need to [register](https://dev.eclipse.org/site_login/create
 
 * "Sign-off" your commits (NOTE! This is only necessary if contributing to the vertx-core project)
 
+
 Every commit you make in your patch or pull request MUST be "signed off".
 
 You do this by adding the `-s` flag when you make the commit(s), e.g.
@@ -44,25 +45,34 @@ Use Eclipse to check out the repo.
 7. In the Branch Selection window, keep the default of the Master branch (FIXME: Should the other branches be deselected?) and click Next.
 8. In the Local Destination window, select Finish.
 
+### Create an Issue
+Create a [GitHub Issue](https://github.com/eclipse/triquetrum/issues) for every significant piece of work ( > 2 hrs).
+
 ### Create a new branch for your changes
 
 1. In the Git Repositories tab, expand the triquetrum repository.
-2. Right click on the "Branches" node and select "Switch To" -> "New Branch".  Enter the new branch name, which is typically your login, followed by a dash and then a very short description.  (FIXME: What about "Configure upstream for push and pull" in this dialog? See [Branch Creation Dialog in the EGit User Guide](https://wiki.eclipse.org/EGit/User_Guide#Branch_Creation_Dialog) and http://www.btday.com/egit-configure-upstream-for-push-and-pull/)
+2. Right click on the "Branches" node and select "Switch To" -> "New Branch".  
+3. Enter the new branch name, -Branch name should be {dvp-er}/{type}/{issue id}/{summary-description}
+e.g. "erwin/ft/5/integrate-display-actor". Types: ft (feature i.e. with functional value); eh (enhancement without functional value); bg (bug); doc; ... ? which is typically your login, followed by a dash and then a very short description. 
 
+ 
 ### Committing
 * Make your changes
 * Make sure you include tests
 * Make sure the test suite passes after your changes
-* Commit your changes into that branch
-* Use descriptive and meaningful commit messages. See [git commit records in the Eclipse Project Handbook](https://www.eclipse.org/projects/handbook/#resources-source)
-
-* If you have a lot of commits squash them into a single commit
+* Commit your changes into that branch. 
+* For files that are in Eclipse packages, right click on the file in the Package Explorer and commit it.  
+* For files that are not in Eclipse packages, invoke the Git Staging via Window -> Show View -> Other -> Git -> Git
+* Use descriptive and meaningful commit messages. See [git commit records in the Eclipse Project Handbook](https://www.eclipse.org/projects/handbook/#resources-source).  Mention issue_id in each commit comment using syntax like "Adapt this interface for #15" to link to issue 15.
+* If you have a lot of commits squash them into a single commit (**FIXME: How do we do this? and is it really necessary?  Not squashing the commits gives finer granularity tracking changes when debugging**)
 * Make sure you use the `-s` flag when committing as explained above.
 * Push your changes to your branch in your forked repository
 
 ## Submitting the changes
 
-Submit a pull request via the normal GitHub UI.
+1. Submit a pull request via the normal [GitHub UI](https://github.com/eclipse/triquetrum) to trigger to request feedback / code review / ... 
+2. Mention issue_id in each comment using syntax like "Adapt this interface for #15" to link to issue 15 in the initial comment for a Pull Request.
+3. Only merge your work to master after positive feedback/review. (**FIXME: Not sure about this requirement yet**)
  
 ## After submitting
 
