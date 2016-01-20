@@ -52,21 +52,22 @@ Create a [GitHub Issue](https://github.com/eclipse/triquetrum/issues) for every 
 
 1. In the Git Repositories tab, expand the triquetrum repository.
 2. Right click on the "Branches" node and select "Switch To" -> "New Branch".  
-3. Enter the new branch name, -Branch name should be {dvp-er}/{type}/{issue id}/{summary-description}
-e.g. "erwin/ft/5/integrate-display-actor". Types: ft (feature i.e. with functional value); eh (enhancement without functional value); bg (bug); doc; ... ? which is typically your login, followed by a dash and then a very short description. 
+3. Enter the new branch name, -Branch name should be {GitHubUserName}/{summary or issue id} e.g. ``erwin/integrate-display-actor``.
 
- 
 ### Committing
-* Make your changes
-* Make sure you include tests
-* Make sure the test suite passes after your changes
+* Make your changes.
+* Make sure you include tests.
+* Make sure the test suite passes after your changes.
 * Commit your changes into that branch. 
 * For files that are in Eclipse packages, right click on the file in the Package Explorer and commit it.  
 * For files that are not in Eclipse packages, invoke the Git Staging via Window -> Show View -> Other -> Git -> Git
 * Use descriptive and meaningful commit messages. See [git commit records in the Eclipse Project Handbook](https://www.eclipse.org/projects/handbook/#resources-source).  Mention issue_id in each commit comment using syntax like "Adapt this interface for #15" to link to issue 15.
-* If you have a lot of commits squash them into a single commit (**FIXME: How do we do this? and is it really necessary?  Not squashing the commits gives finer granularity tracking changes when debugging**)
-* Make sure you use the `-s` flag when committing as explained above.
-* Push your changes to your branch in your forked repository
+* If you have a lot of commits squash them into a single commit (**FIXME: How do we do this? and is it really necessary?  Not squashing the commits gives finer granularity tracking changes when debugging**).
+* Make sure you use the sign off your commit.
+  * If you are commiting using Eclipse, then click on the signature button  
+  * If you are invoking git from the command line, then use the `-s` flag.  
+  * If you are using some other tool, add ``Signed-off-by: YourFirstName YourLastName <YourEclipseAccountEmailAddress>`` For example: ``Signed-off-by: Christopher Brooks <cxh@eecs.berkeley.edu>``
+* Push your changes to your branch in your forked repository.
 
 ## Submitting the changes
 
