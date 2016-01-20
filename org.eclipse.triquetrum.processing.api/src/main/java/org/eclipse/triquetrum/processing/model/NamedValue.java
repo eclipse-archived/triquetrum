@@ -15,31 +15,31 @@ import java.io.Serializable;
 
 /**
  * A generic container for named values, where values can be of any Serializable type.
- * 
+ *
  */
-public interface NamedValue<V extends Serializable> extends Serializable {
+public interface NamedValue<V extends Serializable> extends Serializable, Comparable<NamedValue<V>> {
 
   /**
-  * 
+  *
   * @return the name
   */
   String getName();
 
   /**
-   * 
+   *
    * @return the value in its "raw" type/format
    */
   V getValue();
-  
+
   /**
-   * 
+   *
    * @return a textual name of the contained data type, that should be
    *         consistent with the actual type of the specified generic V.
    */
   DataType getDataType();
 
   /**
-   * 
+   *
    * @return the value in a String-representation
    */
   String getValueAsString();

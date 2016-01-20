@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" configuration-policy="optional" immediate="true" name="TaskProcessingBroker">
+   <implementation class="org.eclipse.triquetrum.processing.service.impl.DefaultTaskProcessingBroker"/>
+   <service>
+      <provide interface="org.eclipse.triquetrum.processing.service.TaskProcessingBroker"/>
+   </service>
+   <reference bind="registerServiceRef" cardinality="0..n" interface="org.eclipse.triquetrum.processing.service.TaskProcessingService"
+   		name="TaskProcessingService" policy="dynamic" unbind="removeServiceRef"/>
+   <property name="timeoutHandlingThreads" type="Short" value="5"/>
+</scr:component>

@@ -11,128 +11,162 @@
 package org.eclipse.triquetrum.processing.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.stream.Stream;
 
+import org.eclipse.triquetrum.processing.ProcessingException;
 
 /**
  * A Task specifies an item of work to be performed. It defines WHAT must be done, not how it must be achieved.
  * <p>
- * Simple work can be handled as one "unit of work" that can be executed by a <code>TaskProcessingService</code>.
- * Complex tasks could be handled by a workflow execution, where actors launch sub-tasks for each meaningful step to get the work done.
+ * Simple work can be handled as one "unit of work" that can be executed by a <code>TaskProcessingService</code>. Complex tasks could be handled by a workflow
+ * execution, where actors launch sub-tasks for each meaningful step to get the work done. In such cases the Task also has a process ID, identifying the
+ * workflow process execution instance (workflow guys often call this an "enactment").
  * </p>
  * <p>
  * The definition consists of following main elements :
  * <ul>
  * <li>type : the main differentiator on the kind of work to be performed</li>
  * <li>a set of parameters : these define the data needed to perform the given task</li>
- * <li>results : the internal structure is a set of result blocks containing result items. 
- * In specialized domains, like science, raw results may not be fit for internal storage but could e.g. be stored in special/huge files.
- * Then the triq result items may be used to represent references to such files/datasets, and/or derived data obtained during the workflow execution.</li>
+ * <li>results : the internal structure is a set of result blocks containing result items. In specialized domains, like science, raw results may not be fit for
+ * internal storage but could e.g. be stored in special/huge files. Then the triq result items may be used to represent references to such files/datasets,
+ * and/or derived data obtained during the workflow execution.</li>
  * </ul>
  * </p>
  */
 public interface Task extends Serializable, Identifiable, AttributeHolder {
 
   /**
-   * @return the type of this task, that typically is the main key to determine by which service this task must be processed
+   * A Task can be linked to an external/business entity, e.g. an experiment ID, a customer ticket or a business order etc.
+   * This (optional, non-unique) identifier can refer to this external entity.
+   * <p>
+   * Alternatively, it can just be used to maintain a more-or-less readable key that can be used to refer to related Tasks.
+   * </p>
+   * @return an optional key that can be used to refer to an associated (business) entity, or can serve as a simple (non-unique) readable key,
+   * to refer to this Task.
    */
-  String getType();
+  String getExternalReference();
 
   /**
-   * @return a unique identifier/name of the initiator, i.e. the party or system component
-   * responsible for the initiation of this task. 
-   * 
-   */
-  String getInitiator();
-  
-  /**
-   * @return a unique identifier/name of the executor, i.e. the party or system component
-   * that (was) determined to be responsible for the handling of this task. 
-   * 
-   */
-  String getExecutor();
-  
-  /**
-   * 
-   * @param executor
-   */
-  void setExecutor(String executor);
-  
-  /**
-   * A correlation ID can be specified by the initiator. 
-   * Triquetrum will then ensure that in any notifications, acknowledgements or other kinds of feedback, the correlation ID will be available.
-   * This can be used by external systems to facilitate correlating their original requests with later asynchronous responses from the triq runtime.
-   * 
+   * A correlation ID can be specified by the initiator. Triquetrum will then ensure that in any notifications, acknowledgements or other kinds of feedback, the
+   * correlation ID will be available. This can be used by external systems to facilitate correlating their original requests with later asynchronous responses
+   * from the triq runtime.
+   *
    * @return the correlation Id that was received from the initiator.
    */
   String getCorrelationId();
 
   /**
-   * @return current status of this context
+   * @return the type of this task, which typically is the main key to determine by which service this task must be processed
    */
-  ProcessStatus getStatus();
+  String getType();
 
   /**
-   * Set the new status of the context. There is currently no formally enforced state transition model. 
-   * The only assumption is that once a <code>Context</code> has been set to a "final" state 
-   * the setter will fail if any more state change is attempted.
-   * 
-   * @param status
-   * @return true if the state was successfully set, false if not
+   * @return a unique identifier/name of the initiator, i.e. the party or system component responsible for the initiation of this task.
+   *
    */
-  boolean setStatus(ProcessStatus status);
+  String getInitiator();
+
+  /**
+   * @return a unique identifier/name of the executor, i.e. the party or system component that (was) determined to be responsible for the handling of this task.
+   *
+   */
+  String getExecutor();
+
+  /**
+   *
+   * @param executor the party or system component that has been selected to become responsible for the handling of this task.
+   */
+  void setExecutor(String executor);
+
+  /**
+   * Complex Tasks may be processed via the execution of a workflow process. In such cases, each significant step may be represented by a Task, and such Tasks
+   * are aware of the process's Id.
+   *
+   * @return the (optional) Id of the process in which this Task is handled.
+   */
+  String getProcessId();
+
+  /**
+   * Set the id of the process that is handling this task.
+   *
+   * @param id the (optional) Id of the process in which this Task is handled.
+   */
+  void setProcessId(String id);
+
+  /**
+   * @return current status of this task
+   */
+  ProcessingStatus getStatus();
+
+  /**
+   * Set the new status of the task.
+   * <p>
+   * There is currently no formally enforced state transition model.
+   * The only assumption is that once a Task has been set to a "final" state,
+   * the setter will fail if any more state changes are attempted.
+   * </p>
+   * @param status the new Task status
+   * @param extraInfos optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
+   * @throws IllegalStateException if the current status does not allow to set the new status (e.g. the current status is final)
+   */
+  void setStatus(ProcessingStatus status, String... extraInfos) throws IllegalStateException;
+
+  /**
+   * Tasks may fail for different reasons. If the failure can be represented as an exception, it should be wrapped in a ProcessingException
+   * and passed in here, optionally with some extra info.
+   *
+   * @param cause the (optional) exception that represents the cause of the error in this Task's processing.
+   * @param extraInfos optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
+   * @throws IllegalStateException if the current status does not allow to set the new status (e.g. the current status is final)
+   */
+  void setErrorStatus(ProcessingException cause, String... extraInfos) throws IllegalStateException;
 
   /**
    * @return the end time stamp
    */
   Date getEndTS();
 
-   /**
-   * @return the list of all events that have happened in this context's lifecycle up-to "now"
+  /**
+   * TODO check if/how we could keep such a stream open infinitely to allow adding new events as they happen.
+   *
+   * @return the Stream of all events that have happened in this task's lifecycle
    */
-  List<TaskEvent> getEvents();
+  Stream<ProcessingEvent<Task>> getEvents();
 
   /**
-   * Store some named entry in the context. 
-   * This is a context-wide storage, not linked to a specific task or its results.
-   * 
-   * @param name
-   * @param value
+   * Adds an extra result for this Task.
+   * <p>
+   * Depending on the Task implementation, there may be restrictions on adding results.
+   * E.g. that only one result block with a same type may be present.
+   * For such cases, the method must return a boolean success indicator (cfr. the Java Collection APIs)
+   * </p>
+   * @param resultBlock
+   * @throws IllegalStateException if a result could no longer be added to this Task, e.g. because it's already in a final status.
    */
-  void putEntry(String name, Serializable value);
+  void addResult(ResultBlock resultBlock) throws IllegalStateException;
 
   /**
-   * Remove the entry with the given name
-   * 
-   * @param name
-   * @return the entry that was present for the given name (or null if none was there)
+   * @return the Stream of results that have been gathered by this task
    */
-  Serializable removeEntry(String name);
-  
-  /**
-   * 
-   * @param name
-   * @return the entry stored under the given name in the context, or null if not present.
-   */
-  Serializable getEntryValue(String name);
+  Stream<ResultBlock> getResults();
 
   /**
-   * 
-   * @return the names of all stored context entries
+   *
+   * @return the (optional) parent task
    */
-  Iterator<String> getEntryNames();
+  Task getParentTask();
 
   /**
-   * 
-   * @return all associated sub-tasks
+   *
+   * @param task
+   * @throws IllegalStateException if a subtask could no longer be added to this Task, e.g. because it's already in a final status.
    */
-  List<Task> getSubTasks();
+  void addSubTask(Task task) throws IllegalStateException;
 
   /**
-   * @return the results that have been gathered by this task
+   *
+   * @return the Stream of all associated sub-tasks
    */
-  Collection<ResultBlock> getResults();
+  Stream<Task> getSubTasks();
 }

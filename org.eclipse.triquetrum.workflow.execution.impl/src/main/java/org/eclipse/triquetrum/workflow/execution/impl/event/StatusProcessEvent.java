@@ -10,22 +10,22 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.execution.impl.event;
 
-import org.eclipse.triquetrum.processing.model.ProcessStatus;
+import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 
 public class StatusProcessEvent extends ProcessEvent {
 
   private static final long serialVersionUID = 1L;
 
-  private ProcessStatus status;
+  private ProcessingStatus status;
   private Throwable throwable;
 
-  public StatusProcessEvent(String processContextId, ProcessStatus status, Throwable throwable) {
+  public StatusProcessEvent(String processContextId, ProcessingStatus status, Throwable throwable) {
     super(processContextId, Kind.UNSPECIFIED, Detail.UNSPECIFIED);
     this.status = status;
     this.throwable = throwable;
   }
 
-  public ProcessStatus getStatus() {
+  public ProcessingStatus getStatus() {
     return status;
   }
 

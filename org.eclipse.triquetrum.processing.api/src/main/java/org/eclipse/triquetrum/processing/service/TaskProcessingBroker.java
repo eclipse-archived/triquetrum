@@ -22,27 +22,29 @@ import org.eclipse.triquetrum.processing.model.Task;
  *
  */
 public interface TaskProcessingBroker {
-  
+
   /**
    * @param task the {@link Task} that must be processed
    * @param timeout the timeout period; null or <=0 values indicate : no timeout should be set.
    * @param unit the {@link TimeUnit} of the timeunit period
-   * @return null if this service is unable to process the given task; 
-   * a Future to the task after processing is finished.
-   * @throws ProcessingException when the delivery has failed of the {@link Task} to a service able to process it.
-   * E.g. when no service is found for it.
+   * @return a Future to the task after processing is finished.
+   * The future may contain a ProcessingException for several typical reasons :
+   * <ul>
+   * <li>when the delivery has failed of the task to a service able to process it. E.g. when no service is found for it.</li>
+   * <li>when there was an error in the service's processing of the task</li>
+   * </ul>
    */
-  CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit) throws ProcessingException;
-  
+  CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit);
+
   /**
-   * 
+   *
    * @param service
    * @return <tt>true</tt> if the new service was successfully registered
    */
   boolean registerService(TaskProcessingService service);
-  
+
   /**
-   * 
+   *
    * @param service
    * @return <tt>true</tt> if the service was registered and was successfully removed
    */

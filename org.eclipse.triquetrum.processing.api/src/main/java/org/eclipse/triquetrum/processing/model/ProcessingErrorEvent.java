@@ -18,20 +18,20 @@ import org.eclipse.triquetrum.ErrorCategory;
 
 
 /**
- * Maintains all info related to an error that occurred during 
+ * Maintains all info related to an error that occurred during
  * the processing of a task.
  * <p>
  * Such error info is typically logged in a well-formatted manner to allow monitoring tools to automatically pick-up specific error types.
  * This can be done via parsing log files, or querying DB records in case execution traces are persisted in a DB etc.
  * </p>
  */
-public interface TaskErrorEvent extends TaskEvent {
+public interface ProcessingErrorEvent<T> extends ProcessingEvent<T> {
 
   /**
    * @return how severe was the error
    */
   Severity getSeverity();
-  
+
   /**
    * @return whether the error concerns a functional or technical issue.
    */
@@ -46,7 +46,7 @@ public interface TaskErrorEvent extends TaskEvent {
    * @return short description, e.g. Missing data, Timed out
    */
   String getShortDescription();
-  
+
   /**
    * @return a readable description of the error type of this item
    */

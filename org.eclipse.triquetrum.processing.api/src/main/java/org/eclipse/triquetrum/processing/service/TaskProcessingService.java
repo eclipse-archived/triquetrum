@@ -17,10 +17,15 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.triquetrum.processing.model.Task;
 
 /**
- * Responsible for the actual processing of a submitted {@link Task} 
+ * Responsible for the actual processing of a submitted {@link Task}
  * that matches the selection criteria of a particular service instance.
  */
 public interface TaskProcessingService {
+
+  /**
+   * @return a descriptive short name for the service
+   */
+  String getName();
 
   /**
    * Process the given Task within the given timeout, if this service instance is capable of handling it. If the
@@ -34,7 +39,7 @@ public interface TaskProcessingService {
    * Task. In case of errors they should also set the relevant exception on the returned Future. <br/>
    * Blocking service implementations are of course possible, and must return a pre-filled Future.
    * </p>
-   * 
+   *
    * @param task
    *          the Task that must be processed
    * @param timeout
@@ -47,7 +52,7 @@ public interface TaskProcessingService {
   CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit);
 
   /**
-   * 
+   *
    * @param task
    * @return true if the given task can be processed by this service
    */
