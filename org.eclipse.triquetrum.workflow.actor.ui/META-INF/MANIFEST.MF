@@ -10,7 +10,6 @@ Import-Package: org.eclipse.swt,
  org.eclipse.swt.widgets,
  org.osgi.framework;version="1.8.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.actor.ui.activator.Activator
-Require-Bundle: ptolemy.actor.lib.gui;bundle-version="11.0.0",
- ptolemy.core;bundle-version="11.0.0",
- ptolemy.gui;bundle-version="11.0.0",
- org.eclipse.triquetrum.workflow.ui;bundle-version="1.0.0"
+Require-Bundle: org.eclipse.triquetrum.workflow.ui;bundle-version="1.0.0",
+ org.eclipse.triquetrum.dependencies
+
