@@ -40,7 +40,6 @@ import ptolemy.kernel.util.Workspace;
  *
  * @author Edward A. Lee, Contributors: Jason E. Smith, Christopher Brooks, Erwin De Ley
  *
- * @see ptolemy.actor.gui.WindowPropertiesAttribute
  */
 @SuppressWarnings("restriction")
 public class WindowPropertiesAttribute extends Parameter implements ControlListener {

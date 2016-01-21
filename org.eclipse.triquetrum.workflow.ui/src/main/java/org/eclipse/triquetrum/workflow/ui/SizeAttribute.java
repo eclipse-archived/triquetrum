@@ -37,7 +37,6 @@ import ptolemy.kernel.util.Workspace;
  * To record the size and position of the shell, use WindowPropertiesAttribute.
  *
  * @author Edward A. Lee,  Contributors: Erwin De Ley
- * @see ptolemy.actor.gui.SizeAttribute
  * @see WindowPropertiesAttribute
  */
 @SuppressWarnings("restriction")
