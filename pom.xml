@@ -11,10 +11,8 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <!-- Added the dependencies module by hand -->
-    <module>../triquetrumDeps/org.eclipse.triquetrum.dependencies</module>
-
     <module>org.eclipse.triquetrum.common</module>
+    <module>org.eclipse.triquetrum.dependencies</module>
     <module>org.eclipse.triquetrum.logging.dvp</module>
     <module>org.eclipse.triquetrum.processing.api</module>
     <module>org.eclipse.triquetrum.validation.api</module>
