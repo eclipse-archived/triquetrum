@@ -28,8 +28,6 @@ import ptolemy.kernel.util.NameDuplicationException;
 /**
  * Base class for SWT implementation of actors that implement PortablePlaceable.
  *
- * @see ptolemy.actor.gui.AbstractPlaceableJavaSE
- *
  * @author Erwin De Ley
  */
 
