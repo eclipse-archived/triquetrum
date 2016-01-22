@@ -35,12 +35,19 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
   private String elementClass;
   private String elementName;
   private String wrappedClass;
+  private String imageId;
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String elementClass, String elementName, String wrappedClass) {
+  public ModelElementCreateFeature(IFeatureProvider fp, String elementClass, String elementName, String wrappedClass, String imageId) {
     super(fp, elementName, "Create a " + elementName);
     this.elementClass = elementClass;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
+    this.imageId = imageId;
+  }
+
+  @Override
+  public String getCreateImageId() {
+    return imageId;
   }
 
   public boolean canCreate(ICreateContext context) {
