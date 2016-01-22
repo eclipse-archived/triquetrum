@@ -33,12 +33,11 @@ import ptolemy.moml.MoMLParser;
 /**
  * TODO refactor MOMLParser, so Ptolemy objects can be created outside of "parsing". I.e. split out all "creation"-related code in a separate utilities class
  * that is then used by the MomlParser and other code (like Triq model editing via EMF).
- * 
+ *
  * For now, this is a minimized copy of MomlParser code to get an initial code drop working with a subset of Ptolemy's features.
  */
 public class PtolemyUtil {
 
-  // TODO add handling for port attributes like multiport, input, output etc
   public static Attribute _createAttribute(NamedObj container, String className, String attrName) throws Exception {
     Attribute previous = container.getAttribute(attrName);
     Class<?> newClass = null;
@@ -150,7 +149,7 @@ public class PtolemyUtil {
   }
 
   /**
-   * 
+   *
    * @param container
    * @param className
    * @param portName
@@ -312,7 +311,7 @@ public class PtolemyUtil {
    * argument (the first argument), which is the enclosing class. Static inner classes, however, work fine. This method marks the contents of what it creates as
    * derived objects, since they are defined in the Java code of the constructor. If we are currently propagating, then it also marks the new instance itself as
    * a derived object.
-   * 
+   *
    * @param newClass
    *          The class.
    * @param arguments
@@ -368,7 +367,7 @@ public class PtolemyUtil {
    * Mark the contents as being derived objects at a depth one greater than the depth argument, and then recursively mark their contents derived. This makes
    * them not export MoML, and prohibits name and container changes. Normally, the argument is an Entity, but this method will accept any NamedObj. This method
    * also adds all (deeply) contained instances of Settable to the _paramsToParse list, which ensures that they will be validated.
-   * 
+   *
    * @param object
    *          The instance that is defined by a class.
    * @param depth

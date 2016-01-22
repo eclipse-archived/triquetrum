@@ -149,13 +149,22 @@ public interface TriqPackage extends EPackage {
   int NAMED_OBJ___TOP_LEVEL = 1;
 
   /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING = 2;
+
+  /**
    * The number of operations of the '<em>Named Obj</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NAMED_OBJ_OPERATION_COUNT = 2;
+  int NAMED_OBJ_OPERATION_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl <em>Entity</em>}' class.
@@ -256,6 +265,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ENTITY___TOP_LEVEL = NAMED_OBJ___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTITY___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
    * The operation id for the '<em>Get Parameters</em>' operation.
@@ -394,6 +412,15 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ENTITY___TOP_LEVEL = ENTITY___TOP_LEVEL;
 
   /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ENTITY___SET_PROPERTY__STRING_STRING_STRING = ENTITY___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
    * The operation id for the '<em>Get Parameters</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -521,6 +548,15 @@ public interface TriqPackage extends EPackage {
   int PORT___TOP_LEVEL = NAMED_OBJ___TOP_LEVEL;
 
   /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
    * The number of operations of the '<em>Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -621,6 +657,15 @@ public interface TriqPackage extends EPackage {
   int RELATION___TOP_LEVEL = NAMED_OBJ___TOP_LEVEL;
 
   /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
    * The number of operations of the '<em>Relation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -710,6 +755,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ATTRIBUTE___TOP_LEVEL = NAMED_OBJ___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
    * The number of operations of the '<em>Attribute</em>' class.
@@ -812,6 +866,15 @@ public interface TriqPackage extends EPackage {
   int PARAMETER___TOP_LEVEL = ATTRIBUTE___TOP_LEVEL;
 
   /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
    * The number of operations of the '<em>Parameter</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -901,6 +964,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int DIRECTOR___TOP_LEVEL = ATTRIBUTE___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIRECTOR___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
    * The operation id for the '<em>Get Parameters</em>' operation.
@@ -1048,6 +1120,15 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ACTOR___TOP_LEVEL = COMPOSITE_ENTITY___TOP_LEVEL;
 
   /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ACTOR___SET_PROPERTY__STRING_STRING_STRING = COMPOSITE_ENTITY___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
    * The operation id for the '<em>Get Parameters</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1165,6 +1246,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ACTOR___TOP_LEVEL = ENTITY___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTOR___SET_PROPERTY__STRING_STRING_STRING = ENTITY___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
    * The operation id for the '<em>Get Parameters</em>' operation.
@@ -1447,6 +1537,16 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   EOperation getNamedObj__TopLevel();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#setProperty(java.lang.String, java.lang.String, java.lang.String) <em>Set Property</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Set Property</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.NamedObj#setProperty(java.lang.String, java.lang.String, java.lang.String)
+   * @generated
+   */
+  EOperation getNamedObj__SetProperty__String_String_String();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.Director <em>Director</em>}'.
@@ -1738,6 +1838,14 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EOperation NAMED_OBJ___TOP_LEVEL = eINSTANCE.getNamedObj__TopLevel();
+
+    /**
+     * The meta object literal for the '<em><b>Set Property</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING = eINSTANCE.getNamedObj__SetProperty__String_String_String();
 
     /**
      * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.DirectorImpl <em>Director</em>}' class.

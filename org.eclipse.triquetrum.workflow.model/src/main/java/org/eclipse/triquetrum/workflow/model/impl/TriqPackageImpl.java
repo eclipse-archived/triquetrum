@@ -398,6 +398,15 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
+  public EOperation getNamedObj__SetProperty__String_String_String() {
+    return namedObjEClass.getEOperations().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getDirector() {
     return directorEClass;
   }
@@ -505,6 +514,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEAttribute(namedObjEClass, NAMED_OBJ__DEEP_COMPLETE);
     createEOperation(namedObjEClass, NAMED_OBJ___GET_CONTAINER);
     createEOperation(namedObjEClass, NAMED_OBJ___TOP_LEVEL);
+    createEOperation(namedObjEClass, NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING);
 
     directorEClass = createEClass(DIRECTOR);
     createEOperation(directorEClass, DIRECTOR___GET_PARAMETERS);
@@ -590,6 +600,11 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEOperation(getNamedObj__GetContainer(), this.getNamedObj(), "getContainer", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getNamedObj__TopLevel(), this.getNamedObj(), "topLevel", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    EOperation op = initEOperation(getNamedObj__SetProperty__String_String_String(), null, "setProperty", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, ecorePackage.getEString(), "name", 1, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, ecorePackage.getEString(), "className", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(directorEClass, Director.class, "Director", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

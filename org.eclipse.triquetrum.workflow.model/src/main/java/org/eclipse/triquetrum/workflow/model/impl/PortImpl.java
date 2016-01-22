@@ -26,6 +26,7 @@ import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
 
+import ptolemy.actor.IOPort;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
 
@@ -98,10 +99,12 @@ public class PortImpl extends NamedObjImpl implements Port {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected PortImpl() {
     super();
+    // this is the default type from Ptolemy that we'll be using
+    setWrappedType("ptolemy.actor.TypedIOPort");
   }
 
   /**
@@ -156,6 +159,20 @@ public class PortImpl extends NamedObjImpl implements Port {
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__OUTPUT, oldOutput, output));
   }
 
+  @Override
+  public void setProperty(String name, String value, String className) {
+    switch(name) {
+      case "input" :
+        setInput(value==null || "true".equals(value));
+        break;
+      case "output" :
+        setOutput(value==null || "true".equals(value));
+        break;
+      default :
+        super.setProperty(name, value, className);
+    }
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -172,7 +189,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   public Entity getContainer() {
     return (Entity) eContainer();
   }
-  
+
   // This is where we can hook in a ptolemy object construction, including its container
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
@@ -198,10 +215,17 @@ public class PortImpl extends NamedObjImpl implements Port {
     try {
       ptolemy.kernel.Entity<?> container = (ptolemy.kernel.Entity<?>) (getContainer() != null ? getContainer().getWrappedObject() : null);
       wrappedObject = PtolemyUtil._createPort(container, getWrappedType(), getName());
+      getWrappedObject().setInput(isInput());
+      getWrappedObject().setOutput(isOutput());
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public IOPort getWrappedObject() {
+    return (IOPort) wrappedObject;
   }
 
   /**

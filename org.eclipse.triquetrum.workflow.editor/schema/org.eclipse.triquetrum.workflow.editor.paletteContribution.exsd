@@ -54,6 +54,9 @@
 
    <element name="entry">
       <complexType>
+         <sequence>
+            <element ref="property" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
          <attribute name="displayName" type="string">
             <annotation>
                <documentation>
@@ -102,6 +105,8 @@ It can be a Java implementation or an actor-oriented implementation.
                   </enumeration>
                   <enumeration value="Attribute">
                   </enumeration>
+                  <enumeration value="Port">
+                  </enumeration>
                </restriction>
             </simpleType>
          </attribute>
@@ -132,6 +137,32 @@ It can be a Java implementation or an actor-oriented implementation.
                <appinfo>
                   <meta.attribute kind="resource"/>
                </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="property">
+      <annotation>
+         <documentation>
+            Properties can be used to add extra configuration information to a palette entry.
+
+A sample use case is to set &quot;input&quot; and/or &quot;output&quot; directions on ports in the palette.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="value" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

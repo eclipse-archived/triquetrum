@@ -31,12 +31,14 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected AttributeImpl() {
     super();
+    // this is the default type from Ptolemy that we'll be using
+    setWrappedType("ptolemy.kernel.util.Attribute");
   }
-   
+
   // This is where we can hook in a ptolemy object construction, including its container
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
@@ -60,7 +62,7 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
       }
     }
   }
-  
+
   @Override
   public void buildWrappedObject() {
     try {
@@ -72,6 +74,11 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
     }
   }
 
+  @Override
+  public ptolemy.kernel.util.Attribute getWrappedObject() {
+    return (ptolemy.kernel.util.Attribute) wrappedObject;
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -81,5 +88,5 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
   protected EClass eStaticClass() {
     return TriqPackage.Literals.ATTRIBUTE;
   }
-  
+
 } //AttributeImpl

@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -22,6 +25,7 @@ import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
@@ -36,13 +40,17 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
   private String elementName;
   private String wrappedClass;
   private String imageId;
+  private Map<String, String> properties = new HashMap<>();
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String elementClass, String elementName, String wrappedClass, String imageId) {
+  public ModelElementCreateFeature(IFeatureProvider fp, String elementClass, String elementName, String wrappedClass, String imageId, Map<String, String> properties) {
     super(fp, elementName, "Create a " + elementName);
     this.elementClass = elementClass;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
     this.imageId = imageId;
+    if(properties!=null) {
+      this.properties.putAll(properties);
+    }
   }
 
   @Override
@@ -81,6 +89,12 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       NamedObj result = (NamedObj) TriqFactory.eINSTANCE.create((EClass) eClassifier);
       result.setName(EditorUtils.buildUniqueName(model, elementName));
       result.setWrappedType(wrappedClass);
+      // TODO review if we can live with a palette with properties without a class specification
+      for(Map.Entry<String, String> attrEntry : properties.entrySet()) {
+        String name = attrEntry.getKey();
+        String value = attrEntry.getValue();
+        result.setProperty(name, value, null);
+      }
 
       if (result instanceof Director) {
         model.setDirector((Director) result);
@@ -88,6 +102,14 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
         model.getEntities().add((Entity) result);
       } else if (result instanceof Attribute) {
         model.getAttributes().add((Attribute) result);
+      } else if (result instanceof Port) {
+        Port p = (Port) result;
+        if(p.isInput()) {
+          model.getInputPorts().add(p);
+        }
+        if(p.isOutput()) {
+          model.getOutputPorts().add(p);
+        }
       }
 
 //      getDiagram().eResource().getContents().add(result);

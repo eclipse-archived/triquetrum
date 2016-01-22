@@ -18,6 +18,7 @@ import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
@@ -35,7 +36,8 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
     // return true if both anchors belong to a Port
     Port source = getPort(context.getSourceAnchor());
     Port target = getPort(context.getTargetAnchor());
-    if (source != null && source.isOutput() && target != null && target.isInput()) {
+    if (isPortPotentialConnectionStart(source)
+        && isPortPotentialConnectionTarget(target)) {
       return true;
     }
     return false;
@@ -44,10 +46,17 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   public boolean canStartConnection(ICreateConnectionContext context) {
     // return true if start anchor belongs to a Port
     Port port = getPort(context.getSourceAnchor());
-    if (port != null && port.isOutput()) {
-      return true;
-    }
-    return false;
+    return isPortPotentialConnectionStart(port);
+  }
+
+  private boolean isPortPotentialConnectionStart(Port port) {
+    return (port!=null) && ((port.isOutput() && !(port.getContainer() instanceof CompositeActor))
+        || (port.isInput() && (port.getContainer() instanceof CompositeActor)));
+  }
+
+  private boolean isPortPotentialConnectionTarget(Port port) {
+    return (port!=null) && ((port.isOutput() && (port.getContainer() instanceof CompositeActor))
+        || (port.isInput() && !(port.getContainer() instanceof CompositeActor)));
   }
 
   public Connection create(ICreateConnectionContext context) {
@@ -100,7 +109,13 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
 //    relation.setContainer(source.getContainer().getContainer());
     relation.getLinkedPorts().add(source);
     relation.getLinkedPorts().add(target);
-    ((CompositeActor)source.getContainer().getContainer()).getRelations().add(relation);
+    NamedObj portContainer = source.getContainer();
+    if(portContainer instanceof CompositeActor) {
+      // this is for ports that are defined on a composite actor (i.e. a submodel)
+      ((CompositeActor)portContainer).getRelations().add(relation);
+    } else {
+      ((CompositeActor)portContainer.getContainer()).getRelations().add(relation);
+    }
     return relation;
   }
 }

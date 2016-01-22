@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
-
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.Settable;
 
@@ -56,10 +55,12 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   protected ParameterImpl() {
     super();
+    // this is the default type from Ptolemy that we'll be using
+    setWrappedType("ptolemy.data.expr.StringParameter");
   }
 
   /**
@@ -76,7 +77,7 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
     super.eBasicSetContainer(newContainer);
-    
+
     try {
       if(getExpression() != null) {
         if(!(wrappedObject instanceof Settable)) {
@@ -97,6 +98,11 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public ptolemy.data.expr.Parameter getWrappedObject() {
+    return (ptolemy.data.expr.Parameter) wrappedObject;
   }
 
   /**
