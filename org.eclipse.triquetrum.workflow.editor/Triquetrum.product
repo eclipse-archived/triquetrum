@@ -347,9 +347,9 @@
       <plugin id="org.eclipse.team.ui"/>
       <plugin id="org.eclipse.text"/>
       <plugin id="org.eclipse.triquetrum.common"/>
-      <plugin id="org.eclipse.triquetrum.dependencies"/>
       <plugin id="org.eclipse.triquetrum.logging.dvp" fragment="true"/>
       <plugin id="org.eclipse.triquetrum.processing.api"/>
+      <plugin id="org.eclipse.triquetrum.processing.model.impl.memory"/>
       <plugin id="org.eclipse.triquetrum.processing.service.impl"/>
       <plugin id="org.eclipse.triquetrum.validation.api"/>
       <plugin id="org.eclipse.triquetrum.workflow.actor.ui"/>
