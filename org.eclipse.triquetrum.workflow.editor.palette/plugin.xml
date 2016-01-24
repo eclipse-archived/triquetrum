@@ -21,8 +21,7 @@
             icon="icons/director.gif"
             type="Director">
       </entry>
-      <group displayName="Sources"
-                  icon="icons/input.gif">
+      <group displayName="Sources">
 	      <entry
 	            class="ptolemy.actor.lib.Const"
 	            displayName="Constant"
@@ -30,8 +29,7 @@
 	            type="Actor">
 	      </entry>
       </group>
-      <group displayName="Sinks"
-                  icon="icons/output.gif">
+      <group displayName="Sinks">
 	      <entry
 	            class="ptolemy.actor.lib.Discard"
 	            displayName="Discard"
@@ -39,8 +37,7 @@
 	            type="Actor">
 	      </entry>
       </group>
-      <group displayName="Submodels"
-                  icon="icons/output.gif">
+      <group displayName="Submodels">
 	      <entry
 	            class="ptolemy.actor.TypedCompositeActor"
 	            displayName="CompositeActor"
@@ -62,8 +59,7 @@
 	            <property name="output" />
 	      </entry>
       </group>
-      <group displayName="Visualization"
-                  icon="icons/input.gif">
+      <group displayName="Visualization">
 	      <entry
 	            class="ptolemy.actor.lib.gui.Display"
 	            displayName="Display"

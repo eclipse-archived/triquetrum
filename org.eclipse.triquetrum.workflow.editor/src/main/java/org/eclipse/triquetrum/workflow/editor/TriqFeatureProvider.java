@@ -142,7 +142,14 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       }
       ModelElementCreateFeature mecf = new ModelElementCreateFeature(this, eClassName, label, clazz, iconResource, properties);
       if (iconResource != null) {
-        ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(iconResource, iconResource);
+        // option 1 to register extra images from palette extensions
+        // not an ideal hack, as we need to replicate Graphiti's ad-hoc internal image key construction
+        //(cfr. org.eclipse.graphiti.ui.internal.services.impl.ImageService.createImageDescriptorForId(String, String))
+//        ImageDescriptor imageDescriptor = TriqEditorPlugin.imageDescriptorFromPlugin(cfgElem.getContributor().getName(), iconResource);
+//        GraphitiUIPlugin.getDefault().getImageRegistry().put(makeKey(TriqDiagramTypeProvider.ID,iconResource), imageDescriptor);
+
+        // option 2 : cfr suggestion in https://bugs.eclipse.org/bugs/show_bug.cgi?id=366452#c8
+        ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource, iconResource);
       }
       results.add(mecf);
       break;
@@ -157,4 +164,10 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     }
     }
   }
+
+  // this is needed for option 1 to register extra images from palette extensions
+//  private String makeKey(String dtp, String imageId) {
+//    return dtp + "||" + imageId;
+//  }
+
 }

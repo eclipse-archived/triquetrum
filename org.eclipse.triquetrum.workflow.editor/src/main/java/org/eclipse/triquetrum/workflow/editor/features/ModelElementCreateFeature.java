@@ -80,6 +80,10 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       if (model == null) {
         model = TriqFactory.eINSTANCE.createCompositeActor();
         model.setName(getDiagram().getName());
+        // we need to force the construction of the root Ptolemy II toplevel here,
+        // otherwise the addition of the new model element can not use ptolemy features
+        // like determining unique names etc.
+        model.buildWrappedObject();
         getDiagram().eResource().getContents().add(model);
         link(getDiagram(), model);
       }

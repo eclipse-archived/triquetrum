@@ -10,9 +10,14 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.graphiti.ui.platform.AbstractImageProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ImageProvider extends AbstractImageProvider {
+
+  private final static Logger LOGGER = LoggerFactory.getLogger(ImageProvider.class);
 
   private static final String ROOT_FOLDER_FOR_IMG = "icons/";
 
@@ -36,7 +41,24 @@ public class ImageProvider extends AbstractImageProvider {
 
   }
 
-  public void myAddImageFilePath(String imageId, String imageFilePath) {
-    addImageFilePath(imageId, imageFilePath);
+  /**
+   * This method permits to dynamically add extra images, and is typically used for palette extensions. E.g. (extra) actor contributions to the Triquetrum
+   * palette can define the desired palette icons using the org.eclipse.triquetrum.workflow.editor.paletteContribution extension point.
+   *
+   * Graphiti by default does not allow to add extra ImageProviders, outside of the preconfigured ones for the TriqDiagramTypeProvider. So we need to provide a
+   * "bridge" here from this default Triquetrum ImageProvider, to also provide images from future extensions...
+   *
+   * @see suggestion in https://bugs.eclipse.org/bugs/show_bug.cgi?id=366452#c8
+   * @param providerBundleName
+   * @param imageId
+   * @param imageFilePath
+   */
+  public void myAddImageFilePath(String providerBundleName, String imageId, String imageFilePath) {
+    if (getImageFilePath(imageId) != null) {
+      LOGGER.warn("Provider {} : Image ID {} already assigned. {} ignored.", new Object[] {providerBundleName, imageId, imageFilePath});
+    } else {
+      URI imageURI = URI.createPlatformPluginURI(providerBundleName + "/" + imageFilePath, true);
+      addImageFilePath(imageId, imageURI.toString());
+    }
   }
 }
