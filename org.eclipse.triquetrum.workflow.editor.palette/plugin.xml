@@ -39,6 +39,29 @@
 	            type="Actor">
 	      </entry>
       </group>
+      <group displayName="Submodels"
+                  icon="icons/output.gif">
+	      <entry
+	            class="ptolemy.actor.TypedCompositeActor"
+	            displayName="CompositeActor"
+	            icon="icons/composite.gif"
+	            type="Actor">
+	      </entry>
+	      <entry
+	            class="ptolemy.actor.TypedIOPort"
+	            displayName="Input Port"
+	            icon="icons/input.gif"
+	            type="Port">
+	            <property name="input" />
+	      </entry>
+	      <entry
+	            class="ptolemy.actor.TypedIOPort"
+	            displayName="Output Port"
+	            icon="icons/output.gif"
+	            type="Port">
+	            <property name="output" />
+	      </entry>
+      </group>
       <group displayName="Visualization"
                   icon="icons/input.gif">
 	      <entry
