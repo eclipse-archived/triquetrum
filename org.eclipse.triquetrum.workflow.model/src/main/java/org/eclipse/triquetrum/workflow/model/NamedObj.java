@@ -124,6 +124,14 @@ public interface NamedObj extends EObject {
   NamedObj topLevel();
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model nameRequired="true"
+   * @generated
+   */
+  void setProperty(String name, String value, String className);
+
+  /**
    * Returns the value of the '<em><b>Wrapped Object</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

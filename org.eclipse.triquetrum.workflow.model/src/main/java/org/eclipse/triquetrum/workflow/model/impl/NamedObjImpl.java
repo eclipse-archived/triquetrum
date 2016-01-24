@@ -24,10 +24,9 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.model.Parameter;
+import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
-
-import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Named Obj</b></em>'. <!-- end-user-doc -->
@@ -160,16 +159,6 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   public void setName(String newName) {
     String oldName = name;
     name = newName;
-    if(getWrappedObject() != null) {
-      ptolemy.kernel.util.NamedObj ptObject = (ptolemy.kernel.util.NamedObj)getWrappedObject();
-      try {
-        ptObject.setName(newName);
-      } catch (NameDuplicationException | IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__NAME, oldName, name));
   }
@@ -203,7 +192,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @return the fully qualified class name of the wrapped Ptolemy II type. <!-- end-user-doc -->
    * @generated
    */
@@ -213,7 +202,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @param newWrappedType
    *          <!-- end-user-doc -->
    * @generated NOT
@@ -231,7 +220,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -241,7 +230,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -254,8 +243,32 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * By default this creates a Parameter (if value is not null) or an Attribute (if value is null) on this NamedObj.
+   * Sub-classes may override this method to implement custom behaviour for particular properties.
+   * <p>
+   * Currently the className is ignored!
+   * </p>
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public void setProperty(String name, String value, String className) {
+    if(value==null) {
+      Attribute attribute = TriqFactory.eINSTANCE.createAttribute();
+      attribute.setName(name);
+      this.getAttributes().add(attribute);
+    } else {
+      Parameter parameter = TriqFactory.eINSTANCE.createParameter();
+      // TODO check if we need to add handling of non-string values somehow?
+      parameter.setName(name);
+      parameter.setExpression(value);
+      this.getAttributes().add(parameter);
+    }
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -266,7 +279,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   /**
    * <!-- begin-user-doc --> This can be used to create a Triq EMF model that wraps an existing Ptolemy II model, visiting all model elements and wrapping them
    * one-by-one.
-   * 
+   *
    * Another approach, mutually exclusive with this setter, is to create a Triq EMF model from scratch. Then the wrappedType can be set with the class name of
    * the underlying Ptolemy II element, which will be used to create the Ptolemy II element when needed. <!-- end-user-doc -->
    * @generated
@@ -320,7 +333,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   @Override
   public void buildWrappedObject() {
   }
-  
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
@@ -441,6 +454,9 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
         return getContainer();
       case TriqPackage.NAMED_OBJ___TOP_LEVEL:
         return topLevel();
+      case TriqPackage.NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING:
+        setProperty((String)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2));
+        return null;
     }
     return super.eInvoke(operationID, arguments);
   }

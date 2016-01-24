@@ -31,7 +31,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.triquetrum.workflow.editor.Messages;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
-import org.eclipse.triquetrum.workflow.editor.input.TriqEditorInput;
 import org.eclipse.triquetrum.workflow.editor.util.FileService;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IWorkbench;
@@ -132,8 +131,8 @@ public class CreateDiagramWizard extends BasicNewResourceWizard {
 
 		FileService.createEmfFileForDiagram(uri, diagram);
 		String providerId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagram.getDiagramTypeId());
-		DiagramEditorInput editorInput = new TriqEditorInput(EcoreUtil.getURI(diagram), providerId);
-		
+		DiagramEditorInput editorInput = new DiagramEditorInput(EcoreUtil.getURI(diagram), providerId);
+
 		try {
 			PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(editorInput, editorID);
 		} catch (PartInitException e) {

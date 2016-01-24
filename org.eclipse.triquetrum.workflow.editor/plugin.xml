@@ -6,7 +6,7 @@
      are made available under the terms of the Eclipse Public License v1.0
      which accompanies this distribution, and is available at
      http://www.eclipse.org/legal/epl-v10.html
-     
+
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
@@ -15,7 +15,11 @@
    <extension point="org.eclipse.emf.ecp.view.context.viewServices">
 	<viewService class="org.eclipse.triquetrum.workflow.editor.views.TriqReferenceService"/>
    </extension>
-   <extension-point id="org.eclipse.triquetrum.workflow.editor.paletteContribution" name="Palette Contribution" schema="schema/org.eclipse.triquetrum.workflow.editor.paletteContribution.exsd"/>
+
+   <extension-point id="org.eclipse.triquetrum.workflow.editor.paletteContribution"
+   		name="Palette Contribution"
+   		schema="schema/org.eclipse.triquetrum.workflow.editor.paletteContribution.exsd"/>
+
    <extension point="org.eclipse.graphiti.ui.diagramTypeProviders">
       <diagramTypeProvider
             class="org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider"
@@ -32,17 +36,23 @@
             name="Triquetrum workflow diagram"
             type="Triquetrum workflow" />
    </extension>
-   <extension point="org.eclipse.ui.elementFactories" id="TriqEditorInputFactory" name="Triquetrum editor input factory">
-      <factory class="org.eclipse.triquetrum.workflow.editor.input.TriqEditorInputFactory" 
-      	id="org.eclipse.triquetrum.workflow.editor.input.TriqEditorInputFactory" />
+   <extension point="org.eclipse.ui.contexts">
+      <context
+            id="org.eclipse.triquetrum.workflow.editor.context"
+            name="Triq Editor context"
+            parentId="org.eclipse.graphiti.ui.diagramEditor">
+      </context>
    </extension>
+
    <extension point="org.eclipse.graphiti.ui.imageProviders">
       <imageProvider class="org.eclipse.triquetrum.workflow.editor.ImageProvider"
                      id="org.eclipse.triquetrum.workflow.editor.ImageProvider" />
    </extension>
+
    <extension point="org.eclipse.ui.editors">
  	  <editor
           class="org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor"
+          contributorClass="org.eclipse.graphiti.ui.editor.DiagramEditorActionBarContributor"
           default="true"
           extensions="tdml"
           icon="icons/model.gif"
@@ -52,6 +62,7 @@
        <contentTypeBinding contentTypeId="org.eclipse.triquetrum.workflow.model" />
       </editor>
    </extension>
+
    <extension point="org.eclipse.core.contenttype.contentTypes">
       <content-type
           base-type="org.eclipse.core.runtime.xml"
@@ -72,9 +83,9 @@
 	     <selection class="org.eclipse.core.resources.IContainer" />
       </wizard>
    </extension>
+
    <extension point="org.eclipse.ui.bindings">
-      <key
-	        commandId="org.eclipse.graphiti.ui.featureExecutionCommand"
+      <key  commandId="org.eclipse.graphiti.ui.featureExecutionCommand"
 	        contextId="org.eclipse.triquetrum.workflow.editor.context"
 	        schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
 	        sequence="M1+F11">
@@ -105,18 +116,11 @@
          </command>
       </menuContribution>
    </extension>
-   <extension point="org.eclipse.ui.contexts">
-      <context
-            id="org.eclipse.triquetrum.workflow.editor.context"
-            name="Triq Editor context"
-            parentId="org.eclipse.graphiti.ui.diagramEditor">
-      </context>
-   </extension>
-   
+
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
-      <propertyContributor contributorId="Triquetrum workflow.PropertyContributor"> 
-        <propertyCategory category="Triquetrum" /> 
-      </propertyContributor> 
+      <propertyContributor contributorId="Triquetrum workflow.PropertyContributor">
+        <propertyCategory category="Triquetrum" />
+      </propertyContributor>
    </extension>
    <extension point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
       <propertyTabs contributorId="Triquetrum workflow.PropertyContributor">

@@ -11,7 +11,9 @@
 package org.eclipse.triquetrum.workflow.editor;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -39,10 +41,12 @@ import org.eclipse.triquetrum.workflow.editor.features.DirectorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementNameDirectEditFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
+import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 
 /**
@@ -90,6 +94,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new ActorAddFeature(this);
     } else if (context.getNewObject() instanceof Relation) {
       return new ConnectionAddFeature(this);
+    } else if (context.getNewObject() instanceof Port) {
+      return new PortAddFeature(this);
     }
     return super.getAddFeature(context);
   }
@@ -125,7 +131,16 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       String clazz = cfgElem.getAttribute("class");
       String iconResource = cfgElem.getAttribute("icon");
       String eClassName = cfgElem.getAttribute("type");
-      ModelElementCreateFeature mecf = new ModelElementCreateFeature(this, eClassName, label, clazz, iconResource);
+      // look for (optional) attributes
+      Map<String, String> properties = new HashMap<>();
+      for(IConfigurationElement child : cfgElem.getChildren()) {
+        if("property".equals(child.getName())) {
+          String name = child.getAttribute("name");
+          String value = child.getAttribute("value");
+          properties.put(name, value);
+        }
+      }
+      ModelElementCreateFeature mecf = new ModelElementCreateFeature(this, eClassName, label, clazz, iconResource, properties);
       if (iconResource != null) {
         ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(iconResource, iconResource);
       }
