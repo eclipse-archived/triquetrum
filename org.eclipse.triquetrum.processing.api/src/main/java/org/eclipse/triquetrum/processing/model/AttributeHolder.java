@@ -12,8 +12,7 @@
 package org.eclipse.triquetrum.processing.model;
 
 import java.io.Serializable;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.stream.Stream;
 
 
 /**
@@ -25,14 +24,14 @@ import java.util.Set;
  *
  */
 public interface AttributeHolder {
-  
+
 	/**
-	 * 
+	 *
 	 * @param name should be non-null
 	 * @return the attribute with the given name, or null if not found
 	 */
   Attribute<? extends Serializable> getAttribute(String name);
-  
+
   /**
    * Associate the attribute with this holder.
    * If the holder already has an attribute with the same name,
@@ -40,19 +39,19 @@ public interface AttributeHolder {
    * and the previous attribute will be returned.
    * @param attribute should be non-null
    * @return the attribute previously associated with this holder, with a same name as the new attribute.
-   * Or null if there was no attribute with the same name. 
+   * Or null if there was no attribute with the same name.
    */
   Attribute<? extends Serializable> putAttribute(Attribute<? extends Serializable> attribute);
-  
+
   /**
-   * 
-   * @return an iterator over the names of all associated attributes of this holder
+   *
+   * @return a Stream with the names of all associated attributes of this holder
    */
-  Iterator<String> getAttributeNames();
-  
+  Stream<String> getAttributeNames();
+
   /**
-   * 
-   * @return a read-only set of all associated attributes
+   *
+   * @return a Stream of all associated attributes
    */
-  Set<Attribute<? extends Serializable>> getAttributes();
+  Stream<Attribute<? extends Serializable>> getAttributes();
 }

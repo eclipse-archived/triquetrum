@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>triquetrum</groupId>
+
+  <!-- Changed artifactId to org.eclipse.triquetrum.build -->
+  <!-- <artifactId>triquetrum</artifactId> -->
+  <artifactId>org.eclipse.triquetrum.build</artifactId>
+
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>org.eclipse.triquetrum.common</module>
+    <module>org.eclipse.triquetrum.dependencies</module>
+    <module>org.eclipse.triquetrum.logging.dvp</module>
+    <module>org.eclipse.triquetrum.processing.api</module>
+    <module>org.eclipse.triquetrum.validation.api</module>
+    <module>org.eclipse.triquetrum.workflow.actor.ui</module>
+    <module>org.eclipse.triquetrum.workflow.api</module>
+    <module>org.eclipse.triquetrum.workflow.editor</module>
+    <module>org.eclipse.triquetrum.workflow.editor.palette</module>
+    <module>org.eclipse.triquetrum.workflow.execution.impl</module>
+    <module>org.eclipse.triquetrum.workflow.model</module>
+    <module>org.eclipse.triquetrum.workflow.model.edit</module>
+    <module>org.eclipse.triquetrum.workflow.model.editor</module>
+    <module>org.eclipse.triquetrum.workflow.model.viewmodel</module>
+    <module>org.eclipse.triquetrum.workflow.ui</module>
+  </modules>
+
+  <repositories>
+    <repository>
+      <id>eclipse-mars</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/releases/mars</url>
+    </repository>
+    <repository>
+      <id>eclipse-indigo</id>
+      <url>http://archive.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository</url>
+      <layout>p2</layout>
+    </repository>
+  </repositories>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-maven-plugin</artifactId>
+        <version>0.24.0</version>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>

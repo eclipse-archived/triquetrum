@@ -13,7 +13,7 @@ package org.eclipse.triquetrum.workflow;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.eclipse.triquetrum.processing.model.ProcessStatus;
+import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 
 /**
  * A light-weight handle on a workflow model-based process execution.
@@ -50,7 +50,7 @@ public interface ProcessHandle extends Serializable {
    * 
    * @return the current execution status
    */
-  ProcessStatus getExecutionStatus();
+  ProcessingStatus getExecutionStatus();
   
   /**
    * Suspensions can  be caused by breakpoints and/or the end of a step execution.

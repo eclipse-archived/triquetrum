@@ -79,7 +79,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       // create new model element
       EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(elementClass);
       NamedObj result = (NamedObj) TriqFactory.eINSTANCE.create((EClass) eClassifier);
-      result.setName(elementName);
+      result.setName(EditorUtils.buildUniqueName(model, elementName));
       result.setWrappedType(wrappedClass);
 
       if (result instanceof Director) {

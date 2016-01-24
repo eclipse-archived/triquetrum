@@ -13,20 +13,20 @@ package org.eclipse.triquetrum.processing.model;
 import org.eclipse.triquetrum.Event;
 
 /**
- * Interface for <code>Event</code>s associated to processing a <code>Task</code>s.
+ * Interface for <code>Event</code>s associated to processing a <code>Task</code> or <code>Process</code>.
  * <p>
  * These can correspond to state transitions, or to arbitrary actions for which
  * someone thought it was important to notify listeners and/or store execution traces.
  * </p>
  */
-public interface TaskEvent extends Event, Identifiable, Comparable<TaskEvent> {
+public interface ProcessingEvent<T> extends Event, Identifiable, Comparable<ProcessingEvent<T>> {
 
   /**
-   * 
-   * @return the associated task
+   *
+   * @return the associated object on which this event occurred
    */
-  Task getContext();
-  
+  T getContext();
+
   /**
    * @return the event message, typically empty except for ERROR events, where error info is then stored in here.
    */

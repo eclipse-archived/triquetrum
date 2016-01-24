@@ -12,7 +12,7 @@ package org.eclipse.triquetrum.workflow.execution.impl.executor;
 
 import java.util.concurrent.FutureTask;
 
-import org.eclipse.triquetrum.processing.model.ProcessStatus;
+import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * @author erwin
  *
  */
-public final class WorkflowExecutionFuture extends FutureTask<ProcessStatus> {
+public final class WorkflowExecutionFuture extends FutureTask<ProcessingStatus> {
   
   private final static Logger LOGGER = LoggerFactory.getLogger(WorkflowExecutionFuture.class);
   
@@ -55,7 +55,7 @@ public final class WorkflowExecutionFuture extends FutureTask<ProcessStatus> {
     return wfet.getProcessId();
   }
   
-  public ProcessStatus getStatus() {
+  public ProcessingStatus getStatus() {
     return wfet.getStatus();
   }
   
