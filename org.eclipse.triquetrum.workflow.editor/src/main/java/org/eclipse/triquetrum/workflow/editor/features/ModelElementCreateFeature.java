@@ -36,14 +36,17 @@ import org.eclipse.triquetrum.workflow.model.TriqPackage;
  */
 public class ModelElementCreateFeature extends AbstractCreateFeature {
 
+  private String group;
+
   private String elementClass;
   private String elementName;
   private String wrappedClass;
   private String imageId;
   private Map<String, String> properties = new HashMap<>();
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String elementClass, String elementName, String wrappedClass, String imageId, Map<String, String> properties) {
+  public ModelElementCreateFeature(IFeatureProvider fp, String group, String elementClass, String elementName, String wrappedClass, String imageId, Map<String, String> properties) {
     super(fp, elementName, "Create a " + elementName);
+    this.group = group;
     this.elementClass = elementClass;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
@@ -51,6 +54,15 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
     if(properties!=null) {
       this.properties.putAll(properties);
     }
+  }
+
+  /**
+   * This can be used e.g. to determine the compartment in which to show this feature's creation tool in the palette.
+   *
+   * @return the group to which this feature belongs.
+   */
+  public String getGroup() {
+    return group;
   }
 
   @Override

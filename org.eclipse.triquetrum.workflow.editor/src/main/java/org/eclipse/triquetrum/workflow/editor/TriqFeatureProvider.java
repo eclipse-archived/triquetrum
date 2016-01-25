@@ -50,17 +50,28 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 
 /**
- * @author delerw
+ * Creates all Triq editor features, including ICreateFeatures for actors as defined in palette extension contributions.
  *
  */
 public class TriqFeatureProvider extends DefaultFeatureProvider {
   public static final String PALETTE_CONTRIBUTION_EXTENSION_ID = "org.eclipse.triquetrum.workflow.editor.paletteContribution";
 
   /**
+   * This map maintains the registered palette contributions for groups.
+   * For the moment we only support 1 level, i.e. no tree/hierarchy yet.
+   * This map is consulted during the execution of org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider.getPalette()
+   */
+  private Map<String, IConfigurationElement> rootgroupsByName = new HashMap<>();
+
+  /**
    * @param dtp
    */
   public TriqFeatureProvider(IDiagramTypeProvider dtp) {
     super(dtp);
+  }
+
+  public Map<String, IConfigurationElement> getRootgroupsByName() {
+    return rootgroupsByName;
   }
 
   @Override
@@ -80,7 +91,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     IExtensionPoint extPoint = Platform.getExtensionRegistry().getExtensionPoint(PALETTE_CONTRIBUTION_EXTENSION_ID);
     for (IExtension ext : extPoint.getExtensions()) {
       for (IConfigurationElement cfgElem : ext.getConfigurationElements()) {
-        handlePaletteEntry(results, cfgElem);
+        handlePaletteEntry(results, null, cfgElem);
       }
     }
     return results.toArray(new ICreateFeature[0]);
@@ -124,9 +135,10 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     return super.getDirectEditingFeature(context);
   }
 
-  public void handlePaletteEntry(List<ICreateFeature> results, IConfigurationElement cfgElem) {
+  public void handlePaletteEntry(List<ICreateFeature> results, IConfigurationElement parentGroupElem, IConfigurationElement cfgElem) {
     switch (cfgElem.getName()) {
     case "entry": {
+      String group = parentGroupElem != null ? parentGroupElem.getAttribute("displayName") : null;
       String label = cfgElem.getAttribute("displayName");
       String clazz = cfgElem.getAttribute("class");
       String iconResource = cfgElem.getAttribute("icon");
@@ -140,7 +152,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
           properties.put(name, value);
         }
       }
-      ModelElementCreateFeature mecf = new ModelElementCreateFeature(this, eClassName, label, clazz, iconResource, properties);
+      ModelElementCreateFeature mecf = new ModelElementCreateFeature(this, group, eClassName, label, clazz, iconResource, properties);
       if (iconResource != null) {
         // option 1 to register extra images from palette extensions
         // not an ideal hack, as we need to replicate Graphiti's ad-hoc internal image key construction
@@ -155,11 +167,17 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       break;
     }
     case "group": {
-      // String label = cfgElem.getAttribute("displayName");
-      // String iconResource = cfgElem.getAttribute("icon");
-      // TODO store group hierarchy somehow in the features or so?
+      String label = cfgElem.getAttribute("displayName");
+      // this should enforce a single level of groups, i.e. children of subgroups are traversed and added,
+      // but they all get linked to their "top-level" parent group.
+      IConfigurationElement groupElement = parentGroupElem;
+      if(parentGroupElem == null) {
+        groupElement = cfgElem;
+        // no parent, so store this group as a root group
+        rootgroupsByName.put(label, cfgElem);
+      }
       for (IConfigurationElement child : cfgElem.getChildren()) {
-        handlePaletteEntry(results, child);
+        handlePaletteEntry(results, groupElement, child);
       }
     }
     }
