@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- Custom properties -->
+  <properties>
+    <target-version>0.0.1-SNAPSHOT</target-version>
+    <tycho-version>0.24.0</tycho-version>
+  </properties>
+  
   <modelVersion>4.0.0</modelVersion>
   <groupId>triquetrum</groupId>
 
@@ -34,11 +41,6 @@
       <layout>p2</layout>
       <url>http://download.eclipse.org/releases/mars</url>
     </repository>
-    <repository>
-      <id>eclipse-indigo</id>
-      <url>http://archive.eclipse.org/tools/orbit/downloads/drops/R20100519200754/repository</url>
-      <layout>p2</layout>
-    </repository>
   </repositories>
   
   <build>
@@ -49,6 +51,34 @@
         <version>0.24.0</version>
         <extensions>true</extensions>
       </plugin>
+
+        <plugin>
+          <!-- FindBugs
+               To invoke, run
+                  mvn findbugs:findbugs
+               
+               To bring up the FindBugs gui for each bundle, run:
+                  mvn findbugs:gui
+
+               docs: http://gleclaire.github.io/findbugs-maven-plugin/   
+          -->
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>findbugs-maven-plugin</artifactId>
+          <version>3.0.3</version>
+          <configuration>
+            <effort>Max</effort>
+            <findbugsXmlOutput>true</findbugsXmlOutput>
+            <failOnError>false</failOnError>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
     </plugins>
   </build>
   
