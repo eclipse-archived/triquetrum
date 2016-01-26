@@ -33,6 +33,7 @@
     <module>org.eclipse.triquetrum.workflow.model.editor</module>
     <module>org.eclipse.triquetrum.workflow.model.viewmodel</module>
     <module>org.eclipse.triquetrum.workflow.ui</module>
+    <module>javadoc</module>
   </modules>
 
   <repositories>
