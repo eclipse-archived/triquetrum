@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
@@ -63,7 +64,6 @@ public class ActorConfigureFeature extends AbstractCustomFeature {
 
   @Override
   public void execute(ICustomContext context) {
-
     PictogramElement[] pes = context.getPictogramElements();
     if (pes != null && pes.length == 1) {
       Object bo = getBusinessObjectForPictogramElement(pes[0]);
@@ -72,6 +72,9 @@ public class ActorConfigureFeature extends AbstractCustomFeature {
         Shell shell = EclipseUtils.getActivePage().getActivePart().getSite().getShell();
         NamedObjDialog dialog = new NamedObjDialog(shell, modelElement);
         dialog.open();
+        if(dialog.getReturnCode()==NamedObjDialog.CANCEL) {
+          throw new OperationCanceledException();
+        }
       }
     }
   }
