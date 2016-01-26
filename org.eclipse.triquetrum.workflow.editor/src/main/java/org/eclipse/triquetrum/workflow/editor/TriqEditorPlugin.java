@@ -28,9 +28,9 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 public class TriqEditorPlugin extends AbstractUIPlugin {
 
-  private static BundleContext context;
   private static TriqEditorPlugin pluginInstance;
 
+  private BundleContext context;
   private ServiceTracker<WorkflowExecutionService, WorkflowExecutionService> wfExecSvcTracker;
   private WorkflowExecutionService executionService;
 
@@ -39,7 +39,6 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
 
   public TriqEditorPlugin() {
     pluginInstance = this;
-
   }
 
   public static TriqEditorPlugin getDefault() {
@@ -58,7 +57,7 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
   @Override
   public void start(BundleContext context) throws Exception {
     super.start(context);
-    TriqEditorPlugin.context = context;
+    this.context = context;
     wfExecSvcTracker = new ServiceTracker<>(context, WorkflowExecutionService.class, createSvcTrackerCustomizer());
     wfExecSvcTracker.open();
   }
@@ -117,7 +116,7 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
           } else {
             return;
           }
-          context.ungetService(ref);
+          TriqEditorPlugin.this.context.ungetService(ref);
         }
       }
 
@@ -125,7 +124,7 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
       }
 
       public WorkflowExecutionService addingService(ServiceReference<WorkflowExecutionService> ref) {
-        WorkflowExecutionService svc = context.getService(ref);
+        WorkflowExecutionService svc = TriqEditorPlugin.this.context.getService(ref);
         synchronized (TriqEditorPlugin.this) {
           if (TriqEditorPlugin.this.executionService == null) {
             TriqEditorPlugin.this.executionService = (WorkflowExecutionService) svc;
