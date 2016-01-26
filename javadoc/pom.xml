@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <!-- Custom properties -->
+  <properties>
+    <target-version>0.0.1-SNAPSHOT</target-version>
+    <tycho-version>0.24.0</tycho-version>
+  </properties>
+  
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>triquetrum</groupId>
+
+  <!-- Changed artifactId to org.eclipse.triquetrum.build -->
+  <!-- artifactId>triquetrum</artifactId -->
+  <artifactId>javadoc</artifactId>
+
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.common</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.logging.dvp</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.processing.api</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.validation.api</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.actor.ui</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>    
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.api</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.editor</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.editor.palette</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.execution.impl</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.model</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.model.edit</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.model.editor</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+
+    <!-- Don't include org.eclipse.triquetrum.workflow.model.viewmodel, there are no .java files there -->
+    
+    <dependency>
+      <groupId>triquetrum</groupId>
+      <artifactId>org.eclipse.triquetrum.workflow.ui</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+    
+  </dependencies>
+  
+  <build>
+
+    <plugins>
+      <!-- Generate JavaDoc output.
+           To run, use:
+           mvn verify
+           Docs: https://www.eclipse.org/tycho/sitedocs-extras/tycho-document-bundle-plugin/javadoc-mojo.html
+           https://www.eclipse.org/tycho/sitedocs-extras/tycho-document-bundle-plugin/plugin-info.html
+      -->
+      <plugin>
+        <groupId>org.eclipse.tycho.extras</groupId>
+        <artifactId>tycho-document-bundle-plugin</artifactId>
+        <version>0.24.0</version>
+        <executions>
+          <execution>
+            <id>javadoc</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>javadoc</goal>
+            </goals>
+            <configuration>
+              <javadocOptions>
+                <!-- If you change the includes, you probably want to run
+                     mvn verify
+                     -->
+                <includes>
+                  <include>org.eclipse.triquetrum</include>
+                  <include>org.eclipse.triquetrum.*</include>
+                </includes>
+              </javadocOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+    </plugins>
+  </build>
+  
+</project>
