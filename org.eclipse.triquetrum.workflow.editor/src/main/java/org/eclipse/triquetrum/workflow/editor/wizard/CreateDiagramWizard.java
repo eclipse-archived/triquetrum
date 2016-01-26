@@ -47,8 +47,6 @@ public class CreateDiagramWizard extends BasicNewResourceWizard {
 	private static final String PAGE_NAME_DIAGRAM_NAME = Messages.CreateDiagramWizard_DiagramNameField;
 	private static final String WIZARD_WINDOW_TITLE = Messages.CreateDiagramWizard_WizardTitle;
 
-	private Diagram diagram;
-
 	@Override
 	public void addPages() {
 		super.addPages();
@@ -143,9 +141,5 @@ public class CreateDiagramWizard extends BasicNewResourceWizard {
 		}
 
 		return true;
-	}
-
-	public Diagram getDiagram() {
-		return diagram;
 	}
 }

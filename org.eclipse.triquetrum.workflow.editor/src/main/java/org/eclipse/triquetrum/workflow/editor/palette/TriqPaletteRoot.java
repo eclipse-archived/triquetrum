@@ -25,7 +25,7 @@ import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
- * A variation on {@link GFPaletteRoot}, replacing the palette construction based on creation features 
+ * A variation on {@link GFPaletteRoot}, replacing the palette construction based on creation features
  * by a palette based on Triquetrum PaletteContribution extension implementations.
  */
 public class TriqPaletteRoot extends PaletteRoot {
@@ -33,7 +33,7 @@ public class TriqPaletteRoot extends PaletteRoot {
   private IDiagramTypeProvider diagramTypeProvider;
 
   /**
-   * 
+   *
    * @param diagramTypeProvider
    *          the diagram type provider
    */
@@ -63,7 +63,7 @@ public class TriqPaletteRoot extends PaletteRoot {
     return null;
   }
 
-  private class DefaultCreationFactory implements CreationFactory {
+  private static class DefaultCreationFactory implements CreationFactory {
     private Object obj;
     private Object objType;
 

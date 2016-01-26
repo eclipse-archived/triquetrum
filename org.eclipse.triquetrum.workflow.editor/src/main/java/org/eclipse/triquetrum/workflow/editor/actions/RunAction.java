@@ -48,11 +48,15 @@ public class RunAction extends Action {
         try {
           // FIXME we assume that the diagram/editor is the selected gui element, or an entity in there. Is this a robust assumption?
           selection = getSelectedModel();
+          if (selection != null) {
+            ptolemy.actor.CompositeActor ptolemyModel = (ptolemy.actor.CompositeActor) selection.getWrappedObject();
+            executionService.start(StartMode.RUN, ptolemyModel, null, null, null);
+          } else {
+            // TODO ignore or add error handling?
+          }
         } catch (Exception e) {
           e.printStackTrace();
         }
-        ptolemy.actor.CompositeActor ptolemyModel = (ptolemy.actor.CompositeActor) selection.getWrappedObject();
-        executionService.start(StartMode.RUN, ptolemyModel, null, null, null);
       } else {
         // TODO add error handling for configuration problem with missing execution service
       }
