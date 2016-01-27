@@ -77,8 +77,4 @@ public class NamedObjDialog extends Dialog {
     view.dispose();
     return super.close();
   }
-
-  protected void createButtonsForButtonBar(Composite parent) {
-    createButton(parent, IDialogConstants.OK_ID, "Close", true);
-  }
 }
