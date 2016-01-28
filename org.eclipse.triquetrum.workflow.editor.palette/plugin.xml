@@ -15,13 +15,15 @@
    <extension
          name="Default Triquetrum palette definition"
          point="org.eclipse.triquetrum.workflow.editor.paletteContribution">
-      <entry
-            class="ptolemy.domains.sdf.kernel.SDFDirector"
-            displayName="SDF director"
-            icon="icons/director.gif"
-            type="Director">
-      </entry>
-      <group displayName="Sources">
+      <group displayName="Directors" icon="icons/director.gif">
+	      <entry
+	            class="ptolemy.domains.sdf.kernel.SDFDirector"
+	            displayName="SDF director"
+	            icon="icons/director.gif"
+	            type="Director">
+	      </entry>
+      </group>
+      <group displayName="Sources" icon="icons/input.gif">
 	      <entry
 	            class="ptolemy.actor.lib.Const"
 	            displayName="Constant"
@@ -29,15 +31,15 @@
 	            type="Actor">
 	      </entry>
       </group>
-      <group displayName="Sinks">
+      <group displayName="Sinks" icon="icons/output.gif">
 	      <entry
 	            class="ptolemy.actor.lib.Discard"
 	            displayName="Discard"
-	            icon="icons/output.gif"
+	            icon="icons/trash.gif"
 	            type="Actor">
 	      </entry>
       </group>
-      <group displayName="Submodels">
+      <group displayName="Submodels" icon="icons/composite.gif">
 	      <entry
 	            class="ptolemy.actor.TypedCompositeActor"
 	            displayName="CompositeActor"
