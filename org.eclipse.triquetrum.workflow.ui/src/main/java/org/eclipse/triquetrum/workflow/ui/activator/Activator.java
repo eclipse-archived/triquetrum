@@ -16,10 +16,10 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.framework.Version;
+import org.ptolemy.classloading.ModelElementClassProvider;
+import org.ptolemy.classloading.osgi.DefaultModelElementClassProvider;
 import org.ptolemy.commons.ThreeDigitVersionSpecification;
 import org.ptolemy.commons.VersionSpecification;
-import org.ptolemy.osgi.DefaultModelElementClassProvider;
-import org.ptolemy.osgi.ModelElementClassProvider;
 
 public class Activator implements BundleActivator {
 
