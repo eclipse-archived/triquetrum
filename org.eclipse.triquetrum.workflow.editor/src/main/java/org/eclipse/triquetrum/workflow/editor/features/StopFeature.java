@@ -16,26 +16,25 @@ import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
-import org.eclipse.triquetrum.workflow.WorkflowExecutionService.StartMode;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 
-public class RunFeature extends AbstractCustomFeature {
+public class StopFeature extends AbstractCustomFeature {
 
-  public static final String HINT = "run"; //$NON-NLS-1$
+  public static final String HINT = "stop"; //$NON-NLS-1$
 
   private TriqToolBehaviorProvider toolProvider;
 
-  public RunFeature(TriqToolBehaviorProvider tbp, IFeatureProvider fp) {
+  public StopFeature(TriqToolBehaviorProvider tbp, IFeatureProvider fp) {
     super(fp);
     toolProvider = tbp;
   }
 
   @Override
   public String getName() {
-    return "Run Triq workflow"; //$NON-NLS-1$
+    return "Stop Triq workflow execution"; //$NON-NLS-1$
   }
 
   @Override
@@ -48,7 +47,7 @@ public class RunFeature extends AbstractCustomFeature {
     boolean available = super.isAvailable(context) && (TriqEditorPlugin.getDefault().getWorkflowExecutionService() != null);
     if(available) {
       CompositeActor selection = EditorUtils.getSelectedModel();
-      available = (selection != null) && (toolProvider.getWorkflowExecutionHandle(selection.getName())==null);
+      available = (selection != null) && (toolProvider.getWorkflowExecutionHandle(selection.getName())!=null);
     }
     return available;
   }
@@ -62,20 +61,14 @@ public class RunFeature extends AbstractCustomFeature {
     try {
       WorkflowExecutionService executionService = TriqEditorPlugin.getDefault().getWorkflowExecutionService();
       if (executionService != null) {
-        // make sure that logging is shown in the console view
-        TriqEditorPlugin.getDefault().initConsoleLogging();
         CompositeActor selection = null;
         try {
           // FIXME we assume that the diagram/editor is the selected gui element, or an entity in there. Is this a robust assumption?
           selection = EditorUtils.getSelectedModel();
           if (selection != null) {
-            ptolemy.actor.CompositeActor ptolemyModel = (ptolemy.actor.CompositeActor) selection.getWrappedObject();
-            ProcessHandle workflowExecutionHandle = executionService.start(StartMode.RUN, ptolemyModel, null, null, null);
-            try {
-              toolProvider.putWorkflowExecutionHandle(workflowExecutionHandle);
-            } catch (IllegalStateException e) {
-              // TODO stop the model immediately?
-            }
+            ProcessHandle processHandle = toolProvider.getWorkflowExecutionHandle(selection.getName());
+            executionService.terminate(processHandle);
+            toolProvider.removeWorkflowExecutionHandle(processHandle);
           } else {
             // TODO ignore or add error handling?
           }
