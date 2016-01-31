@@ -23,21 +23,21 @@
 	            type="Director">
 	      </entry>
       </group>
-      <group displayName="Sources" icon="icons/input.gif">
+      <group displayName="Sources" icon="icons/sink.gif">
 	      <entry
 	            class="ptolemy.actor.lib.Const"
 	            displayName="Constant"
-    	        icon="icons/input.gif"
+    	        icon="icons/value_field.gif"
 	            type="Actor">
 	      </entry>
 	      <entry
 	            class="ptolemy.actor.lib.Ramp"
 	            displayName="Ramp"
-    	        icon="icons/input.gif"
+    	        icon="icons/series.gif"
 	            type="Actor">
 	      </entry>
       </group>
-      <group displayName="Sinks" icon="icons/output.gif">
+      <group displayName="Sinks" icon="icons/source.gif">
 	      <entry
 	            class="ptolemy.actor.lib.Discard"
 	            displayName="Discard"
@@ -67,7 +67,21 @@
 	            <property name="output" />
 	      </entry>
       </group>
-      <group displayName="Transformation">
+      <group displayName="Test" icon="icons/test.gif">
+	      <entry
+	            class="ptolemy.actor.lib.Test"
+	            displayName="Test"
+    	        icon="icons/test.gif"
+	            type="Actor">
+	      </entry>
+	      <entry
+	            class="ptolemy.actor.lib.NonStrictTest"
+	            displayName="NonStrictTest"
+    	        icon="icons/test.gif"
+	            type="Actor">
+	      </entry>
+      </group>
+      <group displayName="Transformation" icon="icons/actor.gif">
 	      <entry
 	            class="ptolemy.actor.lib.AddSubtract"
 	            displayName="AddSubtract"
@@ -81,7 +95,7 @@
 	            type="Actor">
 	      </entry>
       </group>
-      <group displayName="Visualization">
+      <group displayName="Visualization" icon="icons/display.gif">
 	      <entry
 	            class="ptolemy.actor.lib.gui.Display"
 	            displayName="Display"

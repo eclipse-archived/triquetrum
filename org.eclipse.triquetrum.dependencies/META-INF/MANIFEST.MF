@@ -15,7 +15,7 @@ Bundle-ClassPath: deps/ptII/diva_11.0.0.201511291601.jar,
  deps/ptII/ptolemy.domains.sdf_11.0.0.201601302217.jar,
  deps/ptII/ptolemy.gui_11.0.0.201601302205.jar,
  deps/ptII/ptolemy.moml_11.0.0.201601302209.jar,
- deps/ptII/ptolemy.actor.lib_11.0.0.201601311607.jar
+ deps/ptII/ptolemy.actor.lib_11.0.0.201601312216.jar
 Export-Package: com.microstar.xml;version="11.0.0",
  com.microstar.xml.driver;version="11.0.0",
  diva.canvas;version="11.0.0",
