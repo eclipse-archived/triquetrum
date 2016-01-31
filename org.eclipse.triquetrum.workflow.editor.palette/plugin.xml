@@ -30,6 +30,12 @@
     	        icon="icons/input.gif"
 	            type="Actor">
 	      </entry>
+	      <entry
+	            class="ptolemy.actor.lib.Ramp"
+	            displayName="Ramp"
+    	        icon="icons/input.gif"
+	            type="Actor">
+	      </entry>
       </group>
       <group displayName="Sinks" icon="icons/output.gif">
 	      <entry
@@ -59,6 +65,20 @@
 	            icon="icons/output.gif"
 	            type="Port">
 	            <property name="output" />
+	      </entry>
+      </group>
+      <group displayName="Transformation">
+	      <entry
+	            class="ptolemy.actor.lib.AddSubtract"
+	            displayName="AddSubtract"
+    	        icon="icons/actor.gif"
+	            type="Actor">
+	      </entry>
+	      <entry
+	            class="ptolemy.actor.lib.TrigFunction"
+	            displayName="TrigFunction"
+    	        icon="icons/actor.gif"
+	            type="Actor">
 	      </entry>
       </group>
       <group displayName="Visualization">

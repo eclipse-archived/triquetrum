@@ -14,8 +14,8 @@ import java.lang.reflect.Constructor;
 import java.util.Iterator;
 import java.util.List;
 
+import org.ptolemy.classloading.ClassLoadingStrategy;
 import org.ptolemy.commons.VersionSpecification;
-import org.ptolemy.osgi.ClassLoadingStrategy;
 
 import ptolemy.kernel.ComponentEntity;
 import ptolemy.kernel.CompositeEntity;

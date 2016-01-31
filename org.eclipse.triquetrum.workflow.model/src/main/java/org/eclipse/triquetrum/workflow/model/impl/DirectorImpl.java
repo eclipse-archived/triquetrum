@@ -19,6 +19,7 @@ import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.Parameter;
+import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
 /**
@@ -36,6 +37,21 @@ public class DirectorImpl extends AttributeImpl implements Director {
    */
   protected DirectorImpl() {
     super();
+  }
+
+  @Override
+  public void buildWrappedObject() {
+    super.buildWrappedObject();
+    if (!isDeepComplete()) {
+      for(ptolemy.data.expr.Parameter parameter : wrappedObject.attributeList(ptolemy.data.expr.Parameter.class)) {
+        Parameter newParam = TriqFactory.eINSTANCE.createParameter();
+        newParam.setName(parameter.getName());
+        newParam.setWrappedType(parameter.getClass().getName());
+        newParam.setExpression(parameter.getExpression());
+        getAttributes().add(newParam);
+      }
+      setDeepComplete(true);
+    }
   }
 
   /**
@@ -61,10 +77,10 @@ public class DirectorImpl extends AttributeImpl implements Director {
         result.add((Parameter) a);
       }
     }
-    
+
     return result;
   }
-  
+
   @Override
   public CompositeActor getContainer() {
     return (CompositeActor) eContainer();
