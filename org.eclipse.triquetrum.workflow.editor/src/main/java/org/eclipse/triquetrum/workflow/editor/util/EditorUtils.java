@@ -13,8 +13,11 @@ package org.eclipse.triquetrum.workflow.editor.util;
 import java.util.List;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.internal.parts.DiagramEditPart;
 import org.eclipse.graphiti.ui.platform.GraphitiShapeEditPart;
+import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
@@ -72,12 +75,17 @@ public class EditorUtils {
     return (CompositeActor) result;
   }
 
-  private static NamedObj getModelObjectForSelection(Object res) {
+  /**
+   * Find the model element for the selected edit part
+   * @param editPart
+   * @return
+   */
+  public static NamedObj getModelObjectForSelection(Object editPart) {
     NamedObj result = null;
-    if (res instanceof GraphitiShapeEditPart) {
-      GraphitiShapeEditPart editPart = (GraphitiShapeEditPart) res;
-      IFeatureProvider fp = editPart.getFeatureProvider();
-      Object bo = fp.getBusinessObjectForPictogramElement(editPart.getPictogramElement());
+    if (editPart instanceof GraphitiShapeEditPart) {
+      GraphitiShapeEditPart shapeEditPart = (GraphitiShapeEditPart) editPart;
+      IFeatureProvider fp = shapeEditPart.getFeatureProvider();
+      Object bo = fp.getBusinessObjectForPictogramElement(shapeEditPart.getPictogramElement());
       if (bo instanceof NamedObj) {
         result = (NamedObj) bo;
       }

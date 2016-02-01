@@ -380,6 +380,15 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getNamedObj_IconId() {
+    return (EAttribute)namedObjEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EOperation getNamedObj__GetContainer() {
     return namedObjEClass.getEOperations().get(0);
   }
@@ -512,6 +521,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEAttribute(namedObjEClass, NAMED_OBJ__WRAPPED_TYPE);
     createEAttribute(namedObjEClass, NAMED_OBJ__WRAPPED_OBJECT);
     createEAttribute(namedObjEClass, NAMED_OBJ__DEEP_COMPLETE);
+    createEAttribute(namedObjEClass, NAMED_OBJ__ICON_ID);
     createEOperation(namedObjEClass, NAMED_OBJ___GET_CONTAINER);
     createEOperation(namedObjEClass, NAMED_OBJ___TOP_LEVEL);
     createEOperation(namedObjEClass, NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING);
@@ -596,6 +606,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEAttribute(getNamedObj_WrappedType(), ecorePackage.getEString(), "wrappedType", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_WrappedObject(), this.getPtolemyNamedObj(), "wrappedObject", null, 0, 1, NamedObj.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_DeepComplete(), ecorePackage.getEBoolean(), "deepComplete", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_IconId(), ecorePackage.getEString(), "iconId", null, 0, 1, NamedObj.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getNamedObj__GetContainer(), this.getNamedObj(), "getContainer", 0, 1, IS_UNIQUE, IS_ORDERED);
 

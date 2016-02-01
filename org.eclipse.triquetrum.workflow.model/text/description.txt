@@ -35,8 +35,10 @@ Package model <http://www.eclipse.org/triquetrum>
     Attribute wrappedType : EString
     Attribute wrappedObject : PtolemyNamedObj
     Attribute deepComplete : EBoolean
+    Attribute iconId : EString
     Operation getContainer() : NamedObj
     Operation topLevel() : NamedObj
+    Operation setProperty(EString<<1..1>>, EString, EString) : void
 
   Class Director -> Attribute
     Operation getParameters() : Parameter<<0..*>>

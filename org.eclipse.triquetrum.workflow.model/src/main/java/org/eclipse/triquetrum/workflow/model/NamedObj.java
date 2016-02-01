@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedType <em>Wrapped Type</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedObject <em>Wrapped Object</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#isDeepComplete <em>Deep Complete</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getIconId <em>Icon Id</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj()
@@ -178,6 +179,32 @@ public interface NamedObj extends EObject {
    * @generated
    */
   void setDeepComplete(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Icon Id</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Icon Id</em>' attribute.
+   * @see #setIconId(String)
+   * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_IconId()
+   * @model transient="true"
+   * @generated
+   */
+  String getIconId();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getIconId <em>Icon Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Icon Id</em>' attribute.
+   * @see #getIconId()
+   * @generated
+   */
+  void setIconId(String value);
 
   void buildWrappedObject();
   

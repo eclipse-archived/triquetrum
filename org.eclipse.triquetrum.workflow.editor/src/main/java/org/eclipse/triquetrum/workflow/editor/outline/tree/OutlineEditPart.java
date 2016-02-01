@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.gef.EditPart;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.swt.graphics.Image;
@@ -30,7 +31,6 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.Port;
 
-
 /**
  * EditPart for components in the Tree.
  */
@@ -38,7 +38,7 @@ public class OutlineEditPart extends org.eclipse.gef.editparts.AbstractTreeEditP
 
   /**
    * Constructor initializes this with the given model.
-   * 
+   *
    * @param model
    *          The underlying flow model object (e.g. an actor)
    */
@@ -48,7 +48,7 @@ public class OutlineEditPart extends org.eclipse.gef.editparts.AbstractTreeEditP
 
   /**
    * Returns <code>null</code> as a Tree EditPart holds no children under it.
-   * 
+   *
    * @return <code>null</code>
    */
   @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -70,24 +70,28 @@ public class OutlineEditPart extends org.eclipse.gef.editparts.AbstractTreeEditP
 
   @Override
   protected Image getImage() {
-    NamedObj flowModel = (NamedObj) getModel();
-    if (flowModel instanceof Director)
-      return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_DIRECTOR);
-    else if (flowModel instanceof Parameter)
-      return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_PARAMETER);
-    else if (flowModel instanceof Port) {
-      Port port = (Port) flowModel;
-      if (port.isInput()) {
-        return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_INPUTPORT);
-      } else {
-        return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_OUTPUTPORT);
-      }
-    } else if (flowModel instanceof CompositeActor) {
-      return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_COMPOSITE);
-    } else if (flowModel instanceof Actor) {
-      return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_ACTOR);
+    NamedObj modelObject = (NamedObj) getModel();
+    if (!StringUtils.isBlank(modelObject.getIconId())) {
+      return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, modelObject.getIconId());
     } else {
-      return super.getImage();
+      if (modelObject instanceof Director)
+        return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_DIRECTOR);
+      else if (modelObject instanceof Parameter)
+        return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_PARAMETER);
+      else if (modelObject instanceof Port) {
+        Port port = (Port) modelObject;
+        if (port.isInput()) {
+          return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_INPUTPORT);
+        } else {
+          return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_OUTPUTPORT);
+        }
+      } else if (modelObject instanceof CompositeActor) {
+        return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_COMPOSITE);
+      } else if (modelObject instanceof Actor) {
+        return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_ACTOR);
+      } else {
+        return super.getImage();
+      }
     }
   }
 
@@ -103,13 +107,13 @@ public class OutlineEditPart extends org.eclipse.gef.editparts.AbstractTreeEditP
       return flowModel.getName();
     }
   }
-  
+
   @Override
   public void refresh() {
     super.refresh();
     refreshChildrenContents();
   }
-  
+
   protected void refreshChildrenContents() {
     List children = getChildren();
     int size = children.size();

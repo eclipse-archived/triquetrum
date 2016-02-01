@@ -32,7 +32,6 @@ import ptolemy.kernel.util.Settable;
 public class DirectorImpl extends AttributeImpl implements Director {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   protected DirectorImpl() {
@@ -59,7 +58,6 @@ public class DirectorImpl extends AttributeImpl implements Director {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
@@ -91,14 +89,13 @@ public class DirectorImpl extends AttributeImpl implements Director {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-    case TriqPackage.DIRECTOR___GET_PARAMETERS:
-      return getParameters();
+      case TriqPackage.DIRECTOR___GET_PARAMETERS:
+        return getParameters();
     }
     return super.eInvoke(operationID, arguments);
   }

@@ -14,10 +14,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.impl.AbstractAddShapeFeature;
+import org.eclipse.graphiti.mm.algorithms.Image;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
@@ -39,10 +41,18 @@ import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.Port;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ActorAddFeature extends AbstractAddShapeFeature {
 
+  private final static Logger LOGGER = LoggerFactory.getLogger(ActorAddFeature.class);
+
   private static final int SHAPE_X_OFFSET = 8;
+  private static final int ICON_X_OFFSET = SHAPE_X_OFFSET + 3;
+  private static final int ICON_Y_OFFSET = 3;
+  private static final int ICON_SIZE = 16;
+
   private static final IColorConstant ACTOR_NAME_FOREGROUND = IColorConstant.BLACK;
   private static final IColorConstant PARAM_FOREGROUND = IColorConstant.DARK_GRAY;
 
@@ -83,13 +93,13 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       }
     }
 
-//    Object newObject = context.getNewObject();
-//    if (newObject instanceof Actor) {
-//      // need to check that the actor belongs to the same CompositeActor as the one associated with the diagram
-//      Actor actor = (Actor) newObject;
-//      Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
-//      return (topLevelForDiagram == null || topLevelForDiagram.equals(actor.getContainer()));
-//    }
+    // Object newObject = context.getNewObject();
+    // if (newObject instanceof Actor) {
+    // // need to check that the actor belongs to the same CompositeActor as the one associated with the diagram
+    // Actor actor = (Actor) newObject;
+    // Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
+    // return (topLevelForDiagram == null || topLevelForDiagram.equals(actor.getContainer()));
+    // }
     return false;
   }
 
@@ -136,6 +146,19 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       // }
       // create link and wire it
       link(containerShape, addedActor, "ACTOR");
+
+      // add the actor's icon
+      String iconId = (String) context.getProperty("icon");
+      if (!StringUtils.isBlank(iconId)) {
+        try {
+          final Shape imageShape = peCreateService.createShape(containerShape, false);
+          final Image image = gaService.createImage(imageShape, iconId);
+          addedActor.setIconId(iconId);
+          gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
+        } catch (Exception e) {
+          LOGGER.error("Error trying to add actor icon in it shape", e);
+        }
+      }
     }
 
     // SHAPE WITH LINE
@@ -160,7 +183,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
       // vertical alignment has as default value "center"
       text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
-      gaService.setLocationAndSize(text, SHAPE_X_OFFSET, 0, width, 20);
+      gaService.setLocationAndSize(text, SHAPE_X_OFFSET+20, 0, width-25, 20);
 
       // create link and wire it
       link(shape, addedActor, "ACTOR");
