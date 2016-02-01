@@ -55,7 +55,7 @@ public class ImageProvider extends AbstractImageProvider {
    */
   public void myAddImageFilePath(String providerBundleName, String imageId, String imageFilePath) {
     if (getImageFilePath(imageId) != null) {
-      LOGGER.warn("Provider {} : Image ID {} already assigned. {} ignored.", new Object[] {providerBundleName, imageId, imageFilePath});
+      LOGGER.debug("Provider {} : Image ID {} already assigned. {} ignored.", new Object[] {providerBundleName, imageId, imageFilePath});
     } else {
       URI imageURI = URI.createPlatformPluginURI(providerBundleName + "/" + imageFilePath, true);
       addImageFilePath(imageId, imageURI.toString());

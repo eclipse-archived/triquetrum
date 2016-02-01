@@ -72,7 +72,7 @@ public class ActorConfigureFeature extends AbstractCustomFeature {
         Shell shell = EclipseUtils.getActivePage().getActivePart().getSite().getShell();
         NamedObjDialog dialog = new NamedObjDialog(shell, modelElement);
         dialog.open();
-        if(dialog.getReturnCode()==NamedObjDialog.CANCEL) {
+        if(dialog.getReturnCode()!=NamedObjDialog.OK) {
           throw new OperationCanceledException();
         }
       }

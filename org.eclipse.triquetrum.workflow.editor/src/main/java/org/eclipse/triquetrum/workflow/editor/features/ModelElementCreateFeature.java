@@ -128,8 +128,8 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
         }
       }
 
-//      getDiagram().eResource().getContents().add(result);
-
+      // set the icon in the create context, so the add feature can add it in the element's shape
+      context.putProperty("icon", getCreateImageId());
       // do the add
       addGraphicalRepresentation(context, result);
       // activate direct editing after object creation

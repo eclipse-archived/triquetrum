@@ -10,9 +10,11 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.impl.AbstractAddShapeFeature;
+import org.eclipse.graphiti.mm.algorithms.Image;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
@@ -29,10 +31,18 @@ import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DirectorAddFeature extends AbstractAddShapeFeature {
 
-  private static final int SHAPE_X_OFFSET = 8;
+  private final static Logger LOGGER = LoggerFactory.getLogger(DirectorAddFeature.class);
+
+  private static final int SHAPE_X_OFFSET = 0;
+  private static final int ICON_X_OFFSET = SHAPE_X_OFFSET + 3;
+  private static final int ICON_Y_OFFSET = 3;
+  private static final int ICON_SIZE = 16;
+
   private static final IColorConstant DIRECTOR_NAME_FOREGROUND = IColorConstant.BLACK;
 
   private static final IColorConstant DIRECTOR_FOREGROUND = new ColorConstant(98, 131, 167);
@@ -41,7 +51,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
   public DirectorAddFeature(IFeatureProvider fp) {
     super(fp);
   }
-  
+
   protected void link(PictogramElement pe, Object businessObject, String category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated Triq model element
@@ -57,7 +67,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
     // check if user wants to add an director
     Object newObject = context.getNewObject();
     if (newObject instanceof Director) {
-      // need to check that the director belongs to the same CompositeActor as the one associated with the diagram 
+      // need to check that the director belongs to the same CompositeActor as the one associated with the diagram
       Director director = (Director) newObject;
       Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
       return (topLevelForDiagram == null || topLevelForDiagram.equals(director.getContainer()));
@@ -68,12 +78,12 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
   public PictogramElement add(IAddContext context) {
     Director addedDirector = (Director) context.getNewObject();
     ContainerShape targetContainer = (Diagram) context.getTargetContainer();
-    
+
     Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
     if(topLevelForDiagram == null) {
       link(getDiagram(), addedDirector.getContainer());
     }
-    
+
     int xLocation = context.getX();
     int yLocation = context.getY();
 
@@ -85,12 +95,12 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
     int width = 100;
     int height = 60;
     IGaService gaService = Graphiti.getGaService();
-    
+
     Rectangle invisibleRectangle; // need to access it later
 
     {
       invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
-      gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, width + 15, height);
+      gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, width, height);
 
       // create and set graphics algorithm
       RoundedRectangle roundedRectangle = gaService.createRoundedRectangle(invisibleRectangle, 5, 5);
@@ -101,6 +111,18 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
 
       // create link and wire it
       link(containerShape, addedDirector, "DIRECTOR");
+
+      // add the actor's icon
+      String iconId = (String) context.getProperty("icon");
+      if (!StringUtils.isBlank(iconId)) {
+        try {
+          final Shape imageShape = peCreateService.createShape(containerShape, false);
+          final Image image = gaService.createImage(imageShape, iconId);
+          gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
+        } catch (Exception e) {
+          LOGGER.error("Error trying to add director icon in it shape", e);
+        }
+      }
     }
 
     // SHAPE WITH LINE
@@ -114,7 +136,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
       polyline.setLineWidth(2);
     }
 
-    // SHAPE WITH actor name as TEXT
+    // SHAPE WITH director name as TEXT
     {
       // create shape for text
       Shape shape = peCreateService.createShape(containerShape, false);
@@ -125,12 +147,12 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
       text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
       // vertical alignment has as default value "center"
       text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
-      gaService.setLocationAndSize(text, SHAPE_X_OFFSET, 0, width, 20);
+      gaService.setLocationAndSize(text, SHAPE_X_OFFSET+20, 0, width-25, 20);
 
       // create link and wire it
       link(shape, addedDirector, "DIRECTOR");
     }
-    
+
     // don't show director params in graphical model
 
     layoutPictogramElement(containerShape);

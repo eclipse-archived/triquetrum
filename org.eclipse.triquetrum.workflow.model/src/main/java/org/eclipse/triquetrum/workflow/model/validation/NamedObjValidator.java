@@ -32,5 +32,7 @@ public interface NamedObjValidator {
 
   boolean validateDeepComplete(boolean value);
 
+  boolean validateIconId(String value);
+
   boolean validateContainer(NamedObj value);
 }

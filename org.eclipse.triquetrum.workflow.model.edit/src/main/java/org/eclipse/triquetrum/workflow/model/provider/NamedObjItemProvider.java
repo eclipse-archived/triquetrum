@@ -75,6 +75,7 @@ public class NamedObjItemProvider
       addWrappedTypePropertyDescriptor(object);
       addWrappedObjectPropertyDescriptor(object);
       addDeepCompletePropertyDescriptor(object);
+      addIconIdPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -168,6 +169,28 @@ public class NamedObjItemProvider
   }
 
   /**
+   * This adds a property descriptor for the Icon Id feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addIconIdPropertyDescriptor(Object object) {
+    itemPropertyDescriptors.add
+      (createItemPropertyDescriptor
+        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+         getResourceLocator(),
+         getString("_UI_NamedObj_iconId_feature"),
+         getString("_UI_PropertyDescriptor_description", "_UI_NamedObj_iconId_feature", "_UI_NamedObj_type"),
+         TriqPackage.Literals.NAMED_OBJ__ICON_ID,
+         true,
+         false,
+         false,
+         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+         null,
+         null));
+  }
+
+  /**
    * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
    * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
    * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -239,6 +262,7 @@ public class NamedObjItemProvider
       case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
       case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
       case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
+      case TriqPackage.NAMED_OBJ__ICON_ID:
         fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
         return;
       case TriqPackage.NAMED_OBJ__ATTRIBUTES:
