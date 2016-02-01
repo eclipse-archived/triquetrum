@@ -118,6 +118,44 @@
       <menuContribution allPopups="false" locationURI="toolbar:triquetrumToolbar">
          <command
                commandId="org.eclipse.graphiti.ui.featureExecutionCommand"
+               icon="icons/pause_workflow.gif"
+               label="Pause"
+               style="push"
+               tooltip="Pause workflow">
+            <parameter name="org.eclipse.graphiti.ui.featureHint" value="pause" />
+            <visibleWhen checkEnabled="false">
+               <with variable="activeContexts">
+                  <iterate ifEmpty="false" operator="or">
+                     <equals
+                           value="org.eclipse.triquetrum.workflow.editor.context">
+                     </equals>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution allPopups="false" locationURI="toolbar:triquetrumToolbar">
+         <command
+               commandId="org.eclipse.graphiti.ui.featureExecutionCommand"
+               icon="icons/resume_workflow.gif"
+               label="Resume"
+               style="push"
+               tooltip="Resume workflow">
+            <parameter name="org.eclipse.graphiti.ui.featureHint" value="resume" />
+            <visibleWhen checkEnabled="false">
+               <with variable="activeContexts">
+                  <iterate ifEmpty="false" operator="or">
+                     <equals
+                           value="org.eclipse.triquetrum.workflow.editor.context">
+                     </equals>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution allPopups="false" locationURI="toolbar:triquetrumToolbar">
+         <command
+               commandId="org.eclipse.graphiti.ui.featureExecutionCommand"
                icon="icons/stop_workflow.gif"
                label="Stop"
                style="push"

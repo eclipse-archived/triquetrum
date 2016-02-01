@@ -23,7 +23,7 @@
 	            type="Director">
 	      </entry>
       </group>
-      <group displayName="Sources" icon="icons/sink.gif">
+      <group displayName="Sources" icon="icons/source.gif">
 	      <entry
 	            class="ptolemy.actor.lib.Const"
 	            displayName="Constant"
@@ -37,7 +37,7 @@
 	            type="Actor">
 	      </entry>
       </group>
-      <group displayName="Sinks" icon="icons/source.gif">
+      <group displayName="Sinks" icon="icons/sink.gif">
 	      <entry
 	            class="ptolemy.actor.lib.Discard"
 	            displayName="Discard"

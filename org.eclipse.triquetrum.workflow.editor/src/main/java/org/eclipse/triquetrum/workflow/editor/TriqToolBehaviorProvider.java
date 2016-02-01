@@ -30,15 +30,16 @@ import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.editor.features.ActorConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.PauseFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ResumeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.RunFeature;
 import org.eclipse.triquetrum.workflow.editor.features.StopFeature;
 
 public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
 
   /**
-   * This map maintains the process handles for each running model.
-   * For the moment we only support 1 execution at a time for a given model.
-   * (but we want to support concurrent executions of different models)
+   * This map maintains the process handles for each running model. For the moment we only support 1 execution at a time for a given model. (but we want to
+   * support concurrent executions of different models)
    */
   private Map<String, ProcessHandle> workflowExecutionHandles = new ConcurrentHashMap<>();
 
@@ -60,15 +61,16 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
   }
 
   /**
-   * Stores the handle to a running workflow.
-   * Only 1 instance of a workflow model can be running at a given time, in the current Triq editor version.
-   * When an extra handle registration is attempted for a same model, an
+   * Stores the handle to a running workflow. Only 1 instance of a workflow model can be running at a given time, in the current Triq editor version. When an
+   * extra handle registration is attempted for a same model, an
+   *
    * @param workflowExecutionHandle
-   * @throws IllegalStateException when the model is already registered as executing.
+   * @throws IllegalStateException
+   *           when the model is already registered as executing.
    */
   public void putWorkflowExecutionHandle(ProcessHandle workflowExecutionHandle) {
-    if(workflowExecutionHandles.containsKey(workflowExecutionHandle.getModelHandle())) {
-      throw new IllegalStateException("Model "+workflowExecutionHandle.getModelHandle().getCode()+" is already executing");
+    if (workflowExecutionHandles.containsKey(workflowExecutionHandle.getModelHandle())) {
+      throw new IllegalStateException("Model " + workflowExecutionHandle.getModelHandle().getCode() + " is already executing");
     }
     workflowExecutionHandles.put(workflowExecutionHandle.getModelHandle().getCode(), workflowExecutionHandle);
   }
@@ -79,7 +81,7 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
    * @return the removed handle if it was present before the invocation of this method, null otherwise
    */
   public ProcessHandle removeWorkflowExecutionHandle(ProcessHandle workflowExecutionHandle) {
-    return workflowExecutionHandles.remove(workflowExecutionHandle);
+    return workflowExecutionHandles.remove(workflowExecutionHandle.getModelHandle().getCode());
   }
 
   @Override
@@ -95,12 +97,18 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
 
   @Override
   public ICustomFeature getCommandFeature(CustomContext context, String hint) {
-    if (RunFeature.HINT.equals(hint)) {
-      return new RunFeature(this, getFeatureProvider());
-    } else if (StopFeature.HINT.equals(hint)) {
-      return new StopFeature(this, getFeatureProvider());
+    switch (hint) {
+      case RunFeature.HINT:
+        return new RunFeature(this, getFeatureProvider());
+      case PauseFeature.HINT:
+        return new PauseFeature(this, getFeatureProvider());
+      case ResumeFeature.HINT:
+        return new ResumeFeature(this, getFeatureProvider());
+      case StopFeature.HINT:
+        return new StopFeature(this, getFeatureProvider());
+      default:
+        return super.getCommandFeature(context, hint);
     }
-    return super.getCommandFeature(context, hint);
   }
 
   @Override
@@ -125,8 +133,8 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
                 if (compartment == null) {
                   String iconResource = rootGrpElement.getAttribute("icon");
                   if (iconResource != null) {
-                    ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(
-                        rootGrpElement.getContributor().getName(), iconResource, iconResource);
+                    ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(rootGrpElement.getContributor().getName(),
+                        iconResource, iconResource);
                   }
                   compartment = new PaletteCompartmentEntry(mecFt.getGroup(), iconResource);
                   paletteCompartments.put(compartment.getLabel(), compartment);

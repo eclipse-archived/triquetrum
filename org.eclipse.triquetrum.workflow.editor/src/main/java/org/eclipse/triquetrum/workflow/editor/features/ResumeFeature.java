@@ -17,17 +17,17 @@ import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
 import org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 
-public class StopFeature extends AbstractExecutionManagementFeature {
+public class ResumeFeature extends AbstractExecutionManagementFeature {
 
-  public static final String HINT = "stop"; //$NON-NLS-1$
+  public static final String HINT = "resume"; //$NON-NLS-1$
 
-  public StopFeature(TriqToolBehaviorProvider tbp, IFeatureProvider fp) {
+  public ResumeFeature(TriqToolBehaviorProvider tbp, IFeatureProvider fp) {
     super(tbp, fp);
   }
 
   @Override
   public String getName() {
-    return "Stop Triq workflow execution"; //$NON-NLS-1$
+    return "Resume Triq workflow execution"; //$NON-NLS-1$
   }
 
   @Override
@@ -37,7 +37,6 @@ public class StopFeature extends AbstractExecutionManagementFeature {
 
   protected void doExecute(WorkflowExecutionService executionService, CompositeActor selection) throws TriqException {
     ProcessHandle processHandle = getProcessHandleForSelection(selection);
-    executionService.terminate(processHandle);
-    toolProvider.removeWorkflowExecutionHandle(processHandle);
+    executionService.resume(processHandle);
   };
 }
