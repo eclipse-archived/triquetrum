@@ -606,7 +606,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEAttribute(getNamedObj_WrappedType(), ecorePackage.getEString(), "wrappedType", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_WrappedObject(), this.getPtolemyNamedObj(), "wrappedObject", null, 0, 1, NamedObj.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_DeepComplete(), ecorePackage.getEBoolean(), "deepComplete", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNamedObj_IconId(), ecorePackage.getEString(), "iconId", null, 0, 1, NamedObj.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_IconId(), ecorePackage.getEString(), "iconId", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getNamedObj__GetContainer(), this.getNamedObj(), "getContainer", 0, 1, IS_UNIQUE, IS_ORDERED);
 

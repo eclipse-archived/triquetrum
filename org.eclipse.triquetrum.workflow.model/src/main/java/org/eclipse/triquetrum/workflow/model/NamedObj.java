@@ -191,7 +191,7 @@ public interface NamedObj extends EObject {
    * @return the value of the '<em>Icon Id</em>' attribute.
    * @see #setIconId(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_IconId()
-   * @model transient="true"
+   * @model
    * @generated
    */
   String getIconId();
