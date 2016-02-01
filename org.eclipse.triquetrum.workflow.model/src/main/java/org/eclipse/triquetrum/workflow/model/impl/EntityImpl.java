@@ -34,6 +34,7 @@ import ptolemy.actor.IOPort;
 import ptolemy.kernel.ComponentEntity;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
+import ptolemy.kernel.util.Settable;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Entity</b></em>'. <!-- end-user-doc -->
@@ -106,7 +107,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public EList<Parameter> getParameters() {
@@ -194,13 +195,16 @@ public class EntityImpl extends NamedObjImpl implements Entity {
             }
           }
         }
-        
-        for(ptolemy.data.expr.Parameter parameter : e.attributeList(ptolemy.data.expr.Parameter.class)) {
-          Parameter newParam = TriqFactory.eINSTANCE.createParameter();
-          newParam.setName(parameter.getName());
-          newParam.setWrappedType(parameter.getClass().getName());
-          newParam.setExpression(parameter.getExpression());
-          getAttributes().add(newParam);
+
+        for (ptolemy.data.expr.Parameter parameter : e.attributeList(ptolemy.data.expr.Parameter.class)) {
+          // for the moment, only add FULLy user-visible parameters in the editor model
+          if (Settable.FULL.equals(parameter.getVisibility())) {
+            Parameter newParam = TriqFactory.eINSTANCE.createParameter();
+            newParam.setName(parameter.getName());
+            newParam.setWrappedType(parameter.getClass().getName());
+            newParam.setExpression(parameter.getExpression());
+            getAttributes().add(newParam);
+          }
         }
         setDeepComplete(true);
       }

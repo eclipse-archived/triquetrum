@@ -122,13 +122,22 @@ public interface TriqPackage extends EPackage {
   int NAMED_OBJ__DEEP_COMPLETE = 4;
 
   /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_OBJ__ICON_ID = 5;
+
+  /**
    * The number of structural features of the '<em>Named Obj</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NAMED_OBJ_FEATURE_COUNT = 5;
+  int NAMED_OBJ_FEATURE_COUNT = 6;
 
   /**
    * The operation id for the '<em>Get Container</em>' operation.
@@ -220,6 +229,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ENTITY__DEEP_COMPLETE = NAMED_OBJ__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTITY__ICON_ID = NAMED_OBJ__ICON_ID;
 
   /**
    * The feature id for the '<em><b>Input Ports</b></em>' containment reference list.
@@ -347,6 +365,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int COMPOSITE_ENTITY__DEEP_COMPLETE = ENTITY__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ENTITY__ICON_ID = ENTITY__ICON_ID;
 
   /**
    * The feature id for the '<em><b>Input Ports</b></em>' containment reference list.
@@ -494,6 +521,15 @@ public interface TriqPackage extends EPackage {
   int PORT__DEEP_COMPLETE = NAMED_OBJ__DEEP_COMPLETE;
 
   /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__ICON_ID = NAMED_OBJ__ICON_ID;
+
+  /**
    * The feature id for the '<em><b>Input</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -621,6 +657,15 @@ public interface TriqPackage extends EPackage {
   int RELATION__DEEP_COMPLETE = NAMED_OBJ__DEEP_COMPLETE;
 
   /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__ICON_ID = NAMED_OBJ__ICON_ID;
+
+  /**
    * The feature id for the '<em><b>Linked Ports</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -730,6 +775,15 @@ public interface TriqPackage extends EPackage {
   int ATTRIBUTE__DEEP_COMPLETE = NAMED_OBJ__DEEP_COMPLETE;
 
   /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE__ICON_ID = NAMED_OBJ__ICON_ID;
+
+  /**
    * The number of structural features of the '<em>Attribute</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -828,6 +882,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int PARAMETER__DEEP_COMPLETE = ATTRIBUTE__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER__ICON_ID = ATTRIBUTE__ICON_ID;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' attribute.
@@ -939,6 +1002,15 @@ public interface TriqPackage extends EPackage {
   int DIRECTOR__DEEP_COMPLETE = ATTRIBUTE__DEEP_COMPLETE;
 
   /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIRECTOR__ICON_ID = ATTRIBUTE__ICON_ID;
+
+  /**
    * The number of structural features of the '<em>Director</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1046,6 +1118,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int COMPOSITE_ACTOR__DEEP_COMPLETE = COMPOSITE_ENTITY__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ACTOR__ICON_ID = COMPOSITE_ENTITY__ICON_ID;
 
   /**
    * The feature id for the '<em><b>Input Ports</b></em>' containment reference list.
@@ -1201,6 +1282,15 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ACTOR__DEEP_COMPLETE = ENTITY__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTOR__ICON_ID = ENTITY__ICON_ID;
 
   /**
    * The feature id for the '<em><b>Input Ports</b></em>' containment reference list.
@@ -1519,6 +1609,17 @@ public interface TriqPackage extends EPackage {
   EAttribute getNamedObj_DeepComplete();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getIconId <em>Icon Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Icon Id</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.NamedObj#getIconId()
+   * @see #getNamedObj()
+   * @generated
+   */
+  EAttribute getNamedObj_IconId();
+
+  /**
    * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getContainer() <em>Get Container</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1822,6 +1923,14 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EAttribute NAMED_OBJ__DEEP_COMPLETE = eINSTANCE.getNamedObj_DeepComplete();
+
+    /**
+     * The meta object literal for the '<em><b>Icon Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute NAMED_OBJ__ICON_ID = eINSTANCE.getNamedObj_IconId();
 
     /**
      * The meta object literal for the '<em><b>Get Container</b></em>' operation.

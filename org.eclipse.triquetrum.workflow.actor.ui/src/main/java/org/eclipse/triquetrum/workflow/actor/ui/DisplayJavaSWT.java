@@ -143,6 +143,17 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
             _shell = new Shell();
             _shell.setLayout(new GridLayout());
 
+            String titleSpec;
+            try {
+              titleSpec = _display.title.stringValue();
+            } catch (IllegalActionException e) {
+              titleSpec = "Error in title: " + e.getMessage();
+            }
+
+            if (!titleSpec.trim().equals("")) {
+              _shell.setText(titleSpec);
+            }
+
             int numRows = ((IntToken) _display.rowsDisplayed.getToken()).intValue();
             int numColumns = ((IntToken) _display.columnsDisplayed.getToken()).intValue();
 
@@ -305,7 +316,9 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
     Runnable doIt = new Runnable() {
       @Override
       public void run() {
-       // TODO implement setTitle
+        if(_shell!=null) {
+          _shell.setText(stringValue);
+        }
       }
     };
     runDeferred(doIt);

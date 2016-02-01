@@ -39,6 +39,7 @@ import org.eclipse.triquetrum.workflow.model.TriqPackage;
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getWrappedType <em>Wrapped Type</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getWrappedObject <em>Wrapped Object</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#isDeepComplete <em>Deep Complete</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getIconId <em>Icon Id</em>}</li>
  * </ul>
  *
  * @generated
@@ -126,6 +127,26 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    * @ordered
    */
   protected boolean deepComplete = DEEP_COMPLETE_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getIconId() <em>Icon Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIconId()
+   * @generated
+   * @ordered
+   */
+  protected static final String ICON_ID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getIconId() <em>Icon Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getIconId()
+   * @generated
+   * @ordered
+   */
+  protected String iconId = ICON_ID_EDEFAULT;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -312,6 +333,27 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__DEEP_COMPLETE, oldDeepComplete, deepComplete));
   }
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getIconId() {
+    return iconId;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setIconId(String newIconId) {
+    String oldIconId = iconId;
+    iconId = newIconId;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__ICON_ID, oldIconId, iconId));
+  }
+
   // This is where we can hook in a ptolemy object construction, including its container
   // It seems EMF does not build its model (e.g. while parsing the xmi file) as would be easiest for us.
   // I.e. the root model element (a CompositeActor) never gets its eBasicSetContainer(null) called (or too late?),
@@ -364,6 +406,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
         return getWrappedObject();
       case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
         return isDeepComplete();
+      case TriqPackage.NAMED_OBJ__ICON_ID:
+        return getIconId();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -392,6 +436,9 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
         setDeepComplete((Boolean)newValue);
         return;
+      case TriqPackage.NAMED_OBJ__ICON_ID:
+        setIconId((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -418,6 +465,9 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
         setDeepComplete(DEEP_COMPLETE_EDEFAULT);
         return;
+      case TriqPackage.NAMED_OBJ__ICON_ID:
+        setIconId(ICON_ID_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -439,6 +489,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
         return WRAPPED_OBJECT_EDEFAULT == null ? wrappedObject != null : !WRAPPED_OBJECT_EDEFAULT.equals(wrappedObject);
       case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
         return deepComplete != DEEP_COMPLETE_EDEFAULT;
+      case TriqPackage.NAMED_OBJ__ICON_ID:
+        return ICON_ID_EDEFAULT == null ? iconId != null : !ICON_ID_EDEFAULT.equals(iconId);
     }
     return super.eIsSet(featureID);
   }
@@ -478,6 +530,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
     result.append(wrappedObject);
     result.append(", deepComplete: ");
     result.append(deepComplete);
+    result.append(", iconId: ");
+    result.append(iconId);
     result.append(')');
     return result.toString();
   }
