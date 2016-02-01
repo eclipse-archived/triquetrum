@@ -34,6 +34,7 @@ import ptolemy.actor.IOPort;
 import ptolemy.kernel.ComponentEntity;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
+import ptolemy.kernel.util.Settable;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Entity</b></em>'. <!-- end-user-doc -->
@@ -41,24 +42,24 @@ import ptolemy.kernel.util.NameDuplicationException;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl#getInputPorts <em>Input Ports</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl#getOutputPorts <em>Output Ports</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl#getInputPorts <em>Input Ports</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl#getOutputPorts <em>Output Ports</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class EntityImpl extends NamedObjImpl implements Entity {
   /**
-   * The cached value of the '{@link #getInputPorts() <em>Input Ports</em>}' containment reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getInputPorts() <em>Input Ports</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #getInputPorts()
    * @generated
    * @ordered
    */
   protected EList<Port> inputPorts;
   /**
-   * The cached value of the '{@link #getOutputPorts() <em>Output Ports</em>}' containment reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getOutputPorts() <em>Output Ports</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #getOutputPorts()
    * @generated
    * @ordered
@@ -67,6 +68,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   protected EntityImpl() {
@@ -75,6 +77,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
@@ -84,6 +87,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EList<Port> getInputPorts() {
@@ -95,6 +99,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EList<Port> getOutputPorts() {
@@ -106,7 +111,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   public EList<Parameter> getParameters() {
@@ -194,13 +199,16 @@ public class EntityImpl extends NamedObjImpl implements Entity {
             }
           }
         }
-        
-        for(ptolemy.data.expr.Parameter parameter : e.attributeList(ptolemy.data.expr.Parameter.class)) {
-          Parameter newParam = TriqFactory.eINSTANCE.createParameter();
-          newParam.setName(parameter.getName());
-          newParam.setWrappedType(parameter.getClass().getName());
-          newParam.setExpression(parameter.getExpression());
-          getAttributes().add(newParam);
+
+        for (ptolemy.data.expr.Parameter parameter : e.attributeList(ptolemy.data.expr.Parameter.class)) {
+          // for the moment, only add FULLy user-visible parameters in the editor model
+          if (Settable.FULL.equals(parameter.getVisibility())) {
+            Parameter newParam = TriqFactory.eINSTANCE.createParameter();
+            newParam.setName(parameter.getName());
+            newParam.setWrappedType(parameter.getClass().getName());
+            newParam.setExpression(parameter.getExpression());
+            getAttributes().add(newParam);
+          }
         }
         setDeepComplete(true);
       }
@@ -213,95 +221,101 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        return ((InternalEList<?>)getInputPorts()).basicRemove(otherEnd, msgs);
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        return ((InternalEList<?>)getOutputPorts()).basicRemove(otherEnd, msgs);
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      return ((InternalEList<?>) getInputPorts()).basicRemove(otherEnd, msgs);
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      return ((InternalEList<?>) getOutputPorts()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        return getInputPorts();
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        return getOutputPorts();
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      return getInputPorts();
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      return getOutputPorts();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        getInputPorts().clear();
-        getInputPorts().addAll((Collection<? extends Port>)newValue);
-        return;
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        getOutputPorts().clear();
-        getOutputPorts().addAll((Collection<? extends Port>)newValue);
-        return;
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      getInputPorts().clear();
+      getInputPorts().addAll((Collection<? extends Port>) newValue);
+      return;
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      getOutputPorts().clear();
+      getOutputPorts().addAll((Collection<? extends Port>) newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        getInputPorts().clear();
-        return;
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        getOutputPorts().clear();
-        return;
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      getInputPorts().clear();
+      return;
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      getOutputPorts().clear();
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        return inputPorts != null && !inputPorts.isEmpty();
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        return outputPorts != null && !outputPorts.isEmpty();
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      return inputPorts != null && !inputPorts.isEmpty();
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      return outputPorts != null && !outputPorts.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.ENTITY___GET_PARAMETERS:
-        return getParameters();
+    case TriqPackage.ENTITY___GET_PARAMETERS:
+      return getParameters();
     }
     return super.eInvoke(operationID, arguments);
   }

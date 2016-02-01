@@ -85,7 +85,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
 
 //    Object newObject = context.getNewObject();
 //    if (newObject instanceof Actor) {
-//      // need to check that the actor belongs to the same CompositeActor as the one associated with the diagram 
+//      // need to check that the actor belongs to the same CompositeActor as the one associated with the diagram
 //      Actor actor = (Actor) newObject;
 //      Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
 //      return (topLevelForDiagram == null || topLevelForDiagram.equals(actor.getContainer()));
@@ -198,8 +198,8 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
         text.setForeground(manageColor(PARAM_FOREGROUND));
         text.setHorizontalAlignment(Orientation.ALIGNMENT_LEFT);
         // vertical alignment has as default value "center"
-        text.setFont(gaService.manageFont(getDiagram(), IGaService.DEFAULT_FONT, 6));
-        gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 5, 22 + 20 * pIndex++, width, 20);
+        text.setFont(gaService.manageFont(getDiagram(), IGaService.DEFAULT_FONT, 8));
+        gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 5, 22 + 15 * pIndex++, width, 20);
 
         // create link and wire it
         link(shape, param, "PARAMETER");

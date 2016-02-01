@@ -22,17 +22,17 @@ import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
+import ptolemy.kernel.util.Settable;
+
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Director</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Director</b></em>'. <!-- end-user-doc -->
  *
  * @generated
  */
 public class DirectorImpl extends AttributeImpl implements Director {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   protected DirectorImpl() {
@@ -43,20 +43,23 @@ public class DirectorImpl extends AttributeImpl implements Director {
   public void buildWrappedObject() {
     super.buildWrappedObject();
     if (!isDeepComplete()) {
-      for(ptolemy.data.expr.Parameter parameter : wrappedObject.attributeList(ptolemy.data.expr.Parameter.class)) {
-        Parameter newParam = TriqFactory.eINSTANCE.createParameter();
-        newParam.setName(parameter.getName());
-        newParam.setWrappedType(parameter.getClass().getName());
-        newParam.setExpression(parameter.getExpression());
-        getAttributes().add(newParam);
+      for (ptolemy.data.expr.Parameter parameter : wrappedObject.attributeList(ptolemy.data.expr.Parameter.class)) {
+        // for the moment, only add FULLy user-visible parameters in the editor model
+        if (Settable.FULL.equals(parameter.getVisibility())) {
+          Parameter newParam = TriqFactory.eINSTANCE.createParameter();
+          newParam.setName(parameter.getName());
+          newParam.setWrappedType(parameter.getClass().getName());
+          newParam.setExpression(parameter.getExpression());
+          getAttributes().add(newParam);
+        }
       }
       setDeepComplete(true);
     }
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
@@ -65,15 +68,15 @@ public class DirectorImpl extends AttributeImpl implements Director {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated NOT
    */
   public EList<Parameter> getParameters() {
     // TODO: improve this with a jdk8 collection filter thing
     EList<Parameter> result = new BasicEList<>();
     for (Attribute a : getAttributes()) {
-      if(Parameter.class.isInstance(a)) {
+      if (Parameter.class.isInstance(a)) {
         result.add((Parameter) a);
       }
     }
@@ -87,17 +90,17 @@ public class DirectorImpl extends AttributeImpl implements Director {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.DIRECTOR___GET_PARAMETERS:
-        return getParameters();
+    case TriqPackage.DIRECTOR___GET_PARAMETERS:
+      return getParameters();
     }
     return super.eInvoke(operationID, arguments);
   }
 
-} //DirectorImpl
+} // DirectorImpl
