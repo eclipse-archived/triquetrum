@@ -18,6 +18,7 @@ import org.eclipse.triquetrum.workflow.ProcessEventListener;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService.StartMode;
+import org.eclipse.triquetrum.workflow.editor.ExecutionStatusManager;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.eclipse.triquetrum.workflow.editor.util.EclipseUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
@@ -37,7 +38,7 @@ public class RunFeature extends AbstractExecutionManagementFeature {
 
   @Override
   protected boolean isAvailableForSelection(CompositeActor selection) {
-    return (getProcessHandleForSelection(selection)==null);
+    return (getProcessHandleForSelection(selection) == null);
   }
 
   @Override
@@ -75,4 +76,22 @@ public class RunFeature extends AbstractExecutionManagementFeature {
       // TODO stop the model immediately?
     }
   }
+
+//  @Override
+//  protected void doExecute(WorkflowExecutionService executionService, final CompositeActor selection) {
+//    // make sure that logging is shown in the console view
+//    TriqEditorPlugin.getDefault().initConsoleLogging();
+//
+//    ptolemy.actor.CompositeActor ptolemyModel = (ptolemy.actor.CompositeActor) selection.getWrappedObject();
+//    final ProcessHandle workflowExecutionHandle = executionService.start(StartMode.RUN, ptolemyModel, null, null, new ProcessEventListener() {
+//        @Override
+//        public void handle(ProcessEvent event) {
+//          ProcessingStatus status = event.getStatus();
+//          if (status != null) {
+//            ExecutionStatusManager.fireStatusChanged(selection.getName(), null, true);
+//          }
+//        }
+//      });
+//    ExecutionStatusManager.fireStatusChanged(selection.getName(), workflowExecutionHandle, false);
+//  }
 }

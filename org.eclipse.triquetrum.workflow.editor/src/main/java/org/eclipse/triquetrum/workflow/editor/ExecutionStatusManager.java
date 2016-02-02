@@ -14,19 +14,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.eclipse.core.expressions.IEvaluationContext;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.triquetrum.ProcessingStatus;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.ui.AbstractSourceProvider;
 import org.eclipse.ui.ISources;
+import org.eclipse.ui.PlatformUI;
 
 public class ExecutionStatusManager extends AbstractSourceProvider {
 
   public final static String MY_STATE = "org.eclipse.triquetrum.workflow.executionStatus";
-  public final static String RUNNING = "RUNNING";
-  public final static String IDLE = "IDLE";
-  public final static String NONE = "NONE";
 
   private static ExecutionStatusManager instance;
 
@@ -51,7 +50,7 @@ public class ExecutionStatusManager extends AbstractSourceProvider {
    */
   public static synchronized ProcessHandle getWorkflowExecutionHandle(String modelCode) {
     ProcessHandle handle = workflowExecutionHandles.get(modelCode);
-    if (handle!=null && handle.getExecutionStatus().isFinalStatus()) {
+    if (handle != null && handle.getExecutionStatus().isFinalStatus()) {
       // this is a handle that should no longer be here, take it out!
       removeWorkflowExecutionHandle(modelCode);
       handle = null;
@@ -63,17 +62,15 @@ public class ExecutionStatusManager extends AbstractSourceProvider {
    * Stores the handle to a running workflow. Only 1 instance of a workflow model can be running at a given time, in the current Triq editor version. When an
    * extra handle registration is attempted for a same model, an IllegalStateException is thrown.
    *
-   * @param workflowExecutionHandle
+   * @param handle
    * @throws IllegalStateException
    *           when the model is already registered as executing.
    */
-  public static synchronized void putWorkflowExecutionHandle(String modelCode, ProcessHandle workflowExecutionHandle) {
+  public static void putWorkflowExecutionHandle(String modelCode, ProcessHandle handle) {
     if (workflowExecutionHandles.containsKey(modelCode)) {
       throw new IllegalStateException("Model " + modelCode + " is already executing");
     }
-    workflowExecutionHandles.put(modelCode, workflowExecutionHandle);
-
-    instance.fireSourceChanged(ISources.WORKBENCH, MY_STATE, RUNNING);
+    workflowExecutionHandles.put(modelCode, handle);
   }
 
   /**
@@ -81,12 +78,42 @@ public class ExecutionStatusManager extends AbstractSourceProvider {
    * @param modelCode
    * @return the removed handle if it was present before the invocation of this method, null otherwise
    */
-  public static synchronized ProcessHandle removeWorkflowExecutionHandle(String modelCode) {
-    ProcessHandle result = workflowExecutionHandles.remove(modelCode);
-    if (result != null) {
-      instance.fireSourceChanged(ISources.WORKBENCH, MY_STATE, IDLE);
+  public static ProcessHandle removeWorkflowExecutionHandle(String modelCode) {
+    return workflowExecutionHandles.remove(modelCode);
+  }
+
+  /**
+   *
+   * @param modelCode
+   * @param processHandle
+   *          if no handle was registered yet for this code, and the model is in an ongoing execution, use and register this handle.
+   */
+  public static synchronized void fireStatusChanged(String modelCode, ProcessHandle processHandle, boolean manageThread) {
+    ProcessHandle handle = getWorkflowExecutionHandle(modelCode);
+
+    ProcessingStatus status = getExecutionStatusForHandle((handle != null ? handle : processHandle));
+
+    if ((ProcessingStatus.ACTIVE.equals(status)) && (handle == null && processHandle != null)) {
+      putWorkflowExecutionHandle(modelCode, processHandle);
+    } else if (ProcessingStatus.IDLE.equals(status)) {
+      removeWorkflowExecutionHandle(modelCode);
     }
-    return result;
+
+    final String value = status.name();
+
+    // TODO check if this is acceptable for SWT coding?
+    // we somehow need to take hold of the display instance, to handle UI thread issues correctly in the eventlistener callback below.
+    if(manageThread) {
+      final Display display = PlatformUI.getWorkbench().getDisplay();
+      display.asyncExec(new Runnable() {
+        @Override
+        public void run() {
+          instance.fireSourceChanged(ISources.WORKBENCH, MY_STATE, value);
+        }
+      });
+    } else {
+      instance.fireSourceChanged(ISources.WORKBENCH, MY_STATE, value);
+    }
   }
 
   @Override
@@ -103,13 +130,33 @@ public class ExecutionStatusManager extends AbstractSourceProvider {
   public Map getCurrentState() {
     Map<String, Object> map = new HashMap<>(1);
     CompositeActor selection = EditorUtils.getSelectedModel();
+    ProcessHandle handle = null;
     if (selection != null) {
-      boolean running = (getWorkflowExecutionHandle(selection.getName()) != null);
-      String value = running ? RUNNING : IDLE;
-      map.put(MY_STATE, value);
-    } else {
-      map.put(MY_STATE, IEvaluationContext.UNDEFINED_VARIABLE);
+      handle = getWorkflowExecutionHandle(selection.getName());
     }
+    map.put(MY_STATE, getExecutionStatusForHandle(handle));
     return map;
+  }
+
+  protected static ProcessingStatus getExecutionStatusForHandle(ProcessHandle handle) {
+    ProcessingStatus status = ProcessingStatus.IDLE;
+    if (handle != null) {
+      switch (handle.getExecutionStatus()) {
+      case STARTING:
+      case ACTIVE:
+      case STOPPING:
+        status = ProcessingStatus.ACTIVE;
+        break;
+      case SUSPENDED:
+        status = ProcessingStatus.SUSPENDED;
+        break;
+      case FINISHED:
+      case INTERRUPTED:
+      case ERROR:
+      default:
+        status = ProcessingStatus.IDLE;
+      }
+    }
+    return status;
   }
 }

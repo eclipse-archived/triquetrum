@@ -133,12 +133,11 @@
                </with>
                <!--
                <with variable="org.eclipse.triquetrum.workflow.executionStatus">
-                 <not>
                   <equals
-                        value="RUNNING">
+                        value="IDLE">
                   </equals>
-                 </not>
-               </with>-->
+               </with>
+               -->
               </and>
             </visibleWhen>
          </command>
@@ -160,11 +159,12 @@
                      </equals>
                   </iterate>
                </with>
+               <!--
                <with variable="org.eclipse.triquetrum.workflow.executionStatus">
                   <equals
-                        value="RUNNING">
+                        value="ACTIVE">
                   </equals>
-               </with>
+               </with>-->
               </and>
             </visibleWhen>
          </command>
@@ -186,11 +186,12 @@
                      </equals>
                   </iterate>
                </with>
+               <!--
                <with variable="org.eclipse.triquetrum.workflow.executionStatus">
                   <equals
-                        value="RUNNING">
+                        value="SUSPENDED">
                   </equals>
-               </with>
+               </with>-->
               </and>
             </visibleWhen>
          </command>
@@ -212,11 +213,17 @@
                      </equals>
                   </iterate>
                </with>
+               <!--
                <with variable="org.eclipse.triquetrum.workflow.executionStatus">
+                 <or>
                   <equals
-                        value="RUNNING">
+                        value="ACTIVE">
                   </equals>
-               </with>
+                  <equals
+                        value="SUSPENDED">
+                  </equals>
+                 </or>
+               </with>-->
               </and>
             </visibleWhen>
          </command>
