@@ -50,12 +50,12 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   }
 
   private boolean isPortPotentialConnectionStart(Port port) {
-    return (port!=null) && ((port.isOutput() && !(port.getContainer() instanceof CompositeActor))
+    return (port!=null) && (port.canAcceptNewConnection()) && ((port.isOutput() && !(port.getContainer() instanceof CompositeActor))
         || (port.isInput() && (port.getContainer() instanceof CompositeActor)));
   }
 
   private boolean isPortPotentialConnectionTarget(Port port) {
-    return (port!=null) && ((port.isOutput() && (port.getContainer() instanceof CompositeActor))
+    return (port!=null) && (port.canAcceptNewConnection()) && ((port.isOutput() && (port.getContainer() instanceof CompositeActor))
         || (port.isInput() && !(port.getContainer() instanceof CompositeActor)));
   }
 
