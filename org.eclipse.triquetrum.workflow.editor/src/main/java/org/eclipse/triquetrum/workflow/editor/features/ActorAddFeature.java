@@ -10,9 +10,7 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
@@ -52,6 +50,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
   private static final int ICON_X_OFFSET = SHAPE_X_OFFSET + 3;
   private static final int ICON_Y_OFFSET = 3;
   private static final int ICON_SIZE = 16;
+  private static final int PORT_Y_OFFSET = 28;
 
   private static final IColorConstant ACTOR_NAME_FOREGROUND = IColorConstant.BLACK;
   private static final IColorConstant PARAM_FOREGROUND = IColorConstant.DARK_GRAY;
@@ -59,15 +58,8 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
   private static final IColorConstant ACTOR_FOREGROUND = new ColorConstant(98, 131, 167);
   private static final IColorConstant ACTOR_BACKGROUND = new ColorConstant(187, 218, 247);
   private static final IColorConstant PORT_FOREGROUND = IColorConstant.BLACK;
-  private static final IColorConstant PORT_BACKGROUND = IColorConstant.WHITE;
-
-  private static final Map<Class<? extends Port>, IColorConstant> portColours;
-
-  static {
-    portColours = new HashMap<Class<? extends Port>, IColorConstant>();
-    // portColours.put(ErrorPort.class, ERRORPORT_BACKGROUND);
-    // portColours.put(ControlPort.class, CONTROLPORT_BACKGROUND);
-  }
+  private static final IColorConstant PORT_BACKGROUND_MULTIPORT = IColorConstant.WHITE;
+  private static final IColorConstant PORT_BACKGROUND_SINGLEPORT = IColorConstant.BLACK;
 
   public ActorAddFeature(IFeatureProvider fp) {
     super(fp);
@@ -236,15 +228,14 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       int pIndex = 0;
       for (Port p : (List<Port>) addedActor.getOutputPorts()) {
         FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
-        anchor.setLocation(createService.createPoint(15 + width, 10 + (pIndex++) * 12));
+        anchor.setLocation(createService.createPoint(15 + width, PORT_Y_OFFSET + (pIndex++) * 12));
         anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
         link(anchor, p, "OUTPUT");
         // assign a rectangle graphics algorithm for the box relative anchor
         // note, that the rectangle is inside the border of the rectangle shape
         final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, 12, 6, 0, 12 });
         portShape.setForeground(manageColor(PORT_FOREGROUND));
-        IColorConstant portColour = portColours.get(p.getClass());
-        portColour = portColour != null ? portColour : PORT_BACKGROUND;
+        IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
         portShape.setBackground(manageColor(portColour));
         portShape.setLineWidth(1);
         gaService.setLocationAndSize(portShape, -12, -6, 12, 12);
@@ -252,7 +243,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       pIndex = 0;
       for (Port p : (List<Port>) addedActor.getInputPorts()) {
         FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
-        anchor.setLocation(createService.createPoint(0, 10 + (pIndex++) * 12));
+        anchor.setLocation(createService.createPoint(0, PORT_Y_OFFSET + (pIndex++) * 12));
         anchor.setUseAnchorLocationAsConnectionEndpoint(true);
         anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
         link(anchor, p, "INPUT");
@@ -260,8 +251,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
         // note, that the rectangle is inside the border of the rectangle shape
         final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, 12, 6, 0, 12 });
         portShape.setForeground(manageColor(PORT_FOREGROUND));
-        IColorConstant portColour = portColours.get(p.getClass());
-        portColour = portColour != null ? portColour : PORT_BACKGROUND;
+        IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
         portShape.setBackground(manageColor(portColour));
         portShape.setLineWidth(1);
         gaService.setLocationAndSize(portShape, 0, -6, 12, 12);
