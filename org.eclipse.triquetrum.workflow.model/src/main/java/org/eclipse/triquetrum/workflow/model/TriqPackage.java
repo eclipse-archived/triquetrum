@@ -557,13 +557,22 @@ public interface TriqPackage extends EPackage {
   int PORT__LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Multi Port</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__MULTI_PORT = NAMED_OBJ_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PORT_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 3;
+  int PORT_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 4;
 
   /**
    * The operation id for the '<em>Get Container</em>' operation.
@@ -593,13 +602,22 @@ public interface TriqPackage extends EPackage {
   int PORT___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Can Accept New Connection</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___CAN_ACCEPT_NEW_CONNECTION = NAMED_OBJ_OPERATION_COUNT + 0;
+
+  /**
    * The number of operations of the '<em>Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PORT_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 0;
+  int PORT_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl <em>Relation</em>}' class.
@@ -1492,6 +1510,27 @@ public interface TriqPackage extends EPackage {
   EReference getPort_LinkedRelations();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.triquetrum.workflow.model.Port#isMultiPort <em>Multi Port</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Multi Port</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Port#isMultiPort()
+   * @see #getPort()
+   * @generated
+   */
+  EAttribute getPort_MultiPort();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Port#canAcceptNewConnection() <em>Can Accept New Connection</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Can Accept New Connection</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Port#canAcceptNewConnection()
+   * @generated
+   */
+  EOperation getPort__CanAcceptNewConnection();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.Relation <em>Relation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1827,6 +1866,22 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EReference PORT__LINKED_RELATIONS = eINSTANCE.getPort_LinkedRelations();
+
+    /**
+     * The meta object literal for the '<em><b>Multi Port</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PORT__MULTI_PORT = eINSTANCE.getPort_MultiPort();
+
+    /**
+     * The meta object literal for the '<em><b>Can Accept New Connection</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation PORT___CAN_ACCEPT_NEW_CONNECTION = eINSTANCE.getPort__CanAcceptNewConnection();
 
     /**
      * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl <em>Relation</em>}' class.

@@ -35,10 +35,10 @@ import org.eclipse.triquetrum.workflow.model.Port;
  */
 public class PortAddFeature extends AbstractAddShapeFeature {
 
-  private static final int SHAPE_X_OFFSET = 2;
-
+//  private static final int SHAPE_X_OFFSET = 2;
+//
   private static final IColorConstant PORT_BACKGROUND = IColorConstant.BLACK;
-  private static final IColorConstant ANCHOR_BACKGROUND = IColorConstant.RED;
+//  private static final IColorConstant ANCHOR_BACKGROUND = IColorConstant.RED;
 
   public PortAddFeature(IFeatureProvider fp) {
     super(fp);
