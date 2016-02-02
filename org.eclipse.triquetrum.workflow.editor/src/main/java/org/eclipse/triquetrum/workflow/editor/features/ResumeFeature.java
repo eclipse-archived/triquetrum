@@ -14,15 +14,14 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.triquetrum.TriqException;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
-import org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 
 public class ResumeFeature extends AbstractExecutionManagementFeature {
 
   public static final String HINT = "resume"; //$NON-NLS-1$
 
-  public ResumeFeature(TriqToolBehaviorProvider tbp, IFeatureProvider fp) {
-    super(tbp, fp);
+  public ResumeFeature(IFeatureProvider fp) {
+    super(fp);
   }
 
   @Override

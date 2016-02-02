@@ -24,7 +24,7 @@ import org.eclipse.ui.part.FileEditorInput;
 public class EclipseUtils {
   /**
    * Gets the page, even during startup.
-   * 
+   *
    * @return the page
    */
   public static IWorkbenchPage getPage() {
@@ -55,7 +55,7 @@ public class EclipseUtils {
     if (bench == null)
       return null;
     final IWorkbenchWindow[] windows = bench.getWorkbenchWindows();
-    if (windows == null)
+    if (windows == null || windows.length == 0)
       return null;
 
     return windows[0].getActivePage();
@@ -63,7 +63,7 @@ public class EclipseUtils {
 
   /**
    * Try to determine the IFile from the edit input
-   * 
+   *
    * @param input
    * @return file
    */
@@ -73,10 +73,10 @@ public class EclipseUtils {
     }
     return (IFile) input.getAdapter(IFile.class);
   }
-  
+
   /**
    * Opens an external editor on a file path
-   * 
+   *
    * @param file
    * @throws PartInitException
    */

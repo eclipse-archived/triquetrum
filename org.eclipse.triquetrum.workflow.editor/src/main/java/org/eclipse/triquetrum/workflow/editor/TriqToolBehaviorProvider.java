@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
@@ -27,7 +26,6 @@ import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
 import org.eclipse.graphiti.palette.IToolEntry;
 import org.eclipse.graphiti.palette.impl.PaletteCompartmentEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
-import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.editor.features.ActorConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PauseFeature;
@@ -38,50 +36,11 @@ import org.eclipse.triquetrum.workflow.editor.features.StopFeature;
 public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
 
   /**
-   * This map maintains the process handles for each running model. For the moment we only support 1 execution at a time for a given model. (but we want to
-   * support concurrent executions of different models)
-   */
-  private Map<String, ProcessHandle> workflowExecutionHandles = new ConcurrentHashMap<>();
-
-  /**
    *
    * @param diagramTypeProvider
    */
   public TriqToolBehaviorProvider(IDiagramTypeProvider diagramTypeProvider) {
     super(diagramTypeProvider);
-  }
-
-  /**
-   *
-   * @param modelCode
-   * @return the process handle of the running instance of the given model or null, if it was not registered as being executed
-   */
-  public ProcessHandle getWorkflowExecutionHandle(String modelCode) {
-    return workflowExecutionHandles.get(modelCode);
-  }
-
-  /**
-   * Stores the handle to a running workflow. Only 1 instance of a workflow model can be running at a given time, in the current Triq editor version. When an
-   * extra handle registration is attempted for a same model, an
-   *
-   * @param workflowExecutionHandle
-   * @throws IllegalStateException
-   *           when the model is already registered as executing.
-   */
-  public void putWorkflowExecutionHandle(ProcessHandle workflowExecutionHandle) {
-    if (workflowExecutionHandles.containsKey(workflowExecutionHandle.getModelHandle())) {
-      throw new IllegalStateException("Model " + workflowExecutionHandle.getModelHandle().getCode() + " is already executing");
-    }
-    workflowExecutionHandles.put(workflowExecutionHandle.getModelHandle().getCode(), workflowExecutionHandle);
-  }
-
-  /**
-   *
-   * @param workflowExecutionHandle
-   * @return the removed handle if it was present before the invocation of this method, null otherwise
-   */
-  public ProcessHandle removeWorkflowExecutionHandle(ProcessHandle workflowExecutionHandle) {
-    return workflowExecutionHandles.remove(workflowExecutionHandle.getModelHandle().getCode());
   }
 
   @Override
@@ -99,13 +58,13 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
   public ICustomFeature getCommandFeature(CustomContext context, String hint) {
     switch (hint) {
       case RunFeature.HINT:
-        return new RunFeature(this, getFeatureProvider());
+        return new RunFeature(getFeatureProvider());
       case PauseFeature.HINT:
-        return new PauseFeature(this, getFeatureProvider());
+        return new PauseFeature(getFeatureProvider());
       case ResumeFeature.HINT:
-        return new ResumeFeature(this, getFeatureProvider());
+        return new ResumeFeature(getFeatureProvider());
       case StopFeature.HINT:
-        return new StopFeature(this, getFeatureProvider());
+        return new StopFeature(getFeatureProvider());
       default:
         return super.getCommandFeature(context, hint);
     }

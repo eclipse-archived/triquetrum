@@ -14,15 +14,14 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.triquetrum.TriqException;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
-import org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 
 public class StopFeature extends AbstractExecutionManagementFeature {
 
   public static final String HINT = "stop"; //$NON-NLS-1$
 
-  public StopFeature(TriqToolBehaviorProvider tbp, IFeatureProvider fp) {
-    super(tbp, fp);
+  public StopFeature(IFeatureProvider fp) {
+    super(fp);
   }
 
   @Override
@@ -38,6 +37,6 @@ public class StopFeature extends AbstractExecutionManagementFeature {
   protected void doExecute(WorkflowExecutionService executionService, CompositeActor selection) throws TriqException {
     ProcessHandle processHandle = getProcessHandleForSelection(selection);
     executionService.terminate(processHandle);
-    toolProvider.removeWorkflowExecutionHandle(processHandle);
+    removeProcessHandle(processHandle);
   };
 }

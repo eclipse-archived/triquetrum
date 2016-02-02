@@ -17,18 +17,16 @@ import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
 import org.eclipse.triquetrum.TriqException;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
+import org.eclipse.triquetrum.workflow.editor.ExecutionStatusManager;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
-import org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.slf4j.Logger;
 
 public abstract class AbstractExecutionManagementFeature extends AbstractCustomFeature {
 
-  protected TriqToolBehaviorProvider toolProvider;
-
-  public AbstractExecutionManagementFeature(TriqToolBehaviorProvider tbp, IFeatureProvider fp) {
+  public AbstractExecutionManagementFeature(IFeatureProvider fp) {
     super(fp);
-    toolProvider = tbp;
   }
 
   @Override
@@ -98,14 +96,18 @@ public abstract class AbstractExecutionManagementFeature extends AbstractCustomF
   protected abstract void doExecute(WorkflowExecutionService executionService, CompositeActor selection) throws TriqException;
 
   protected ProcessHandle getProcessHandleForSelection(CompositeActor selection) {
-    return toolProvider.getWorkflowExecutionHandle(selection.getName());
+    return ExecutionStatusManager.getWorkflowExecutionHandle(selection.getName());
   }
 
   protected void storeProcessHandle(CompositeActor selection, ProcessHandle workflowExecutionHandle) {
-    toolProvider.putWorkflowExecutionHandle(workflowExecutionHandle);
+    ExecutionStatusManager.putWorkflowExecutionHandle(selection.getName(), workflowExecutionHandle);
   }
 
-  protected ProcessHandle removeProcessHandle(CompositeActor selection, ProcessHandle workflowExecutionHandle) {
-    return toolProvider.removeWorkflowExecutionHandle(workflowExecutionHandle);
+  protected ProcessHandle removeProcessHandle(CompositeActor selection) {
+    return ExecutionStatusManager.removeWorkflowExecutionHandle(selection.getName());
+  }
+
+  protected ProcessHandle removeProcessHandle(ProcessHandle workflowExecutionHandle) {
+    return ExecutionStatusManager.removeWorkflowExecutionHandle(workflowExecutionHandle.getModelHandle().getCode());
   }
 }

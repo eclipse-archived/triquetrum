@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.ui.IWorkbenchPage;
 
 public class EditorUtils {
 
@@ -53,7 +54,8 @@ public class EditorUtils {
   @SuppressWarnings("restriction")
   public static CompositeActor getSelectedModel() {
     NamedObj result = null;
-    final ISelection sel = EclipseUtils.getPage().getSelection();
+    IWorkbenchPage page = EclipseUtils.getPage();
+    final ISelection sel = page!=null ? page.getSelection() : null;
     if (sel != null && sel instanceof IStructuredSelection) {
       final IStructuredSelection str = (IStructuredSelection) sel;
       Object res = str.getFirstElement();
