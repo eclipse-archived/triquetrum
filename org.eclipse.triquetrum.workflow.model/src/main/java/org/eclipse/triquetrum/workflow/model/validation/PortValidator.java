@@ -28,5 +28,7 @@ public interface PortValidator {
   boolean validateOutput(boolean value);
   boolean validateLinkedRelations(EList<Relation> value);
 
+  boolean validateMultiPort(boolean value);
+
   boolean validateContainer(Entity value);
 }

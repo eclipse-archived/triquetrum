@@ -20,6 +20,8 @@ Package model <http://www.eclipse.org/triquetrum>
     Attribute input : EBoolean
     Attribute output : EBoolean
     Reference linkedRelations : Relation<<0..*>>
+    Attribute multiPort : EBoolean
+    Operation canAcceptNewConnection() : EBoolean
 
   Class Relation -> NamedObj
     Reference linkedPorts : Port<<0..*>>

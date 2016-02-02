@@ -56,6 +56,7 @@ public class PortItemProvider extends NamedObjItemProvider {
       addInputPropertyDescriptor(object);
       addOutputPropertyDescriptor(object);
       addLinkedRelationsPropertyDescriptor(object);
+      addMultiPortPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -127,6 +128,28 @@ public class PortItemProvider extends NamedObjItemProvider {
   }
 
   /**
+   * This adds a property descriptor for the Multi Port feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addMultiPortPropertyDescriptor(Object object) {
+    itemPropertyDescriptors.add
+      (createItemPropertyDescriptor
+        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+         getResourceLocator(),
+         getString("_UI_Port_multiPort_feature"),
+         getString("_UI_PropertyDescriptor_description", "_UI_Port_multiPort_feature", "_UI_Port_type"),
+         TriqPackage.Literals.PORT__MULTI_PORT,
+         true,
+         false,
+         false,
+         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+         null,
+         null));
+  }
+
+  /**
    * This returns Port.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -166,6 +189,7 @@ public class PortItemProvider extends NamedObjItemProvider {
     switch (notification.getFeatureID(Port.class)) {
       case TriqPackage.PORT__INPUT:
       case TriqPackage.PORT__OUTPUT:
+      case TriqPackage.PORT__MULTI_PORT:
         fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
         return;
     }

@@ -187,6 +187,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
             newPort.setWrappedType(port.getClass().getName());
             newPort.setInput(((IOPort) port).isInput());
             newPort.setOutput(((IOPort) port).isOutput());
+            newPort.setMultiPort(((IOPort) port).isMultiport());
             if (((IOPort) port).isInput()) {
               getInputPorts().add(newPort);
             }

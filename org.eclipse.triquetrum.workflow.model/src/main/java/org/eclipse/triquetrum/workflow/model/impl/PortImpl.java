@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.model.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -41,6 +42,7 @@ import ptolemy.kernel.util.NameDuplicationException;
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isInput <em>Input</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isOutput <em>Output</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#getLinkedRelations <em>Linked Relations</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isMultiPort <em>Multi Port</em>}</li>
  * </ul>
  *
  * @generated
@@ -95,6 +97,26 @@ public class PortImpl extends NamedObjImpl implements Port {
    * @ordered
    */
   protected EList<Relation> linkedRelations;
+
+  /**
+   * The default value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMultiPort()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean MULTI_PORT_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMultiPort()
+   * @generated
+   * @ordered
+   */
+  protected boolean multiPort = MULTI_PORT_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -185,6 +207,39 @@ public class PortImpl extends NamedObjImpl implements Port {
     return linkedRelations;
   }
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isMultiPort() {
+    return multiPort;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setMultiPort(boolean newMultiPort) {
+    boolean oldMultiPort = multiPort;
+    multiPort = newMultiPort;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__MULTI_PORT, oldMultiPort, multiPort));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * Checks whether the port can accept a new connection.
+   * For single ports, this means that if there is already a connection, the new request must be refused.
+   * For multi ports there is currently no constraint.
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean canAcceptNewConnection() {
+    return isMultiPort() || getLinkedRelations().isEmpty();
+  }
+
   @Override
   public Entity getContainer() {
     return (Entity) eContainer();
@@ -271,6 +326,8 @@ public class PortImpl extends NamedObjImpl implements Port {
         return isOutput();
       case TriqPackage.PORT__LINKED_RELATIONS:
         return getLinkedRelations();
+      case TriqPackage.PORT__MULTI_PORT:
+        return isMultiPort();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -294,6 +351,9 @@ public class PortImpl extends NamedObjImpl implements Port {
         getLinkedRelations().clear();
         getLinkedRelations().addAll((Collection<? extends Relation>)newValue);
         return;
+      case TriqPackage.PORT__MULTI_PORT:
+        setMultiPort((Boolean)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -315,6 +375,9 @@ public class PortImpl extends NamedObjImpl implements Port {
       case TriqPackage.PORT__LINKED_RELATIONS:
         getLinkedRelations().clear();
         return;
+      case TriqPackage.PORT__MULTI_PORT:
+        setMultiPort(MULTI_PORT_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -333,8 +396,24 @@ public class PortImpl extends NamedObjImpl implements Port {
         return output != OUTPUT_EDEFAULT;
       case TriqPackage.PORT__LINKED_RELATIONS:
         return linkedRelations != null && !linkedRelations.isEmpty();
+      case TriqPackage.PORT__MULTI_PORT:
+        return multiPort != MULTI_PORT_EDEFAULT;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+    switch (operationID) {
+      case TriqPackage.PORT___CAN_ACCEPT_NEW_CONNECTION:
+        return canAcceptNewConnection();
+    }
+    return super.eInvoke(operationID, arguments);
   }
 
   /**
@@ -351,6 +430,8 @@ public class PortImpl extends NamedObjImpl implements Port {
     result.append(input);
     result.append(", output: ");
     result.append(output);
+    result.append(", multiPort: ");
+    result.append(multiPort);
     result.append(')');
     return result.toString();
   }
