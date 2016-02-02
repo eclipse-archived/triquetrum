@@ -17,10 +17,10 @@ import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.triquetrum.ProcessingStatus;
 import org.eclipse.triquetrum.processing.ErrorCode;
 import org.eclipse.triquetrum.processing.ProcessingException;
 import org.eclipse.triquetrum.processing.model.Attribute;
-import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 import org.eclipse.triquetrum.processing.model.ResultBlock;
 import org.eclipse.triquetrum.processing.model.ResultItem;
 import org.eclipse.triquetrum.processing.model.Task;

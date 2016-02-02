@@ -10,99 +10,152 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.EventObject;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.eclipse.triquetrum.Event;
+import org.eclipse.triquetrum.ProcessingStatus;
 
 /**
- * An event interface as a basis for all specific events related to process executions.
- * It reuses some concepts from eclipse's DebugEvent, e.g. the <i>kind</i> and <i>detail</i>.
+ * An event implementation as a basis for all specific events related to process executions.
  * <p>
- * Topics of ProcessEvents are of the format <code>org/eclipse/triquetrum/process/[PROCESS ID]/[KIND]/[DETAIL]/...</code>.
+ * Topics of ProcessEvents are of the format <code>org/eclipse/triquetrum/process/[PROCESS ID]/[STATUS]/...</code>, where [STATUS] is optional, i.e. when it's
+ * an event about a state change.
  * </p>
- * 
+ *
  * @see org.eclipse.debug.core.DebugEvent about event kind & detail
  */
-public interface ProcessEvent extends Event {
+public class ProcessEvent extends EventObject implements Event {
+  private static final long serialVersionUID = 411059590003641225L;
 
-  String TOPIC_PREFIX = "org/eclipse/triquetrum/process/";
-  
-  enum Kind {
-    /**
-     * Indicates a process was resumed. 
-     * The detail will indicate in which way it was resumed (STEP or CLIENT_REQUEST).
-     */
-    RESUME(0x0001), 
-    /**
-     * Indicates a process was suspended. 
-     * The detail will indicate in which way it was resumed (STEP_END, BREAKPOINT or CLIENT_REQUEST).
-     */
-    SUSPEND(0x0002), 
-    /**
-     * Indicates a process or a child(i.e. a Task) was created/started
-     */
-    CREATE(0x0004), 
-    /**
-     * Indicates a process or a child(i.e. a Task) was terminated on CLIENT_REQUEST (via a specific terminate() call) or naturally (with UNSPECIFIED detail)
-     */
-    TERMINATE(0x0008), 
-    UNSPECIFIED(0);
-    
-    int kind;
-    Kind(int kind) {
-      this.kind = kind;
-    }
-    int getKind() {
-      return kind;
-    }
-  }
+  public final static String TOPIC_PREFIX = "org/eclipse/triquetrum/process/";
+  public final static String BREAKPOINTS = "___breakpoints";
 
-  enum Detail {
-    /**
-     * Indicates a process was resumed by a step action.
-     * <p>
-     * In eclipse's DebugEvent, this value is used for STEP_OVER.
-     * In Triquetrum this corresponds to the execution of one Task.
-     * <br/>
-     * In the far future we might want to differentiate stepping <i>over</i> versus <i>into</i> Tasks 
-     * (i.e. to step by its sub-tasks), but for the moment this is not supported.
-     * </p>
-     */
-    STEP(0x0002),
-    /**
-     * Indicates a process was suspended due to the completion of a step action.
-     */
-    STEP_END(0x0008),
-    /**
-     * Indicates a process was suspended by a breakpoint.
-     */
-    BREAKPOINT(0x0010),
-    /**
-     * Indicates a process was suspended, resumed or terminated due to a client request, i.e. an explicit suspend(), resume() or terminate() call.
-     */
-    CLIENT_REQUEST(0x0020),
-    UNSPECIFIED(0);
-    int detail;
-    Detail(int detail) {
-      this.detail = detail;
-    }
-    int getDetail() {
-      return detail;
-    }
+  private String processId;
+  private Date timeStamp;
+  private String topic;
+  private Map<String, String> eventProperties = new HashMap<String, String>();
+
+  private ProcessingStatus status;
+  private Throwable throwable;
+
+  /**
+   * Event to signal an arbitrary interesting fact occurring during a process execution.
+   * That fact should be summarised as a subtopic.
+   *
+   * @param processId
+   * @param subtopic
+   *          topic fragment that gets added after the topic prefix and processId
+   */
+  public ProcessEvent(String processId, String subTopic) {
+    super(processId);
+    this.processId = processId;
+    this.topic = TOPIC_PREFIX + processId + "/" + subTopic;
+    this.timeStamp = new Date();
   }
 
   /**
-   * @return the kind of the event
-   * @see org.eclipse.debug.core.DebugEvent.getKind()
+   * Event to signal a process status change.
+   *
+   * @param processId
+   * @param status
+   *          the new process status
    */
-  Kind getKind();
+  public ProcessEvent(String processId, ProcessingStatus status) {
+    super(processId);
+    this.processId = processId;
+    this.status = status;
+    this.topic = TOPIC_PREFIX + processId + "/" + status;
+    this.timeStamp = new Date();
+  }
 
   /**
-   * @return the detail of the event
-   * @see org.eclipse.debug.core.DebugEvent.getDetail()
-   */
-  Detail getDetail();
-  
+  * Event to signal that a process went in ERROR, due to the given errorCause.
+  *
+  * @param processId
+  * @param errorCause
+  */
+ public ProcessEvent(String processId, Throwable errorCause) {
+   super(processId);
+   this.processId = processId;
+   this.status = ProcessingStatus.ERROR;
+   this.topic = TOPIC_PREFIX + processId + "/" + status;
+   this.timeStamp = new Date();
+   this.throwable = errorCause;
+ }
+
+
   /**
    * @return the id of the process to which this event is related
    */
-  String getProcessId();
+  public String getProcessId() {
+    return processId;
+  }
+
+  /**
+   *
+   * @return the throwable that caused the process to go into ERROR status;
+   *  null if the event is not related to a processing error.
+   */
+  public Throwable getThrowable() {
+    return throwable;
+  }
+
+  /**
+   *
+   * @return the status for this event, if it's a status-related event; null otherwise
+   */
+  public ProcessingStatus getStatus() {
+    return status;
+  }
+
+  public String getTopic() {
+    return topic;
+  }
+
+  public Date getCreationTS() {
+    return timeStamp;
+  }
+
+  /**
+   * @return 0L as default duration
+   */
+  public Long getDuration() {
+    return 0L;
+  }
+
+  public String getProperty(String propName) {
+    return eventProperties.get(propName);
+  }
+
+  public Iterator<String> getPropertyNames() {
+    return eventProperties.keySet().iterator();
+  }
+
+  protected String putProperty(String propName, String propValue) {
+    return eventProperties.put(propName, propValue);
+  }
+
+  protected String removeProperty(String propName) {
+    return eventProperties.remove(propName);
+  }
+
+  @Override
+  public String toString() {
+    return toString(new SimpleDateFormat("dd/MM/yy HH:mm:ss.SSS"));
+  }
+
+  /**
+   *
+   * @param dateFormat
+   * @return a toString representation of the event, where dates are formatted with the given dateFormat.
+   */
+  public String toString(DateFormat dateFormat) {
+    return dateFormat.format(getCreationTS()) + " ProcessEvent [topic=" + getTopic() + "]";
+  }
 }

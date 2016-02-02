@@ -12,17 +12,17 @@ package org.eclipse.triquetrum;
 
 
 /**
- * 
+ *
  * TODO : check what's better : different methods per large event categories
  * or one hyper-generic method as below...
- * 
+ *
  */
-public interface EventListener extends java.util.EventListener{
-  
+public interface EventListener<T extends Event> extends java.util.EventListener {
+
   /**
-   * 
+   *
    * @param event
    */
-  void handle(Event event);
+  void handle(T event);
 
 }

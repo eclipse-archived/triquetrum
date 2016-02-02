@@ -13,7 +13,7 @@ package org.eclipse.triquetrum.workflow;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.eclipse.triquetrum.processing.model.ProcessingStatus;
+import org.eclipse.triquetrum.ProcessingStatus;
 
 /**
  * A light-weight handle on a workflow model-based process execution.

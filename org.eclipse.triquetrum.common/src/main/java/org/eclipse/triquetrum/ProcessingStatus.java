@@ -8,7 +8,7 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.processing.model;
+package org.eclipse.triquetrum;
 
 /**
  * @author erwin

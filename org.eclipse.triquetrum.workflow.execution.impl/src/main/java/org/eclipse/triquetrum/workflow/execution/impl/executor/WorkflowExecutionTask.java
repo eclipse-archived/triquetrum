@@ -21,14 +21,14 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.RunnableFuture;
 
 import org.eclipse.triquetrum.EventListener;
+import org.eclipse.triquetrum.ProcessingStatus;
 import org.eclipse.triquetrum.processing.ProcessingException;
-import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.ModelHandle;
+import org.eclipse.triquetrum.workflow.ProcessEvent;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService.StartMode;
 import org.eclipse.triquetrum.workflow.execution.impl.debug.ActorBreakpointListener;
 import org.eclipse.triquetrum.workflow.execution.impl.debug.PortBreakpointListener;
-import org.eclipse.triquetrum.workflow.execution.impl.event.StatusProcessEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +66,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
   private Manager manager;
   private EventListener listener;
 
-  public WorkflowExecutionTask(StartMode mode, ModelHandle modelHandle, String processId, 
+  public WorkflowExecutionTask(StartMode mode, ModelHandle modelHandle, String processId,
       Map<String, String> parameterOverrides, EventListener listener,
       String... breakpointNames) {
     this.mode = mode;
@@ -100,7 +100,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
 
   /**
    * Performs the real model execution on the caller's thread.
-   * 
+   *
    * @return the final status after the model execution has terminated
    */
   @Override
@@ -168,7 +168,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
         manager = null;
       }
       if (listener != null) {
-        listener.handle(new StatusProcessEvent(processId, status, null));
+        listener.handle(new ProcessEvent(processId, status));
       }
     } else {
       LOGGER.trace("Context {} - Ignoring canceling execution of model {} that is already done", processId, modelHandle.getCode());
@@ -232,7 +232,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
     LOGGER.warn("Context " + processId + " - Execution error of model " + getModelHandle().getCode(), throwable);
     status = ProcessingStatus.ERROR;
     if (listener != null) {
-      listener.handle(new StatusProcessEvent(processId, status, throwable));
+      listener.handle(new ProcessEvent(processId, throwable));
     }
     busy = false;
   }
@@ -252,7 +252,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
         status = ProcessingStatus.INTERRUPTED;
       }
       if (listener != null) {
-        listener.handle(new StatusProcessEvent(processId, status, null));
+        listener.handle(new ProcessEvent(processId, status));
       }
       busy = false;
     }
