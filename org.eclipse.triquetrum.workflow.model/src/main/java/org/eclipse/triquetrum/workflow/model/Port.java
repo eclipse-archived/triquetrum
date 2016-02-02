@@ -24,6 +24,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#isInput <em>Input</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#isOutput <em>Output</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations <em>Linked Relations</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#isMultiPort <em>Multi Port</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getPort()
@@ -100,5 +101,39 @@ public interface Port extends NamedObj {
    * @generated
    */
   EList<Relation> getLinkedRelations();
+
+  /**
+   * Returns the value of the '<em><b>Multi Port</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Multi Port</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Multi Port</em>' attribute.
+   * @see #setMultiPort(boolean)
+   * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getPort_MultiPort()
+   * @model
+   * @generated
+   */
+  boolean isMultiPort();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Port#isMultiPort <em>Multi Port</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Multi Port</em>' attribute.
+   * @see #isMultiPort()
+   * @generated
+   */
+  void setMultiPort(boolean value);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  boolean canAcceptNewConnection();
 
 } // Port

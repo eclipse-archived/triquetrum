@@ -281,6 +281,24 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getPort_MultiPort() {
+    return (EAttribute)portEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getPort__CanAcceptNewConnection() {
+    return portEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getRelation() {
     return relationEClass;
   }
@@ -506,6 +524,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEAttribute(portEClass, PORT__INPUT);
     createEAttribute(portEClass, PORT__OUTPUT);
     createEReference(portEClass, PORT__LINKED_RELATIONS);
+    createEAttribute(portEClass, PORT__MULTI_PORT);
+    createEOperation(portEClass, PORT___CAN_ACCEPT_NEW_CONNECTION);
 
     relationEClass = createEClass(RELATION);
     createEReference(relationEClass, RELATION__LINKED_PORTS);
@@ -591,6 +611,9 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEAttribute(getPort_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPort_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPort_LinkedRelations(), this.getRelation(), this.getRelation_LinkedPorts(), "linkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPort_MultiPort(), ecorePackage.getEBoolean(), "multiPort", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEOperation(getPort__CanAcceptNewConnection(), ecorePackage.getEBoolean(), "canAcceptNewConnection", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(relationEClass, Relation.class, "Relation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
