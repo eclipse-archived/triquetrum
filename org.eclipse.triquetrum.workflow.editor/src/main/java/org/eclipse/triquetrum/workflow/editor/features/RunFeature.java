@@ -22,8 +22,12 @@ import org.eclipse.triquetrum.workflow.editor.ExecutionStatusManager;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.eclipse.triquetrum.workflow.editor.util.EclipseUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RunFeature extends AbstractExecutionManagementFeature {
+
+  private final static Logger LOGGER = LoggerFactory.getLogger(RunFeature.class);
 
   public static final String HINT = "run"; //$NON-NLS-1$
 
@@ -38,11 +42,15 @@ public class RunFeature extends AbstractExecutionManagementFeature {
 
   @Override
   protected boolean isAvailableForSelection(CompositeActor selection) {
-    return (getProcessHandleForSelection(selection) == null);
+    LOGGER.trace("isAvailableForSelection() - entry : {}", selection.getName());
+    boolean result = (getProcessHandleForSelection(selection) == null);
+    LOGGER.trace("isAvailableForSelection() - exit : {} -> {}", selection.getName(), result);
+    return result;
   }
 
   @Override
   protected void doExecute(WorkflowExecutionService executionService, final CompositeActor selection) {
+    LOGGER.trace("doExecute() - entry : {}", selection.getName());
     // make sure that logging is shown in the console view
     TriqEditorPlugin.getDefault().initConsoleLogging();
     // TODO check if this is acceptable for SWT coding?
@@ -53,17 +61,20 @@ public class RunFeature extends AbstractExecutionManagementFeature {
     ProcessHandle workflowExecutionHandle = executionService.start(StartMode.RUN, ptolemyModel, null, null, new ProcessEventListener() {
       @Override
       public void handle(ProcessEvent event) {
+          LOGGER.trace("ProcessEventListener.handle() - entry : {} -> {}", selection.getName(), event);
           ProcessingStatus status = event.getStatus();
-          if(status!=null && status.isFinalStatus()) {
-            // the execution is done so we need to update the state of process handle, and the accompanying execution commands in the toolbar
+          if(status!=null) {
+            // we need to update the state of process handle, and the accompanying execution commands in the toolbar
             // this requires display to help us out with UI thread handling...
             display.syncExec(new Runnable() {
               @Override
               public void run() {
-                removeProcessHandle(selection);
+                ProcessHandle handle = status.isFinalStatus() ? removeProcessHandle(selection) : getProcessHandleForSelection(selection);
+                fireExecutionStatusChange(handle);
               }
             });
           }
+          LOGGER.trace("ProcessEventListener.handle() - exit : {} -> {}", selection.getName(), event);
       }
     });
     // TODO there is a risk here that for very fast model executions, the listener has already been invoked before this next step is done.
@@ -75,23 +86,6 @@ public class RunFeature extends AbstractExecutionManagementFeature {
     } catch (IllegalStateException e) {
       // TODO stop the model immediately?
     }
+    LOGGER.trace("doExecute() - exit : {}", selection.getName());
   }
-
-//  @Override
-//  protected void doExecute(WorkflowExecutionService executionService, final CompositeActor selection) {
-//    // make sure that logging is shown in the console view
-//    TriqEditorPlugin.getDefault().initConsoleLogging();
-//
-//    ptolemy.actor.CompositeActor ptolemyModel = (ptolemy.actor.CompositeActor) selection.getWrappedObject();
-//    final ProcessHandle workflowExecutionHandle = executionService.start(StartMode.RUN, ptolemyModel, null, null, new ProcessEventListener() {
-//        @Override
-//        public void handle(ProcessEvent event) {
-//          ProcessingStatus status = event.getStatus();
-//          if (status != null) {
-//            ExecutionStatusManager.fireStatusChanged(selection.getName(), null, true);
-//          }
-//        }
-//      });
-//    ExecutionStatusManager.fireStatusChanged(selection.getName(), workflowExecutionHandle, false);
-//  }
 }

@@ -99,15 +99,19 @@ public abstract class AbstractExecutionManagementFeature extends AbstractCustomF
     return ExecutionStatusManager.getWorkflowExecutionHandle(selection.getName());
   }
 
-  protected void storeProcessHandle(CompositeActor selection, ProcessHandle workflowExecutionHandle) {
-    ExecutionStatusManager.putWorkflowExecutionHandle(selection.getName(), workflowExecutionHandle);
+  protected void storeProcessHandle(CompositeActor selection, ProcessHandle handle) {
+    ExecutionStatusManager.putWorkflowExecutionHandle(selection.getName(), handle);
   }
 
   protected ProcessHandle removeProcessHandle(CompositeActor selection) {
     return ExecutionStatusManager.removeWorkflowExecutionHandle(selection.getName());
   }
 
-  protected ProcessHandle removeProcessHandle(ProcessHandle workflowExecutionHandle) {
-    return ExecutionStatusManager.removeWorkflowExecutionHandle(workflowExecutionHandle.getModelHandle().getCode());
+  protected ProcessHandle removeProcessHandle(ProcessHandle handle) {
+    return ExecutionStatusManager.removeWorkflowExecutionHandle(handle.getModelHandle().getCode());
+  }
+
+  protected void fireExecutionStatusChange(ProcessHandle handle) {
+    ExecutionStatusManager.getInstance().fireStatusChanged(handle);
   }
 }

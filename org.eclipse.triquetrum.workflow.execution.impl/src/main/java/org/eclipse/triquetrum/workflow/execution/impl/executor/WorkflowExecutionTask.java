@@ -261,6 +261,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
   /**
    * Changes the model execution status according to the new manager state.
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void managerStateChanged(ptolemy.actor.Manager manager) {
     State state = manager.getState();
@@ -278,6 +279,9 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
         if (suspended && ProcessingStatus.ACTIVE.equals(status)) {
           LOGGER.info("Context {} - Suspended at startup for Flow {}", processId, modelHandle.getCode());
           manager.pause();
+        }
+        if (listener != null) {
+          listener.handle(new ProcessEvent(processId, status));
         }
       }
       if (status.isFinalStatus()) {
