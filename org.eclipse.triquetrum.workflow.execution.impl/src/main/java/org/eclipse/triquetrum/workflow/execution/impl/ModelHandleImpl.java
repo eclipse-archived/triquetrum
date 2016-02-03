@@ -12,6 +12,8 @@ package org.eclipse.triquetrum.workflow.execution.impl;
 
 import java.net.URI;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.ptolemy.commons.VersionSpecification;
 
@@ -26,12 +28,12 @@ public class ModelHandleImpl implements ModelHandle {
 	private VersionSpecification version;
 	private String rawModelDefinition;
 	private transient CompositeActor model;
-	
+
 	public ModelHandleImpl(CompositeActor model) {
 		code = model.getName();
 		this.model = model;
 	}
-	
+
 	@Override
 	public String getCode() {
 		return code;
@@ -56,24 +58,46 @@ public class ModelHandleImpl implements ModelHandle {
 	public VersionSpecification getVersion() {
 		return version;
 	}
-	
+
 	public void setCode(String code) {
 		this.code = code;
 	}
-	
+
 	public void setModel(TypedCompositeActor model) {
 		this.model = model;
 	}
-	
+
 	public void setRawModelDefinition(String rawModelDefinition) {
 		this.rawModelDefinition = rawModelDefinition;
 	}
-	
+
 	public void setResourceLocator(URI resourceLocator) {
 		this.resourceLocator = resourceLocator;
 	}
-	
+
 	public void setVersion(VersionSpecification version) {
 		this.version = version;
 	}
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(13, 23).append(code).append(version).toHashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    ModelHandleImpl other = (ModelHandleImpl) obj;
+    return new EqualsBuilder().appendSuper(super.equals(obj)).append(code, other.code).append(version, other.version).isEquals();
+  }
+
+  @Override
+  public String toString() {
+    return "ModelHandleImpl [resourceLocator=" + resourceLocator + ", code=" + code + ", version=" + version + "]";
+  }
 }

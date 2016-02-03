@@ -8,7 +8,7 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.execution.impl.event;
+package org.eclipse.triquetrum.workflow.event;
 
 
 public class BreakpointSuspendEvent extends SuspendEvent {

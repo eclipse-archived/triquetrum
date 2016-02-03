@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.stream.Stream;
 
+import org.eclipse.triquetrum.ProcessingStatus;
 import org.eclipse.triquetrum.processing.ProcessingException;
 
 /**

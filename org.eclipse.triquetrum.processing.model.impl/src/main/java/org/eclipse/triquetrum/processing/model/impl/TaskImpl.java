@@ -18,11 +18,11 @@ import java.util.stream.Stream;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.eclipse.triquetrum.ProcessingStatus;
 import org.eclipse.triquetrum.processing.ProcessingException;
 import org.eclipse.triquetrum.processing.model.Attribute;
 import org.eclipse.triquetrum.processing.model.AttributeHolder;
 import org.eclipse.triquetrum.processing.model.ProcessingEvent;
-import org.eclipse.triquetrum.processing.model.ProcessingStatus;
 import org.eclipse.triquetrum.processing.model.ResultBlock;
 import org.eclipse.triquetrum.processing.model.Task;
 

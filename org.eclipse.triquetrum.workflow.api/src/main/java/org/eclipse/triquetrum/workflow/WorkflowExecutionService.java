@@ -17,19 +17,18 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.eclipse.triquetrum.Event;
-import org.eclipse.triquetrum.EventListener;
 
 import ptolemy.actor.CompositeActor;
 
 /**
  * A service interface for everything related to executing a workflow,
  * including support for stopping/pausing/resuming/stepping/breakpoints etc.
- * 
+ *
  * @author erwin
  *
  */
 public interface WorkflowExecutionService {
-  
+
   enum StartMode {
     RUN, DEBUG, STEP;
   }
@@ -42,7 +41,7 @@ public interface WorkflowExecutionService {
    * </p>
    * <p>
    * The optional listener will be notified of all detailed <code>ProcessEvent</code>s.
-   * Remark that in the absence of a listener, steps/resume may still be triggered via <code>step()</code> and <code>resume()</code>, 
+   * Remark that in the absence of a listener, steps/resume may still be triggered via <code>step()</code> and <code>resume()</code>,
    * and status info may be obtained via iteratively invoking <code>refresh(Processhandle)</code>.
    * <br/>
    * But such a "polling" approach is not desirable. A listener-based approach is almost always more efficient and more powerful.
@@ -67,7 +66,7 @@ public interface WorkflowExecutionService {
    * </p>
    * <p>
    * Breakpoints must refer to named elements in the running process : actors and/or ports.
-   * <br/> 
+   * <br/>
    * The names given should be the full hierarchic names, without the flow's name.
    * E.g. in a HelloWorld model with a Constant actor connected to a Console, valid breakpoints could be :
    * <ul>
@@ -78,8 +77,8 @@ public interface WorkflowExecutionService {
    * </p>
    * <p>
    * The optional <code>processId</code> identifies a Process that is being executed across one or more workflow executions.
-   * Such <code>Process</code> instances are typically created outside of the Passerelle runtime services. 
-   * For simple processes, each workflow execution typically corresponds to one Process which ends up in a final status. 
+   * Such <code>Process</code> instances are typically created outside of the Passerelle runtime services.
+   * For simple processes, each workflow execution typically corresponds to one Process which ends up in a final status.
    * For more complex processes, several consecutive workflow executions may be involved that are linked through delegation/redirection, sharing a same Process context.
    * </p>
    * <p>
@@ -93,17 +92,17 @@ public interface WorkflowExecutionService {
    * </p>
    * @param mode
    * @param modelHandle
-   * @param processId can be null : for context-aware executions, this can be used to set/share the <code>Process</code> context for a flow execution. 
+   * @param processId can be null : for context-aware executions, this can be used to set/share the <code>Process</code> context for a flow execution.
    * @param parameterOverrides can be null : overridden values of flow/actor parameters
    * @param listener can be null
    * @param breakpointNames optional names of the Flow elements (ports and/or actors) where the process should place a breakpoint, if started in DEBUG mode
    * @return
    */
-  ProcessHandle start(StartMode mode, ModelHandle modelHandle, String processId, Map<String, String> parameterOverrides, EventListener listener, String... breakpointNames);
+  ProcessHandle start(StartMode mode, ModelHandle modelHandle, String processId, Map<String, String> parameterOverrides, ProcessEventListener listener, String... breakpointNames);
 
   /**
    * Variation of the start-method that directly receives the model to execute i.o. a ModelHandle.
-   * 
+   *
    * @param mode
    * @param model
    * @param processId
@@ -112,7 +111,7 @@ public interface WorkflowExecutionService {
    * @param breakpointNames
    * @return
    */
-  ProcessHandle start(StartMode mode, CompositeActor model, String processId, Map<String, String> parameterOverrides, EventListener listener, String... breakpointNames);
+  ProcessHandle start(StartMode mode, CompositeActor model, String processId, Map<String, String> parameterOverrides, ProcessEventListener listener, String... breakpointNames);
 
   /**
    * Wait until the process has finished and return the final status.
@@ -129,9 +128,9 @@ public interface WorkflowExecutionService {
    * @param time
    * @param unit
    * @return the handle with a final status
-   * 
+   *
    * @throws WorkflowNotExecutingException when no process execution information was found.
-   * @throws ExecutionException when there was an error executing the process; 
+   * @throws ExecutionException when there was an error executing the process;
    *  Typically <code>getCause()</code> will contain a <code>PasserelleException</code> with concrete error info.
    * @throws InterruptedException when the waiting thread has been interrupted
    * @throws TimeoutException when the process did not finish within the given maximum wait time
@@ -150,37 +149,37 @@ public interface WorkflowExecutionService {
    * @throws WorkflowNotExecutingException when the process identified by the handle was not (or no longer) running
    */
   ProcessHandle terminate(ProcessHandle processHandle) throws WorkflowNotExecutingException;
-  
+
   /**
-   * 
+   *
    * @param processHandle
    * @return the updated processHandle
    * @throws WorkflowNotExecutingException when the process identified by the handle was not (or no longer) running
    */
   ProcessHandle suspend(ProcessHandle processHandle) throws WorkflowNotExecutingException;
-  
+
   /**
    * Resume all suspended elements and continue the execution until next breakpoint(s) are reached
    * or until the end if no breakpoints are encountered anymore.
-   * 
+   *
    * @param processHandle
    * @return the updated processHandle
    * @throws WorkflowNotExecutingException when the process identified by the handle was not (or no longer) running
    */
   ProcessHandle resume(ProcessHandle processHandle) throws WorkflowNotExecutingException;
-  
+
   /**
    * Resume at the given suspendedElement. Other suspended elements will remain suspended.
-   * 
+   *
    * @param processHandle
    * @param suspendedElement
    * @return
    * @throws WorkflowNotExecutingException
    */
   ProcessHandle resume(ProcessHandle processHandle, String suspendedElement) throws WorkflowNotExecutingException;
-  
+
   /**
-   * 
+   *
    * @param processHandle
    * @return the updated processHandle
    * @throws WorkflowNotExecutingException when the process identified by the handle was not (or no longer) running
@@ -188,14 +187,14 @@ public interface WorkflowExecutionService {
   ProcessHandle step(ProcessHandle processHandle) throws WorkflowNotExecutingException;
 
   /**
-   * 
+   *
    * @param extraBreakpoints
    * @return the updated processHandle with extra breakpoints
    */
   ProcessHandle addBreakpoints(ProcessHandle processHandle, String... extraBreakpoints);
-  
+
   /**
-   * 
+   *
    * @param breakpointsToRemove
    * @return the updated processHandle with removed breakpoints
    */
@@ -204,42 +203,42 @@ public interface WorkflowExecutionService {
   /**
    * Signal an <code>Event</code> to the running process identified by the handle.
    * These can be pure events, or may also pass more complex data (e.g. user input) into a running process.
-   * 
+   *
    * @param processHandle
    * @param event
    * @return the updated processHandle after delivering the event to the running process
    * @throws WorkflowNotExecutingException when the process identified by the handle was not (or no longer) running
    */
   ProcessHandle signalEvent(ProcessHandle processHandle, Event event) throws WorkflowNotExecutingException;
-  
+
   /**
-   * 
+   *
    * @param processHandle
    * @param maxCount
    * @return the list of processing events, from newest to oldest and limited to the given maxCount
    */
-  List<Event> getProcessEvents(ProcessHandle processHandle, int maxCount);
-  
+  List<ProcessEvent> getProcessEvents(ProcessHandle processHandle, int maxCount);
+
   /**
    * Gets the process events for a process with given UUID.
    * <p>
-   * This method is useful for processes executed in the past, 
+   * This method is useful for processes executed in the past,
    * or other situations where the ProcessHandle is not available.
    * </p>
-   * 
+   *
    * @param processId
    * @param maxCount
    * @return the list of processing events, from newest to oldest and limited to the given maxCount
    */
-  List<Event> getProcessEvents(String processId, int maxCount);
+  List<ProcessEvent> getProcessEvents(String processId, int maxCount);
 
   /**
-   * 
+   *
    * @param processId
    * @return the handle for the given process Id; null if no active process with given Id is found.
    */
   ProcessHandle getHandle(String processId);
-  
+
   /**
    * TODO check if we should not remove this, as getHandle() basically does the same
    * @param processHandle

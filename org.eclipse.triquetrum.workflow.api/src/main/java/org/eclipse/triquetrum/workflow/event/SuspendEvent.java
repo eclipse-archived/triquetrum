@@ -8,13 +8,15 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.execution.impl.event;
+package org.eclipse.triquetrum.workflow.event;
 
+import org.eclipse.triquetrum.ProcessingStatus;
+import org.eclipse.triquetrum.workflow.ProcessEvent;
 
-public class StepEndEvent extends ProcessEvent {
-  private static final long serialVersionUID = -3706694407381524396L;
+public class SuspendEvent extends ProcessEvent {
+  private static final long serialVersionUID = -891252244387569231L;
 
-  public StepEndEvent(String processContextId) {
-    super(processContextId, Kind.SUSPEND, Detail.STEP_END);
+  public SuspendEvent(String processContextId) {
+    super(processContextId, ProcessingStatus.SUSPENDED);
   }
 }

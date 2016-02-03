@@ -8,13 +8,20 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.execution.impl.event;
+package org.eclipse.triquetrum.workflow.event;
 
+import org.eclipse.triquetrum.ProcessingStatus;
+import org.eclipse.triquetrum.workflow.ProcessEvent;
 
-public class StepEvent extends ProcessEvent {
-  private static final long serialVersionUID = 1510130153248898519L;
+public class ResumeEvent extends ProcessEvent {
+  private static final long serialVersionUID = 5364678627782578860L;
 
-  public StepEvent(String processContextId) {
-    super(processContextId, Kind.RESUME, Detail.STEP);
+  public ResumeEvent(String processContextId) {
+    super(processContextId, ProcessingStatus.ACTIVE);
+  }
+
+  public ResumeEvent(String processContextId, String breakpointName) {
+    this(processContextId);
+    this.putProperty(BREAKPOINTS, breakpointName);
   }
 }

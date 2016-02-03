@@ -14,15 +14,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CancellationException;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.eclipse.triquetrum.Event;
-import org.eclipse.triquetrum.EventListener;
 import org.eclipse.triquetrum.workflow.ModelHandle;
+import org.eclipse.triquetrum.workflow.ProcessEvent;
+import org.eclipse.triquetrum.workflow.ProcessEventListener;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
 import org.eclipse.triquetrum.workflow.WorkflowNotExecutingException;
@@ -44,9 +44,9 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
   public WorkflowExecutionServiceImpl() {
     this(Runtime.getRuntime().availableProcessors());
   }
-  
+
   /**
-   * 
+   *
    * @param maxConcurrentProcesses
    */
   public WorkflowExecutionServiceImpl(int maxConcurrentProcesses) {
@@ -55,9 +55,9 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
   }
 
   @Override
-  public ProcessHandle start(StartMode mode, ModelHandle modelHandle, String processContextId, Map<String, String> parameterOverrides, 
-      EventListener listener, String... breakpointNames) {
-    
+  public ProcessHandle start(StartMode mode, ModelHandle modelHandle, String processContextId, Map<String, String> parameterOverrides,
+      ProcessEventListener listener, String... breakpointNames) {
+
     if (processContextId == null || processContextId.trim().length()==0) {
       processContextId = UUID.randomUUID().toString();
     }
@@ -70,10 +70,10 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
 
     return procHandle;
   }
-  
+
   @Override
-  public ProcessHandle start(StartMode mode, CompositeActor model, String processId, Map<String, String> parameterOverrides, 
-      EventListener listener, String... breakpointNames) {
+  public ProcessHandle start(StartMode mode, CompositeActor model, String processId, Map<String, String> parameterOverrides,
+      ProcessEventListener listener, String... breakpointNames) {
     return start(mode, new ModelHandleImpl(model), processId, parameterOverrides, listener, breakpointNames);
   }
 
@@ -152,10 +152,10 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
       return processHandle;
     }
   }
-  
+
   /**
    * TODO : implement partial suspensions (cfr doc for <code>start()</code> method).
-   * 
+   *
    * Until then this method just delegates to the plain <code>resume(processHandle)</code>
    */
   @Override
@@ -176,13 +176,13 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
   }
 
   @Override
-  public List<Event> getProcessEvents(ProcessHandle processHandle, int maxCount) {
+  public List<ProcessEvent> getProcessEvents(ProcessHandle processHandle, int maxCount) {
     // TODO implement getProcessEvents()
     throw new UnsupportedOperationException();
   }
 
   @Override
-  public List<Event> getProcessEvents(String processId, int maxCount) {
+  public List<ProcessEvent> getProcessEvents(String processId, int maxCount) {
     // TODO implement getProcessEvents()
     throw new UnsupportedOperationException();
   }

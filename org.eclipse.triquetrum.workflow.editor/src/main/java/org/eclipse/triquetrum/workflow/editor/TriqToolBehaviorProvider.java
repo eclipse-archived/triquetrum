@@ -11,9 +11,6 @@
 package org.eclipse.triquetrum.workflow.editor;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -29,13 +26,19 @@ import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
 import org.eclipse.graphiti.palette.IToolEntry;
 import org.eclipse.graphiti.palette.impl.PaletteCompartmentEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
-import org.eclipse.graphiti.tb.IToolBehaviorProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.PauseFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ResumeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.RunFeature;
+import org.eclipse.triquetrum.workflow.editor.features.StopFeature;
 
 public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
 
+  /**
+   *
+   * @param diagramTypeProvider
+   */
   public TriqToolBehaviorProvider(IDiagramTypeProvider diagramTypeProvider) {
     super(diagramTypeProvider);
   }
@@ -53,10 +56,18 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
 
   @Override
   public ICustomFeature getCommandFeature(CustomContext context, String hint) {
-    if (RunFeature.HINT.equals(hint)) {
-      return new RunFeature(getFeatureProvider());
+    switch (hint) {
+      case RunFeature.HINT:
+        return new RunFeature(getFeatureProvider());
+      case PauseFeature.HINT:
+        return new PauseFeature(getFeatureProvider());
+      case ResumeFeature.HINT:
+        return new ResumeFeature(getFeatureProvider());
+      case StopFeature.HINT:
+        return new StopFeature(getFeatureProvider());
+      default:
+        return super.getCommandFeature(context, hint);
     }
-    return super.getCommandFeature(context, hint);
   }
 
   @Override
@@ -81,8 +92,8 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
                 if (compartment == null) {
                   String iconResource = rootGrpElement.getAttribute("icon");
                   if (iconResource != null) {
-                    ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(
-                        rootGrpElement.getContributor().getName(), iconResource, iconResource);
+                    ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(rootGrpElement.getContributor().getName(),
+                        iconResource, iconResource);
                   }
                   compartment = new PaletteCompartmentEntry(mecFt.getGroup(), iconResource);
                   paletteCompartments.put(compartment.getLabel(), compartment);

@@ -12,7 +12,7 @@ package org.eclipse.triquetrum.workflow.execution.impl.executor;
 
 import java.util.concurrent.FutureTask;
 
-import org.eclipse.triquetrum.processing.model.ProcessingStatus;
+import org.eclipse.triquetrum.ProcessingStatus;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.slf4j.Logger;
