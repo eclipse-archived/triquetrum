@@ -73,6 +73,7 @@ public class NamedObjDialog extends Dialog {
 
   @Override
   public boolean close() {
+    view.getSWTControl().forceFocus();
     view.dispose();
     return super.close();
   }
