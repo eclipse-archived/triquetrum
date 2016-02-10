@@ -4,7 +4,7 @@
 
   <!-- Custom properties -->
   <properties>
-    <target-version>0.0.1-SNAPSHOT</target-version>
+    <target-version>0.1.0-SNAPSHOT</target-version>
     <tycho-version>0.24.0</tycho-version>
   </properties>
   
@@ -15,7 +15,7 @@
   <!-- <artifactId>triquetrum</artifactId> -->
   <artifactId>org.eclipse.triquetrum.build</artifactId>
 
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>org.eclipse.triquetrum.common</module>
