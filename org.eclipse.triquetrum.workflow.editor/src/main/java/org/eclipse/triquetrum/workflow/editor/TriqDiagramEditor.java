@@ -33,7 +33,9 @@ public class TriqDiagramEditor extends DiagramEditor {
     super.setFocus();
     // Make sure the execution manager refreshes the state of the toolbar buttons
     CompositeActor selection = EditorUtils.getSelectedModel();
-    ExecutionStatusManager.getInstance().fireStatusChanged(selection.getName());
+    if(selection!=null) {
+      ExecutionStatusManager.getInstance().fireStatusChanged(selection.getName());
+    }
   }
 
   @Override
