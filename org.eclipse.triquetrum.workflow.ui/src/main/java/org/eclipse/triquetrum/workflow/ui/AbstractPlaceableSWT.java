@@ -80,12 +80,49 @@ public abstract class AbstractPlaceableSWT {
     _windowProperties.setProperties(_shell);
   }
 
+  /**
+   * Set the title of the window.
+   * <p>
+   * If the <i>title</i> parameter is set to the empty string, and the Display window has been rendered,
+   * then the title of the Display window will be updated to the value of the given parameter.
+   * </p>
+   * This is executed in the UI event thread.
+   *
+   * @param stringValue
+   *          The title to be set.
+   * @exception IllegalActionException
+   *              If the title cannot be set.
+   */
+  public void setTitle(final String stringValue) throws IllegalActionException {
+    Runnable doIt = new Runnable() {
+      @Override
+      public void run() {
+        if(_shell!=null) {
+          _shell.setText(stringValue);
+        }
+      }
+    };
+    runDeferred(doIt);
+  }
+
   ///////////////////////////////////////////////////////////////////
   //// protected methods ////
 
   /** Free up memory when closing. */
-  protected void cleanUp() {
-    setShell(null);
+  public void cleanUp() {
+    Runnable doIt = new Runnable() {
+      @Override
+      public void run() {
+        setShell(null);
+      }
+    };
+    runDeferred(doIt);
+  }
+
+  /** Run an action in the UI thread */
+  protected void runDeferred(Runnable doIt) {
+    org.eclipse.swt.widgets.Display display = _shell!=null ? _shell.getDisplay() : org.eclipse.swt.widgets.Display.getDefault();
+    display.syncExec(doIt);
   }
 
   /**

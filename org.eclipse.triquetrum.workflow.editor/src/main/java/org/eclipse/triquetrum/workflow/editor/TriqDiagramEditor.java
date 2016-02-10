@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+ * Copyright (c) 2015, 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -33,7 +33,9 @@ public class TriqDiagramEditor extends DiagramEditor {
     super.setFocus();
     // Make sure the execution manager refreshes the state of the toolbar buttons
     CompositeActor selection = EditorUtils.getSelectedModel();
-    ExecutionStatusManager.getInstance().fireStatusChanged(selection.getName());
+    if(selection!=null) {
+      ExecutionStatusManager.getInstance().fireStatusChanged(selection.getName());
+    }
   }
 
   @Override

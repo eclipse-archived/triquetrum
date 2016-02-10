@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Palette entry for XYPlotActor
+Bundle-SymbolicName: org.eclipse.triquetrum.workflow.actor.plot.palette;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: org.eclipse.triquetrum.workflow.editor;bundle-version="1.0.0"
