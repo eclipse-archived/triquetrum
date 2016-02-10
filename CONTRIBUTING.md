@@ -52,7 +52,9 @@ Create a [GitHub Issue](https://github.com/eclipse/triquetrum/issues) for every 
 
 1. In the Git Repositories tab, expand the triquetrum repository.
 2. Right click on the "Branches" node and select "Switch To" -> "New Branch".  
-3. Enter the new branch name, -Branch name should be {GitHubUserName}/{summary or issue id} e.g. ``erwin/integrate-display-actor``.
+3. Enter the new branch name.  
+Branch name should be {GitHubUserName}/{summary or issue id} e.g. ``erwin/integrate-display-actor``.  
+Alternative idea is a bit more elaborated : {GitHubUserName}/{ChangeType}/{issue id}/{summary} e.g. ``jake/ft/5/integrate-display-actor``. In this approach change type acronyms can be e.g. ft (feature i.e. with functional value) ; eh (enhancement without functional value) ; bg (bug) ; doc ; ...
 
 ### Committing
 * Make your changes.
@@ -62,7 +64,6 @@ Create a [GitHub Issue](https://github.com/eclipse/triquetrum/issues) for every 
 * For files that are in Eclipse packages, right click on the file in the Package Explorer and commit it.  
 * For files that are not in Eclipse packages, invoke the Git Staging via Window -> Show View -> Other -> Git -> Git
 * Use descriptive and meaningful commit messages. See [git commit records in the Eclipse Project Handbook](https://www.eclipse.org/projects/handbook/#resources-source).  Mention issue_id in each commit comment using syntax like "Adapt this interface for #15" to link to issue 15.
-* If you have a lot of commits squash them into a single commit (**FIXME: How do we do this? and is it really necessary?  Not squashing the commits gives finer granularity tracking changes when debugging**).
 * Make sure you use the sign off your commit.
   * If you are commiting using Eclipse, then click on the signature button  
   * If you are invoking git from the command line, then use the `-s` flag.  
@@ -73,7 +74,7 @@ Create a [GitHub Issue](https://github.com/eclipse/triquetrum/issues) for every 
 
 1. Submit a pull request via the normal [GitHub UI](https://github.com/eclipse/triquetrum) to trigger to request feedback / code review / ... 
 2. Mention issue_id in each comment using syntax like "Adapt this interface for #15" to link to issue 15 in the initial comment for a Pull Request.
-3. Only merge your work to master after positive feedback/review. (**FIXME: Not sure about this requirement yet**)
+3. The pull request will be reviewed by one of the committers, and then merged into master.
  
 ## After submitting
 

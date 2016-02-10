@@ -4,18 +4,15 @@ Bundle-Name: Triquetrum Dependencies
 Bundle-SymbolicName: org.eclipse.triquetrum.dependencies
 Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Bundle-ClassPath: deps/ptII/diva_11.0.0.201511291601.jar,
- deps/ptII/org.apache.commons.lang_2.6.0.v201404270220.jar,
- deps/ptII/org.apache.log4j_1.2.15.v201012070815.jar,
- deps/ptII/org.ptolemy.commons_11.0.0.201511291558.jar,
- deps/ptII/org.slf4j.impl.log4j12_1.7.2.v20131105-2200.jar,
+Bundle-ClassPath: deps/ptII/org.ptolemy.commons_11.0.0.201511291558.jar,
  deps/ptII/ptolemy.actor.lib.gui_11.0.0.201601302217.jar,
  deps/ptII/ptolemy.core_11.0.0.201601302205.jar,
  deps/ptII/ptolemy.domains.process_11.0.0.201601302217.jar,
  deps/ptII/ptolemy.domains.sdf_11.0.0.201601302217.jar,
- deps/ptII/ptolemy.gui_11.0.0.201601302205.jar,
  deps/ptII/ptolemy.moml_11.0.0.201601302209.jar,
- deps/ptII/ptolemy.actor.lib_11.0.0.201601312216.jar
+ deps/ptII/ptolemy.actor.lib_11.0.0.201601312216.jar,
+ deps/ptII/diva_11.0.0.201602101550.jar,
+ deps/ptII/ptolemy.gui_11.0.0.201602101550.jar
 Export-Package: com.microstar.xml;version="11.0.0",
  com.microstar.xml.driver;version="11.0.0",
  diva.canvas;version="11.0.0",
