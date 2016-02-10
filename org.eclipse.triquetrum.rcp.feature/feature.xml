@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Copyright (c) 2016 iSencia Belgium NV.
+     All rights reserved. This program and the accompanying materials
+     are made available under the terms of the Eclipse Public License v1.0
+     which accompanies this distribution, and is available at
+     http://www.eclipse.org/legal/epl-v10.html
+     
+     Contributors:
+        Erwin De Ley - initial API and implementation and/or initial documentation
+ -->
+
+<feature
+      id="org.eclipse.triquetrum.rcp.feature"
+      label="Triquetrum RCP Feature"
+      version="1.0.0.qualifier"
+      provider-name="Eclipse Triquetrum">
+
+   <description url="https://projects.eclipse.org/projects/technology.triquetrum">
+      This feature groups all individual Triquetrum features, to define the default Triquetrum RCP application.
+   </description>
+
+   <copyright>
+      /*******************************************************************************
+* Copyright (c) 2015-2016 iSencia Belgium NV.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License
+v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*    Erwin De Ley - initial API and implementation and/or initial
+documentation
+*******************************************************************************/
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      Eclipse Public License v1.0
+   </license>
+
+   <includes
+         id="org.eclipse.triquetrum.core.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.triquetrum.ptolemy.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.triquetrum.thirdparty.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.triquetrum.workflow.core.feature"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.triquetrum.workflow.rcp.feature"
+         version="0.0.0"/>
+
+</feature>

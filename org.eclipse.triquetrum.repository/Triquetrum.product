@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Triquetrum" uid="org.eclipse.triquetrum.workflow.editor.rcp" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="1.0.0.qualifier" useFeatures="true" includeLaunchers="true">
+
+   <aboutInfo>
+      <image path="eclipse_lg.png"/>
+      <text>
+         %productBlurb
+      </text>
+   </aboutInfo>
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-consoleLog -console
+      </programArgs>
+      <vmArgs>-Dosgi.requiredJavaVersion=1.7 -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
+      </vmArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
+   </launcherArgs>
+
+   <windowImages i16="eclipse16.png" i32="eclipse32.png" i48="eclipse48.png"/>
+
+   <splash
+      startupProgressRect="2,290,448,10"
+      startupMessageRect="7,265,320,20"
+      startupForegroundColor="9c9696" />
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+   <vm>
+      <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
+   </vm>
+
+   <plugins>
+   </plugins>
+
+   <features>
+      <feature id="org.eclipse.triquetrum.rcp.feature" version="1.0.0.qualifier"/>
+      <feature id="org.eclipse.core.runtime.feature" version="1.1.101.v20150903-1804"/>
+      <feature id="org.eclipse.ecf.core.feature"/>
+      <feature id="org.eclipse.ecf.core.ssl.feature"/>
+      <feature id="org.eclipse.ecf.filetransfer.feature"/>
+      <feature id="org.eclipse.ecf.filetransfer.httpclient4.feature"/>
+      <feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature"/>
+      <feature id="org.eclipse.ecf.filetransfer.ssl.feature"/>
+      <feature id="org.eclipse.emf.common" version="2.11.0.v20150805-0538"/>
+      <feature id="org.eclipse.emf.common.ui" version="2.10.0.v20150806-0404"/>
+      <feature id="org.eclipse.emf.databinding" version="1.4.0.v20150806-0404"/>
+      <feature id="org.eclipse.emf.databinding.edit" version="1.4.0.v20150806-0404"/>
+      <feature id="org.eclipse.emf.ecore" version="2.11.1.v20150805-0538"/>
+      <feature id="org.eclipse.emf.ecore.edit" version="2.9.0.v20150806-0404"/>
+      <feature id="org.eclipse.emf.ecp.e3.feature" version="1.7.0.20150914-1619"/>
+      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.7.0.20150914-1619"/>
+      <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.7.0.20150914-1619"/>
+      <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.7.0.20150914-1619"/>
+      <feature id="org.eclipse.emf.edit" version="2.11.1.v20150806-0404"/>
+      <feature id="org.eclipse.emf.edit.ui" version="2.11.0.v20150806-0404"/>
+      <feature id="org.eclipse.emf.transaction" version="1.9.0.201506010221"/>
+      <feature id="org.eclipse.emf.validation" version="1.9.0.201505312255"/>
+      <feature id="org.eclipse.emf.workspace" version="1.9.0.201506010221"/>
+      <feature id="org.eclipse.equinox.core.sdk" version="3.11.1.v20150831-1342"/>
+      <feature id="org.eclipse.equinox.p2.core.feature" version="1.3.100.v20150527-1706"/>
+      <feature id="org.eclipse.equinox.p2.discovery.feature" version="1.0.300.v20150430-1836"/>
+      <feature id="org.eclipse.equinox.p2.extras.feature" version="1.2.100.v20150601-1708"/>
+      <feature id="org.eclipse.equinox.p2.rcp.feature" version="1.2.101.v20150826-1318"/>
+      <feature id="org.eclipse.equinox.p2.user.ui" version="2.2.101.v20150826-1318"/>
+      <feature id="org.eclipse.gef" version="3.10.1.201508170204"/>
+      <feature id="org.eclipse.graphiti.feature" version="0.12.1.v20150916-0905"/>
+      <feature id="org.eclipse.graphiti.feature.tools" version="0.12.1.v20150916-0905"/>
+      <feature id="org.eclipse.graphiti.export.feature" version="0.12.1.v20150916-0905"/>
+      <feature id="org.eclipse.help"/>
+      <feature id="org.eclipse.jdt" version="3.11.1.v20150904-0015"/>
+      <feature id="org.eclipse.net4j" version="4.4.1.v20150912-0814"/>
+      <feature id="org.eclipse.net4j.util" version="4.4.1.v20150820-0533"/>
+      <feature id="org.eclipse.ocl" version="3.5.0.v20150525-1635"/>
+      <feature id="org.eclipse.pde" version="3.11.1.v20150904-0345"/>
+      <feature id="org.eclipse.platform" version="4.5.1.v20150904-0015"/>
+      <feature id="org.eclipse.rcp"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+      <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
+      <plugin id="org.eclipse.triquetrum.common" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.processing.service.impl" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.actor.ui" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.editor" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.execution.impl" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.ui" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="3" />
+      <plugin id="org.ptolemy.commons" autoStart="true" startLevel="0" />
+      <plugin id="ptolemy.actor.lib" autoStart="true" startLevel="0" />
+      <plugin id="ptolemy.actor.lib.gui" autoStart="true" startLevel="0" />
+      <plugin id="ptolemy.core" autoStart="true" startLevel="0" />
+      <plugin id="ptolemy.domains.process" autoStart="true" startLevel="0" />
+      <plugin id="ptolemy.domains.sdf" autoStart="true" startLevel="0" />
+      <plugin id="ptolemy.gui" autoStart="true" startLevel="0" />
+      <plugin id="ptolemy.moml" autoStart="true" startLevel="0" />
+   </configurations>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
+
+</product>

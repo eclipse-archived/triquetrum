@@ -57,22 +57,8 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
   //// public methods ////
 
   /**
-   * Free up memory when closing. This is executed in the GUI event thread.
-   */
-  @Override
-  public void cleanUp() {
-    Runnable doIt = new Runnable() {
-      @Override
-      public void run() {
-        DisplayJavaSWT.super.cleanUp();
-      }
-    };
-    runDeferred(doIt);
-  }
-
-  /**
-   * Append the string value of the token to the text area on the screen. Each value is terminated with a newline character. This is executed in the Swing event
-   * thread.
+   * Append the string value of the token to the text area on the screen. Each value is terminated with a newline character.
+   * This is executed in the UI event thread.
    *
    * @param value
    *          The string to be displayed
@@ -129,7 +115,7 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
    * Open the display window if it has not been opened.
    *
    * @exception IllegalActionException
-   *              If there is a problem creating the effigy and tableau. This is executed in the Swing event thread.
+   *              If there is a problem creating the shell/window. This is executed in the UI event thread.
    */
   @Override
   public void openWindow() throws IllegalActionException {
@@ -225,29 +211,15 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
         if (!titleSpec.trim().equals("")) {
           _shell.setText(titleSpec);
         }
-
-//        try {
-       // TODO find a way to set the size of the Text area
-//          int numRows = ((IntToken) _display.rowsDisplayed.getToken()).intValue();
-//          textArea.setRows(numRows);
-//
-//          int numColumns = ((IntToken) _display.columnsDisplayed.getToken()).intValue();
-//          textArea.setColumns(numColumns);
-
-//        } catch (IllegalActionException ex) {
-//          // Ignore, and use default number of rows.
-//        }
-
         // Make sure the text is not editable.
         textArea.setEditable(false);
-        _swtContainer = container;
       }
     };
     runDeferred(doIt);
   }
 
   /**
-   * Remove the display from the current container, if there is one. This is executed in the Swing thread later.
+   * Remove the display from the current container, if there is one. This is executed in the UI thread later.
    */
   @Override
   public void remove() {
@@ -261,7 +233,7 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
   }
 
   /**
-   * Set the desired number of columns of the textArea, if there is one. This is executed in the Swing event thread.
+   * Set the desired number of columns of the textArea, if there is one. This is executed in the UI event thread.
    *
    * @param numberOfColumns
    *          The new value of the attribute.
@@ -280,7 +252,7 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
   }
 
   /**
-   * Set the desired number of rows of the textArea, if there is one. This is executed in the Swing event thread.
+   * Set the desired number of rows of the textArea, if there is one. This is executed in the UI event thread.
    *
    * @param numberOfRows
    *          The new value of the attribute.
@@ -298,39 +270,6 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
     runDeferred(doIt);
   }
 
-  /**
-   * Set the title of the window.
-   * <p>
-   * If the <i>title</i> parameter is set to the empty string, and the Display window has been rendered, then the title of the Display window will be updated to
-   * the value of the name parameter.
-   * </p>
-   * This is executed in the Swing event thread.
-   *
-   * @param stringValue
-   *          The title to be set.
-   * @exception IllegalActionException
-   *              If the title cannot be set.
-   */
-  @Override
-  public void setTitle(final String stringValue) throws IllegalActionException {
-    Runnable doIt = new Runnable() {
-      @Override
-      public void run() {
-        if(_shell!=null) {
-          _shell.setText(stringValue);
-        }
-      }
-    };
-    runDeferred(doIt);
-  }
-
-  ///////////////////////////////////////////////////////////////////
-  //// private methods ////
-  private void runDeferred(Runnable doIt) {
-    org.eclipse.swt.widgets.Display display = _shell!=null ? _shell.getDisplay() : org.eclipse.swt.widgets.Display.getDefault();
-    display.syncExec(doIt);
-  }
-
   ///////////////////////////////////////////////////////////////////
   //// public members ////
 
@@ -339,9 +278,6 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
 
   ///////////////////////////////////////////////////////////////////
   //// private members ////
-
-  /** The SWT Container */
-  private Composite _swtContainer;
 
   /** Reference to the Display actor */
   private Display _display;
