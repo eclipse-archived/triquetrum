@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-     Copyright (c) 2016 iSencia Belgium NV.
-     All rights reserved. This program and the accompanying materials
-     are made available under the terms of the Eclipse Public License v1.0
-     which accompanies this distribution, and is available at
-     http://www.eclipse.org/legal/epl-v10.html
-     
-     Contributors:
-        Erwin De Ley - initial API and implementation and/or initial documentation
- -->
+<!-- Copyright (c) 2016 iSencia Belgium NV. All rights reserved. This program
+	and the accompanying materials are made available under the terms of the
+	Eclipse Public License v1.0 which accompanies this distribution, and is available
+	at http://www.eclipse.org/legal/epl-v10.html Contributors: Erwin De Ley -
+	initial API and implementation and/or initial documentation -->
 
 <project
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
@@ -17,9 +12,9 @@
 	<parent>
 		<groupId>triquetrum</groupId>
 		<artifactId>org.eclipse.triquetrum.build</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.1.0-SNAPSHOT</version>
 	</parent>
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>org.eclipse.triquetrum.repository</artifactId>
 	<packaging>eclipse-repository</packaging>

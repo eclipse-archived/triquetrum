@@ -15,9 +15,10 @@
   <!-- <artifactId>triquetrum</artifactId> -->
   <artifactId>org.eclipse.triquetrum.build</artifactId>
 
-  <version>0.1.0-SNAPSHOT</version>
+  <version>${target-version}</version>
   <packaging>pom</packaging>
   <modules>
+    <module>org.eclipse.triquetrum.target.platform</module>
     <module>org.eclipse.triquetrum.common</module>
     <module>org.eclipse.triquetrum.logging.dvp</module>
     <module>org.eclipse.triquetrum.processing.api</module>
@@ -64,49 +65,89 @@
   
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-maven-plugin</artifactId>
-        <version>${tycho-version}</version>
-        <extensions>true</extensions>
-      </plugin>
-	  <plugin>
-		<groupId>org.eclipse.tycho</groupId>
-		<artifactId>tycho-p2-repository-plugin</artifactId>
-		<version>${tycho-version}</version>
-		<configuration>
-			<includeAllDependencies>true</includeAllDependencies>
-		</configuration>
-	  </plugin>
-        <plugin>
-          <!-- FindBugs
-               To invoke, run
-                  mvn findbugs:findbugs
-               
-               To bring up the FindBugs gui for each bundle, run:
-                  mvn findbugs:gui
+		<plugin>
+			<groupId>org.eclipse.tycho</groupId>
+			<artifactId>tycho-maven-plugin</artifactId>
+			<version>${tycho-version}</version>
+			<extensions>true</extensions>
+		</plugin>
+		<plugin>
+			<groupId>org.eclipse.tycho</groupId>
+			<artifactId>tycho-p2-repository-plugin</artifactId>
+			<version>${tycho-version}</version>
+			<configuration>
+				<includeAllDependencies>true</includeAllDependencies>
+			</configuration>
+		</plugin>
+<!-- This configures the target platform and the supported architectures. -->
+		<plugin>
+			<groupId>org.eclipse.tycho</groupId>
+			<artifactId>target-platform-configuration</artifactId>
+			<version>${tycho-version}</version>
+			<configuration>
+				<environments>
+					<environment>
+						<os>linux</os>
+						<ws>gtk</ws>
+						<arch>x86</arch>
+					</environment>
+					<environment>
+						<os>linux</os>
+						<ws>gtk</ws>
+						<arch>x86_64</arch>
+					</environment>
+					<environment>
+						<os>win32</os>
+						<ws>win32</ws>
+						<arch>x86</arch>
+					</environment>
+					<environment>
+						<os>win32</os>
+						<ws>win32</ws>
+						<arch>x86_64</arch>
+					</environment>
+					<environment>
+						<os>macosx</os>
+						<ws>cocoa</ws>
+						<arch>x86_64</arch>
+					</environment>
+				</environments>
+				<target>
+					<artifact>
+						<groupId>triquetrum</groupId>
+						<artifactId>org.eclipse.triquetrum.target.platform</artifactId>
+						<version>${target-version}</version>
+					</artifact>
+				</target>
+			</configuration>
+		</plugin>
+		<plugin>
+		  <!-- FindBugs
+			   To invoke, run
+				  mvn findbugs:findbugs
+			   
+			   To bring up the FindBugs gui for each bundle, run:
+				  mvn findbugs:gui
 
-               docs: http://gleclaire.github.io/findbugs-maven-plugin/   
-          -->
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
-          <version>3.0.3</version>
-          <configuration>
-            <effort>Max</effort>
-            <findbugsXmlOutput>true</findbugsXmlOutput>
-            <failOnError>false</failOnError>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>check</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-
+			   docs: http://gleclaire.github.io/findbugs-maven-plugin/   
+		  -->
+		  <groupId>org.codehaus.mojo</groupId>
+		  <artifactId>findbugs-maven-plugin</artifactId>
+		  <version>3.0.3</version>
+		  <configuration>
+			<effort>Max</effort>
+			<findbugsXmlOutput>true</findbugsXmlOutput>
+			<failOnError>false</failOnError>
+		  </configuration>
+		  <executions>
+			<execution>
+			  <goals>
+				<goal>check</goal>
+			  </goals>
+			</execution>
+		  </executions>
+		</plugin>
     </plugins>
   </build>
-  
 </project>
 
