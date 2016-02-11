@@ -15,7 +15,7 @@
   <!-- <artifactId>triquetrum</artifactId> -->
   <artifactId>org.eclipse.triquetrum.build</artifactId>
 
-  <version>${target-version}</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
     <module>org.eclipse.triquetrum.target.platform</module>
@@ -45,24 +45,6 @@
 	<module>org.eclipse.triquetrum.repository</module>
   </modules>
 
-  <repositories>
-    <repository>
-      <id>eclipse-mars</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/mars</url>
-    </repository>
-    <repository>
-      <id>orbit</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20151118145958/repository/</url>
-    </repository>
-    <repository>
-      <id>Ptolemy p2</id>
-      <layout>p2</layout>
-      <url>http://users.telenet.be/triquetrum-ptolemy-p2/</url>
-    </repository>
-  </repositories>
-  
   <build>
     <plugins>
 		<plugin>
@@ -116,7 +98,7 @@
 					<artifact>
 						<groupId>triquetrum</groupId>
 						<artifactId>org.eclipse.triquetrum.target.platform</artifactId>
-						<version>${target-version}</version>
+						<version>0.1.0-SNAPSHOT</version>
 					</artifact>
 				</target>
 			</configuration>
