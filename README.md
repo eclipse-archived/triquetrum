@@ -7,4 +7,4 @@ Besides delivering a generic workflow environment, Triquetrum also delivers exte
 
 ## Resources
 * [Downloads](https://wiki.eclipse.org/Triquetrum/Downloads)
-* [Wiki](https://wiki.eclipse.org/Triquetrum/)
+* [Wiki](https://wiki.eclipse.org/Triquetrum)
