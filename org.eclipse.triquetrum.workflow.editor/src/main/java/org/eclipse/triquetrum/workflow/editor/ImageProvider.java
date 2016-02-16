@@ -23,7 +23,8 @@ public class ImageProvider extends AbstractImageProvider {
 
   @Override
   protected void addAvailableImages() {
-    // outline
+    addImageFilePath(ImageConstants.IMG_CONFIGURE, ROOT_FOLDER_FOR_IMG + "configure.gif");
+
     addImageFilePath(ImageConstants.IMG_OUTLINE_TREE, ROOT_FOLDER_FOR_IMG + "tree.gif");
     addImageFilePath(ImageConstants.IMG_OUTLINE_THUMBNAIL, ROOT_FOLDER_FOR_IMG + "thumbnail.gif");
 

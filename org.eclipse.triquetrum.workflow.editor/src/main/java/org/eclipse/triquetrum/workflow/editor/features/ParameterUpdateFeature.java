@@ -16,6 +16,7 @@ import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.Text;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
@@ -49,7 +50,7 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
       if ("PARAMETER".equalsIgnoreCase(boCategory)) {
         // parameters can not change name, only the value can change
         String boValue = Graphiti.getPeService().getPropertyValue(shape, "__BO_VALUE");
-        parameterChanged = !p.getExpression().equals(boValue);
+        parameterChanged = p.getExpression() != null && !p.getExpression().equals(boValue);
       }
     }
     if (parameterChanged) {
@@ -70,14 +71,30 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
       Shape shape = (Shape) pictogramElement;
       String boCategory = Graphiti.getPeService().getPropertyValue(shape, "__BO_CATEGORY");
       if ("PARAMETER".equals(boCategory)) {
-        Text text = (Text) shape.getGraphicsAlgorithm();
-        String pName = param.getName();
-        String pVal = param.getExpression();
-        pName = (pName.length() > 12) ? pName.substring(0, 12) : pName;
-        pVal = (pVal.length() > 12) ? pVal.substring(0, 12) : pVal;
-        text.setValue(pName + " : " + pVal);
-        Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
-        result = true;
+        Text text = null;
+        if (shape.getGraphicsAlgorithm() instanceof Text) {
+          text = (Text) shape.getGraphicsAlgorithm();
+        } else if (shape instanceof ContainerShape) {
+          for (Shape childShape : ((ContainerShape) shape).getChildren()) {
+            boCategory = Graphiti.getPeService().getPropertyValue(childShape, "__BO_CATEGORY");
+            if ("PARAMETER".equals(boCategory)) {
+              if (childShape.getGraphicsAlgorithm() instanceof Text) {
+                text = (Text) childShape.getGraphicsAlgorithm();
+                break;
+              }
+            }
+          }
+        }
+        if (text != null) {
+          String pName = param.getName();
+          String pVal = param.getExpression();
+          pVal = pVal != null ? pVal : "";
+          text.setValue(pName + " : " + pVal);
+          Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
+          result = true;
+        } else {
+          // TODO report an error here?
+        }
       }
     }
     return result;

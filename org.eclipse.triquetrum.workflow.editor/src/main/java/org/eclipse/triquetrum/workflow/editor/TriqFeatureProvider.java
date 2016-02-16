@@ -27,9 +27,11 @@ import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.IFeature;
 import org.eclipse.graphiti.features.IUpdateFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
+import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
+import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
@@ -38,8 +40,10 @@ import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.DirectorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.DirectorUpdateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementNameDirectEditFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
 import org.eclipse.triquetrum.workflow.model.Actor;
@@ -75,6 +79,11 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   }
 
   @Override
+  public ICustomFeature[] getCustomFeatures(ICustomContext context) {
+    return new ICustomFeature[] {new ModelElementConfigureFeature(this)};
+  }
+
+  @Override
   public IFeature[] getDragAndDropFeatures(IPictogramElementContext context) {
     // simply return all create connection features
     return getCreateConnectionFeatures();
@@ -107,6 +116,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new ConnectionAddFeature(this);
     } else if (context.getNewObject() instanceof Port) {
       return new PortAddFeature(this);
+    } else if (context.getNewObject() instanceof Parameter) {
+      return new ParameterAddFeature(this);
     }
     return super.getAddFeature(context);
   }

@@ -19,14 +19,20 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.context.IDoubleClickContext;
+import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.context.impl.CustomContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.palette.IObjectCreationToolEntry;
 import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
 import org.eclipse.graphiti.palette.IToolEntry;
 import org.eclipse.graphiti.palette.impl.PaletteCompartmentEntry;
+import org.eclipse.graphiti.tb.ContextButtonEntry;
+import org.eclipse.graphiti.tb.ContextEntryHelper;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
-import org.eclipse.triquetrum.workflow.editor.features.ActorConfigureFeature;
+import org.eclipse.graphiti.tb.IContextButtonEntry;
+import org.eclipse.graphiti.tb.IContextButtonPadData;
+import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PauseFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ResumeFeature;
@@ -44,8 +50,32 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
   }
 
   @Override
+  public IContextButtonPadData getContextButtonPad(IPictogramElementContext context) {
+    IContextButtonPadData data = super.getContextButtonPad(context);
+    PictogramElement pe = context.getPictogramElement();
+
+    // 1. set the generic context buttons
+    // note, that we do not add 'remove' (just as an example)
+    setGenericContextButtons(data, pe, CONTEXT_BUTTON_DELETE | CONTEXT_BUTTON_UPDATE);
+
+    // 2. set the configure button
+    CustomContext cc = new CustomContext(new PictogramElement[] { pe });
+    ICustomFeature[] cf = getFeatureProvider().getCustomFeatures(cc);
+    for (int i = 0; i < cf.length; i++) {
+      ICustomFeature iCustomFeature = cf[i];
+      if (iCustomFeature instanceof ModelElementConfigureFeature) {
+        ContextButtonEntry button = new ContextButtonEntry(iCustomFeature, cc);
+        data.getDomainSpecificContextButtons().add(button);
+        break;
+      }
+    }
+
+    return data;
+  }
+
+  @Override
   public ICustomFeature getDoubleClickFeature(IDoubleClickContext context) {
-    ICustomFeature customFeature = new ActorConfigureFeature((TriqFeatureProvider) getFeatureProvider());
+    ICustomFeature customFeature = new ModelElementConfigureFeature((TriqFeatureProvider) getFeatureProvider());
     // canExecute() tests especially if the context contains an actor or director or so
     if (customFeature.canExecute(context)) {
       return customFeature;
