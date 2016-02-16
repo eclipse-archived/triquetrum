@@ -11,10 +11,9 @@
 package org.eclipse.triquetrum.workflow.editor;
 
 import org.eclipse.gef.commands.CommandStack;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.triquetrum.workflow.editor.outline.DiagramEditorOutlinePage;
-import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
-import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 public class TriqDiagramEditor extends DiagramEditor {
@@ -31,16 +30,14 @@ public class TriqDiagramEditor extends DiagramEditor {
   @Override
   public void setFocus() {
     super.setFocus();
-    // Make sure the execution manager refreshes the state of the toolbar buttons
-    CompositeActor selection = EditorUtils.getSelectedModel();
-    if(selection!=null) {
-      ExecutionStatusManager.getInstance().fireStatusChanged(selection.getName());
+    Diagram d = getDiagramTypeProvider().getDiagram();
+    if(d!=null) {
+      ExecutionStatusManager.getInstance().fireStatusChanged(d.getName());
     }
   }
 
   @Override
   public CommandStack getCommandStack() {
-    // TODO Auto-generated method stub
     return super.getCommandStack();
   }
 }
