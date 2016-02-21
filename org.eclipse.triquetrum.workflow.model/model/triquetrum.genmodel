@@ -1,38 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.triquetrum.workflow.model/src/main/java"
-    editDirectory="/org.eclipse.triquetrum.workflow.model.edit/src/main/java" editorDirectory="/org.eclipse.triquetrum.workflow.model.editor/src/main/java"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="Copyright (c) 2016 iSencia Belgium NV.&#xD;&#xA;All rights reserved. This program and the accompanying materials&#xD;&#xA;are made available under the terms of the Eclipse Public License v1.0&#xD;&#xA;which accompanies this distribution, and is available at&#xD;&#xA;http://www.eclipse.org/legal/epl-v10.html&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Erwin De Ley - initial API and implementation and/or initial documentation"
+    modelDirectory="/org.eclipse.triquetrum.workflow.model/src/main/java" editDirectory="/org.eclipse.triquetrum.workflow.model.edit/src/main/java"
+    editorDirectory="/org.eclipse.triquetrum.workflow.model.editor/src/main/java"
     modelPluginID="org.eclipse.triquetrum.workflow.model" modelName="Triquetrum" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     testsDirectory="/org.eclipse.triquetrum.workflow.model.tests/src/main/java" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="7.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+    complianceLevel="7.0" copyrightFields="false" runtimeVersion="2.6" operationReflection="true"
+    runtimePlatform="RCP" importOrganizing="true">
   <foreignModel>triquetrum.ecore</foreignModel>
   <genPackages prefix="Triq" basePackage="org.eclipse.triquetrum.workflow" disposableProviderFactory="true"
       ecorePackage="triquetrum.ecore#/">
+    <genDataTypes ecoreDataType="triquetrum.ecore#//PtolemyNamedObj"/>
+    <genClasses ecoreClass="triquetrum.ecore#//NamedObj">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//NamedObj/attributes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/wrappedType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/wrappedObject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/deepComplete"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/iconId"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getContainer"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/topLevel"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/setProperty">
+        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/setProperty/name"/>
+        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/setProperty/value"/>
+        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/setProperty/className"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="triquetrum.ecore#//Attribute"/>
+    <genClasses ecoreClass="triquetrum.ecore#//Annotation">
+      <genFeatures createChild="false" propertyDescription="" propertyMultiLine="true"
+          ecoreFeature="ecore:EAttribute triquetrum.ecore#//Annotation/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Annotation/fontFamily"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Annotation/textSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Annotation/bold"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Annotation/italic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference triquetrum.ecore#//Annotation/color"/>
+    </genClasses>
+    <genClasses ecoreClass="triquetrum.ecore#//Parameter">
+      <genFeatures createChild="false" propertyCategory="" propertyDescription="This is the field that contains a parameter's value"
+          ecoreFeature="ecore:EAttribute triquetrum.ecore#//Parameter/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="triquetrum.ecore#//Director">
+      <genOperations ecoreOperation="triquetrum.ecore#//Director/getParameters"/>
+    </genClasses>
     <genClasses ecoreClass="triquetrum.ecore#//Entity">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Entity/ports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Entity/inputPorts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Entity/outputPorts"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//Entity/getParameters"/>
     </genClasses>
     <genClasses ecoreClass="triquetrum.ecore#//CompositeEntity">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//CompositeEntity/entities"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//CompositeEntity/relations"/>
     </genClasses>
+    <genClasses ecoreClass="triquetrum.ecore#//Actor"/>
+    <genClasses ecoreClass="triquetrum.ecore#//CompositeActor">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//CompositeActor/director"/>
+    </genClasses>
     <genClasses ecoreClass="triquetrum.ecore#//Port">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/input"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/output"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Port/linkedRelations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/multiPort"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//Port/canAcceptNewConnection"/>
     </genClasses>
     <genClasses ecoreClass="triquetrum.ecore#//Relation">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Relation/linkedPorts"/>
-    </genClasses>
-    <genClasses ecoreClass="triquetrum.ecore#//Attribute"/>
-    <genClasses ecoreClass="triquetrum.ecore#//Parameter"/>
-    <genClasses ecoreClass="triquetrum.ecore#//NamedObj">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//NamedObj/attributes"/>
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference triquetrum.ecore#//NamedObj/container"/>
-    </genClasses>
-    <genClasses ecoreClass="triquetrum.ecore#//Director"/>
-    <genClasses ecoreClass="triquetrum.ecore#//CompositeActor">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//CompositeActor/director"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

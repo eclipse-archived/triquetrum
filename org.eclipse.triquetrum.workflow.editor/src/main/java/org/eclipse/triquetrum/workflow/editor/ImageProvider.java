@@ -12,17 +12,16 @@ package org.eclipse.triquetrum.workflow.editor;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.graphiti.ui.platform.AbstractImageProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ImageProvider extends AbstractImageProvider {
 
-  private final static Logger LOGGER = LoggerFactory.getLogger(ImageProvider.class);
+//  private final static Logger LOGGER = LoggerFactory.getLogger(ImageProvider.class);
 
   private static final String ROOT_FOLDER_FOR_IMG = "icons/";
 
   @Override
   protected void addAvailableImages() {
+    addImageFilePath(ImageConstants.IMG_COLOR_CHANGE, ROOT_FOLDER_FOR_IMG + "color-palette.gif");
     addImageFilePath(ImageConstants.IMG_CONFIGURE, ROOT_FOLDER_FOR_IMG + "configure.gif");
 
     addImageFilePath(ImageConstants.IMG_OUTLINE_TREE, ROOT_FOLDER_FOR_IMG + "tree.gif");

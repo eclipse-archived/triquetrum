@@ -1,13 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+/**
+ * Copyright (c) 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 package org.eclipse.triquetrum.workflow.model;
 
 import org.eclipse.emf.ecore.EFactory;
@@ -30,6 +30,51 @@ public interface TriqFactory extends EFactory {
   TriqFactory eINSTANCE = org.eclipse.triquetrum.workflow.model.impl.TriqFactoryImpl.init();
 
   /**
+   * Returns a new object of class '<em>Named Obj</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Named Obj</em>'.
+   * @generated
+   */
+  NamedObj createNamedObj();
+
+  /**
+   * Returns a new object of class '<em>Attribute</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Attribute</em>'.
+   * @generated
+   */
+  Attribute createAttribute();
+
+  /**
+   * Returns a new object of class '<em>Annotation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Annotation</em>'.
+   * @generated
+   */
+  Annotation createAnnotation();
+
+  /**
+   * Returns a new object of class '<em>Parameter</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Parameter</em>'.
+   * @generated
+   */
+  Parameter createParameter();
+
+  /**
+   * Returns a new object of class '<em>Director</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Director</em>'.
+   * @generated
+   */
+  Director createDirector();
+
+  /**
    * Returns a new object of class '<em>Entity</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -48,6 +93,24 @@ public interface TriqFactory extends EFactory {
   CompositeEntity createCompositeEntity();
 
   /**
+   * Returns a new object of class '<em>Actor</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Actor</em>'.
+   * @generated
+   */
+  Actor createActor();
+
+  /**
+   * Returns a new object of class '<em>Composite Actor</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Composite Actor</em>'.
+   * @generated
+   */
+  CompositeActor createCompositeActor();
+
+  /**
    * Returns a new object of class '<em>Port</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -64,60 +127,6 @@ public interface TriqFactory extends EFactory {
    * @generated
    */
   Relation createRelation();
-
-  /**
-   * Returns a new object of class '<em>Attribute</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute</em>'.
-   * @generated
-   */
-  Attribute createAttribute();
-
-  /**
-   * Returns a new object of class '<em>Parameter</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Parameter</em>'.
-   * @generated
-   */
-  Parameter createParameter();
-
-  /**
-   * Returns a new object of class '<em>Named Obj</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Named Obj</em>'.
-   * @generated
-   */
-  NamedObj createNamedObj();
-
-  /**
-   * Returns a new object of class '<em>Director</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Director</em>'.
-   * @generated
-   */
-  Director createDirector();
-
-  /**
-   * Returns a new object of class '<em>Composite Actor</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Composite Actor</em>'.
-   * @generated
-   */
-  CompositeActor createCompositeActor();
-
-  /**
-   * Returns a new object of class '<em>Actor</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Actor</em>'.
-   * @generated
-   */
-  Actor createActor();
 
   /**
    * Returns the package supported by this factory.

@@ -57,10 +57,6 @@
       <feature id="org.eclipse.emf.databinding.edit" version="1.4.0.v20150806-0404"/>
       <feature id="org.eclipse.emf.ecore" version="2.11.1.v20150805-0538"/>
       <feature id="org.eclipse.emf.ecore.edit" version="2.9.0.v20150806-0404"/>
-      <feature id="org.eclipse.emf.ecp.e3.feature" version="1.7.0.20150914-1619"/>
-      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.7.0.20150914-1619"/>
-      <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.7.0.20150914-1619"/>
-      <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.7.0.20150914-1619"/>
       <feature id="org.eclipse.emf.edit" version="2.11.1.v20150806-0404"/>
       <feature id="org.eclipse.emf.edit.ui" version="2.11.0.v20150806-0404"/>
       <feature id="org.eclipse.emf.transaction" version="1.9.0.201506010221"/>
@@ -84,6 +80,10 @@
       <feature id="org.eclipse.pde" version="3.11.1.v20150904-0345"/>
       <feature id="org.eclipse.platform" version="4.5.1.v20150904-0015"/>
       <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.emf.ecp.e3.feature" version="1.8.0.20160215-1658"/>
+      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.8.0.20160215-1658"/>
+      <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.8.0.20160215-1658"/>
+      <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.8.0.20160215-1658"/>
    </features>
 
    <configurations>

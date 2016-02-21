@@ -7,30 +7,6 @@ This can be disabled with -vmargs -Dorg.eclipse.emf.examples.generator.validator
 
 Package model <http://www.eclipse.org/triquetrum>
 
-  Class Entity -> NamedObj
-    Reference inputPorts : Port<<0..*>>
-    Reference outputPorts : Port<<0..*>>
-    Operation getParameters() : Parameter<<0..*>>
-
-  Class CompositeEntity -> Entity
-    Reference entities : Entity<<0..*>>
-    Reference relations : Relation<<0..*>>
-
-  Class Port -> NamedObj
-    Attribute input : EBoolean
-    Attribute output : EBoolean
-    Reference linkedRelations : Relation<<0..*>>
-    Attribute multiPort : EBoolean
-    Operation canAcceptNewConnection() : EBoolean
-
-  Class Relation -> NamedObj
-    Reference linkedPorts : Port<<0..*>>
-
-  Class Attribute -> NamedObj
-
-  Class Parameter -> Attribute
-    Attribute expression : EString
-
   Class NamedObj
     Attribute name : EString<<1..1>>
     Reference attributes : Attribute<<0..*>>
@@ -42,12 +18,44 @@ Package model <http://www.eclipse.org/triquetrum>
     Operation topLevel() : NamedObj
     Operation setProperty(EString<<1..1>>, EString, EString) : void
 
+  Class Attribute -> NamedObj
+
+  Class Annotation -> Attribute
+    Attribute text : EString
+    Attribute fontFamily : EString
+    Attribute textSize : EInt
+    Attribute bold : EBoolean
+    Attribute italic : EBoolean
+    Attribute color : EString<<1..1>>
+
+  Class Parameter -> Attribute
+    Attribute expression : EString
+
   Class Director -> Attribute
     Operation getParameters() : Parameter<<0..*>>
+
+  Class Entity -> NamedObj
+    Reference inputPorts : Port<<0..*>>
+    Reference outputPorts : Port<<0..*>>
+    Operation getParameters() : Parameter<<0..*>>
+
+  Class CompositeEntity -> Entity
+    Reference entities : Entity<<0..*>>
+    Reference relations : Relation<<0..*>>
+
+  Class Actor -> Entity
 
   Class CompositeActor -> CompositeEntity
     Reference director : Director
 
-  Class Actor -> Entity
+  Class Port -> NamedObj
+    Attribute input : EBoolean
+    Attribute output : EBoolean
+    Reference linkedRelations : Relation<<0..*>>
+    Attribute multiPort : EBoolean
+    Operation canAcceptNewConnection() : EBoolean
+
+  Class Relation -> NamedObj
+    Reference linkedPorts : Port<<0..*>>
 
   DataType PtolemyNamedObj <ptolemy.kernel.util.NamedObj>

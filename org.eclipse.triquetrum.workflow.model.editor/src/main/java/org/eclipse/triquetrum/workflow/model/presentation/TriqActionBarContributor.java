@@ -1,17 +1,19 @@
-/*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+/**
+ * Copyright (c) 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 package org.eclipse.triquetrum.workflow.model.presentation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import org.eclipse.emf.common.ui.action.WorkbenchWindowActionDelegate;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
 
@@ -42,7 +44,10 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
+
+import org.eclipse.jface.wizard.WizardDialog;
 
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
@@ -56,6 +61,27 @@ import org.eclipse.ui.PartInitException;
 public class TriqActionBarContributor
   extends EditingDomainActionBarContributor
   implements ISelectionChangedListener {
+  /**
+   * Action to create objects from the Triq model.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public static class NewAction extends WorkbenchWindowActionDelegate {
+    /**
+     * @see org.eclipse.ui.IActionDelegate#run(org.eclipse.jface.action.IAction)
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void run(IAction action) {
+      TriqModelWizard wizard = new TriqModelWizard();
+      wizard.init(getWindow().getWorkbench(), StructuredSelection.EMPTY);
+      WizardDialog wizardDialog = new WizardDialog(getWindow().getShell(), wizard);
+      wizardDialog.open();
+    }
+  }
+
   /**
    * This keeps track of the active editor.
    * <!-- begin-user-doc -->

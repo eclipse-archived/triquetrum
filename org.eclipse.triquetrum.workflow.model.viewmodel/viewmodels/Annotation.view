@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_ggoQUJH5EeWbG5rKBOcOIw" name="Annotation" ecorePath="/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore">
+  <rootEClass href="http://www.eclipse.org/triquetrum#//Annotation"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ggxaQJH5EeWbG5rKBOcOIb" name="Control textSize">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ggoQUJH5EeWbG5rKBOcOIh">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Annotation/textSize"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ggxaQJH5EeWbG5rKBOcOIe" name="Control color">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ggoQUJH5EeWbG5rKBOcOIk">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Annotation/color"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ggxaQJH5EeWbG5rKBOcOIa" name="Control fontFamily">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ggoQUJH5EeWbG5rKBOcOIg">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Annotation/fontFamily"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ggxaQJH5EeWbG5rKBOcOIc" name="Control bold">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ggoQUJH5EeWbG5rKBOcOIi">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Annotation/bold"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ggxaQJH5EeWbG5rKBOcOId" name="Control italic">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ggoQUJH5EeWbG5rKBOcOIj">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Annotation/italic"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ggxaQJH5EeWbG5rKBOcOIw" name="Control text">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ggoQUJH5EeWbG5rKBOcOIf">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Annotation/text"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

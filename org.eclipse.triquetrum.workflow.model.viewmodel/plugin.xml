@@ -6,7 +6,7 @@
      are made available under the terms of the Eclipse Public License v1.0
      which accompanies this distribution, and is available at
      http://www.eclipse.org/legal/epl-v10.html
-     
+
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
@@ -14,10 +14,9 @@
 <plugin>
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodels/Annotation.view"/>
 <file filePath="viewmodels/Parameter.view"/>
-
 <file filePath="viewmodels/Attribute.view"/>
-
 <file filePath="viewmodels/Director.view"/>
 <file filePath="viewmodels/Actor.view"/>
    </extension>

@@ -1,13 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+/**
+ * Copyright (c) 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 package org.eclipse.triquetrum.workflow.model.util;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -76,6 +76,26 @@ public class TriqAdapterFactory extends AdapterFactoryImpl {
   protected TriqSwitch<Adapter> modelSwitch =
     new TriqSwitch<Adapter>() {
       @Override
+      public Adapter caseNamedObj(NamedObj object) {
+        return createNamedObjAdapter();
+      }
+      @Override
+      public Adapter caseAttribute(Attribute object) {
+        return createAttributeAdapter();
+      }
+      @Override
+      public Adapter caseAnnotation(Annotation object) {
+        return createAnnotationAdapter();
+      }
+      @Override
+      public Adapter caseParameter(Parameter object) {
+        return createParameterAdapter();
+      }
+      @Override
+      public Adapter caseDirector(Director object) {
+        return createDirectorAdapter();
+      }
+      @Override
       public Adapter caseEntity(Entity object) {
         return createEntityAdapter();
       }
@@ -84,36 +104,20 @@ public class TriqAdapterFactory extends AdapterFactoryImpl {
         return createCompositeEntityAdapter();
       }
       @Override
-      public Adapter casePort(Port object) {
-        return createPortAdapter();
-      }
-      @Override
-      public Adapter caseRelation(Relation object) {
-        return createRelationAdapter();
-      }
-      @Override
-      public Adapter caseAttribute(Attribute object) {
-        return createAttributeAdapter();
-      }
-      @Override
-      public Adapter caseParameter(Parameter object) {
-        return createParameterAdapter();
-      }
-      @Override
-      public Adapter caseNamedObj(NamedObj object) {
-        return createNamedObjAdapter();
-      }
-      @Override
-      public Adapter caseDirector(Director object) {
-        return createDirectorAdapter();
+      public Adapter caseActor(Actor object) {
+        return createActorAdapter();
       }
       @Override
       public Adapter caseCompositeActor(CompositeActor object) {
         return createCompositeActorAdapter();
       }
       @Override
-      public Adapter caseActor(Actor object) {
-        return createActorAdapter();
+      public Adapter casePort(Port object) {
+        return createPortAdapter();
+      }
+      @Override
+      public Adapter caseRelation(Relation object) {
+        return createRelationAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object) {
@@ -134,6 +138,76 @@ public class TriqAdapterFactory extends AdapterFactoryImpl {
     return modelSwitch.doSwitch((EObject)target);
   }
 
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.NamedObj <em>Named Obj</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.NamedObj
+   * @generated
+   */
+  public Adapter createNamedObjAdapter() {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Attribute <em>Attribute</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.Attribute
+   * @generated
+   */
+  public Adapter createAttributeAdapter() {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Annotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.Annotation
+   * @generated
+   */
+  public Adapter createAnnotationAdapter() {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Parameter <em>Parameter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.Parameter
+   * @generated
+   */
+  public Adapter createParameterAdapter() {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Director <em>Director</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.Director
+   * @generated
+   */
+  public Adapter createDirectorAdapter() {
+    return null;
+  }
 
   /**
    * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Entity <em>Entity</em>}'.
@@ -164,6 +238,34 @@ public class TriqAdapterFactory extends AdapterFactoryImpl {
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Actor <em>Actor</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.Actor
+   * @generated
+   */
+  public Adapter createActorAdapter() {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.CompositeActor <em>Composite Actor</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.CompositeActor
+   * @generated
+   */
+  public Adapter createCompositeActorAdapter() {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Port <em>Port</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -188,90 +290,6 @@ public class TriqAdapterFactory extends AdapterFactoryImpl {
    * @generated
    */
   public Adapter createRelationAdapter() {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Attribute <em>Attribute</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.triquetrum.workflow.model.Attribute
-   * @generated
-   */
-  public Adapter createAttributeAdapter() {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Parameter <em>Parameter</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.triquetrum.workflow.model.Parameter
-   * @generated
-   */
-  public Adapter createParameterAdapter() {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.NamedObj <em>Named Obj</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.triquetrum.workflow.model.NamedObj
-   * @generated
-   */
-  public Adapter createNamedObjAdapter() {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Director <em>Director</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.triquetrum.workflow.model.Director
-   * @generated
-   */
-  public Adapter createDirectorAdapter() {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.CompositeActor <em>Composite Actor</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.triquetrum.workflow.model.CompositeActor
-   * @generated
-   */
-  public Adapter createCompositeActorAdapter() {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Actor <em>Actor</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.eclipse.triquetrum.workflow.model.Actor
-   * @generated
-   */
-  public Adapter createActorAdapter() {
     return null;
   }
 

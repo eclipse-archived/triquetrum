@@ -28,9 +28,7 @@ import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
 import org.eclipse.graphiti.palette.IToolEntry;
 import org.eclipse.graphiti.palette.impl.PaletteCompartmentEntry;
 import org.eclipse.graphiti.tb.ContextButtonEntry;
-import org.eclipse.graphiti.tb.ContextEntryHelper;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
-import org.eclipse.graphiti.tb.IContextButtonEntry;
 import org.eclipse.graphiti.tb.IContextButtonPadData;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
@@ -63,11 +61,11 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
     ICustomFeature[] cf = getFeatureProvider().getCustomFeatures(cc);
     for (int i = 0; i < cf.length; i++) {
       ICustomFeature iCustomFeature = cf[i];
-      if (iCustomFeature instanceof ModelElementConfigureFeature) {
+//      if (iCustomFeature instanceof ModelElementConfigureFeature) {
         ContextButtonEntry button = new ContextButtonEntry(iCustomFeature, cc);
         data.getDomainSpecificContextButtons().add(button);
-        break;
-      }
+//        break;
+//      }
     }
 
     return data;

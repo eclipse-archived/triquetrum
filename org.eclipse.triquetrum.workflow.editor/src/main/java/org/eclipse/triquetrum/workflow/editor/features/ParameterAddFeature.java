@@ -55,7 +55,7 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
   }
 
   public boolean canAdd(IAddContext context) {
-    // check if user wants to add an actor
+    // check if user wants to add a parameter
     if (context.getNewObject() instanceof Parameter) {
       // check if user wants to add to a diagram
       if (context.getTargetContainer() instanceof Diagram) {

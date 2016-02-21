@@ -25,17 +25,23 @@ import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.IFeature;
+import org.eclipse.graphiti.features.IResizeShapeFeature;
 import org.eclipse.graphiti.features.IUpdateFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
+import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorUpdateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.AnnotationAddFeature;
+import org.eclipse.triquetrum.workflow.editor.features.AnnotationChangeColorFeature;
+import org.eclipse.triquetrum.workflow.editor.features.AnnotationResizeFeature;
+import org.eclipse.triquetrum.workflow.editor.features.AnnotationUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.DirectorAddFeature;
@@ -47,6 +53,7 @@ import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
 import org.eclipse.triquetrum.workflow.model.Actor;
+import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
@@ -61,9 +68,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public static final String PALETTE_CONTRIBUTION_EXTENSION_ID = "org.eclipse.triquetrum.workflow.editor.paletteContribution";
 
   /**
-   * This map maintains the registered palette contributions for groups.
-   * For the moment we only support 1 level, i.e. no tree/hierarchy yet.
-   * This map is consulted during the execution of org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider.getPalette()
+   * This map maintains the registered palette contributions for groups. For the moment we only support 1 level, i.e. no tree/hierarchy yet. This map is
+   * consulted during the execution of org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider.getPalette()
    */
   private Map<String, IConfigurationElement> rootgroupsByName = new HashMap<>();
 
@@ -80,7 +86,9 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
 
   @Override
   public ICustomFeature[] getCustomFeatures(ICustomContext context) {
-    return new ICustomFeature[] {new ModelElementConfigureFeature(this)};
+    // The annotation color change is currently not done via a direct custom feature,
+    // but is done via the Annotation configuration form.
+    return new ICustomFeature[] { /*new AnnotationChangeColorFeature(this),*/ new ModelElementConfigureFeature(this) };
   }
 
   @Override
@@ -118,6 +126,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new PortAddFeature(this);
     } else if (context.getNewObject() instanceof Parameter) {
       return new ParameterAddFeature(this);
+    } else if (context.getNewObject() instanceof Annotation) {
+      return new AnnotationAddFeature(this);
     }
     return super.getAddFeature(context);
   }
@@ -128,12 +138,24 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     Object bo = getBusinessObjectForPictogramElement(pictogramElement);
     if (bo instanceof Parameter) {
       return new ParameterUpdateFeature(this);
+    } else if (bo instanceof Annotation) {
+      return new AnnotationUpdateFeature(this);
     } else if (bo instanceof Director) {
       return new DirectorUpdateFeature(this);
     } else if (bo instanceof Actor) {
       return new ActorUpdateFeature(this);
     }
     return super.getUpdateFeature(context);
+  }
+
+  @Override
+  public IResizeShapeFeature getResizeShapeFeature(IResizeShapeContext context) {
+    PictogramElement pictogramElement = context.getPictogramElement();
+    Object bo = getBusinessObjectForPictogramElement(pictogramElement);
+    if (bo instanceof Annotation) {
+      return new AnnotationResizeFeature(this);
+    }
+    return super.getResizeShapeFeature(context);
   }
 
   @Override
@@ -156,8 +178,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       String eClassName = cfgElem.getAttribute("type");
       // look for (optional) attributes
       Map<String, String> properties = new HashMap<>();
-      for(IConfigurationElement child : cfgElem.getChildren()) {
-        if("property".equals(child.getName())) {
+      for (IConfigurationElement child : cfgElem.getChildren()) {
+        if ("property".equals(child.getName())) {
           String name = child.getAttribute("name");
           String value = child.getAttribute("value");
           properties.put(name, value);
@@ -167,12 +189,13 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       if (iconResource != null) {
         // option 1 to register extra images from palette extensions
         // not an ideal hack, as we need to replicate Graphiti's ad-hoc internal image key construction
-        //(cfr. org.eclipse.graphiti.ui.internal.services.impl.ImageService.createImageDescriptorForId(String, String))
-//        ImageDescriptor imageDescriptor = TriqEditorPlugin.imageDescriptorFromPlugin(cfgElem.getContributor().getName(), iconResource);
-//        GraphitiUIPlugin.getDefault().getImageRegistry().put(makeKey(TriqDiagramTypeProvider.ID,iconResource), imageDescriptor);
+        // (cfr. org.eclipse.graphiti.ui.internal.services.impl.ImageService.createImageDescriptorForId(String, String))
+        // ImageDescriptor imageDescriptor = TriqEditorPlugin.imageDescriptorFromPlugin(cfgElem.getContributor().getName(), iconResource);
+        // GraphitiUIPlugin.getDefault().getImageRegistry().put(makeKey(TriqDiagramTypeProvider.ID,iconResource), imageDescriptor);
 
         // option 2 : cfr suggestion in https://bugs.eclipse.org/bugs/show_bug.cgi?id=366452#c8
-        ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource, iconResource);
+        ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource,
+            iconResource);
       }
       results.add(mecf);
       break;
@@ -182,7 +205,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       // this should enforce a single level of groups, i.e. children of subgroups are traversed and added,
       // but they all get linked to their "top-level" parent group.
       IConfigurationElement groupElement = parentGroupElem;
-      if(parentGroupElem == null) {
+      if (parentGroupElem == null) {
         groupElement = cfgElem;
         // no parent, so store this group as a root group
         rootgroupsByName.put(label, cfgElem);
@@ -195,8 +218,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   }
 
   // this is needed for option 1 to register extra images from palette extensions
-//  private String makeKey(String dtp, String imageId) {
-//    return dtp + "||" + imageId;
-//  }
+  // private String makeKey(String dtp, String imageId) {
+  // return dtp + "||" + imageId;
+  // }
 
 }

@@ -21,7 +21,7 @@
 	            class="ptolemy.vergil.kernel.attributes.TextAttribute"
 	            displayName="Annotation"
 	            icon="icons/value_field.gif"
-	            type="Attribute">
+	            type="Annotation">
 	      </entry>
         <entry
               class="ptolemy.data.expr.StringParameter"

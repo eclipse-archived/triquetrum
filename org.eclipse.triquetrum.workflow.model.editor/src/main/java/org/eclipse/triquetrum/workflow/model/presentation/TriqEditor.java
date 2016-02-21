@@ -1,13 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+/**
+ * Copyright (c) 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 package org.eclipse.triquetrum.workflow.model.presentation;
 
 
@@ -24,17 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceChangeEvent;
-import org.eclipse.core.resources.IResourceChangeListener;
-import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResourceDeltaVisitor;
-import org.eclipse.core.resources.ResourcesPlugin;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 
@@ -47,8 +36,6 @@ import org.eclipse.jface.action.Separator;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.ProgressMonitorDialog;
-
-import org.eclipse.jface.util.LocalSelectionTransfer;
 
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ISelection;
@@ -69,7 +56,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CTabFolder;
 
 import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.FileTransfer;
 import org.eclipse.swt.dnd.Transfer;
 
 import org.eclipse.swt.events.ControlAdapter;
@@ -94,11 +80,6 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 
-import org.eclipse.ui.dialogs.SaveAsDialog;
-
-import org.eclipse.ui.ide.IGotoMarker;
-
-import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
 import org.eclipse.ui.views.contentoutline.ContentOutline;
@@ -117,7 +98,6 @@ import org.eclipse.emf.common.command.CommandStackListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.ui.MarkerHelper;
 import org.eclipse.emf.common.ui.ViewerPane;
 
 import org.eclipse.emf.common.ui.editor.ProblemEditorPart;
@@ -130,7 +110,6 @@ import org.eclipse.emf.common.util.URI;
 
 
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -156,15 +135,15 @@ import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
-
-import org.eclipse.emf.edit.ui.util.EditUIMarkerHelper;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 
 import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 
 import org.eclipse.triquetrum.workflow.model.provider.TriqItemProviderAdapterFactory;
 
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.emf.common.ui.URIEditorInput;
+
+import org.eclipse.jface.operation.IRunnableWithProgress;
 
 
 /**
@@ -175,7 +154,29 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
  */
 public class TriqEditor
   extends MultiPageEditorPart
-  implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider, IGotoMarker {
+  implements IEditingDomainProvider, ISelectionProvider, IMenuListener, IViewerProvider {
+  /**
+   * The filters for file extensions supported by the editor.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public static final List<String> FILE_EXTENSION_FILTERS = prefixExtensions(TriqModelWizard.FILE_EXTENSIONS, "*.");
+  
+  /**
+   * Returns a new unmodifiable list containing prefixed versions of the extensions in the given list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private static List<String> prefixExtensions(List<String> extensions, String prefix) {
+    List<String> result = new ArrayList<String>();
+    for (String extension : extensions) {
+      result.add(prefix + extension);
+    }
+    return Collections.unmodifiableList(result);
+  }
+
   /**
    * This keeps track of the editing domain that is used to track all changes to the model.
    * <!-- begin-user-doc -->
@@ -314,15 +315,6 @@ public class TriqEditor
    * @generated
    */
   protected ISelection editorSelection = StructuredSelection.EMPTY;
-
-  /**
-   * The MarkerHelper is responsible for creating workspace resource markers presented
-   * in Eclipse's Problems View.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected MarkerHelper markerHelper = new EditUIMarkerHelper();
 
   /**
    * This listens for when the outline becomes active
@@ -466,84 +458,6 @@ public class TriqEditor
     };
 
   /**
-   * This listens for workspace changes.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected IResourceChangeListener resourceChangeListener =
-    new IResourceChangeListener() {
-      public void resourceChanged(IResourceChangeEvent event) {
-        IResourceDelta delta = event.getDelta();
-        try {
-          class ResourceDeltaVisitor implements IResourceDeltaVisitor {
-            protected ResourceSet resourceSet = editingDomain.getResourceSet();
-            protected Collection<Resource> changedResources = new ArrayList<Resource>();
-            protected Collection<Resource> removedResources = new ArrayList<Resource>();
-
-            public boolean visit(IResourceDelta delta) {
-              if (delta.getResource().getType() == IResource.FILE) {
-                if (delta.getKind() == IResourceDelta.REMOVED ||
-                    delta.getKind() == IResourceDelta.CHANGED && delta.getFlags() != IResourceDelta.MARKERS) {
-                  Resource resource = resourceSet.getResource(URI.createPlatformResourceURI(delta.getFullPath().toString(), true), false);
-                  if (resource != null) {
-                    if (delta.getKind() == IResourceDelta.REMOVED) {
-                      removedResources.add(resource);
-                    }
-                    else if (!savedResources.remove(resource)) {
-                      changedResources.add(resource);
-                    }
-                  }
-                }
-                return false;
-              }
-
-              return true;
-            }
-
-            public Collection<Resource> getChangedResources() {
-              return changedResources;
-            }
-
-            public Collection<Resource> getRemovedResources() {
-              return removedResources;
-            }
-          }
-
-          final ResourceDeltaVisitor visitor = new ResourceDeltaVisitor();
-          delta.accept(visitor);
-
-          if (!visitor.getRemovedResources().isEmpty()) {
-            getSite().getShell().getDisplay().asyncExec
-              (new Runnable() {
-                 public void run() {
-                   removedResources.addAll(visitor.getRemovedResources());
-                   if (!isDirty()) {
-                     getSite().getPage().closeEditor(TriqEditor.this, false);
-                   }
-                 }
-               });
-          }
-
-          if (!visitor.getChangedResources().isEmpty()) {
-            getSite().getShell().getDisplay().asyncExec
-              (new Runnable() {
-                 public void run() {
-                   changedResources.addAll(visitor.getChangedResources());
-                   if (getSite().getPage().getActiveEditor() == TriqEditor.this) {
-                     handleActivate();
-                   }
-                 }
-               });
-          }
-        }
-        catch (CoreException exception) {
-          TriquetrumEditorPlugin.INSTANCE.log(exception);
-        }
-      }
-    };
-
-  /**
    * Handles activation of the editor or it's associated views.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -646,7 +560,6 @@ public class TriqEditor
       else if (diagnostic.getSeverity() != Diagnostic.OK) {
         ProblemEditorPart problemEditorPart = new ProblemEditorPart();
         problemEditorPart.setDiagnostic(diagnostic);
-        problemEditorPart.setMarkerHelper(markerHelper);
         try {
           addPage(++lastEditorPage, problemEditorPart, getEditorInput());
           setPageText(lastEditorPage, problemEditorPart.getPartName());
@@ -655,18 +568,6 @@ public class TriqEditor
         }
         catch (PartInitException exception) {
           TriquetrumEditorPlugin.INSTANCE.log(exception);
-        }
-      }
-
-      if (markerHelper.hasMarkers(editingDomain.getResourceSet())) {
-        markerHelper.deleteMarkers(editingDomain.getResourceSet());
-        if (diagnostic.getSeverity() != Diagnostic.OK) {
-          try {
-            markerHelper.createMarkers(diagnostic);
-          }
-          catch (CoreException exception) {
-            TriquetrumEditorPlugin.INSTANCE.log(exception);
-          }
         }
       }
     }
@@ -945,7 +846,7 @@ public class TriqEditor
     getSite().registerContextMenu(contextMenu, new UnwrappingSelectionProvider(viewer));
 
     int dndOperations = DND.DROP_COPY | DND.DROP_MOVE | DND.DROP_LINK;
-    Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance(), LocalSelectionTransfer.getTransfer(), FileTransfer.getInstance() };
+    Transfer[] transfers = new Transfer[] { LocalTransfer.getInstance() };
     viewer.addDragSupport(dndOperations, transfers, new ViewerDragAdapter(viewer));
     viewer.addDropSupport(dndOperations, transfers, new EditingDomainViewerDropAdapter(editingDomain, viewer));
   }
@@ -957,7 +858,7 @@ public class TriqEditor
    * @generated
    */
   public void createModel() {
-    URI resourceURI = EditUIUtil.getURI(getEditorInput(), editingDomain.getResourceSet().getURIConverter());
+    URI resourceURI = EditUIUtil.getURI(getEditorInput());
     Exception exception = null;
     Resource resource = null;
     try {
@@ -1325,9 +1226,6 @@ public class TriqEditor
     else if (key.equals(IPropertySheetPage.class)) {
       return getPropertySheetPage();
     }
-    else if (key.equals(IGotoMarker.class)) {
-      return this;
-    }
     else {
       return super.getAdapter(key);
     }
@@ -1486,16 +1384,14 @@ public class TriqEditor
     //
     final Map<Object, Object> saveOptions = new HashMap<Object, Object>();
     saveOptions.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
-    saveOptions.put(Resource.OPTION_LINE_DELIMITER, Resource.OPTION_LINE_DELIMITER_UNSPECIFIED);
 
     // Do the work within an operation because this is a long running activity that modifies the workbench.
     //
-    WorkspaceModifyOperation operation =
-      new WorkspaceModifyOperation() {
+    IRunnableWithProgress operation =
+      new IRunnableWithProgress() {
         // This is the method that gets invoked when the operation runs.
         //
-        @Override
-        public void execute(IProgressMonitor monitor) {
+        public void run(IProgressMonitor monitor) {
           // Save the resources to the file system.
           //
           boolean first = true;
@@ -1578,14 +1474,11 @@ public class TriqEditor
    */
   @Override
   public void doSaveAs() {
-    SaveAsDialog saveAsDialog = new SaveAsDialog(getSite().getShell());
-    saveAsDialog.open();
-    IPath path = saveAsDialog.getResult();
-    if (path != null) {
-      IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-      if (file != null) {
-        doSaveAs(URI.createPlatformResourceURI(file.getFullPath().toString(), true), new FileEditorInput(file));
-      }
+    String[] filters = FILE_EXTENSION_FILTERS.toArray(new String[FILE_EXTENSION_FILTERS.size()]);
+    String[] files = TriquetrumEditorAdvisor.openFilePathDialog(getSite().getShell(), SWT.SAVE, filters);
+    if (files.length > 0) {
+      URI uri = URI.createFileURI(files[0]);
+      doSaveAs(uri, new URIEditorInput(uri));
     }
   }
 
@@ -1606,18 +1499,6 @@ public class TriqEditor
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void gotoMarker(IMarker marker) {
-    List<?> targetObjects = markerHelper.getTargetObjects(editingDomain, marker);
-    if (!targetObjects.isEmpty()) {
-      setSelectionToViewer(targetObjects);
-    }
-  }
-
-  /**
    * This is called during startup.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1630,7 +1511,6 @@ public class TriqEditor
     setPartName(editorInput.getName());
     site.setSelectionProvider(this);
     site.getPage().addPartListener(partListener);
-    ResourcesPlugin.getWorkspace().addResourceChangeListener(resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
   }
 
   /**
@@ -1793,8 +1673,6 @@ public class TriqEditor
   @Override
   public void dispose() {
     updateProblemIndication = false;
-
-    ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 
     getSite().getPage().removePartListener(partListener);
 

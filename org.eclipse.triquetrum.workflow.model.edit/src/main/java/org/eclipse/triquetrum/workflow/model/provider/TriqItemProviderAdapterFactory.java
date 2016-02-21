@@ -1,13 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+/**
+ * Copyright (c) 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 package org.eclipse.triquetrum.workflow.model.provider;
 
 import java.util.ArrayList;
@@ -80,6 +80,121 @@ public class TriqItemProviderAdapterFactory extends TriqAdapterFactory implement
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.NamedObj} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected NamedObjItemProvider namedObjItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.NamedObj}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createNamedObjAdapter() {
+    if (namedObjItemProvider == null) {
+      namedObjItemProvider = new NamedObjItemProvider(this);
+    }
+
+    return namedObjItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Attribute} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected AttributeItemProvider attributeItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Attribute}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createAttributeAdapter() {
+    if (attributeItemProvider == null) {
+      attributeItemProvider = new AttributeItemProvider(this);
+    }
+
+    return attributeItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Annotation} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected AnnotationItemProvider annotationItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Annotation}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createAnnotationAdapter() {
+    if (annotationItemProvider == null) {
+      annotationItemProvider = new AnnotationItemProvider(this);
+    }
+
+    return annotationItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Parameter} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ParameterItemProvider parameterItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Parameter}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createParameterAdapter() {
+    if (parameterItemProvider == null) {
+      parameterItemProvider = new ParameterItemProvider(this);
+    }
+
+    return parameterItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Director} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected DirectorItemProvider directorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Director}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createDirectorAdapter() {
+    if (directorItemProvider == null) {
+      directorItemProvider = new DirectorItemProvider(this);
+    }
+
+    return directorItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Entity} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -126,6 +241,52 @@ public class TriqItemProviderAdapterFactory extends TriqAdapterFactory implement
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Actor} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ActorItemProvider actorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Actor}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createActorAdapter() {
+    if (actorItemProvider == null) {
+      actorItemProvider = new ActorItemProvider(this);
+    }
+
+    return actorItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.CompositeActor} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected CompositeActorItemProvider compositeActorItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.CompositeActor}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createCompositeActorAdapter() {
+    if (compositeActorItemProvider == null) {
+      compositeActorItemProvider = new CompositeActorItemProvider(this);
+    }
+
+    return compositeActorItemProvider;
+  }
+
+  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Port} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -169,144 +330,6 @@ public class TriqItemProviderAdapterFactory extends TriqAdapterFactory implement
     }
 
     return relationItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Attribute} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected AttributeItemProvider attributeItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Attribute}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createAttributeAdapter() {
-    if (attributeItemProvider == null) {
-      attributeItemProvider = new AttributeItemProvider(this);
-    }
-
-    return attributeItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Parameter} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ParameterItemProvider parameterItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Parameter}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createParameterAdapter() {
-    if (parameterItemProvider == null) {
-      parameterItemProvider = new ParameterItemProvider(this);
-    }
-
-    return parameterItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.NamedObj} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected NamedObjItemProvider namedObjItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.NamedObj}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createNamedObjAdapter() {
-    if (namedObjItemProvider == null) {
-      namedObjItemProvider = new NamedObjItemProvider(this);
-    }
-
-    return namedObjItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Director} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected DirectorItemProvider directorItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Director}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createDirectorAdapter() {
-    if (directorItemProvider == null) {
-      directorItemProvider = new DirectorItemProvider(this);
-    }
-
-    return directorItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.CompositeActor} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected CompositeActorItemProvider compositeActorItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.CompositeActor}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createCompositeActorAdapter() {
-    if (compositeActorItemProvider == null) {
-      compositeActorItemProvider = new CompositeActorItemProvider(this);
-    }
-
-    return compositeActorItemProvider;
-  }
-
-  /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Actor} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected ActorItemProvider actorItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Actor}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createActorAdapter() {
-    if (actorItemProvider == null) {
-      actorItemProvider = new ActorItemProvider(this);
-    }
-
-    return actorItemProvider;
   }
 
   /**
@@ -408,16 +431,17 @@ public class TriqItemProviderAdapterFactory extends TriqAdapterFactory implement
    * @generated
    */
   public void dispose() {
+    if (namedObjItemProvider != null) namedObjItemProvider.dispose();
+    if (attributeItemProvider != null) attributeItemProvider.dispose();
+    if (annotationItemProvider != null) annotationItemProvider.dispose();
+    if (parameterItemProvider != null) parameterItemProvider.dispose();
+    if (directorItemProvider != null) directorItemProvider.dispose();
     if (entityItemProvider != null) entityItemProvider.dispose();
     if (compositeEntityItemProvider != null) compositeEntityItemProvider.dispose();
+    if (actorItemProvider != null) actorItemProvider.dispose();
+    if (compositeActorItemProvider != null) compositeActorItemProvider.dispose();
     if (portItemProvider != null) portItemProvider.dispose();
     if (relationItemProvider != null) relationItemProvider.dispose();
-    if (attributeItemProvider != null) attributeItemProvider.dispose();
-    if (parameterItemProvider != null) parameterItemProvider.dispose();
-    if (namedObjItemProvider != null) namedObjItemProvider.dispose();
-    if (directorItemProvider != null) directorItemProvider.dispose();
-    if (compositeActorItemProvider != null) compositeActorItemProvider.dispose();
-    if (actorItemProvider != null) actorItemProvider.dispose();
   }
 
 }
