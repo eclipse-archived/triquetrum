@@ -38,16 +38,16 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
 
   private String group;
 
-  private String elementClass;
+  private String category;
   private String elementName;
   private String wrappedClass;
   private String imageId;
   private Map<String, String> properties = new HashMap<>();
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String group, String elementClass, String elementName, String wrappedClass, String imageId, Map<String, String> properties) {
+  public ModelElementCreateFeature(IFeatureProvider fp, String group, String category, String elementName, String wrappedClass, String imageId, Map<String, String> properties) {
     super(fp, elementName, "Create a " + elementName);
     this.group = group;
-    this.elementClass = elementClass;
+    this.category = category;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
     this.imageId = imageId;
@@ -75,7 +75,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       return false;
     } else {
       // make sure we can only set 1 Director per model level
-      EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(elementClass);
+      EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category);
       if(TriqPackage.DIRECTOR == eClassifier.getClassifierID()) {
         CompositeActor model = EditorUtils.getSelectedModel();
         return model==null || model.getDirector() == null;
@@ -101,7 +101,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       }
 
       // create new model element
-      EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(elementClass);
+      EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category);
       NamedObj result = (NamedObj) TriqFactory.eINSTANCE.create((EClass) eClassifier);
       result.setName(EditorUtils.buildUniqueName(model, elementName));
       result.setWrappedType(wrappedClass);

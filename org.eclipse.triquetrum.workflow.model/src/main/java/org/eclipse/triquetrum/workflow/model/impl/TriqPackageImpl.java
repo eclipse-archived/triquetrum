@@ -1,5 +1,5 @@
-/*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+/**
+ * Copyright (c) 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,7 +7,7 @@
  *
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 package org.eclipse.triquetrum.workflow.model.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -16,10 +16,9 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
 import org.eclipse.triquetrum.workflow.model.Actor;
+import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
@@ -44,6 +43,41 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass namedObjEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass attributeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass annotationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass parameterEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass directorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass entityEClass = null;
 
   /**
@@ -58,42 +92,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass portEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass relationEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass attributeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass parameterEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass namedObjEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass directorEClass = null;
+  private EClass actorEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -107,7 +106,14 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass actorEClass = null;
+  private EClass portEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass relationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -175,168 +181,6 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     // Update the registry and return the package
     EPackage.Registry.INSTANCE.put(TriqPackage.eNS_URI, theTriqPackage);
     return theTriqPackage;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getEntity() {
-    return entityEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEntity_InputPorts() {
-    return (EReference)entityEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getEntity_OutputPorts() {
-    return (EReference)entityEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getEntity__GetParameters() {
-    return entityEClass.getEOperations().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getCompositeEntity() {
-    return compositeEntityEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getCompositeEntity_Entities() {
-    return (EReference)compositeEntityEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getCompositeEntity_Relations() {
-    return (EReference)compositeEntityEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getPort() {
-    return portEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPort_Input() {
-    return (EAttribute)portEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPort_Output() {
-    return (EAttribute)portEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getPort_LinkedRelations() {
-    return (EReference)portEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPort_MultiPort() {
-    return (EAttribute)portEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getPort__CanAcceptNewConnection() {
-    return portEClass.getEOperations().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getRelation() {
-    return relationEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getRelation_LinkedPorts() {
-    return (EReference)relationEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAttribute() {
-    return attributeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getParameter() {
-    return parameterEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getParameter_Expression() {
-    return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -434,6 +278,96 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getAttribute() {
+    return attributeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAnnotation() {
+    return annotationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAnnotation_Text() {
+    return (EAttribute)annotationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAnnotation_FontFamily() {
+    return (EAttribute)annotationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAnnotation_TextSize() {
+    return (EAttribute)annotationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAnnotation_Bold() {
+    return (EAttribute)annotationEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAnnotation_Italic() {
+    return (EAttribute)annotationEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAnnotation_Color() {
+    return (EAttribute)annotationEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getParameter() {
+    return parameterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getParameter_Expression() {
+    return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getDirector() {
     return directorEClass;
   }
@@ -445,6 +379,78 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    */
   public EOperation getDirector__GetParameters() {
     return directorEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEntity() {
+    return entityEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEntity_InputPorts() {
+    return (EReference)entityEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEntity_OutputPorts() {
+    return (EReference)entityEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getEntity__GetParameters() {
+    return entityEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCompositeEntity() {
+    return compositeEntityEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCompositeEntity_Entities() {
+    return (EReference)compositeEntityEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCompositeEntity_Relations() {
+    return (EReference)compositeEntityEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getActor() {
+    return actorEClass;
   }
 
   /**
@@ -470,8 +476,71 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getActor() {
-    return actorEClass;
+  public EClass getPort() {
+    return portEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPort_Input() {
+    return (EAttribute)portEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPort_Output() {
+    return (EAttribute)portEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPort_LinkedRelations() {
+    return (EReference)portEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPort_MultiPort() {
+    return (EAttribute)portEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getPort__CanAcceptNewConnection() {
+    return portEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getRelation() {
+    return relationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRelation_LinkedPorts() {
+    return (EReference)relationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -511,30 +580,6 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     isCreated = true;
 
     // Create classes and their features
-    entityEClass = createEClass(ENTITY);
-    createEReference(entityEClass, ENTITY__INPUT_PORTS);
-    createEReference(entityEClass, ENTITY__OUTPUT_PORTS);
-    createEOperation(entityEClass, ENTITY___GET_PARAMETERS);
-
-    compositeEntityEClass = createEClass(COMPOSITE_ENTITY);
-    createEReference(compositeEntityEClass, COMPOSITE_ENTITY__ENTITIES);
-    createEReference(compositeEntityEClass, COMPOSITE_ENTITY__RELATIONS);
-
-    portEClass = createEClass(PORT);
-    createEAttribute(portEClass, PORT__INPUT);
-    createEAttribute(portEClass, PORT__OUTPUT);
-    createEReference(portEClass, PORT__LINKED_RELATIONS);
-    createEAttribute(portEClass, PORT__MULTI_PORT);
-    createEOperation(portEClass, PORT___CAN_ACCEPT_NEW_CONNECTION);
-
-    relationEClass = createEClass(RELATION);
-    createEReference(relationEClass, RELATION__LINKED_PORTS);
-
-    attributeEClass = createEClass(ATTRIBUTE);
-
-    parameterEClass = createEClass(PARAMETER);
-    createEAttribute(parameterEClass, PARAMETER__EXPRESSION);
-
     namedObjEClass = createEClass(NAMED_OBJ);
     createEAttribute(namedObjEClass, NAMED_OBJ__NAME);
     createEReference(namedObjEClass, NAMED_OBJ__ATTRIBUTES);
@@ -546,13 +591,45 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEOperation(namedObjEClass, NAMED_OBJ___TOP_LEVEL);
     createEOperation(namedObjEClass, NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING);
 
+    attributeEClass = createEClass(ATTRIBUTE);
+
+    annotationEClass = createEClass(ANNOTATION);
+    createEAttribute(annotationEClass, ANNOTATION__TEXT);
+    createEAttribute(annotationEClass, ANNOTATION__FONT_FAMILY);
+    createEAttribute(annotationEClass, ANNOTATION__TEXT_SIZE);
+    createEAttribute(annotationEClass, ANNOTATION__BOLD);
+    createEAttribute(annotationEClass, ANNOTATION__ITALIC);
+    createEAttribute(annotationEClass, ANNOTATION__COLOR);
+
+    parameterEClass = createEClass(PARAMETER);
+    createEAttribute(parameterEClass, PARAMETER__EXPRESSION);
+
     directorEClass = createEClass(DIRECTOR);
     createEOperation(directorEClass, DIRECTOR___GET_PARAMETERS);
+
+    entityEClass = createEClass(ENTITY);
+    createEReference(entityEClass, ENTITY__INPUT_PORTS);
+    createEReference(entityEClass, ENTITY__OUTPUT_PORTS);
+    createEOperation(entityEClass, ENTITY___GET_PARAMETERS);
+
+    compositeEntityEClass = createEClass(COMPOSITE_ENTITY);
+    createEReference(compositeEntityEClass, COMPOSITE_ENTITY__ENTITIES);
+    createEReference(compositeEntityEClass, COMPOSITE_ENTITY__RELATIONS);
+
+    actorEClass = createEClass(ACTOR);
 
     compositeActorEClass = createEClass(COMPOSITE_ACTOR);
     createEReference(compositeActorEClass, COMPOSITE_ACTOR__DIRECTOR);
 
-    actorEClass = createEClass(ACTOR);
+    portEClass = createEClass(PORT);
+    createEAttribute(portEClass, PORT__INPUT);
+    createEAttribute(portEClass, PORT__OUTPUT);
+    createEReference(portEClass, PORT__LINKED_RELATIONS);
+    createEAttribute(portEClass, PORT__MULTI_PORT);
+    createEOperation(portEClass, PORT___CAN_ACCEPT_NEW_CONNECTION);
+
+    relationEClass = createEClass(RELATION);
+    createEReference(relationEClass, RELATION__LINKED_PORTS);
 
     // Create data types
     ptolemyNamedObjEDataType = createEDataType(PTOLEMY_NAMED_OBJ);
@@ -586,49 +663,24 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    entityEClass.getESuperTypes().add(this.getNamedObj());
-    compositeEntityEClass.getESuperTypes().add(this.getEntity());
-    portEClass.getESuperTypes().add(this.getNamedObj());
-    relationEClass.getESuperTypes().add(this.getNamedObj());
     attributeEClass.getESuperTypes().add(this.getNamedObj());
+    annotationEClass.getESuperTypes().add(this.getAttribute());
     parameterEClass.getESuperTypes().add(this.getAttribute());
     directorEClass.getESuperTypes().add(this.getAttribute());
-    compositeActorEClass.getESuperTypes().add(this.getCompositeEntity());
+    entityEClass.getESuperTypes().add(this.getNamedObj());
+    compositeEntityEClass.getESuperTypes().add(this.getEntity());
     actorEClass.getESuperTypes().add(this.getEntity());
+    compositeActorEClass.getESuperTypes().add(this.getCompositeEntity());
+    portEClass.getESuperTypes().add(this.getNamedObj());
+    relationEClass.getESuperTypes().add(this.getNamedObj());
 
     // Initialize classes, features, and operations; add parameters
-    initEClass(entityEClass, Entity.class, "Entity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEntity_InputPorts(), this.getPort(), null, "inputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEntity_OutputPorts(), this.getPort(), null, "outputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEOperation(getEntity__GetParameters(), this.getParameter(), "getParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
-
-    initEClass(compositeEntityEClass, CompositeEntity.class, "CompositeEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCompositeEntity_Entities(), this.getEntity(), null, "entities", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCompositeEntity_Relations(), this.getRelation(), null, "relations", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(portEClass, Port.class, "Port", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPort_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPort_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPort_LinkedRelations(), this.getRelation(), this.getRelation_LinkedPorts(), "linkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPort_MultiPort(), ecorePackage.getEBoolean(), "multiPort", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEOperation(getPort__CanAcceptNewConnection(), ecorePackage.getEBoolean(), "canAcceptNewConnection", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    initEClass(relationEClass, Relation.class, "Relation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getParameter_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(namedObjEClass, NamedObj.class, "NamedObj", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getNamedObj_Name(), ecorePackage.getEString(), "name", null, 1, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNamedObj_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_WrappedType(), ecorePackage.getEString(), "wrappedType", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_WrappedObject(), this.getPtolemyNamedObj(), "wrappedObject", null, 0, 1, NamedObj.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNamedObj_DeepComplete(), ecorePackage.getEBoolean(), "deepComplete", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_DeepComplete(), ecorePackage.getEBoolean(), "deepComplete", "false", 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_IconId(), ecorePackage.getEString(), "iconId", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getNamedObj__GetContainer(), this.getNamedObj(), "getContainer", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -640,14 +692,48 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "className", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+    initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAnnotation_Text(), ecorePackage.getEString(), "text", "Double click to edit text.", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_FontFamily(), ecorePackage.getEString(), "fontFamily", "Arial", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_TextSize(), ecorePackage.getEInt(), "textSize", "8", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Bold(), ecorePackage.getEBoolean(), "bold", "false", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Italic(), ecorePackage.getEBoolean(), "italic", "false", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Color(), ecorePackage.getEString(), "color", "{0.0,0.0,0.0,1.0}", 1, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getParameter_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(directorEClass, Director.class, "Director", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEOperation(getDirector__GetParameters(), this.getParameter(), "getParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
 
+    initEClass(entityEClass, Entity.class, "Entity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEntity_InputPorts(), this.getPort(), null, "inputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEntity_OutputPorts(), this.getPort(), null, "outputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEOperation(getEntity__GetParameters(), this.getParameter(), "getParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+    initEClass(compositeEntityEClass, CompositeEntity.class, "CompositeEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCompositeEntity_Entities(), this.getEntity(), null, "entities", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompositeEntity_Relations(), this.getRelation(), null, "relations", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(actorEClass, Actor.class, "Actor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
     initEClass(compositeActorEClass, CompositeActor.class, "CompositeActor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCompositeActor_Director(), this.getDirector(), null, "director", null, 0, 1, CompositeActor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(actorEClass, Actor.class, "Actor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(portEClass, Port.class, "Port", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPort_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPort_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPort_LinkedRelations(), this.getRelation(), this.getRelation_LinkedPorts(), "linkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPort_MultiPort(), ecorePackage.getEBoolean(), "multiPort", "false", 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEOperation(getPort__CanAcceptNewConnection(), ecorePackage.getEBoolean(), "canAcceptNewConnection", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEClass(relationEClass, Relation.class, "Relation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(ptolemyNamedObjEDataType, ptolemy.kernel.util.NamedObj.class, "PtolemyNamedObj", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

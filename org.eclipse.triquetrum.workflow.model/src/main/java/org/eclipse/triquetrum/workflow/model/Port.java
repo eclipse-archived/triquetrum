@@ -104,6 +104,7 @@ public interface Port extends NamedObj {
 
   /**
    * Returns the value of the '<em><b>Multi Port</b></em>' attribute.
+   * The default value is <code>"false"</code>.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Multi Port</em>' attribute isn't clear,
@@ -113,7 +114,7 @@ public interface Port extends NamedObj {
    * @return the value of the '<em>Multi Port</em>' attribute.
    * @see #setMultiPort(boolean)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getPort_MultiPort()
-   * @model
+   * @model default="false"
    * @generated
    */
   boolean isMultiPort();

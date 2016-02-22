@@ -13,20 +13,20 @@ package org.eclipse.triquetrum.workflow.editor.features;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
-import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.util.EclipseUtils;
 import org.eclipse.triquetrum.workflow.editor.views.NamedObjDialog;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 
-public class ActorConfigureFeature extends AbstractCustomFeature {
+public class ModelElementConfigureFeature extends AbstractCustomFeature {
 
-  public ActorConfigureFeature(TriqFeatureProvider fp) {
+  public ModelElementConfigureFeature(TriqFeatureProvider fp) {
     super(fp);
   }
 
@@ -42,22 +42,30 @@ public class ActorConfigureFeature extends AbstractCustomFeature {
 
   @Override
   public String getDescription() {
-    return "Configure an actor or director";
+    return "Configure a model element";
+  }
+
+  @Override
+  public String getImageId() {
+    return ImageConstants.IMG_CONFIGURE;
   }
 
   @Override
   public boolean canExecute(ICustomContext context) {
     boolean ret = false;
     PictogramElement pe = context.getInnerPictogramElement();
-    GraphicsAlgorithm ga = context.getInnerGraphicsAlgorithm();
+    if(pe==null) {
+      PictogramElement[] pes = context.getPictogramElements();
+      if (pes != null && pes.length == 1) {
+        pe = pes[0];
+      }
+    }
     // prevent double click action on actor's name's Text field
     if (pe != null) {
       String boCategory = Graphiti.getPeService().getPropertyValue(pe, "__BO_CATEGORY");
-      if ("ACTOR".equals(boCategory) || "DIRECTOR".equals(boCategory)) {
-        ret = !(ga instanceof Text);
-      } else {
-        ret = ("PARAMETER".equals(boCategory)) || ("PORT".equals(boCategory));
-      }
+      ret = (("ACTOR".equals(boCategory) || "DIRECTOR".equals(boCategory)
+          || ("ANNOTATION".equals(boCategory)) || ("PARAMETER".equals(boCategory)) || ("PORT".equals(boCategory)))
+          && !(pe.getGraphicsAlgorithm() instanceof Text));
     }
     return ret;
   }

@@ -56,7 +56,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
   }
 
   public boolean canAdd(IAddContext context) {
-    // check if user wants to add an actor
+    // check if user wants to add a port
     if (context.getNewObject() instanceof Port) {
       // check if user wants to add to a diagram
       if (context.getTargetContainer() instanceof Diagram) {

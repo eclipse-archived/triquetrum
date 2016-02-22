@@ -1,13 +1,13 @@
-/*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+/**
+ * Copyright (c) 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
+ * 
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
- *******************************************************************************/
+ */
 package org.eclipse.triquetrum.workflow.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
@@ -65,16 +65,17 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
   @Override
   public EObject create(EClass eClass) {
     switch (eClass.getClassifierID()) {
+      case TriqPackage.NAMED_OBJ: return createNamedObj();
+      case TriqPackage.ATTRIBUTE: return createAttribute();
+      case TriqPackage.ANNOTATION: return createAnnotation();
+      case TriqPackage.PARAMETER: return createParameter();
+      case TriqPackage.DIRECTOR: return createDirector();
       case TriqPackage.ENTITY: return createEntity();
       case TriqPackage.COMPOSITE_ENTITY: return createCompositeEntity();
+      case TriqPackage.ACTOR: return createActor();
+      case TriqPackage.COMPOSITE_ACTOR: return createCompositeActor();
       case TriqPackage.PORT: return createPort();
       case TriqPackage.RELATION: return createRelation();
-      case TriqPackage.ATTRIBUTE: return createAttribute();
-      case TriqPackage.PARAMETER: return createParameter();
-      case TriqPackage.NAMED_OBJ: return createNamedObj();
-      case TriqPackage.DIRECTOR: return createDirector();
-      case TriqPackage.COMPOSITE_ACTOR: return createCompositeActor();
-      case TriqPackage.ACTOR: return createActor();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -115,6 +116,56 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
    * <!-- end-user-doc -->
    * @generated
    */
+  public NamedObj createNamedObj() {
+    NamedObjImpl namedObj = new NamedObjImpl();
+    return namedObj;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Attribute createAttribute() {
+    AttributeImpl attribute = new AttributeImpl();
+    return attribute;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Annotation createAnnotation() {
+    AnnotationImpl annotation = new AnnotationImpl();
+    return annotation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Parameter createParameter() {
+    ParameterImpl parameter = new ParameterImpl();
+    return parameter;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Director createDirector() {
+    DirectorImpl director = new DirectorImpl();
+    return director;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Entity createEntity() {
     EntityImpl entity = new EntityImpl();
     return entity;
@@ -135,59 +186,9 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
    * <!-- end-user-doc -->
    * @generated
    */
-  public Port createPort() {
-    PortImpl port = new PortImpl();
-    return port;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Relation createRelation() {
-    RelationImpl relation = new RelationImpl();
-    return relation;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Attribute createAttribute() {
-    AttributeImpl attribute = new AttributeImpl();
-    return attribute;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Parameter createParameter() {
-    ParameterImpl parameter = new ParameterImpl();
-    return parameter;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NamedObj createNamedObj() {
-    NamedObjImpl namedObj = new NamedObjImpl();
-    return namedObj;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Director createDirector() {
-    DirectorImpl director = new DirectorImpl();
-    return director;
+  public Actor createActor() {
+    ActorImpl actor = new ActorImpl();
+    return actor;
   }
 
   /**
@@ -205,9 +206,19 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
    * <!-- end-user-doc -->
    * @generated
    */
-  public Actor createActor() {
-    ActorImpl actor = new ActorImpl();
-    return actor;
+  public Port createPort() {
+    PortImpl port = new PortImpl();
+    return port;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Relation createRelation() {
+    RelationImpl relation = new RelationImpl();
+    return relation;
   }
 
   /**

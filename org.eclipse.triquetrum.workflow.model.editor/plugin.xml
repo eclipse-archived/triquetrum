@@ -1,48 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.0"?>
-
-<!--
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><?eclipse version="3.0"?><!--
      Copyright (c) 2015 iSencia Belgium NV.
      All rights reserved. This program and the accompanying materials
      are made available under the terms of the Eclipse Public License v1.0
      which accompanies this distribution, and is available at
      http://www.eclipse.org/legal/epl-v10.html
-     
+
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
- -->
+ --><!--
+--><plugin>
 
-<!--
--->
-
-<plugin>
-
-   <extension point="org.eclipse.ui.newWizards">
+   <extension id="TriquetrumEditorAdvisorApplication" point="org.eclipse.core.runtime.applications">
       <!-- @generated triquetrum -->
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
-      <wizard
-            id="org.eclipse.triquetrum.workflow.model.presentation.TriqModelWizardID"
-            name="%_UI_TriqModelWizard_label"
-            class="org.eclipse.triquetrum.workflow.model.presentation.TriqModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
-            icon="icons/full/obj16/TriqModelFile.gif">
-         <description>%_UI_TriqModelWizard_description</description>
-         <selection class="org.eclipse.core.resources.IResource"/>
-      </wizard>
+      <application>
+         <run class="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisor$Application"/>
+      </application>
+   </extension>
+
+   <extension point="org.eclipse.ui.perspectives">
+      <!-- @generated triquetrum -->
+      <perspective class="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisor$Perspective" id="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorPerspective" name="%_UI_Perspective_label">
+      </perspective>
+   </extension>
+
+   <extension point="org.eclipse.ui.commands">
+      <!-- @generated triquetrum -->
+      <command categoryId="org.eclipse.ui.category.file" description="%_UI_Menu_OpenURI_description" id="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenURICommand" name="%_UI_Menu_OpenURI_label"/>
+      <command categoryId="org.eclipse.ui.category.file" description="%_UI_Menu_Open_description" id="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenCommand" name="%_UI_Menu_Open_label"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.bindings">
+      <!-- @generated triquetrum -->
+      <key commandId="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenURICommand" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+U"/>
+      <key commandId="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenCommand" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+O"/>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated triquetrum -->
+      <actionSet id="TriquetrumEditorAdvisorActionSet" label="%_UI_TriquetrumEditorAdvisor_ActionSet_label" visible="true">
+         <action class="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisor$AboutAction" id="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorAboutAction" label="%_UI_Menu_About_label" menubarPath="help/additions"/>
+         <action class="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisor$OpenURIAction" definitionId="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenURICommand" id="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenURIAction" label="%_UI_Menu_OpenURI_label" menubarPath="file/additions"/>
+         <action class="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisor$OpenAction" definitionId="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenCommand" id="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenAction" label="%_UI_Menu_Open_label" menubarPath="file/additions"/>
+      </actionSet>
+   </extension>
+
+   <extension point="org.eclipse.ui.actionSets">
+      <!-- @generated triquetrum -->
+      <actionSet id="org.eclipse.triquetrum.workflow.model.presentation.TriqActionBarContributorActionSet" label="%_UI_TriqModelWizard_ActionSet_label" visible="true">
+         <action class="org.eclipse.triquetrum.workflow.model.presentation.TriqActionBarContributor$NewAction" id="org.eclipse.triquetrum.workflow.model.presentation.TriqActionBarContributorNewAction" label="%_UI_TriqModelWizard_label" menubarPath="file/new/additions"/>
+      </actionSet>
    </extension>
 
    <extension point="org.eclipse.ui.editors">
       <!-- @generated triquetrum -->
-      <editor
-            id="org.eclipse.triquetrum.workflow.model.presentation.TriqEditorID"
-            name="%_UI_TriqEditor_label"
-            icon="icons/full/obj16/TriqModelFile.gif"
-            extensions="triq"
-            class="org.eclipse.triquetrum.workflow.model.presentation.TriqEditor"
-            contributorClass="org.eclipse.triquetrum.workflow.model.presentation.TriqActionBarContributor">
+      <editor class="org.eclipse.triquetrum.workflow.model.presentation.TriqEditor" contributorClass="org.eclipse.triquetrum.workflow.model.presentation.TriqActionBarContributor" extensions="triq" icon="icons/full/obj16/TriqModelFile.gif" id="org.eclipse.triquetrum.workflow.model.presentation.TriqEditorID" name="%_UI_TriqEditor_label">
       </editor>
    </extension>
-
-</plugin>
+<extension point="org.eclipse.ui.editors"><editor class="org.eclipse.emfforms.spi.editor.GenericEditor" default="false" extensions="triq" icon="icons/full/obj16/TriqModelFile.gif" id="org.eclipse.triquetrum.workflow.model.editor.Triq.emfformseditor" name="EMFForms Editor"/></extension><extension point="org.eclipse.ui.editors"><editor class="org.eclipse.emfforms.spi.editor.GenericEditor" default="false" extensions="triq" icon="icons/full/obj16/TriqModelFile.gif" id="org.eclipse.triquetrum.workflow.model.editor.Triq.emfformseditor" name="EMFForms Editor"/></extension></plugin>

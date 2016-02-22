@@ -13,10 +13,13 @@ package org.eclipse.triquetrum.workflow.editor;
 public interface ImageConstants {
 	String PRE = TriqEditorPlugin.getID()+".";
 
+  String IMG_COLOR_CHANGE = PRE + "colorChange";
+  String IMG_CONFIGURE = PRE + "configure";
+
 	// outline
 	String IMG_OUTLINE_TREE = PRE + "outline.tree";
 	String IMG_OUTLINE_THUMBNAIL = PRE + "outline.thumbnail";
-	
+
   // outline tree item icons
   String IMG_ACTOR = PRE + "actor";
   String IMG_COMPOSITE = PRE + "composite";

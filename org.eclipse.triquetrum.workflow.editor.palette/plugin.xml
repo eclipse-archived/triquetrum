@@ -15,13 +15,34 @@
    <extension
          name="Default Triquetrum palette definition"
          point="org.eclipse.triquetrum.workflow.editor.paletteContribution">
-      <group displayName="Directors" icon="icons/director.gif">
+
+      <group displayName="Utilities">
 	      <entry
-	            class="ptolemy.domains.sdf.kernel.SDFDirector"
-	            displayName="SDF director"
-	            icon="icons/director.gif"
-	            type="Director">
+	            class="ptolemy.vergil.kernel.attributes.TextAttribute"
+	            displayName="Annotation"
+	            icon="icons/value_field.gif"
+	            type="Annotation">
 	      </entry>
+        <entry
+              class="ptolemy.data.expr.Parameter"
+              displayName="Parameter"
+              icon="icons/value_field.gif"
+              type="Parameter">
+        </entry>
+        <entry
+              class="ptolemy.data.expr.StringParameter"
+              displayName="StringParameter"
+              icon="icons/value_field.gif"
+              type="Parameter">
+        </entry>
+      </group>
+      <group displayName="Directors" icon="icons/director.gif">
+        <entry
+              class="ptolemy.domains.sdf.kernel.SDFDirector"
+              displayName="SDF director"
+              icon="icons/director.gif"
+              type="Director">
+        </entry>
       </group>
       <group displayName="Sources" icon="icons/source.gif">
 	      <entry

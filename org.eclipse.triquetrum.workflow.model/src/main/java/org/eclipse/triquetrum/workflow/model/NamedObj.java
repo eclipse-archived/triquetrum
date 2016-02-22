@@ -156,6 +156,7 @@ public interface NamedObj extends EObject {
 
   /**
    * Returns the value of the '<em><b>Deep Complete</b></em>' attribute.
+   * The default value is <code>"false"</code>.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Deep Complete</em>' attribute isn't clear,
@@ -165,7 +166,7 @@ public interface NamedObj extends EObject {
    * @return the value of the '<em>Deep Complete</em>' attribute.
    * @see #setDeepComplete(boolean)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_DeepComplete()
-   * @model
+   * @model default="false"
    * @generated
    */
   boolean isDeepComplete();

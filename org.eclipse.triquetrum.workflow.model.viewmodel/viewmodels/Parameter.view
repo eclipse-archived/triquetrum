@@ -7,7 +7,7 @@
     </domainModelReference>
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ggxaSpH5EeWbG5rKBOcOIw" name="Control expression">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ggxaS5H5EeWbG5rKBOcOIw">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ALTfENZmEeWwvfz-06PiPA">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Parameter/expression"/>
     </domainModelReference>
   </children>
