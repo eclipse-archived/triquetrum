@@ -24,6 +24,12 @@
 	            type="Annotation">
 	      </entry>
         <entry
+              class="ptolemy.data.expr.Parameter"
+              displayName="Parameter"
+              icon="icons/value_field.gif"
+              type="Parameter">
+        </entry>
+        <entry
               class="ptolemy.data.expr.StringParameter"
               displayName="StringParameter"
               icon="icons/value_field.gif"

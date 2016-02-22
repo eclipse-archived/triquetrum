@@ -32,7 +32,7 @@ public class AnnotationResizeFeature extends DefaultResizeShapeFeature {
     super(fp);
   }
 
-  public boolean canResizeShape(org.eclipse.graphiti.features.context.IResizeShapeContext context) {
+  public boolean canResizeShape(IResizeShapeContext context) {
     String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), "__BO_CATEGORY");
     return ("ANNOTATION".equals(boCategory));
   };

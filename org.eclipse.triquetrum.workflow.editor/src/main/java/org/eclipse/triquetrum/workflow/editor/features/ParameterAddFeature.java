@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
@@ -34,10 +37,17 @@ import org.eclipse.triquetrum.workflow.model.Parameter;
  */
 public class ParameterAddFeature extends AbstractAddShapeFeature {
   private static final IColorConstant PARAMETER_NAME_FOREGROUND = IColorConstant.BLACK;
-  private static final IColorConstant PARAMETER_DOTBACKGROUND = IColorConstant.RED;
+  private static final IColorConstant PARAMETER_DOTBACKGROUND = IColorConstant.BLUE;
+  private static final IColorConstant STRINGPARAMETER_DOTBACKGROUND = IColorConstant.RED;
 
   private static final int WIDTH = 160;
   private static final int HEIGHT = 20;
+
+  private static final Map<String, IColorConstant> DOT_COLOURS = new HashMap<>();
+  {
+    DOT_COLOURS.put("ptolemy.data.expr.StringParameter", STRINGPARAMETER_DOTBACKGROUND);
+    DOT_COLOURS.put("ptolemy.data.expr.Parameter", PARAMETER_DOTBACKGROUND);
+  }
 
   public ParameterAddFeature(IFeatureProvider fp) {
     super(fp);
@@ -81,7 +91,7 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
 
     Shape dotShape = peCreateService.createShape(containerShape, false);
     Ellipse dot = gaService.createEllipse(dotShape);
-    dot.setBackground(manageColor(PARAMETER_DOTBACKGROUND));
+    dot.setBackground(manageColor(DOT_COLOURS.getOrDefault(addedParameter.getWrappedType(), PARAMETER_DOTBACKGROUND)));
     gaService.setLocationAndSize(dot, 0, 6, 8, 8);
     // create shape for text
     Shape shape = peCreateService.createShape(containerShape, false);

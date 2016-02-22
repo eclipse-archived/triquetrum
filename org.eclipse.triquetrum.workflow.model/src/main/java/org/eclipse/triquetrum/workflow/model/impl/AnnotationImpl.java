@@ -18,6 +18,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
+import ptolemy.data.BooleanToken;
+import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.NameDuplicationException;
+import ptolemy.vergil.kernel.attributes.TextAttribute;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Annotation</b></em>'.
@@ -193,6 +198,15 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   public void setText(String newText) {
     String oldText = text;
     text = newText;
+    if(getWrappedObject() != null) {
+      TextAttribute ptObject = (TextAttribute)getWrappedObject();
+      try {
+        ptObject.text.setExpression(newText);
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__TEXT, oldText, text));
   }
@@ -214,6 +228,16 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   public void setFontFamily(String newFontFamily) {
     String oldFontFamily = fontFamily;
     fontFamily = newFontFamily;
+    if(getWrappedObject() != null) {
+      TextAttribute ptObject = (TextAttribute)getWrappedObject();
+      ptObject.fontFamily.setExpression(newFontFamily);
+      try {
+        ptObject.fontFamily.validate();
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__FONT_FAMILY, oldFontFamily, fontFamily));
   }
@@ -256,6 +280,15 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   public void setBold(boolean newBold) {
     boolean oldBold = bold;
     bold = newBold;
+    if(getWrappedObject() != null) {
+      TextAttribute ptObject = (TextAttribute)getWrappedObject();
+      try {
+        ptObject.bold.setToken(BooleanToken.getInstance(newBold));
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__BOLD, oldBold, bold));
   }
@@ -277,6 +310,15 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   public void setItalic(boolean newItalic) {
     boolean oldItalic = italic;
     italic = newItalic;
+    if(getWrappedObject() != null) {
+      TextAttribute ptObject = (TextAttribute)getWrappedObject();
+      try {
+        ptObject.italic.setToken(BooleanToken.getInstance(newItalic));
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__ITALIC, oldItalic, italic));
   }
@@ -292,12 +334,23 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc -->
+   * TODO check compatibility between the color string presentations in Triq and Ptolemy II
    * <!-- end-user-doc -->
    * @generated
    */
   public void setColor(String newColor) {
     String oldColor = color;
     color = newColor;
+    if(getWrappedObject() != null) {
+      TextAttribute ptObject = (TextAttribute)getWrappedObject();
+      ptObject.textColor.setExpression(newColor);
+      try {
+        ptObject.textColor.validate();
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__COLOR, oldColor, color));
   }
