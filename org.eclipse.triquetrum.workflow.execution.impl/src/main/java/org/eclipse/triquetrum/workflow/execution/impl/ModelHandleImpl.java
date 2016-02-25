@@ -18,9 +18,12 @@ import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.ptolemy.commons.VersionSpecification;
 
 import ptolemy.actor.CompositeActor;
-import ptolemy.actor.TypedCompositeActor;
 
-public class ModelHandleImpl implements ModelHandle {
+/**
+ * This is an internal ModelHandle implementation, for usage in the workflow execution service.
+ *
+ */
+class ModelHandleImpl implements ModelHandle {
 	private static final long serialVersionUID = 1L;
 
 	private URI resourceLocator;
@@ -59,29 +62,9 @@ public class ModelHandleImpl implements ModelHandle {
 		return version;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-	public void setModel(TypedCompositeActor model) {
-		this.model = model;
-	}
-
-	public void setRawModelDefinition(String rawModelDefinition) {
-		this.rawModelDefinition = rawModelDefinition;
-	}
-
-	public void setResourceLocator(URI resourceLocator) {
-		this.resourceLocator = resourceLocator;
-	}
-
-	public void setVersion(VersionSpecification version) {
-		this.version = version;
-	}
-
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(13, 23).append(code).append(version).toHashCode();
+    return new HashCodeBuilder(13, 23).append(code).append(version).append(resourceLocator).toHashCode();
   }
 
   @Override
@@ -93,7 +76,7 @@ public class ModelHandleImpl implements ModelHandle {
     if (getClass() != obj.getClass())
       return false;
     ModelHandleImpl other = (ModelHandleImpl) obj;
-    return new EqualsBuilder().appendSuper(super.equals(obj)).append(code, other.code).append(version, other.version).isEquals();
+    return new EqualsBuilder().append(code, other.code).append(version, other.version).append(resourceLocator, other.resourceLocator).isEquals();
   }
 
   @Override

@@ -13,9 +13,7 @@ package org.eclipse.triquetrum.workflow.execution.impl.executor;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.RunnableFuture;
@@ -29,6 +27,7 @@ import org.eclipse.triquetrum.workflow.ProcessEvent;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService.StartMode;
 import org.eclipse.triquetrum.workflow.execution.impl.debug.ActorBreakpointListener;
 import org.eclipse.triquetrum.workflow.execution.impl.debug.PortBreakpointListener;
+import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,12 +35,8 @@ import ptolemy.actor.CompositeActor;
 import ptolemy.actor.ExecutionListener;
 import ptolemy.actor.Manager;
 import ptolemy.actor.Manager.State;
-import ptolemy.data.expr.Parameter;
 import ptolemy.kernel.ComponentEntity;
-import ptolemy.kernel.Entity;
 import ptolemy.kernel.Port;
-import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.Workspace;
 
 
 /**
@@ -109,8 +104,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
     try {
       boolean debug = false;
       synchronized (this) {
-        CompositeActor model = (CompositeActor) modelHandle.getModel().clone(new Workspace());
-        applyParameterSettings(modelHandle, model, parameterOverrides);
+        CompositeActor model = WorkflowUtils.applyParameterSettings(modelHandle, processId, parameterOverrides);
         if (StartMode.DEBUG.equals(mode)) {
           debug = setBreakpoints(modelHandle, model, breakpointNames);
         }
@@ -287,70 +281,6 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
       if (status.isFinalStatus()) {
         busy = false;
       }
-    }
-  }
-
-  protected void applyParameterSettings(ModelHandle flowHandle, CompositeActor flow, Map<String, String> props) throws ProcessingException {
-    if (props != null) {
-      Iterator<Entry<String, String>> propsItr = props.entrySet().iterator();
-      while (propsItr.hasNext()) {
-        Entry<String, String> element = propsItr.next();
-        String propName = element.getKey();
-        String propValue = element.getValue();
-        String[] nameParts = propName.split("[\\.]");
-
-        // set model parameters
-        if (nameParts.length == 1 && !flow.attributeList().isEmpty()) {
-          try {
-            final Parameter p = (Parameter) flow.getAttribute(nameParts[0], Parameter.class);
-            setParameter(flowHandle, p, propName, propValue);
-          } catch (final IllegalActionException e1) {
-            throw new ProcessingException(ErrorCode.MODEL_CONFIGURATION_ERROR, "Inconsistent parameter definition " + propName, flow, e1);
-          }
-        }
-        // parts[parts.length-1] is the parameter name
-        // all the parts[] before that are part of the nested Parameter name
-        Entity<?> e = flow;
-        for (int j = 0; j < nameParts.length - 1; j++) {
-          if (e instanceof CompositeActor) {
-            Entity<?> test = ((CompositeActor) e).getEntity(nameParts[j]);
-            if (test == null) {
-              try {
-                // maybe it is a director
-                ptolemy.actor.Director d = ((CompositeActor) e).getDirector();
-                if (d != null) {
-                  Parameter p = (Parameter) d.getAttribute(nameParts[nameParts.length - 1], Parameter.class);
-                  setParameter(flowHandle, p, propName, propValue);
-                }
-              } catch (IllegalActionException e1) {
-                throw new ProcessingException(ErrorCode.MODEL_CONFIGURATION_ERROR, "Inconsistent parameter definition " + propName, flow, e1);
-              }
-            } else {
-              e = ((CompositeActor) e).getEntity(nameParts[j]);
-              if (e != null) {
-                try {
-                  Parameter p = (Parameter) e.getAttribute(nameParts[nameParts.length - 1], Parameter.class);
-                  setParameter(flowHandle, p, propName, propValue);
-                } catch (IllegalActionException e1) {
-                  throw new ProcessingException(ErrorCode.MODEL_CONFIGURATION_ERROR, "Inconsistent parameter definition " + propName, flow, e1);
-                }
-              }
-            }
-          } else {
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  private void setParameter(ModelHandle modelHandle, final Parameter p, String propName, String propValue) throws ProcessingException {
-    if (p != null) {
-      p.setExpression(propValue);
-      p.setPersistent(true);
-      LOGGER.info("Context {} - Flow {} - Override parameter {} : {}", new Object[] { processId, modelHandle.getCode(), propName, propValue });
-    } else if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug("Context {} - Flow {} - Unknown parameter, no override : {} ", new Object[] { processId, modelHandle.getCode(), propName });
     }
   }
 

@@ -10,10 +10,9 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow;
 
-import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.ptolemy.commons.VersionSpecification;
 
-import ptolemy.actor.TypedCompositeActor;
+import ptolemy.actor.CompositeActor;
 
 /**
  * This interface offers operations to manage Models in a repository.
@@ -35,7 +34,7 @@ import ptolemy.actor.TypedCompositeActor;
  * This interface offers a basic "linear" view on Models in a repository. More advanced repository interfaces (e.g.
  * including Projects, rules modules, images and other asset types) will/must be defined separately.
  * </p>
- * 
+ *
  * @author erwin
  *
  */
@@ -46,20 +45,20 @@ public interface WorkflowRepositoryService {
    * <p>
    * If an entry already exists for the given name, this operation will fail.
    * </p>
-   * 
+   *
    * @param model
    * @return the handle to the created repository entry
    * @throws DuplicateEntryException
    *           if an entry with the same identifier already exists
    */
-  ModelHandle commit(TypedCompositeActor model) throws DuplicateEntryException;
+  ModelHandle commit(CompositeActor model) throws DuplicateEntryException;
 
   /**
    * Store the given Model in the repository, if it does not exist yet, using the given modelCode as identifier.
    * <p>
    * If an entry already exists for the given modelCode, this operation will fail.
    * </p>
-   * 
+   *
    * @param modelCode
    *          the identifier to be used for the model and its future revisions
    * @param model
@@ -67,10 +66,10 @@ public interface WorkflowRepositoryService {
    * @throws DuplicateEntryException
    *           if an entry with the same identifier already exists
    */
-  ModelHandle commit(String modelCode, TypedCompositeActor model) throws DuplicateEntryException;
+  ModelHandle commit(String modelCode, CompositeActor model) throws DuplicateEntryException;
 
   /**
-   * 
+   *
    * @param modelCode
    * @return all versions of the Model, that were stored in the repository for the given modelCode.
    * @throws EntryNotFoundException
@@ -83,7 +82,7 @@ public interface WorkflowRepositoryService {
    * <p>
    * In a versioned repository, this should increase the major version nr for the model.
    * </p>
-   * 
+   *
    * @param handle
    * @param updatedModel
    * @param activate
@@ -93,11 +92,11 @@ public interface WorkflowRepositoryService {
    * @throws EntryNotFoundException
    *           when the handle does not correspond to a Model entry in this repository
    */
-  ModelHandle update(ModelHandle handle, TypedCompositeActor updatedModel, boolean activate) throws EntryNotFoundException;
+  ModelHandle update(ModelHandle handle, CompositeActor updatedModel, boolean activate) throws EntryNotFoundException;
 
   /**
    * Returns the Model stored in the repository for the given code, in the version that is currently activated.
-   * 
+   *
    * @param modelCode
    * @return the ModelHandle active for the given code
    * @throws EntryNotFoundException
@@ -107,7 +106,7 @@ public interface WorkflowRepositoryService {
 
   /**
    * Returns the Model stored in the repository for the given code, in the most recent version.
-   * 
+   *
    * @param modelCode
    * @return the most recent ModelHandle for the given code
    * @throws EntryNotFoundException
@@ -117,7 +116,7 @@ public interface WorkflowRepositoryService {
 
   /**
    * Returns the Model stored in the repository for the given code and version.
-   * 
+   *
    * @param modelCode
    * @param version
    * @return the ModelHandle for the given code and version
@@ -127,7 +126,7 @@ public interface WorkflowRepositoryService {
   ModelHandle getModelVersion(String modelCode, VersionSpecification version) throws EntryNotFoundException;
 
   /**
-   * 
+   *
    * @param handle
    *          a handle that may be a "compacted" one, i.e. without the actual model definition but just with
    *          code/version/location metadata.
@@ -142,7 +141,7 @@ public interface WorkflowRepositoryService {
   String[] getAllModelCodes();
 
   /**
-   * 
+   *
    * @param modelCode
    * @return handles for all model versions in the repository for the given code
    * @throws EntryNotFoundException
@@ -151,7 +150,7 @@ public interface WorkflowRepositoryService {
   ModelHandle[] getAllModelRevisions(String modelCode) throws EntryNotFoundException;
 
   /**
-   * 
+   *
    * @param handle
    * @return the handle to the model revision that was active before
    * @throws EntryNotFoundException
