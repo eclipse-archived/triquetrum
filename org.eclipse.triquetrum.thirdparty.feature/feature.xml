@@ -9,7 +9,6 @@
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
-
 <feature
       id="org.eclipse.triquetrum.thirdparty.feature"
       label="Triquetrum thirdpart deps feature"
@@ -54,6 +53,13 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.io"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>

@@ -80,10 +80,10 @@
       <feature id="org.eclipse.pde" version="3.11.1.v20150904-0345"/>
       <feature id="org.eclipse.platform" version="4.5.1.v20150904-0015"/>
       <feature id="org.eclipse.rcp"/>
-      <feature id="org.eclipse.emf.ecp.e3.feature" version="1.8.0.20160215-1658"/>
-      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.8.0.20160215-1658"/>
-      <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.8.0.20160215-1658"/>
-      <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.8.0.20160215-1658"/>
+      <feature id="org.eclipse.emf.ecp.e3.feature" version="1.8.0.20160216-1319"/>
+      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.8.0.20160216-1319"/>
+      <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.8.0.20160216-1319"/>
+      <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.8.0.20160216-1319"/>
    </features>
 
    <configurations>
