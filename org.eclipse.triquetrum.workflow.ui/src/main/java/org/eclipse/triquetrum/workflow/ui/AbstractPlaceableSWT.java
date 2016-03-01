@@ -77,14 +77,16 @@ public abstract class AbstractPlaceableSWT {
     _shell = shell;
     _windowClosingAdapter = new WindowClosingAdapter();
     shell.addShellListener(_windowClosingAdapter);
-    _windowProperties.setProperties(_shell);
+    if (_windowProperties != null) {
+      _windowProperties.setProperties(_shell);
+    }
   }
 
   /**
    * Set the title of the window.
    * <p>
-   * If the <i>title</i> parameter is set to the empty string, and the Display window has been rendered,
-   * then the title of the Display window will be updated to the value of the given parameter.
+   * If the <i>title</i> parameter is set to the empty string, and the Display window has been rendered, then the title of the Display window will be updated to
+   * the value of the given parameter.
    * </p>
    * This is executed in the UI event thread.
    *
@@ -97,7 +99,7 @@ public abstract class AbstractPlaceableSWT {
     Runnable doIt = new Runnable() {
       @Override
       public void run() {
-        if(_shell!=null) {
+        if (_shell != null) {
           _shell.setText(stringValue);
         }
       }
@@ -121,13 +123,13 @@ public abstract class AbstractPlaceableSWT {
 
   /** Run an action in the UI thread */
   protected void runDeferred(Runnable doIt) {
-    org.eclipse.swt.widgets.Display display = _shell!=null ? _shell.getDisplay() : org.eclipse.swt.widgets.Display.getDefault();
+    org.eclipse.swt.widgets.Display display = _shell != null ? _shell.getDisplay() : org.eclipse.swt.widgets.Display.getDefault();
     display.syncExec(doIt);
   }
 
   /**
-   * Write a MoML description of the contents of this object.
-   * This overrides the base class to make sure that the current shell properties, if there is a shell, are recorded.
+   * Write a MoML description of the contents of this object. This overrides the base class to make sure that the current shell properties, if there is a shell,
+   * are recorded.
    *
    * @param output
    *          The output stream to write to.

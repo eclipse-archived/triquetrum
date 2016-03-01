@@ -16,6 +16,6 @@ import org.eclipse.triquetrum.TriqException;
 public class WorkflowNotExecutingException extends TriqException {
 
   public WorkflowNotExecutingException(ModelHandle modelHandle) {
-    super(ErrorCode.MODEL_STATE_ERROR, modelHandle.getModel(), null);
+    super(ErrorCode.MODEL_STATE_ERROR, modelHandle.getCode(), null);
   }
 }

@@ -9,7 +9,6 @@
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
-
 <feature
       id="org.eclipse.triquetrum.workflow.core.feature"
       label="Triquetrum workflow core feature"
@@ -54,6 +53,27 @@
 
    <plugin
          id="org.eclipse.triquetrum.workflow.model"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.triquetrum.workflow.actor.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.triquetrum.workflow.repository.impl.filesystem"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.triquetrum.workflow.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
