@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.wizard;
 
+import java.io.IOException;
+import java.util.Collections;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -22,6 +25,8 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
@@ -34,14 +39,31 @@ import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
+/**
+ * A collection of some utilities for usage by new/import/export wizards.
+ *
+ */
 public class WizardUtils {
 
-  public static CompositeActor getExistingDiagram(final IFile targetFile) {
-    Diagram diagram = GraphitiUiInternal.getEmfService().getDiagramFromFile(targetFile, new ResourceSetImpl());
+  /**
+   *
+   * @param workflowFile
+   * @return a workflow EMF model from the given file
+   */
+  public static CompositeActor getExistingWorkflow(final IFile workflowFile) {
+    Diagram diagram = GraphitiUiInternal.getEmfService().getDiagramFromFile(workflowFile, new ResourceSetImpl());
 
     return (CompositeActor) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
   }
 
+  /**
+   *
+   * @param diagramTypeId
+   * @param diagramName
+   * @param project
+   * @param diagramFolder
+   * @return
+   */
   public static Diagram createDiagramAndFile(final String diagramTypeId, final String diagramName, IProject project, IFolder diagramFolder) {
     Diagram diagram = Graphiti.getPeCreateService().createDiagram(diagramTypeId, diagramName, true);
     if (diagramFolder == null) {
@@ -83,7 +105,7 @@ public class WizardUtils {
     return diagram;
   }
 
-  protected static void openDiagramInEditor(Diagram diagram) throws PartInitException {
+  public static void openDiagramInEditor(Diagram diagram) throws PartInitException {
     String editorID = TriqDiagramEditor.EDITOR_ID;
     String diagramTypeProviderId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagram.getDiagramTypeId());
     String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$
@@ -99,4 +121,34 @@ public class WizardUtils {
     PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(editorInput, editorID);
   }
 
+  /**
+   * Iterate over all model elements in a Ptolemy II model, create corresponding elements in a Triq workflow diagram,
+   * and store the diagram file in the given destination folder.
+   *
+   * @param destFolder
+   * @param diagram
+   * @param ptolemyModel
+   * @return
+   */
+  public static Diagram fillDiagramFromPtolemyModel(IFolder destFolder, Diagram diagram, ptolemy.actor.CompositeActor ptolemyModel) {
+    // Get the default resource set to hold the new resource
+    ResourceSet resourceSet = new ResourceSetImpl();
+    TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(resourceSet);
+    if (editingDomain == null) {
+      editingDomain = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(resourceSet);
+    }
+
+    FillDiagramFromPtolemyModelCommand operation = new FillDiagramFromPtolemyModelCommand(destFolder, editingDomain, diagram, ptolemyModel);
+    editingDomain.getCommandStack().execute(operation);
+    try {
+      operation.getCreatedResource().save(Collections.EMPTY_MAP);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    // Dispose the editing domain to eliminate memory leak
+    editingDomain.dispose();
+
+    return diagram;
+  }
 }

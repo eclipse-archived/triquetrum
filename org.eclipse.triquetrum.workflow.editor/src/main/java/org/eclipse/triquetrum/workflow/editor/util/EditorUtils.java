@@ -38,12 +38,6 @@ import org.eclipse.ui.IWorkbenchPage;
 public class EditorUtils {
 
 
-  public static Diagram fillDiagramFromPtolemyModel(Diagram diagram, ptolemy.actor.CompositeActor ptolemyModel) {
-    // TODO implement diagram filling from a ptolemy compositeactor
-    // using Graphiti
-    return diagram;
-  }
-
   /**
    * Opens a dialog to change the color.
    *

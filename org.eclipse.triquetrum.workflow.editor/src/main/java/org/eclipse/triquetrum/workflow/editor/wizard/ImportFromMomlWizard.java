@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -27,10 +28,13 @@ import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.triquetrum.workflow.editor.Messages;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
+import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
 import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.ide.IDE;
+
+import ptolemy.actor.CompositeActor;
 
 /**
  * A wizard to import a model that was prepared in Ptolemy II and stored in MOML/XML.
@@ -71,12 +75,14 @@ public class ImportFromMomlWizard extends Wizard implements IImportWizard {
       destFolder = (IFolder) destResource;
     } else if(destResource instanceof IProject) {
       destProject = (IProject )destResource;
+      destFolder = destProject.getFolder("workflows"); //$NON-NLS-1$
     }
     try {
+      CompositeActor ptolemyModel = WorkflowUtils.readFrom(momlPath.toFile().toURI());
       // create an empty diagram with the correct type and name
-      Diagram diagram = WizardUtils.createDiagramAndFile(TriqDiagramTypeProvider.DIAGRAMTYPE  , momlPath.removeFileExtension().lastSegment(), destProject, destFolder);
+      Diagram diagram = Graphiti.getPeCreateService().createDiagram(TriqDiagramTypeProvider.DIAGRAMTYPE, momlPath.removeFileExtension().lastSegment(), true);
       // now create diagram elements for all moml model elements
-
+      WizardUtils.fillDiagramFromPtolemyModel(destFolder, diagram, ptolemyModel);
       // finally, show the imported model in the Triq editor
       WizardUtils.openDiagramInEditor(diagram);
     } catch (PartInitException e) {
@@ -84,6 +90,9 @@ public class ImportFromMomlWizard extends Wizard implements IImportWizard {
       IStatus status = new Status(IStatus.ERROR, TriqEditorPlugin.getID(), error, e);
       ErrorDialog.openError(getShell(), Messages.CreateDiagramWizard_ErrorOccuredTitle, null, status);
       return false;
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
     }
     return true;
   }

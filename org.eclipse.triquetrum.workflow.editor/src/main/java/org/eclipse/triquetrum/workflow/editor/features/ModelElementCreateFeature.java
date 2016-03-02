@@ -56,6 +56,18 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
     }
   }
 
+  public String getCategory() {
+    return category;
+  }
+
+  public String getWrappedClass() {
+    return wrappedClass;
+  }
+
+  public String getElementName() {
+    return elementName;
+  }
+
   /**
    * This can be used e.g. to determine the compartment in which to show this feature's creation tool in the palette.
    *
