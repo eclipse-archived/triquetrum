@@ -151,11 +151,20 @@ public class PortImpl extends NamedObjImpl implements Port {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void setInput(boolean newInput) {
     boolean oldInput = input;
     input = newInput;
+    if(getWrappedObject() != null) {
+      IOPort ptObject = (IOPort)getWrappedObject();
+      try {
+        ptObject.setInput(newInput);
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__INPUT, oldInput, input));
   }
@@ -177,6 +186,15 @@ public class PortImpl extends NamedObjImpl implements Port {
   public void setOutput(boolean newOutput) {
     boolean oldOutput = output;
     output = newOutput;
+    if(getWrappedObject() != null) {
+      IOPort ptObject = (IOPort)getWrappedObject();
+      try {
+        ptObject.setOutput(newOutput);
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__OUTPUT, oldOutput, output));
   }
@@ -224,6 +242,15 @@ public class PortImpl extends NamedObjImpl implements Port {
   public void setMultiPort(boolean newMultiPort) {
     boolean oldMultiPort = multiPort;
     multiPort = newMultiPort;
+    if(getWrappedObject() != null) {
+      IOPort ptObject = (IOPort)getWrappedObject();
+      try {
+        ptObject.setMultiport(newMultiPort);
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__MULTI_PORT, oldMultiPort, multiPort));
   }
@@ -254,7 +281,10 @@ public class PortImpl extends NamedObjImpl implements Port {
         buildWrappedObject();
     } else {
       try {
-        ((ptolemy.kernel.Port)wrappedObject).setContainer(container);
+        getWrappedObject().setContainer(container);
+        getWrappedObject().setInput(input);
+        getWrappedObject().setOutput(output);
+        getWrappedObject().setMultiport(multiPort);
       } catch (IllegalActionException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
