@@ -37,6 +37,7 @@ import org.eclipse.ui.IWorkbenchPage;
 
 public class EditorUtils {
 
+
   /**
    * Opens a dialog to change the color.
    *

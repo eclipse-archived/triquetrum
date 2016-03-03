@@ -20,6 +20,7 @@ import org.eclipse.graphiti.ui.platform.IImageProvider;
 public class TriqDiagramTypeProvider extends AbstractDiagramTypeProvider {
 
   public static final String ID = "org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider";
+  public static final String DIAGRAMTYPE = "Triquetrum workflow";
 
   private IToolBehaviorProvider[] toolBehaviorProviders;
   private ImageProvider imageProvider;
