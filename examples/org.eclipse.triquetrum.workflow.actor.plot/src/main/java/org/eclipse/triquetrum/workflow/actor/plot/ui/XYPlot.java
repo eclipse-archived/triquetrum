@@ -67,10 +67,10 @@ public class XYPlot extends AbstractPlaceableSWT {
             _shell.setActive();
             _shell.open();
 
-            String title = actor.title.getExpression();
+            String title = actor.title.stringValue();
             title = !StringUtils.isBlank(title) ? title : actor.getName();
-            String xName = actor.xName.getExpression();
-            String yName = actor.yName.getExpression();
+            String xName = actor.xName.stringValue();
+            String yName = actor.yName.stringValue();
 
             // use LightweightSystem to create the bridge between SWT and draw2D
             final LightweightSystem lws = new LightweightSystem(_shell);
