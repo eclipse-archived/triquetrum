@@ -51,8 +51,8 @@
 <repository location="http://download.eclipse.org/ecp/releases/releases_18/180/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.triquetrum.ptolemy.feature.source.feature.group" version="1.0.0.201603031059"/>
-<unit id="org.eclipse.triquetrum.ptolemy.feature.feature.group" version="1.0.0.201603031059"/>
+<unit id="org.eclipse.triquetrum.ptolemy.feature.source.feature.group" version="0.0.0"/>
+<unit id="org.eclipse.triquetrum.ptolemy.feature.feature.group" version="0.0.0"/>
 <repository location="http://users.telenet.be/triquetrum-ptolemy-p2/"/>
 </location>
 </locations>
