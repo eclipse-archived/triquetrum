@@ -95,6 +95,7 @@
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
       <plugin id="org.eclipse.triquetrum.common" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.processing.service.impl" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.actor.plot" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.actor.ui" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.editor" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.execution.impl" autoStart="true" startLevel="0" />
