@@ -43,6 +43,7 @@
     <module>org.eclipse.triquetrum.workflow.core.feature</module>
     <module>org.eclipse.triquetrum.workflow.rcp.feature</module>
     <module>org.eclipse.triquetrum.rcp.feature</module>
+    <module>examples</module>
     <module>org.eclipse.triquetrum.repository</module>
   </modules>
 
