@@ -84,6 +84,7 @@
       <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.8.0.20160216-1319"/>
       <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.8.0.20160216-1319"/>
       <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.8.0.20160216-1319"/>
+      <feature id="org.eclipse.triquetrum.workflow.actor.plot.feature" version="1.0.0.qualifier"/>
    </features>
 
    <configurations>
@@ -94,6 +95,7 @@
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
       <plugin id="org.eclipse.triquetrum.common" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.processing.service.impl" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.actor.plot" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.actor.ui" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.editor" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.execution.impl" autoStart="true" startLevel="0" />

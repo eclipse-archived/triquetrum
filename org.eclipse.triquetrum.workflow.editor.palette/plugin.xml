@@ -57,6 +57,13 @@
     	        icon="icons/series.gif"
 	            type="Actor">
 	      </entry>
+        <group displayName="IO">
+          <entry
+                class="ptolemy.actor.lib.io.CSVReader"
+                displayName="CSVReader"
+                type="Actor">
+          </entry>
+        </group>
       </group>
       <group displayName="Sinks" icon="icons/sink.gif">
 	      <entry
@@ -102,6 +109,14 @@
 	            type="Actor">
 	      </entry>
       </group>
+      <group displayName="Flow control">
+        <entry
+              class="ptolemy.actor.lib.RecordDisassembler"
+              displayName="RecordDisassembler"
+              icon="icons/actor.gif"
+              type="Actor">
+        </entry>
+      </group>
       <group displayName="Transformation" icon="icons/actor.gif">
 	      <entry
 	            class="ptolemy.actor.lib.AddSubtract"
@@ -109,6 +124,12 @@
     	        icon="icons/actor.gif"
 	            type="Actor">
 	      </entry>
+        <entry
+              class="ptolemy.actor.lib.MovingAverage"
+              displayName="MovingAverage"
+              icon="icons/actor.gif"
+              type="Actor">
+        </entry>
 	      <entry
 	            class="ptolemy.actor.lib.TrigFunction"
 	            displayName="TrigFunction"

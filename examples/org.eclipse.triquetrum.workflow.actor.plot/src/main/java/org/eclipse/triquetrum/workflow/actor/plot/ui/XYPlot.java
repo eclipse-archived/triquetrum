@@ -10,32 +10,39 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.actor.plot.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.draw2d.LightweightSystem;
 import org.eclipse.nebula.visualization.xygraph.dataprovider.CircularBufferDataProvider;
 import org.eclipse.nebula.visualization.xygraph.dataprovider.Sample;
 import org.eclipse.nebula.visualization.xygraph.figures.Trace;
 import org.eclipse.nebula.visualization.xygraph.figures.Trace.PointStyle;
+import org.eclipse.nebula.visualization.xygraph.figures.Trace.TraceType;
 import org.eclipse.nebula.visualization.xygraph.figures.XYGraph;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.triquetrum.workflow.actor.plot.XYPlotActor;
 import org.eclipse.triquetrum.workflow.ui.AbstractPlaceableSWT;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.util.MessageHandler;
 
 /**
- * A utility to prepare a shell to show an XY plot, uased by the XYPlotActor.
+ * A utility to prepare a shell to show an XY plot, used by the XYPlotActor.
  * <p>
  * The implementation follows some of the mechanisms of e.g. org.eclipse.triquetrum.workflow.actor.ui.DisplayJavaSWT.
  * </p>
  *
  */
 public class XYPlot extends AbstractPlaceableSWT {
+  private final static Logger LOGGER = LoggerFactory.getLogger(XYPlot.class);
 
   private XYGraph graph;
-  private CircularBufferDataProvider traceDataProvider;
+  private List<CircularBufferDataProvider> traceDataProviders = new ArrayList<>();
   private XYPlotActor actor;
 
   /**
@@ -67,10 +74,11 @@ public class XYPlot extends AbstractPlaceableSWT {
             _shell.setActive();
             _shell.open();
 
-            String title = actor.title.getExpression();
+            String title = actor.title.stringValue();
             title = !StringUtils.isBlank(title) ? title : actor.getName();
-            String xName = actor.xName.getExpression();
-            String yName = actor.yName.getExpression();
+            String xName = actor.xName.stringValue();
+            String yName = actor.yName.stringValue();
+            String[] seriesNames = actor.seriesNames.stringValue().split(",");
 
             // use LightweightSystem to create the bridge between SWT and draw2D
             final LightweightSystem lws = new LightweightSystem(_shell);
@@ -88,19 +96,40 @@ public class XYPlot extends AbstractPlaceableSWT {
             // set it as the content of LightwightSystem
             lws.setContents(xyGraph);
 
+            // For each channel connected to the actor's inputY port,
             // create a trace data provider, which will provide the data to the trace.
-            traceDataProvider = new CircularBufferDataProvider(false);
-            traceDataProvider.setBufferSize(100);
-
-            // create the trace
-            Trace trace = new Trace(yName, xyGraph.primaryXAxis, xyGraph.primaryYAxis, traceDataProvider);
-
-            // set trace property
-            trace.setPointStyle(PointStyle.XCROSS);
-
-            // add the trace to xyGraph
-            xyGraph.addTrace(trace);
-
+            int widthY = actor.inputY.getWidth();
+            for (int i = 0; i < widthY; ++i) {
+              CircularBufferDataProvider traceDataProvider = new CircularBufferDataProvider(false);
+              traceDataProvider.setBufferSize(100);
+              traceDataProviders.add(traceDataProvider);
+              // create the trace
+              String traceName = (seriesNames.length>i) ? seriesNames[i] : seriesNames[seriesNames.length-1];
+              Trace trace = new Trace(traceName, xyGraph.primaryXAxis, xyGraph.primaryYAxis, traceDataProvider);
+              // set trace properties
+              PointStyle pointStyle = PointStyle.NONE;
+              try {
+                pointStyle = PointStyle.valueOf(actor.plotPointStyle.stringValue());
+                if(!PointStyle.NONE.equals(pointStyle)) {
+                  // increase the point size a bit as the point shapes are barely noticeable otherwise
+                  trace.setPointSize(6);
+                }
+              } catch (Exception e) {
+                // it's OK, this is not a critical issue just leave it at the default NONE.
+                LOGGER.warn("Error determining the desired plot Point Style",e);
+              }
+              trace.setPointStyle(pointStyle);
+              TraceType traceType = TraceType.SOLID_LINE;
+              try {
+                traceType = TraceType.valueOf(actor.plotLineStyle.stringValue());
+              } catch (Exception e) {
+                // it's OK, this is not a critical issue just leave it at the default SOLIDE_LINE.
+                LOGGER.warn("Error determining the desired plot Line Style",e);
+              }
+              trace.setTraceType(traceType);
+              // add the trace to xyGraph
+              xyGraph.addTrace(trace);
+            }
             setShell(_shell);
           } catch (Exception ex) {
             MessageHandler.error("Error opening window for XYPlotActor.", ex);
@@ -111,11 +140,11 @@ public class XYPlot extends AbstractPlaceableSWT {
     runDeferred(doIt);
   }
 
-  public void addPoint(double x, double y) {
+  public void addPoint(int channel, double x, double y) {
     runDeferred(new Runnable() {
       @Override
       public void run() {
-        traceDataProvider.addSample(new Sample(x, y));
+        traceDataProviders.get(channel).addSample(new Sample(x, y));
       }
     });
   }

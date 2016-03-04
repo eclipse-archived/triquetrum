@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.actor.plot;
 
+import org.eclipse.nebula.visualization.xygraph.figures.Trace;
 import org.eclipse.triquetrum.workflow.actor.plot.ui.XYPlot;
 
 import ptolemy.actor.TypedAtomicActor;
@@ -48,6 +49,20 @@ public class XYPlotActor extends TypedAtomicActor {
   public StringParameter yName;
 
   /**
+   * The names to be assigned to the data series (comma-separated list of names)
+   */
+  public StringParameter seriesNames;
+
+  /**
+   * Choices for plot styles, corresponding to org.eclipse.nebula.visualization.xygraph.figures.Trace.TraceType
+   */
+  public StringParameter plotLineStyle;
+  /**
+   * Choices for plot styles, corresponding to org.eclipse.nebula.visualization.xygraph.figures.Trace.PointStyle
+   */
+  public StringParameter plotPointStyle;
+
+  /**
    * The input receiving the X double values
    */
   public TypedIOPort inputX;
@@ -81,12 +96,29 @@ public class XYPlotActor extends TypedAtomicActor {
 
     inputY = new TypedIOPort(this, "inputY", true, false);
     inputY.setTypeEquals(BaseType.DOUBLE);
+    inputY.setMultiport(true);
 
     title = new StringParameter(this, "title");
     xName = new StringParameter(this, "X name");
     xName.setExpression("X");
     yName = new StringParameter(this, "Y name");
     yName.setExpression("Y");
+    seriesNames = new StringParameter(this, "Series names");
+    seriesNames.setExpression("data1");
+
+    plotLineStyle = new StringParameter(this, "Line style");
+    plotLineStyle.setExpression(Trace.TraceType.SOLID_LINE.name());
+    plotLineStyle.addChoice(Trace.TraceType.SOLID_LINE.name());
+    plotLineStyle.addChoice(Trace.TraceType.DASH_LINE.name());
+    plotLineStyle.addChoice(Trace.TraceType.DASHDOT_LINE.name());
+    plotLineStyle.addChoice(Trace.TraceType.POINT.name());
+
+    plotPointStyle = new StringParameter(this, "Point style");
+    plotPointStyle.setExpression(Trace.PointStyle.POINT.name());
+    plotPointStyle.addChoice(Trace.PointStyle.NONE.name());
+    plotPointStyle.addChoice(Trace.PointStyle.POINT.name());
+    plotPointStyle.addChoice(Trace.PointStyle.XCROSS.name());
+    plotPointStyle.addChoice(Trace.PointStyle.DIAMOND.name());
   }
 
   @Override
@@ -107,7 +139,6 @@ public class XYPlotActor extends TypedAtomicActor {
     boolean hasX = false;
     boolean hasY = false;
     double xValue = 0.0;
-    double yValue = 0.0;
     if (inputX.getWidth() > 0) {
       if (inputX.hasToken(0)) {
         xValue = ((DoubleToken) inputX.get(0)).doubleValue();
@@ -117,12 +148,19 @@ public class XYPlotActor extends TypedAtomicActor {
       xValue = xCounter++;
       hasX = true;
     }
-    if (inputY.hasToken(0)) {
-      yValue = ((DoubleToken) inputY.get(0)).doubleValue();
-      hasY = true;
-    }
-    if (hasX && hasY) {
-      plot.addPoint(xValue, yValue);
+
+    if (hasX) {
+      int yWidth = inputY.getWidth();
+      for (int i = 0; i < yWidth; ++i) {
+        double yValue = 0.0;
+        if (inputY.hasToken(i)) {
+          yValue = ((DoubleToken) inputY.get(i)).doubleValue();
+          hasY = true;
+        }
+        if (hasY) {
+          plot.addPoint(i, xValue, yValue);
+        }
+      }
     }
     return super.postfire();
   }
