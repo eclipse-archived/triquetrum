@@ -22,6 +22,7 @@ import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
+import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.Settable;
 
 /**
@@ -39,10 +40,13 @@ public class DirectorImpl extends AttributeImpl implements Director {
   }
 
   @Override
-  public void buildWrappedObject() {
-    super.buildWrappedObject();
+  public void initializeFrom(NamedObj ptObject) {
     if (!isDeepComplete()) {
-      for (ptolemy.data.expr.Parameter parameter : wrappedObject.attributeList(ptolemy.data.expr.Parameter.class)) {
+      if (!(ptObject instanceof ptolemy.actor.Director)) {
+        throw new IllegalArgumentException(ptObject + " should be a Director");
+      }
+      super.initializeFrom(ptObject);
+      for (ptolemy.data.expr.Parameter parameter : ptObject.attributeList(ptolemy.data.expr.Parameter.class)) {
         // for the moment, only add FULLy user-visible parameters in the editor model
         if (Settable.FULL.equals(parameter.getVisibility())) {
           Parameter newParam = TriqFactory.eINSTANCE.createParameter();
@@ -54,6 +58,11 @@ public class DirectorImpl extends AttributeImpl implements Director {
       }
       setDeepComplete(true);
     }
+  }
+
+  @Override
+  public ptolemy.actor.Director getWrappedObject() {
+    return (ptolemy.actor.Director) wrappedObject;
   }
 
   /**

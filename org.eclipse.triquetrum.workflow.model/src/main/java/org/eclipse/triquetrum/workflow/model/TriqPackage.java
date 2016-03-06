@@ -167,13 +167,31 @@ public interface TriqPackage extends EPackage {
   int NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING = 2;
 
   /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_OBJ___BUILD_WRAPPED_OBJECT = 3;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ = 4;
+
+  /**
    * The number of operations of the '<em>Named Obj</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NAMED_OBJ_OPERATION_COUNT = 3;
+  int NAMED_OBJ_OPERATION_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.AttributeImpl <em>Attribute</em>}' class.
@@ -274,6 +292,24 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ = NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The number of operations of the '<em>Attribute</em>' class.
@@ -439,6 +475,24 @@ public interface TriqPackage extends EPackage {
   int ANNOTATION___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION___BUILD_WRAPPED_OBJECT = ATTRIBUTE___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION___INITIALIZE_FROM__NAMEDOBJ = ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ;
+
+  /**
    * The number of operations of the '<em>Annotation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -557,6 +611,24 @@ public interface TriqPackage extends EPackage {
   int PARAMETER___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER___BUILD_WRAPPED_OBJECT = ATTRIBUTE___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER___INITIALIZE_FROM__NAMEDOBJ = ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ;
+
+  /**
    * The number of operations of the '<em>Parameter</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -664,6 +736,24 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int DIRECTOR___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIRECTOR___BUILD_WRAPPED_OBJECT = ATTRIBUTE___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIRECTOR___INITIALIZE_FROM__NAMEDOBJ = ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Parameters</em>' operation.
@@ -800,6 +890,24 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ENTITY___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTITY___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTITY___INITIALIZE_FROM__NAMEDOBJ = NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Parameters</em>' operation.
@@ -956,6 +1064,24 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ENTITY___SET_PROPERTY__STRING_STRING_STRING = ENTITY___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ENTITY___BUILD_WRAPPED_OBJECT = ENTITY___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ENTITY___INITIALIZE_FROM__NAMEDOBJ = ENTITY___INITIALIZE_FROM__NAMEDOBJ;
+
+  /**
    * The operation id for the '<em>Get Parameters</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1090,6 +1216,24 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ACTOR___SET_PROPERTY__STRING_STRING_STRING = ENTITY___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTOR___BUILD_WRAPPED_OBJECT = ENTITY___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTOR___INITIALIZE_FROM__NAMEDOBJ = ENTITY___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Parameters</em>' operation.
@@ -1255,6 +1399,24 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ACTOR___SET_PROPERTY__STRING_STRING_STRING = COMPOSITE_ENTITY___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ACTOR___BUILD_WRAPPED_OBJECT = COMPOSITE_ENTITY___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ACTOR___INITIALIZE_FROM__NAMEDOBJ = COMPOSITE_ENTITY___INITIALIZE_FROM__NAMEDOBJ;
+
+  /**
    * The operation id for the '<em>Get Parameters</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1409,6 +1571,24 @@ public interface TriqPackage extends EPackage {
   int PORT___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___INITIALIZE_FROM__NAMEDOBJ = NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ;
+
+  /**
    * The operation id for the '<em>Can Accept New Connection</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1536,6 +1716,24 @@ public interface TriqPackage extends EPackage {
   int RELATION___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Initialize From</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___INITIALIZE_FROM__NAMEDOBJ = NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ;
+
+  /**
    * The number of operations of the '<em>Relation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1660,6 +1858,26 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   EOperation getNamedObj__SetProperty__String_String_String();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#buildWrappedObject() <em>Build Wrapped Object</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Build Wrapped Object</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.NamedObj#buildWrappedObject()
+   * @generated
+   */
+  EOperation getNamedObj__BuildWrappedObject();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#initializeFrom(ptolemy.kernel.util.NamedObj) <em>Initialize From</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Initialize From</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.NamedObj#initializeFrom(ptolemy.kernel.util.NamedObj)
+   * @generated
+   */
+  EOperation getNamedObj__InitializeFrom__NamedObj();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.Attribute <em>Attribute</em>}'.
@@ -2093,6 +2311,22 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EOperation NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING = eINSTANCE.getNamedObj__SetProperty__String_String_String();
+
+    /**
+     * The meta object literal for the '<em><b>Build Wrapped Object</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation NAMED_OBJ___BUILD_WRAPPED_OBJECT = eINSTANCE.getNamedObj__BuildWrappedObject();
+
+    /**
+     * The meta object literal for the '<em><b>Initialize From</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ = eINSTANCE.getNamedObj__InitializeFrom__NamedObj();
 
     /**
      * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.AttributeImpl <em>Attribute</em>}' class.

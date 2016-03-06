@@ -11,6 +11,7 @@
 package org.eclipse.triquetrum.workflow.model.util;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.Singleton;
 import ptolemy.kernel.util.Workspace;
 import ptolemy.moml.EntityLibrary;
+import ptolemy.moml.MoMLFilter;
 import ptolemy.moml.MoMLParser;
 
 /**
@@ -407,4 +409,13 @@ public class PtolemyUtil {
     }
   }
 
+  public static List<MoMLFilter> getImportFilters() {
+    if(importFilters.isEmpty()) {
+      importFilters.add(new SubstituteClassesForTriquetrum());
+      importFilters.add(new RemoveGraphicalClassesForTriquetrum());
+    }
+    return (List<MoMLFilter>) importFilters.clone();
+  }
+
+  private final static ArrayList<MoMLFilter> importFilters = new ArrayList<>();
 }

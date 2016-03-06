@@ -17,6 +17,8 @@ Package model <http://www.eclipse.org/triquetrum>
     Operation getContainer() : NamedObj
     Operation topLevel() : NamedObj
     Operation setProperty(EString<<1..1>>, EString, EString) : void
+    Operation buildWrappedObject() : void
+    Operation initializeFrom(PtolemyNamedObj) : void
 
   Class Attribute -> NamedObj
 

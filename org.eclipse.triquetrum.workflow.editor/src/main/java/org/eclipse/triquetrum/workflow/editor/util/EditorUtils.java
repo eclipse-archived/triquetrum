@@ -153,7 +153,6 @@ public class EditorUtils {
    *
    * @return the diagram from the selected diagram editor
    */
-  @SuppressWarnings("restriction")
   public static Diagram getSelectedDiagram() {
     Diagram result = null;
     IWorkbenchPage page = EclipseUtils.getPage();

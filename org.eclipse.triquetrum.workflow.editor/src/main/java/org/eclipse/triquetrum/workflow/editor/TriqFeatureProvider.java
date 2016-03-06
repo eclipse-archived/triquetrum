@@ -39,7 +39,6 @@ import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationAddFeature;
-import org.eclipse.triquetrum.workflow.editor.features.AnnotationChangeColorFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;

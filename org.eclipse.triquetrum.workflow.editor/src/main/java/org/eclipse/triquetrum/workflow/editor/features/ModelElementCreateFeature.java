@@ -29,9 +29,13 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
-
 /**
- * Creates a new model element based on a drag-n-drop from the palette, after prompting the user for the name.
+ * Creates a new model element based on a drag-n-drop from the palette, after prompting the user for the name, or via an import of an existing Ptolemy II model.
+ * <p>
+ * An import starts from a known and configured Ptolemy object, so the Triq Diagram model element must wrap that given object. On the other hand, a
+ * create-from-the-palette only knows about the type of the wrapped Ptolemy object and about some default metadata, but is free to construct a default new
+ * instance of its wrapped Ptolemy object that will get its configuration info later.
+ * </p>
  *
  */
 public class ModelElementCreateFeature extends AbstractCreateFeature {
@@ -44,14 +48,17 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
   private String imageId;
   private Map<String, String> properties = new HashMap<>();
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String group, String category, String elementName, String wrappedClass, String imageId, Map<String, String> properties) {
+  private ptolemy.kernel.util.NamedObj wrappedObject;
+
+  public ModelElementCreateFeature(IFeatureProvider fp, String group, String category, String elementName, String wrappedClass, String imageId,
+      Map<String, String> properties) {
     super(fp, elementName, "Create a " + elementName);
     this.group = group;
     this.category = category;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
     this.imageId = imageId;
-    if(properties!=null) {
+    if (properties != null) {
       this.properties.putAll(properties);
     }
   }
@@ -82,15 +89,23 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
     return imageId;
   }
 
+  public ptolemy.kernel.util.NamedObj getWrappedObject() {
+    return wrappedObject;
+  }
+
+  public void setWrappedObject(ptolemy.kernel.util.NamedObj wrappedObject) {
+    this.wrappedObject = wrappedObject;
+  }
+
   public boolean canCreate(ICreateContext context) {
-    if(!(context.getTargetContainer() instanceof Diagram)) {
+    if (!(context.getTargetContainer() instanceof Diagram)) {
       return false;
     } else {
       // make sure we can only set 1 Director per model level
       EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category);
-      if(TriqPackage.DIRECTOR == eClassifier.getClassifierID()) {
+      if (TriqPackage.DIRECTOR == eClassifier.getClassifierID()) {
         CompositeActor model = EditorUtils.getSelectedModel();
-        return model==null || model.getDirector() == null;
+        return model == null || model.getDirector() == null;
       }
       return true;
     }
@@ -98,7 +113,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
 
   public Object[] create(ICreateContext context) {
     try {
-//      CompositeActor model = EditorUtils.getSelectedModel();
+      // CompositeActor model = EditorUtils.getSelectedModel();
 
       CompositeActor model = (CompositeActor) getBusinessObjectForPictogramElement(getDiagram());
       if (model == null) {
@@ -115,13 +130,17 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       // create new model element
       EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category);
       NamedObj result = (NamedObj) TriqFactory.eINSTANCE.create((EClass) eClassifier);
-      result.setName(EditorUtils.buildUniqueName(model, elementName));
-      result.setWrappedType(wrappedClass);
-      // TODO review if we can live with a palette with properties without a class specification
-      for(Map.Entry<String, String> attrEntry : properties.entrySet()) {
-        String name = attrEntry.getKey();
-        String value = attrEntry.getValue();
-        result.setProperty(name, value, null);
+      if (wrappedObject == null) {
+        result.setName(EditorUtils.buildUniqueName(model, elementName));
+        result.setWrappedType(wrappedClass);
+        // TODO review if we can live with a palette with properties without a class specification
+        for (Map.Entry<String, String> attrEntry : properties.entrySet()) {
+          String name = attrEntry.getKey();
+          String value = attrEntry.getValue();
+          result.setProperty(name, value, null);
+        }
+      } else {
+        result.setWrappedObject(wrappedObject);
       }
 
       if (result instanceof Director) {
@@ -132,10 +151,10 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
         model.getAttributes().add((Attribute) result);
       } else if (result instanceof Port) {
         Port p = (Port) result;
-        if(p.isInput()) {
+        if (p.isInput()) {
           model.getInputPorts().add(p);
         }
-        if(p.isOutput()) {
+        if (p.isOutput()) {
           model.getOutputPorts().add(p);
         }
       }

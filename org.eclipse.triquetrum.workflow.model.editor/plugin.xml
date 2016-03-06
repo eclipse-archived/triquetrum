@@ -31,7 +31,7 @@
 
    <extension point="org.eclipse.ui.bindings">
       <!-- @generated triquetrum -->
-      <key commandId="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenURICommand" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+U"/>
+      <key commandId="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenURICommand" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+R"/>
       <key commandId="org.eclipse.triquetrum.workflow.model.presentation.TriquetrumEditorAdvisorOpenCommand" schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" sequence="M1+O"/>
    </extension>
 
@@ -53,7 +53,10 @@
 
    <extension point="org.eclipse.ui.editors">
       <!-- @generated triquetrum -->
-      <editor class="org.eclipse.triquetrum.workflow.model.presentation.TriqEditor" contributorClass="org.eclipse.triquetrum.workflow.model.presentation.TriqActionBarContributor" extensions="triq" icon="icons/full/obj16/TriqModelFile.gif" id="org.eclipse.triquetrum.workflow.model.presentation.TriqEditorID" name="%_UI_TriqEditor_label">
+      <editor class="org.eclipse.triquetrum.workflow.model.presentation.TriqEditor" contributorClass="org.eclipse.triquetrum.workflow.model.presentation.TriqActionBarContributor" extensions="tdml" icon="icons/full/obj16/TriqModelFile.gif" id="org.eclipse.triquetrum.workflow.model.presentation.TriqEditorID" name="%_UI_TriqEditor_label">
       </editor>
    </extension>
-<extension point="org.eclipse.ui.editors"><editor class="org.eclipse.emfforms.spi.editor.GenericEditor" default="false" extensions="triq" icon="icons/full/obj16/TriqModelFile.gif" id="org.eclipse.triquetrum.workflow.model.editor.Triq.emfformseditor" name="EMFForms Editor"/></extension><extension point="org.eclipse.ui.editors"><editor class="org.eclipse.emfforms.spi.editor.GenericEditor" default="false" extensions="triq" icon="icons/full/obj16/TriqModelFile.gif" id="org.eclipse.triquetrum.workflow.model.editor.Triq.emfformseditor" name="EMFForms Editor"/></extension></plugin>
+  <extension point="org.eclipse.ui.editors">
+      <editor class="org.eclipse.emfforms.spi.editor.GenericEditor" default="false" extensions="tdml" icon="icons/full/obj16/TriqModelFile.gif" id="org.eclipse.triquetrum.workflow.model.editor.Triq.emfformseditor" name="EMFForms Editor"/>
+  </extension>
+</plugin>

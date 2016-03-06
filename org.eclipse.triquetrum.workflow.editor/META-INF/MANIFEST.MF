@@ -71,7 +71,8 @@ Import-Package: org.apache.commons.io;version="2.2.0",
  ptolemy.data.expr;version="10.1.0",
  ptolemy.kernel;version="10.1.0",
  ptolemy.kernel.util;version="10.1.0",
- ptolemy.moml;version="10.1.0"
+ ptolemy.moml;version="10.1.0",
+ ptolemy.vergil.kernel.attributes;version="11.0.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin
 Service-Component: OSGI-INF/colorRendererService.xml
 Bundle-ActivationPolicy: lazy

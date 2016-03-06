@@ -12,40 +12,37 @@ package org.eclipse.triquetrum.workflow.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+
 import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.Settable;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Parameter</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Parameter</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.ParameterImpl#getExpression <em>Expression</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.ParameterImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ParameterImpl extends AttributeImpl implements Parameter {
   /**
-   * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #getExpression()
    * @generated
    * @ordered
    */
   protected static final String EXPRESSION_EDEFAULT = null;
   /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #getExpression()
    * @generated
    * @ordered
@@ -53,8 +50,8 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
   protected String expression = EXPRESSION_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated NOT
    */
   protected ParameterImpl() {
@@ -64,8 +61,8 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
@@ -73,23 +70,17 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
     return TriqPackage.Literals.PARAMETER;
   }
 
-  // This is where we can hook in a ptolemy object construction, including its container
   @Override
-  protected void eBasicSetContainer(InternalEObject newContainer) {
-    super.eBasicSetContainer(newContainer);
-
+  public void buildWrappedObject() {
+    super.buildWrappedObject();
     try {
-      if(getExpression() != null) {
-        if(!(wrappedObject instanceof Settable)) {
-          throw new Exception("Property cannot be assigned a value: " + getName() + " (instance of " + wrappedType + ")");
-        } else {
-          Settable settable = (Settable) wrappedObject;
-          settable.setExpression(getExpression());
-
-          // Propagate. This has the side effect of marking
-          // the object overridden.
-          wrappedObject.propagateValue();
-        }
+      if (!(wrappedObject instanceof Settable)) {
+        throw new Exception("Property cannot be assigned a value: " + getName() + " (instance " + wrappedObject + " is not of " + wrappedType + ")");
+      } else if (getExpression() != null) {
+        Settable settable = (Settable) wrappedObject;
+        settable.setExpression(getExpression());
+        // Propagate. This has the side effect of marking the object overridden.
+        wrappedObject.propagateValue();
       }
     } catch (IllegalActionException e) {
       // TODO Auto-generated catch block
@@ -101,13 +92,25 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
   }
 
   @Override
+  public void initializeFrom(NamedObj ptObject) {
+    if (!isDeepComplete()) {
+      if (!(ptObject instanceof Settable)) {
+        throw new IllegalArgumentException(ptObject + " should be a Settable");
+      }
+      super.initializeFrom(ptObject);
+      setExpression(((Settable)ptObject).getExpression());
+      setDeepComplete(true);
+    }
+  }
+
+  @Override
   public ptolemy.data.expr.Parameter getWrappedObject() {
     return (ptolemy.data.expr.Parameter) wrappedObject;
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public String getExpression() {
@@ -115,16 +118,16 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * TODO refactor this : via a listener? or subclassing all generated impls to allow overriding/extending in there?
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> TODO refactor this : via a listener? or subclassing all generated impls to allow overriding/extending in there? <!-- end-user-doc
+   * -->
+   *
    * @generated NOT
    */
   public void setExpression(String newExpression) {
     String oldExpression = expression;
     expression = newExpression;
-    if(getWrappedObject() != null) {
-      ptolemy.data.expr.Parameter ptObject = (ptolemy.data.expr.Parameter)getWrappedObject();
+    if (getWrappedObject() != null) {
+      ptolemy.data.expr.Parameter ptObject = (ptolemy.data.expr.Parameter) getWrappedObject();
       ptObject.setExpression(newExpression);
       try {
         ptObject.validate();
@@ -138,71 +141,72 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-      case TriqPackage.PARAMETER__EXPRESSION:
-        return getExpression();
+    case TriqPackage.PARAMETER__EXPRESSION:
+      return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-      case TriqPackage.PARAMETER__EXPRESSION:
-        setExpression((String)newValue);
-        return;
+    case TriqPackage.PARAMETER__EXPRESSION:
+      setExpression((String) newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-      case TriqPackage.PARAMETER__EXPRESSION:
-        setExpression(EXPRESSION_EDEFAULT);
-        return;
+    case TriqPackage.PARAMETER__EXPRESSION:
+      setExpression(EXPRESSION_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-      case TriqPackage.PARAMETER__EXPRESSION:
-        return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
+    case TriqPackage.PARAMETER__EXPRESSION:
+      return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
     }
     return super.eIsSet(featureID);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public String toString() {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (expression: ");
@@ -211,4 +215,4 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
     return result.toString();
   }
 
-} //ParameterImpl
+} // ParameterImpl

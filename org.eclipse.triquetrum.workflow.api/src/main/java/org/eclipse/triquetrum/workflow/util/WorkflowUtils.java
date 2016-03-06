@@ -20,6 +20,7 @@ import java.util.Map.Entry;
 import org.eclipse.triquetrum.TriqException;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.ModelHandle;
+import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
 import org.ptolemy.commons.VersionSpecification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,7 @@ import ptolemy.data.expr.Parameter;
 import ptolemy.kernel.Entity;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.Workspace;
+import ptolemy.moml.MoMLFilter;
 import ptolemy.moml.MoMLParser;
 
 /**
@@ -73,16 +75,21 @@ public class WorkflowUtils {
    * @param modelsRootLocator
    * @param modelResourceLocator
    * @param version
+   * @param filters optional filters to manipulate the moml parsing
    * @return
    * @throws MalformedURLException
    * @throws Exception
    */
-  public static CompositeActor readFrom(URI modelsRootLocator, URI modelResourceLocator, VersionSpecification version) throws MalformedURLException, Exception {
-    MoMLParser parser = new MoMLParser(null, version, null);
+  public static CompositeActor readFrom(URI modelsRootLocator, URI modelResourceLocator, VersionSpecification version, MoMLFilter... filters) throws MalformedURLException, Exception {
+    Workspace workspace = new Workspace("TriqImport");
+    MoMLParser parser = new MoMLParser(workspace, version, null);
+    MoMLParser.addMoMLFilters(PtolemyUtil.getImportFilters(), workspace);
     URL modelURL = modelResourceLocator.toURL();
     MoMLParser.purgeModelRecord(modelURL);
     URL baseURL = modelsRootLocator != null ? modelsRootLocator.toURL() : null;
-    return (CompositeActor) parser.parse(baseURL, modelURL);
+    CompositeActor result = (CompositeActor) parser.parse(baseURL, modelURL);
+    MoMLParser.setMoMLFilters(null, workspace);
+    return result;
   }
 
   /**

@@ -31,9 +31,6 @@ import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
 
 import ptolemy.actor.IOPort;
-import ptolemy.kernel.ComponentEntity;
-import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.kernel.util.Settable;
 
 /**
@@ -42,24 +39,24 @@ import ptolemy.kernel.util.Settable;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl#getInputPorts <em>Input Ports</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl#getOutputPorts <em>Output Ports</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl#getInputPorts <em>Input Ports</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.EntityImpl#getOutputPorts <em>Output Ports</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class EntityImpl extends NamedObjImpl implements Entity {
   /**
-   * The cached value of the '{@link #getInputPorts() <em>Input Ports</em>}' containment reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getInputPorts() <em>Input Ports</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #getInputPorts()
    * @generated
    * @ordered
    */
   protected EList<Port> inputPorts;
   /**
-   * The cached value of the '{@link #getOutputPorts() <em>Output Ports</em>}' containment reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getOutputPorts() <em>Output Ports</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #getOutputPorts()
    * @generated
    * @ordered
@@ -68,6 +65,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   protected EntityImpl() {
@@ -76,6 +74,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
@@ -85,6 +84,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EList<Port> getInputPorts() {
@@ -96,6 +96,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EList<Port> getOutputPorts() {
@@ -149,164 +150,157 @@ public class EntityImpl extends NamedObjImpl implements Entity {
     return (CompositeEntity) eContainer();
   }
 
-  // This is where we can hook in a ptolemy object construction, including its container
-  @Override
-  protected void eBasicSetContainer(InternalEObject newContainer) {
-    super.eBasicSetContainer(newContainer);
-    ptolemy.kernel.CompositeEntity container = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    if (wrappedObject == null) {
-      if (wrappedType != null) {
-        buildWrappedObject();
-      } else {
-        System.err.println("wrappedType unknown at container setting time for " + this);
-      }
-    } else {
-      try {
-        ((ComponentEntity<?>) wrappedObject).setContainer(container);
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (NameDuplicationException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-  }
-
   @Override
   public void buildWrappedObject() {
     try {
       ptolemy.kernel.CompositeEntity container = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
-      ptolemy.kernel.Entity<?> e = PtolemyUtil._createEntity(container, getWrappedType(), null, getName());
-      wrappedObject = e;
-      if (!isDeepComplete()) {
-        for (ptolemy.kernel.Port port : e.portList()) {
-          if (port instanceof IOPort) {
-            Port newPort = TriqFactory.eINSTANCE.createPort();
-            newPort.setName(port.getName());
-            newPort.setWrappedType(port.getClass().getName());
-            newPort.setInput(((IOPort) port).isInput());
-            newPort.setOutput(((IOPort) port).isOutput());
-            newPort.setMultiPort(((IOPort) port).isMultiport());
-            if (((IOPort) port).isInput()) {
-              getInputPorts().add(newPort);
-            }
-            if (((IOPort) port).isOutput()) {
-              getOutputPorts().add(newPort);
-            }
-          }
-        }
-
-        for (ptolemy.data.expr.Parameter parameter : e.attributeList(ptolemy.data.expr.Parameter.class)) {
-          // for the moment, only add FULLy user-visible parameters in the editor model
-          if (Settable.FULL.equals(parameter.getVisibility())) {
-            Parameter newParam = TriqFactory.eINSTANCE.createParameter();
-            newParam.setName(parameter.getName());
-            newParam.setWrappedType(parameter.getClass().getName());
-            newParam.setExpression(parameter.getExpression());
-            getAttributes().add(newParam);
-          }
-        }
-        setDeepComplete(true);
-      }
-      // TODO see if/how to refresh actor with ports in the diagram
+      wrappedObject = PtolemyUtil._createEntity(container, getWrappedType(), null, getName());
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
 
+  @Override
+  public void initializeFrom(ptolemy.kernel.util.NamedObj ptObject) {
+    if (!isDeepComplete()) {
+      if (!(ptObject instanceof ptolemy.kernel.Entity<?>)) {
+        throw new IllegalArgumentException(ptObject + " should be an Entity");
+      }
+      super.initializeFrom(ptObject);
+      ptolemy.kernel.Entity<?> e = (ptolemy.kernel.Entity<?>) ptObject;
+      for (ptolemy.kernel.Port port : e.portList()) {
+        if (port instanceof IOPort) {
+          Port newPort = TriqFactory.eINSTANCE.createPort();
+          newPort.setName(port.getName());
+          newPort.setWrappedType(port.getClass().getName());
+          newPort.setInput(((IOPort) port).isInput());
+          newPort.setOutput(((IOPort) port).isOutput());
+          newPort.setMultiPort(((IOPort) port).isMultiport());
+          if (((IOPort) port).isInput()) {
+            getInputPorts().add(newPort);
+          }
+          if (((IOPort) port).isOutput()) {
+            getOutputPorts().add(newPort);
+          }
+        }
+      }
+      for (ptolemy.data.expr.Parameter parameter : e.attributeList(ptolemy.data.expr.Parameter.class)) {
+        // for the moment, only add FULLy user-visible parameters in the editor model
+        if (Settable.FULL.equals(parameter.getVisibility())) {
+          Parameter newParam = TriqFactory.eINSTANCE.createParameter();
+          newParam.setName(parameter.getName());
+          newParam.setWrappedType(parameter.getClass().getName());
+          newParam.setExpression(parameter.getExpression());
+          getAttributes().add(newParam);
+        }
+      }
+      setDeepComplete(true);
+    }
+  }
+
+  @Override
+  public ptolemy.kernel.Entity<?> getWrappedObject() {
+    return (ptolemy.kernel.Entity<?>) wrappedObject;
+  }
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        return ((InternalEList<?>)getInputPorts()).basicRemove(otherEnd, msgs);
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        return ((InternalEList<?>)getOutputPorts()).basicRemove(otherEnd, msgs);
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      return ((InternalEList<?>) getInputPorts()).basicRemove(otherEnd, msgs);
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      return ((InternalEList<?>) getOutputPorts()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        return getInputPorts();
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        return getOutputPorts();
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      return getInputPorts();
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      return getOutputPorts();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        getInputPorts().clear();
-        getInputPorts().addAll((Collection<? extends Port>)newValue);
-        return;
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        getOutputPorts().clear();
-        getOutputPorts().addAll((Collection<? extends Port>)newValue);
-        return;
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      getInputPorts().clear();
+      getInputPorts().addAll((Collection<? extends Port>) newValue);
+      return;
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      getOutputPorts().clear();
+      getOutputPorts().addAll((Collection<? extends Port>) newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        getInputPorts().clear();
-        return;
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        getOutputPorts().clear();
-        return;
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      getInputPorts().clear();
+      return;
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      getOutputPorts().clear();
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-      case TriqPackage.ENTITY__INPUT_PORTS:
-        return inputPorts != null && !inputPorts.isEmpty();
-      case TriqPackage.ENTITY__OUTPUT_PORTS:
-        return outputPorts != null && !outputPorts.isEmpty();
+    case TriqPackage.ENTITY__INPUT_PORTS:
+      return inputPorts != null && !inputPorts.isEmpty();
+    case TriqPackage.ENTITY__OUTPUT_PORTS:
+      return outputPorts != null && !outputPorts.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.ENTITY___GET_PARAMETERS:
-        return getParameters();
+    case TriqPackage.ENTITY___GET_PARAMETERS:
+      return getParameters();
     }
     return super.eInvoke(operationID, arguments);
   }

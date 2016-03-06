@@ -66,6 +66,7 @@ public class ImportFromMomlWizard extends Wizard implements IImportWizard {
   public boolean performFinish() {
     IPath momlPath = page.getAbsoluteMomlPath();
     IPath destPath = page.getDestinationContainerPath();
+    System.out.println(momlPath);
     System.out.println(destPath);
 
     IResource destResource = ResourcesPlugin.getWorkspace().getRoot().findMember(destPath);
