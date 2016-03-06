@@ -35,6 +35,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
@@ -148,7 +149,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           addedActor.setIconId(iconId);
           gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
         } catch (Exception e) {
-          LOGGER.error("Error trying to add actor icon in it shape", e);
+          LOGGER.error(ErrorCode.MODEL_CONFIGURATION_ERROR + " - Error trying to add actor icon for " + addedActor, e);
         }
       }
     }

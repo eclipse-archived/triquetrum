@@ -11,16 +11,14 @@
 package org.eclipse.triquetrum.workflow.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
 import ptolemy.data.BooleanToken;
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.vergil.kernel.attributes.TextAttribute;
 
 /**
@@ -181,6 +179,36 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
     return TriqPackage.Literals.ANNOTATION;
   }
 
+  // This is where we can hook in a ptolemy object construction, including its container
+  @Override
+  protected void eBasicSetContainer(InternalEObject newContainer) {
+    super.eBasicSetContainer(newContainer);
+
+    try {
+      if(getText() != null) {
+        if(!(wrappedObject instanceof TextAttribute)) {
+          throw new Exception("Property cannot be assigned a value: " + getName() + " (instance of " + wrappedType + ")");
+        } else {
+          TextAttribute ptObject = (TextAttribute) wrappedObject;
+          ptObject.text.setExpression(getText());
+          // Propagate. This has the side effect of marking the object overridden.
+          ptObject.text.propagateValue();
+        }
+      }
+    } catch (IllegalActionException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public TextAttribute getWrappedObject() {
+    return (TextAttribute) super.getWrappedObject();
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -199,7 +227,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
     String oldText = text;
     text = newText;
     if(getWrappedObject() != null) {
-      TextAttribute ptObject = (TextAttribute)getWrappedObject();
+      TextAttribute ptObject = getWrappedObject();
       try {
         ptObject.text.setExpression(newText);
       } catch (IllegalActionException e) {
