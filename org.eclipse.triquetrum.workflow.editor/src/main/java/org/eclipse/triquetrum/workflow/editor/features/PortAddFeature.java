@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import java.util.Map;
+
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.impl.AbstractAddShapeFeature;
@@ -17,6 +19,7 @@ import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
@@ -118,7 +121,12 @@ public class PortAddFeature extends AbstractAddShapeFeature {
         gaService.setLocationAndSize(portShape, 0, 0, 20, 20);
       }
 
-
+      // TODO find a way to get the full name from our Triq NamedObj,
+      // then we don't need to depend on the presence of the wrapped object.
+      Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
+      if(anchorMap != null && addedPort.getWrappedObject() != null) {
+        anchorMap.put(addedPort.getWrappedObject().getFullName(), anchor);
+      }
       link(containerShape, addedPort, "PORT");
     }
 

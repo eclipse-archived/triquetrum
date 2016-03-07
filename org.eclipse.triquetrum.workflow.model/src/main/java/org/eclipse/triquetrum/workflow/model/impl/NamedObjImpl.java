@@ -376,13 +376,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
         ((NamedObjImpl) newContainer).buildWrappedObject();
       }
       if (wrappedObject == null) {
-        if (wrappedType != null) {
-          buildWrappedObject();
-          initializeFrom(getWrappedObject());
-        } else {
-          // TODO improve error handling for NamedObj.eBasicSetContainer()
-          System.err.println("wrappedType unknown at container setting time for " + this);
-        }
+        buildWrappedObject();
+        initializeFrom(getWrappedObject());
       }
     }
   }

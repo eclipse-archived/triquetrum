@@ -11,6 +11,7 @@
 package org.eclipse.triquetrum.workflow.editor.features;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
@@ -24,6 +25,7 @@ import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
@@ -240,6 +242,12 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
         portShape.setBackground(manageColor(portColour));
         portShape.setLineWidth(1);
         gaService.setLocationAndSize(portShape, -12, -6, 12, 12);
+        // TODO find a way to get the full name from our Triq NamedObj,
+        // then we don't need to depend on the presence of the wrapped object.
+        Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
+        if(anchorMap != null && p.getWrappedObject() != null) {
+          anchorMap.put(p.getWrappedObject().getFullName(), anchor);
+        }
       }
       pIndex = 0;
       for (Port p : (List<Port>) addedActor.getInputPorts()) {
@@ -256,6 +264,12 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
         portShape.setBackground(manageColor(portColour));
         portShape.setLineWidth(1);
         gaService.setLocationAndSize(portShape, 0, -6, 12, 12);
+        // TODO find a way to get the full name from our Triq NamedObj,
+        // then we don't need to depend on the presence of the wrapped object.
+        Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
+        if(anchorMap != null && p.getWrappedObject() != null) {
+          anchorMap.put(p.getWrappedObject().getFullName(), anchor);
+        }
       }
 
       layoutPictogramElement(containerShape);

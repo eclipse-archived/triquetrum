@@ -10,7 +10,9 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.wizard;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -19,21 +21,29 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
+import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
+import org.eclipse.graphiti.features.context.impl.CreateConnectionContext;
 import org.eclipse.graphiti.features.context.impl.CreateContext;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
+import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider;
+import org.eclipse.triquetrum.workflow.editor.features.ConnectionCreateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.FeatureConstants;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
+import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 
 import ptolemy.actor.CompositeActor;
 import ptolemy.actor.Director;
+import ptolemy.actor.IOPort;
+import ptolemy.actor.IORelation;
 import ptolemy.data.expr.Parameter;
 import ptolemy.kernel.Entity;
 import ptolemy.kernel.Port;
-import ptolemy.kernel.Relation;
 import ptolemy.kernel.util.Location;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.vergil.kernel.attributes.TextAttribute;
@@ -50,6 +60,10 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
   private CompositeActor ptolemyModel;
   private IFolder saveLocation;
   private Resource createdResource;
+
+  // A cache maintained during importing, to easily retrieve anchors
+  // for creating relations based on the names of the corresponding linked ports in the Ptolemy model.
+  private Map<String, Anchor> anchorMap = new HashMap<>();
 
   /**
    *
@@ -86,7 +100,10 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
     createModelElement(featureProvider, director);
 
     // we don't import all attributes as lots of them are ptolemy-internal
-    // so we take parameters ...
+    // TODO find something to resolve errors related to the order of adding parameters
+    // that contain expressions with references to other parameters that may be later in the list.
+
+    // First we take parameters ...
     for(Parameter p : (List<Parameter>)ptolemyModel.attributeList(Parameter.class)) {
       createModelElement(featureProvider, p);
     }
@@ -96,15 +113,17 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
     }
 
     for(Port p : (List<Port>)ptolemyModel.portList()) {
+      // TODO ensure the port anchors are added to the anchorMao
       createModelElement(featureProvider, p);
     }
 
     for(Entity entity : (List<Entity>)ptolemyModel.entityList(Entity.class)) {
+      // TODO ensure the actors' port anchors are added to the anchorMao
       createModelElement(featureProvider, entity);
     }
 
-    for(Relation rel : (List<Relation>)ptolemyModel.relationList()) {
-
+    for(IORelation rel : (List<IORelation>)ptolemyModel.relationList()) {
+      createRelation(featureProvider, rel);
     }
 
 
@@ -123,14 +142,54 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
     context.setTargetContainer(diagram);
     context.setX(x);
     context.setY(y);
+    // A hack to facilitate caching port anchors.
+    // As we don't get Graphiti shapes from the create feature, but our business object,
+    // it's rather tricky to retrieve anchors from the feature's returned creation result.
+    // So we push the cache/map into the creation feature (and so into the corresponding AddFeature)
+    // and let them fill in the anchors on the fly, when they're created/added.
+    context.putProperty(FeatureConstants.ANCHORMAP_NAME, anchorMap);
     for (ICreateFeature createFeature : featureProvider.getCreateFeatures()) {
       if (createFeature instanceof ModelElementCreateFeature) {
         ModelElementCreateFeature mecf = (ModelElementCreateFeature) createFeature;
         if (ptObject.getClass().getName().equals(mecf.getWrappedClass())) {
           mecf.setWrappedObject(ptObject);
           result = (org.eclipse.triquetrum.workflow.model.NamedObj) mecf.create(context)[0];
-//          result.setWrappedObject(ptObject);
           break;
+        }
+      }
+    }
+    return result;
+  }
+
+  // TODO figure out about channel orders in ports somehow
+  // Ptolemy has no way to determine an index,ID or name of a channel
+  // it seems to depend on the order of adding the channel.
+  // So this is an issue when recreating a model automatically...
+  protected org.eclipse.triquetrum.workflow.model.Relation createRelation(IFeatureProvider featureProvider, IORelation ptObject) {
+    org.eclipse.triquetrum.workflow.model.Relation result = null;
+    // TODO for the moment we assume plain connections from 1 output port to 1 input port
+    IOPort srcPort = ptObject.linkedSourcePortList().get(0);
+    IOPort destPort = ptObject.linkedDestinationPortList().get(0);
+
+    // figure out to which Triq Diagram ports the Ptolemy model's src and dest ports map
+    Anchor srcAnchor = anchorMap.get(srcPort.getFullName());
+    Anchor destAnchor = anchorMap.get(destPort.getFullName());
+
+    CreateConnectionContext context = new CreateConnectionContext();
+    context.setSourceAnchor(srcAnchor);
+//    context.setSourcePictogramElement(srcAnchor.getParent());
+    context.setTargetAnchor(destAnchor);
+//    context.setTargetPictogramElement(destAnchor.getParent());
+    for (ICreateConnectionFeature createFeature : featureProvider.getCreateConnectionFeatures()) {
+      if (createFeature instanceof ConnectionCreateFeature) {
+        ConnectionCreateFeature ccf = (ConnectionCreateFeature) createFeature;
+        if (ccf.canCreate(context)) {
+          ccf.setWrappedObject(ptObject);
+          Connection conn = ccf.create(context);
+          result = (Relation) featureProvider.getBusinessObjectForPictogramElement(conn);
+          break;
+        } else {
+          // TODO error log
         }
       }
     }

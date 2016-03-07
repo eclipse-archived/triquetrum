@@ -23,13 +23,24 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 
+import ptolemy.actor.IORelation;
 import ptolemy.kernel.util.IllegalActionException;
 
 public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
 
+  private IORelation wrappedObject;
+
   public ConnectionCreateFeature(IFeatureProvider fp) {
     // provide name and description for the UI, e.g. the palette
     super(fp, "Relation", "Create Connection");
+  }
+
+  public IORelation getWrappedObject() {
+    return wrappedObject;
+  }
+
+  public void setWrappedObject(IORelation wrappedObject) {
+    this.wrappedObject = wrappedObject;
   }
 
   public boolean canCreate(ICreateConnectionContext context) {
@@ -105,8 +116,11 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
    */
   private Relation createRelation(Port source, Port target) throws IllegalActionException {
     Relation relation = TriqFactory.eINSTANCE.createRelation();
-    relation.setName(EditorUtils.buildUniqueName(source, "_R"));
-//    relation.setContainer(source.getContainer().getContainer());
+    if(wrappedObject!=null) {
+      relation.setWrappedObject(wrappedObject);
+    } else {
+      relation.setName(EditorUtils.buildUniqueName(source, "_R"));
+    }
     relation.getLinkedPorts().add(source);
     relation.getLinkedPorts().add(target);
     NamedObj portContainer = source.getContainer();
