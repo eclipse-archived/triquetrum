@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.processing.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +22,9 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
+import org.eclipse.triquetrum.ProcessingStatus;
 import org.eclipse.triquetrum.processing.ErrorCode;
 import org.eclipse.triquetrum.processing.ProcessingException;
 import org.eclipse.triquetrum.processing.model.Task;
@@ -71,6 +74,41 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
     }
     return futResult;
   }
+
+  @Override
+  public CompletableFuture<Task> processSubTasks(Task task, Long timeout, TimeUnit unit, boolean finishWhenDone) {
+    List<CompletableFuture<Task>> futures = task.getSubTasks().
+        map(t -> process(t, timeout, unit)).
+        collect(Collectors.<CompletableFuture<Task>>toList());
+    CompletableFuture<Void> allDoneFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
+
+    return allDoneFuture.thenApply(t -> {
+      if(finishWhenDone) {
+        task.setStatus(ProcessingStatus.FINISHED);
+      }
+      return task;
+      }
+    );
+  }
+
+  @Override
+  public CompletableFuture<List<Task>> process(Long timeout, TimeUnit unit, Task... tasks) {
+    List<CompletableFuture<Task>> futures = new ArrayList<>();
+    for(Task t : tasks) {
+      futures.add(process(t, timeout, unit));
+    }
+    return sequence(futures);
+  }
+
+  // TODO improve error handling in future sequencing
+  // For the moment, if one future returns an error the whole chain is interrupted by an unchecked exception.
+  private static <T> CompletableFuture<List<T>> sequence(List<CompletableFuture<T>> futures) {
+    CompletableFuture<Void> allDoneFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
+    return allDoneFuture.thenApply(v -> futures.stream().
+                    map(future -> future.join()).
+                    collect(Collectors.<T>toList())
+    );
+}
 
   private void registerTimeOutHandler(final Task task, Long timeout, TimeUnit unit) {
     if (timeout == null || unit == null || (timeout <= 0)) {

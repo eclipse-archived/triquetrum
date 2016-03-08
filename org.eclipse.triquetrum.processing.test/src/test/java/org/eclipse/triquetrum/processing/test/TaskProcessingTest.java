@@ -11,16 +11,19 @@
 package org.eclipse.triquetrum.processing.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import org.eclipse.triquetrum.ProcessingStatus;
@@ -239,7 +242,7 @@ public class TaskProcessingTest {
              // So the "t" parameter is only present for syntactic reasons.
              thenCompose(t -> TaskProcessingBrokerTracker.getBroker().process(t2, 3L, TimeUnit.SECONDS)
         );
-      Task tDone1 = future1.get(3L, TimeUnit.SECONDS);
+      Task tDone1 = future1.get(1L, TimeUnit.SECONDS);
       Task tDone2 = future2.get(1L, TimeUnit.SECONDS);
       assertEquals("Should get same task t1 back after execution", t1,  tDone1);
       assertEquals("Should get same task t2 back after execution", t2,  tDone2);
@@ -247,6 +250,141 @@ public class TaskProcessingTest {
       assertEquals("Task t2 status should be FINISHED",  ProcessingStatus.FINISHED, t2.getStatus());
       // TODO evaluate if we need to implement and test automated FINISHED status setting for the main task, once all it's subtasks are done.
       // I think this would be the correct behaviour, and it could be implemented by having a parent task listening on status changes of it's sub tasks.
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Exception in task processing "+e);
+    }
+  }
+  /**
+   * This test exploits the features of CompletableFuture to process 2 concurrent subtasks asynchronously,
+   * and set the MainTask to finished when both subtasks are done.
+   */
+  @Test
+  public void testMainAndSubTaskSequenceProcessing1() {
+    Map<String, Serializable> resultItems = new HashMap<>();
+    resultItems.put("item1", "value1");
+    resultItems.put("item2", 10L);
+    TaskProcessingBrokerTracker.getBroker().registerService(new MockTaskProcessingService("testType", resultItems));
+
+    TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
+
+    // Chained task processing typically represents the handling of a complex "main" task, that can be split up in a sequence of smaller "sub" tasks.
+    // TaskProcessingService implementations may need to refer to results of one-or-more previous tasks in the chain/sequence.
+    // This can be achieved by passing via a new task's parent task, to find the (other) sub tasks that must be consulted (e.g. to read their results).
+    // So even though we don't really need a main task for this unit test, we show the construction here as a typical code example.
+    Task mainTask = triqFactory.createTask(null, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    Task t1 = triqFactory.createTask(mainTask, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    Task t2 = triqFactory.createTask(mainTask, "testInitiator2", "testType", "testCorrelationId2", "testExternalRef2");
+
+    try {
+      // This gives an example of chaining task executions asynchronously.
+      CompletableFuture<Task> future1 = TaskProcessingBrokerTracker.getBroker().process(t1, 3L, TimeUnit.SECONDS);
+      CompletableFuture<Task> future2 = TaskProcessingBrokerTracker.getBroker().process(t2, 3L, TimeUnit.SECONDS);
+      CompletableFuture<Void> mainTaskFuture = future2.thenAcceptBoth(future1, (_t1, _t2) -> mainTask.setStatus(ProcessingStatus.FINISHED));
+      mainTaskFuture.get(1L, TimeUnit.SECONDS);
+      Task tDone1 = future1.get(1L, TimeUnit.MILLISECONDS);
+      Task tDone2 = future2.get(1L, TimeUnit.MILLISECONDS);
+      assertEquals("Should get same task t1 back after execution", t1,  tDone1);
+      assertEquals("Should get same task t2 back after execution", t2,  tDone2);
+      assertEquals("Task mainTask status should be FINISHED",  ProcessingStatus.FINISHED, mainTask.getStatus());
+      assertEquals("Task t1 status should be FINISHED",  ProcessingStatus.FINISHED, t1.getStatus());
+      assertEquals("Task t2 status should be FINISHED",  ProcessingStatus.FINISHED, t2.getStatus());
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Exception in task processing "+e);
+    }
+  }
+  /**
+   * This test exploits the features of CompletableFuture to process 2 concurrent subtasks asynchronously,
+   * and set the MainTask to finished when both subtasks are done.
+   */
+  @Test
+  public void testMainAndSubTaskSequenceProcessing2() {
+    Map<String, Serializable> resultItems = new HashMap<>();
+    resultItems.put("item1", "value1");
+    resultItems.put("item2", 10L);
+    TaskProcessingBrokerTracker.getBroker().registerService(new MockTaskProcessingService("testType", resultItems));
+
+    TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
+
+    // Chained task processing typically represents the handling of a complex "main" task, that can be split up in a sequence of smaller "sub" tasks.
+    // TaskProcessingService implementations may need to refer to results of one-or-more previous tasks in the chain/sequence.
+    // This can be achieved by passing via a new task's parent task, to find the (other) sub tasks that must be consulted (e.g. to read their results).
+    // So even though we don't really need a main task for this unit test, we show the construction here as a typical code example.
+    Task mainTask = triqFactory.createTask(null, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    Task t1 = triqFactory.createTask(mainTask, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    Task t2 = triqFactory.createTask(mainTask, "testInitiator2", "testType", "testCorrelationId2", "testExternalRef2");
+
+    try {
+      // This gives an example of chaining task executions asynchronously.
+      CompletableFuture<List<Task>> future = TaskProcessingBrokerTracker.getBroker().process(3L, TimeUnit.SECONDS, t1, t2);
+      CompletableFuture<Void> mainTaskFuture = future.thenAccept(taskList -> mainTask.setStatus(ProcessingStatus.FINISHED));
+      mainTaskFuture.get(1L, TimeUnit.SECONDS);
+      Task tDone1 = future.get(1L, TimeUnit.MILLISECONDS).get(0);
+      Task tDone2 = future.get(1L, TimeUnit.MILLISECONDS).get(1);
+      assertEquals("Should get same task t1 back after execution", t1,  tDone1);
+      assertEquals("Should get same task t2 back after execution", t2,  tDone2);
+      assertEquals("Task mainTask status should be FINISHED",  ProcessingStatus.FINISHED, mainTask.getStatus());
+      assertEquals("Task t1 status should be FINISHED",  ProcessingStatus.FINISHED, t1.getStatus());
+      assertEquals("Task t2 status should be FINISHED",  ProcessingStatus.FINISHED, t2.getStatus());
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Exception in task processing "+e);
+    }
+  }
+  @Test
+  public void testMainAndSubTaskSequenceProcessing3() {
+    Map<String, Serializable> resultItems = new HashMap<>();
+    resultItems.put("item1", "value1");
+    resultItems.put("item2", 10L);
+    TaskProcessingBrokerTracker.getBroker().registerService(new MockTaskProcessingService("testType", resultItems));
+
+    TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
+
+    // Chained task processing typically represents the handling of a complex "main" task, that can be split up in a sequence of smaller "sub" tasks.
+    // TaskProcessingService implementations may need to refer to results of one-or-more previous tasks in the chain/sequence.
+    // This can be achieved by passing via a new task's parent task, to find the (other) sub tasks that must be consulted (e.g. to read their results).
+    // So even though we don't really need a main task for this unit test, we show the construction here as a typical code example.
+    Task mainTask = triqFactory.createTask(null, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    Task t1 = triqFactory.createTask(mainTask, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    Task t2 = triqFactory.createTask(mainTask, "testInitiator2", "testType", "testCorrelationId2", "testExternalRef2");
+
+    try {
+      // This gives an example of chaining task executions asynchronously.
+      CompletableFuture<Task> future = TaskProcessingBrokerTracker.getBroker().processSubTasks(mainTask, 3L, TimeUnit.SECONDS, true);
+      Task mainDone = future.get(3L, TimeUnit.SECONDS);
+      assertEquals("Should get same mainTask back after execution", mainTask,  mainDone);
+      assertEquals("Task mainTask status should be FINISHED",  ProcessingStatus.FINISHED, mainTask.getStatus());
+      mainDone.getSubTasks().forEach(t->assertEquals("Task status should be FINISHED",  ProcessingStatus.FINISHED, t.getStatus()));
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Exception in task processing "+e);
+    }
+  }
+  @Test
+  public void testMainAndSubTaskSequenceProcessing4() {
+    Map<String, Serializable> resultItems = new HashMap<>();
+    resultItems.put("item1", "value1");
+    resultItems.put("item2", 10L);
+    TaskProcessingBrokerTracker.getBroker().registerService(new MockTaskProcessingService("testType", resultItems));
+
+    TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
+
+    // Chained task processing typically represents the handling of a complex "main" task, that can be split up in a sequence of smaller "sub" tasks.
+    // TaskProcessingService implementations may need to refer to results of one-or-more previous tasks in the chain/sequence.
+    // This can be achieved by passing via a new task's parent task, to find the (other) sub tasks that must be consulted (e.g. to read their results).
+    // So even though we don't really need a main task for this unit test, we show the construction here as a typical code example.
+    Task mainTask = triqFactory.createTask(null, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    Task t1 = triqFactory.createTask(mainTask, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    Task t2 = triqFactory.createTask(mainTask, "testInitiator2", "testType", "testCorrelationId2", "testExternalRef2");
+
+    try {
+      // This gives an example of chaining task executions asynchronously.
+      CompletableFuture<Task> future = TaskProcessingBrokerTracker.getBroker().processSubTasks(mainTask, 3L, TimeUnit.SECONDS, false);
+      Task mainDone = future.get(3L, TimeUnit.SECONDS);
+      assertEquals("Should get same mainTask back after execution", mainTask,  mainDone);
+      assertNotEquals("Task mainTask status should not be FINISHED",  ProcessingStatus.FINISHED, mainTask.getStatus());
+      mainDone.getSubTasks().forEach(t->assertEquals("Task status should be FINISHED",  ProcessingStatus.FINISHED, t.getStatus()));
     } catch (Exception e) {
       e.printStackTrace();
       fail("Exception in task processing "+e);
