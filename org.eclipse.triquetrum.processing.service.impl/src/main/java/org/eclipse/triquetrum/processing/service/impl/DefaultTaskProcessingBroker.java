@@ -15,13 +15,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import org.eclipse.triquetrum.ProcessingStatus;
@@ -54,7 +56,9 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
   public CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit) {
     // Get timeout handling working before accessing the services
     // to make sure that bad/blocking service implementations don't interfere with it.
-    registerTimeOutHandler(task, timeout, unit);
+    // TODO check if should provide a service base class that does the timeout handling,
+    // then we can move it away from this boker.
+    CompletableFuture<Task> timeOutHandler = registerTimeOutHandler(task, timeout, unit);
 
     CompletableFuture<Task> futResult = null;
     for (SortedSet<ServiceEntry> svcSet : services.values()) {
@@ -68,56 +72,55 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
         }
       }
     }
+
     if (futResult == null) {
       futResult = new CompletableFuture<>();
       futResult.completeExceptionally(new ProcessingException(ErrorCode.TASK_UNHANDLED, "No service found for " + task, null));
     }
+
+    // Remark that timeout handling in the broker only works for non-blocking services!
+    // When the selected TaskProcessingService above was a blocking one, the process method by definition only returns
+    // when the processing is done or ended in error.
+    // Timeout-handling for blocking services must be implemented in the service itself.
+    // (and as remarked above, it might be best to do that for all service implementations anyway)
+    futResult = futResult.applyToEither(timeOutHandler, t -> {t.setStatus(ProcessingStatus.FINISHED); return t;})
+      .whenComplete((t, ex) -> {
+      if (ex != null) {
+        ProcessingException pex = null;
+        if (ex.getCause() instanceof ProcessingException) {
+          pex = (ProcessingException) ex.getCause();
+        } else if (ex.getCause() instanceof TimeoutException) {
+          pex = new ProcessingException(ErrorCode.TASK_TIMEOUT, ex.getCause());
+        } else {
+          pex = new ProcessingException(ErrorCode.TASK_ERROR, ex.getCause());
+        }
+        task.setErrorStatus(pex);
+      }
+    });
+
     return futResult;
   }
 
   @Override
   public CompletableFuture<Task> processSubTasks(Task task, Long timeout, TimeUnit unit, boolean finishWhenDone) {
-    List<CompletableFuture<Task>> futures = task.getSubTasks().
-        map(t -> process(t, timeout, unit)).
-        collect(Collectors.<CompletableFuture<Task>>toList());
+    List<CompletableFuture<Task>> futures = task.getSubTasks().map(t -> process(t, timeout, unit)).collect(Collectors.<CompletableFuture<Task>> toList());
     CompletableFuture<Void> allDoneFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
 
     return allDoneFuture.thenApply(t -> {
-      if(finishWhenDone) {
+      if (finishWhenDone) {
         task.setStatus(ProcessingStatus.FINISHED);
       }
       return task;
-      }
-    );
+    });
   }
 
   @Override
   public CompletableFuture<List<Task>> process(Long timeout, TimeUnit unit, Task... tasks) {
     List<CompletableFuture<Task>> futures = new ArrayList<>();
-    for(Task t : tasks) {
+    for (Task t : tasks) {
       futures.add(process(t, timeout, unit));
     }
     return sequence(futures);
-  }
-
-  // TODO improve error handling in future sequencing
-  // For the moment, if one future returns an error the whole chain is interrupted by an unchecked exception.
-  private static <T> CompletableFuture<List<T>> sequence(List<CompletableFuture<T>> futures) {
-    CompletableFuture<Void> allDoneFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
-    return allDoneFuture.thenApply(v -> futures.stream().
-                    map(future -> future.join()).
-                    collect(Collectors.<T>toList())
-    );
-}
-
-  private void registerTimeOutHandler(final Task task, Long timeout, TimeUnit unit) {
-    if (timeout == null || unit == null || (timeout <= 0)) {
-      return;
-    }
-    delayTimer.schedule(new TimeoutHandler(task.getProcessId(), task.getId()), timeout, unit);
-    if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug("Task {} timeout set to {} {}", new Object[] { task.getId(), timeout, unit });
-    }
   }
 
   /**
@@ -132,20 +135,20 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
    * Typically invoked by a reconfiguration of the DS component.
    */
   public void modified(Map<String, Object> properties) {
-    short timeoutHandlingThreads = (short) properties.getOrDefault("timeoutHandlingThreads", (short)1);
+    short timeoutHandlingThreads = (short) properties.getOrDefault("timeoutHandlingThreads", (short) 1);
     if (delayTimer != null) {
       // first shutdown the pending timeout handlers
       try {
         List<Runnable> pendingThings = delayTimer.shutdownNow();
         for (Runnable runnable : pendingThings) {
-          LOGGER.warn("Configuration was modified. Shutdown "+runnable);
+          LOGGER.warn("Configuration was modified. Shutdown " + runnable);
         }
       } catch (Exception e) {
         // ignore this one
       }
     }
     // (re)create a thread pool with the configured size
-    delayTimer = Executors.newScheduledThreadPool(timeoutHandlingThreads);
+    delayTimer = Executors.newScheduledThreadPool(timeoutHandlingThreads, new TimeoutHandlerThreadFactory("task-timeout-handler"));
   }
 
   /**
@@ -221,39 +224,52 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
     return result;
   }
 
-  public static final class TimeoutHandler implements Callable<Void> {
-    private final String processID;
-    private final Long taskID;
+  // TODO improve error handling in future sequencing
+  // For the moment, if one future returns an error the whole chain is interrupted by an unchecked exception.
+  private static <T> CompletableFuture<List<T>> sequence(List<CompletableFuture<T>> futures) {
+    CompletableFuture<Void> allDoneFuture = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
+    return allDoneFuture.thenApply(v -> futures.stream().map(future -> future.join()).collect(Collectors.<T> toList()));
+  }
 
-    public TimeoutHandler(String processID, Long taskID) {
-      this.processID = processID;
-      this.taskID = taskID;
+  private CompletableFuture<Task> registerTimeOutHandler(final Task task, Long timeout, TimeUnit unit) {
+    final CompletableFuture<Task> timeoutHandler = new CompletableFuture<>();
+    if (timeout != null && unit != null && (timeout > 0)) {
+      delayTimer.schedule(() -> {
+        return timeoutHandler.completeExceptionally(new TimeoutException("Task " + task.getId() + " timeout after " + timeout + " "+ unit));
+      }, timeout, unit);
+      if (LOGGER.isDebugEnabled()) {
+        LOGGER.debug("Task {} timeout set to {} {}", new Object[] { task.getId(), timeout, unit });
+      }
+    }
+    return timeoutHandler;
+  }
+
+  private static class TimeoutHandlerThreadFactory implements ThreadFactory {
+    final private AtomicInteger threadNumber = new AtomicInteger(1);
+    final private String namePrefix;
+    final private ClassLoader contextClassLoader;
+
+    TimeoutHandlerThreadFactory(String namePrefix) {
+      this.namePrefix = namePrefix;
+      this.contextClassLoader = getClass().getClassLoader();
     }
 
-    public Void call() {
-      // TODO : port this from Passerelle
-      // ProcessManager procMgr = ProcessManagerServiceTracker.getService().getProcessManager(processID);
-      // if (procMgr != null) {
-      // Task task = procMgr.getTask(taskID);
-      // if (task != null && !task.getProcessingContext().isFinished()) {
-      // procMgr.notifyTimeOut(task);
-      // }
-      // }
-      return null;
-    }
-
-    @Override
-    public String toString() {
-      return "TimeoutHandler [processID=" + processID + ", taskID=" + taskID + "]";
+    public Thread newThread(Runnable r) {
+      Thread t = new Thread(r, namePrefix + threadNumber.getAndIncrement());
+      t.setDaemon(true);
+      t.setPriority(Thread.NORM_PRIORITY);
+      t.setContextClassLoader(contextClassLoader);
+      return t;
     }
   }
+
 
   /**
    * A pair of a service and its version
    */
-  public static final class ServiceEntry implements Comparable<ServiceEntry> {
-    TaskProcessingService service;
-    Version version;
+  private static final class ServiceEntry implements Comparable<ServiceEntry> {
+    final TaskProcessingService service;
+    final Version version;
 
     public ServiceEntry(TaskProcessingService service, Version version) {
       this.service = service;

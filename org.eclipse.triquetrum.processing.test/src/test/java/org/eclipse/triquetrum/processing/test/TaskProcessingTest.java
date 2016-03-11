@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Stream;
 
 import org.eclipse.triquetrum.ProcessingStatus;
@@ -198,12 +198,44 @@ public class TaskProcessingTest {
     } catch (ExecutionException e) {
       // the future reports a processing exception wrapped in an ExecutionException
       assertEquals("Should be an IllegalStateException", IllegalStateException.class, e.getCause().getClass());
+      assertEquals("Task should be in error",  ProcessingStatus.ERROR, t.getStatus());
       // we still want to make sure that the result stream is not-null
       Stream<ResultBlock> results = t.getResults();
       assertNotNull("Task results stream must be not null", results);
       // but it should be "empty", i.e. there can be no first element
       ResultBlock resultBlock = results.findFirst().orElse(null);
       assertNull("Task result must be empty/null", resultBlock);
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail("Exception in task processing "+e);
+    }
+  }
+
+  /**
+   * This test checks what should happen when the task processing fails with some exception thrown inside the service implementation.
+   */
+  @Test
+  public void testTaskProcessingWithTimeout() {
+    Map<String, Serializable> resultItems = new HashMap<>();
+    resultItems.put("item1", "value1");
+    resultItems.put("item2", 10L);
+    TaskProcessingBrokerTracker.getBroker().registerService(new MockTaskProcessingService("testType", resultItems));
+
+    TriqFactory triqFactory = TriqFactoryTracker.getDefaultFactory();
+    Task t = triqFactory.createTask(null, "testInitiator", "testType", "testCorrelationId", "testExternalRef");
+    // This is a simple trick to tell the MockTaskProcessingService that it should throw an exception of the specified type.
+    // We use the task to pass the requested exception type into the service impl, where the code checks for the presence
+    // of such an attribute and then simply throws such an exception.
+    triqFactory.createAttribute(t, MockTaskProcessingService.DELAY_ATTRIBUTE, 1);
+
+    try {
+      CompletableFuture<Task> future = TaskProcessingBrokerTracker.getBroker().process(t, 100L, TimeUnit.MILLISECONDS);
+      future.get();
+      fail("Task processing should have caused an error through timeout");
+    } catch (ExecutionException e) {
+      // the future reports a processing exception wrapped in an ExecutionException
+      Throwable cause = e.getCause();
+      assertEquals("Should be a TimeOutException", TimeoutException.class, cause.getClass());
     } catch (Exception e) {
       e.printStackTrace();
       fail("Exception in task processing "+e);
