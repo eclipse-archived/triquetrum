@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2015-2016 iSencia Belgium NV.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Erwin De Ley - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.shapes;
 
 import org.eclipse.draw2d.Graphics;
@@ -8,11 +18,24 @@ import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRenderer;
 
 public class SvgModelElementShape extends RectangleFigure implements IGraphicsAlgorithmRenderer {
 
+  private String svgURI;
+  private int translateX;
+  private int translateY;
+
+  /**
+   * @param svgURI
+   */
+  SvgModelElementShape(String svgURI, int translateX, int translateY) {
+    this.svgURI = svgURI;
+    this.translateX = translateX;
+    this.translateY = translateY;
+  }
+
   @Override
   protected void fillShape(Graphics graphics) {
+    // TODO figure out a way to get the SVG translation/moving working with some Batik API or whatever
     SVGFigure figure = new SVGFigure();
-    figure.setURI("platform:/plugin/org.eclipse.triquetrum.workflow.editor/icons/src_actor.svg");
-    figure.setParent(this);
+    figure.setURI(svgURI);
     figure.setBounds(this.getBounds());
     figure.paint(graphics);
   }
@@ -31,5 +54,4 @@ public class SvgModelElementShape extends RectangleFigure implements IGraphicsAl
 
     graphics.drawRectangle(r);
   }
-
 }

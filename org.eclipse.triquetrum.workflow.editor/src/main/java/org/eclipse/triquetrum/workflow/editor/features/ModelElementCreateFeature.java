@@ -19,6 +19,7 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.AbstractCreateFeature;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
@@ -41,16 +42,19 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
   private String category;
   private String elementName;
   private String wrappedClass;
-  private String imageId;
+  private String iconResource;
+  private String iconType;
   private Map<String, String> properties = new HashMap<>();
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String group, String category, String elementName, String wrappedClass, String imageId, Map<String, String> properties) {
+
+  public ModelElementCreateFeature(IFeatureProvider fp, String group, String category, String elementName, String wrappedClass, String iconResource, String iconType, Map<String, String> properties) {
     super(fp, elementName, "Create a " + elementName);
     this.group = group;
     this.category = category;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
-    this.imageId = imageId;
+    this.iconResource = iconResource;
+    this.iconType = iconType;
     if(properties!=null) {
       this.properties.putAll(properties);
     }
@@ -79,7 +83,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
 
   @Override
   public String getCreateImageId() {
-    return imageId;
+    return TriqFeatureProvider.ICONTYPE_IMG.equalsIgnoreCase(iconType) ? iconResource : TriqFeatureProvider.DEFAULT_ACTOR_IMG;
   }
 
   public boolean canCreate(ICreateContext context) {
@@ -141,7 +145,8 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       }
 
       // set the icon in the create context, so the add feature can add it in the element's shape
-      context.putProperty("icon", getCreateImageId());
+      context.putProperty("icon", iconResource);
+      context.putProperty("iconType", iconType);
       // do the add
       addGraphicalRepresentation(context, result);
       // activate direct editing after object creation

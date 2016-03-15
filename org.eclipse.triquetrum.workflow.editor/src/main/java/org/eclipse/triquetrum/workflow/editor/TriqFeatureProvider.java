@@ -15,10 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
@@ -39,7 +41,6 @@ import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationAddFeature;
-import org.eclipse.triquetrum.workflow.editor.features.AnnotationChangeColorFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;
@@ -59,12 +60,23 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Creates all Triq editor features, including ICreateFeatures for actors as defined in palette extension contributions.
  *
  */
 public class TriqFeatureProvider extends DefaultFeatureProvider {
+
+  private final static Logger LOGGER = LoggerFactory.getLogger(TriqFeatureProvider.class);
+
+  public static final String ICONTYPE_IMG = "img";
+  public static final String ICONTYPE_SVG = "svg";
+  public static final String ICONTYPE_PTOLEMY = "ptolemy";
+  public static final String DEFAULT_ACTOR_IMG = "icons/actor.gif";
+
+
   public static final String PALETTE_CONTRIBUTION_EXTENSION_ID = "org.eclipse.triquetrum.workflow.editor.paletteContribution";
 
   /**
@@ -88,7 +100,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public ICustomFeature[] getCustomFeatures(ICustomContext context) {
     // The annotation color change is currently not done via a direct custom feature,
     // but is done via the Annotation configuration form.
-    return new ICustomFeature[] { /*new AnnotationChangeColorFeature(this),*/ new ModelElementConfigureFeature(this) };
+    return new ICustomFeature[] { /* new AnnotationChangeColorFeature(this), */ new ModelElementConfigureFeature(this) };
   }
 
   @Override
@@ -174,8 +186,14 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       String group = parentGroupElem != null ? parentGroupElem.getAttribute("displayName") : null;
       String label = cfgElem.getAttribute("displayName");
       String clazz = cfgElem.getAttribute("class");
+
       String iconResource = cfgElem.getAttribute("icon");
+      iconResource = !StringUtils.isBlank(iconResource) ? iconResource : DEFAULT_ACTOR_IMG;
+      String iconType = cfgElem.getAttribute("iconType");
+      iconType = StringUtils.isBlank(iconType) ? ICONTYPE_IMG : iconType;
+
       String eClassName = cfgElem.getAttribute("type");
+
       // look for (optional) attributes
       Map<String, String> properties = new HashMap<>();
       for (IConfigurationElement child : cfgElem.getChildren()) {
@@ -185,8 +203,23 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
           properties.put(name, value);
         }
       }
-      ModelElementCreateFeature mecf = new ModelElementCreateFeature(this, group, eClassName, label, clazz, iconResource, properties);
-      if (iconResource != null) {
+      ModelElementCreateFeature mecf = null;
+      switch (iconType) {
+      case ICONTYPE_SVG:
+      case ICONTYPE_PTOLEMY:
+        try {
+          iconResource = URI.createPlatformPluginURI(cfgElem.getContributor().getName() + "/" + iconResource, true).toString();
+          mecf = new ModelElementCreateFeature(this, group, eClassName, label, clazz, iconResource, iconType, properties);
+        } catch (Exception e) {
+          LOGGER.error("Error adding feature from palette for "+label, e);
+        }
+        break;
+      case ICONTYPE_IMG:
+      default:
+        // Images are managed by an ImageProvider in Graphiti
+        // By default it's not possible to add extra images from outside the ImageProvider implementation itself,
+        // e.g. as needed to allow extra image uploads by additional bundles, via extension points etc.
+
         // option 1 to register extra images from palette extensions
         // not an ideal hack, as we need to replicate Graphiti's ad-hoc internal image key construction
         // (cfr. org.eclipse.graphiti.ui.internal.services.impl.ImageService.createImageDescriptorForId(String, String))
@@ -194,6 +227,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
         // GraphitiUIPlugin.getDefault().getImageRegistry().put(makeKey(TriqDiagramTypeProvider.ID,iconResource), imageDescriptor);
 
         // option 2 : cfr suggestion in https://bugs.eclipse.org/bugs/show_bug.cgi?id=366452#c8
+        mecf = new ModelElementCreateFeature(this, group, eClassName, label, clazz, iconResource, iconType, properties);
         ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource,
             iconResource);
       }

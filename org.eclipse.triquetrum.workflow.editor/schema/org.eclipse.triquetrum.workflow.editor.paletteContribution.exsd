@@ -79,16 +79,6 @@ It can be a Java implementation or an actor-oriented implementation.
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="icon" type="string">
-            <annotation>
-               <documentation>
-                  A plugin relative path to the image to be used as the icon for this palette entry.
-               </documentation>
-               <appinfo>
-                  <meta.attribute kind="resource"/>
-               </appinfo>
-            </annotation>
-         </attribute>
          <attribute name="type" use="required">
             <annotation>
                <documentation>
@@ -108,6 +98,41 @@ It can be a Java implementation or an actor-oriented implementation.
                   <enumeration value="Port">
                   </enumeration>
                   <enumeration value="Annotation">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+         <attribute name="icon" type="string">
+            <annotation>
+               <documentation>
+                  A plugin relative path to the image to be used as the icon for this palette entry.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="iconType">
+            <annotation>
+               <documentation>
+                  Identifies the type of the icon definition.
+Currently supports 3 types :
+1. img (gif,jpg,... files with size 16x16px) : these are shown as small icons on the top-left of a default rounded rectangle for actors, directors etc.
+2. svg (svg,xml files) : these should define the complete figure of a model element. The result will be rendered with a width of 100px and a height matching the SVG definition&apos;s aspect ratio.
+3. ptolemy : Ptolemy II MOML icon definitions. Similar to SVG they should define the complete figure of a model element. Contrary to SVG, we assume size info to be absolute here.
+
+If unspecified, img is assumed as default.
+
+In the future this may be adapted to allow registering extra types via extensions.
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="img">
+                  </enumeration>
+                  <enumeration value="svg">
+                  </enumeration>
+                  <enumeration value="ptolemy">
                   </enumeration>
                </restriction>
             </simpleType>
