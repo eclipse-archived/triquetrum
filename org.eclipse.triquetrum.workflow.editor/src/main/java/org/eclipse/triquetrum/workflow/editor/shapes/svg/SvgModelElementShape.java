@@ -8,13 +8,12 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.editor.shapes;
+package org.eclipse.triquetrum.workflow.editor.shapes.svg;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRenderer;
-import org.eclipse.triquetrum.workflow.editor.shapes.svg.SVGFigure;
 
 public class SvgModelElementShape extends RectangleFigure implements IGraphicsAlgorithmRenderer {
 
@@ -25,7 +24,7 @@ public class SvgModelElementShape extends RectangleFigure implements IGraphicsAl
   /**
    * @param svgURI
    */
-  SvgModelElementShape(String svgURI, int translateX, int translateY) {
+  public SvgModelElementShape(String svgURI, int translateX, int translateY) {
     this.svgURI = svgURI;
     this.translateX = translateX;
     this.translateY = translateY;

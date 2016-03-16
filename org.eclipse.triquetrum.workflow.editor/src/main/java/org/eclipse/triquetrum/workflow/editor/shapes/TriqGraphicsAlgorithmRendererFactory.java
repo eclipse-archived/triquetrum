@@ -15,6 +15,8 @@ import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRenderer;
 import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRendererFactory;
 import org.eclipse.graphiti.platform.ga.IRendererContext;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
+import org.eclipse.triquetrum.workflow.editor.shapes.ptolemy.PtolemyModelElementShape;
+import org.eclipse.triquetrum.workflow.editor.shapes.svg.SvgModelElementShape;
 
 public class TriqGraphicsAlgorithmRendererFactory implements IGraphicsAlgorithmRendererFactory {
 

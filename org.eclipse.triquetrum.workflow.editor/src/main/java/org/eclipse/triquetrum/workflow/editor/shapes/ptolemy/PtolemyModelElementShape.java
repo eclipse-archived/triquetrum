@@ -8,39 +8,55 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.editor.shapes;
+package org.eclipse.triquetrum.workflow.editor.shapes.ptolemy;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRenderer;
 import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
 
-import ptolemy.kernel.util.NamedObj;
 import ptolemy.vergil.icon.EditorIcon;
+import ptolemy.vergil.kernel.attributes.LineAttribute;
+import ptolemy.vergil.kernel.attributes.RectangleAttribute;
+import ptolemy.vergil.kernel.attributes.TextAttribute;
+import ptolemy.vergil.kernel.attributes.VisibleAttribute;
 
 public class PtolemyModelElementShape extends RectangleFigure implements IGraphicsAlgorithmRenderer {
 
+  private static Map<Class<? extends VisibleAttribute>, DrawingStrategy<? extends VisibleAttribute>> drawingStrategies = new HashMap<>();
+  static {
+    drawingStrategies.put(RectangleAttribute.class, new RectangleDrawingStrategy());
+    drawingStrategies.put(LineAttribute.class, new LineDrawingStrategy());
+    drawingStrategies.put(TextAttribute.class, new TextDrawingStrategy());
+  }
+
   private String iconURI;
-  private int translateX;
-  private int translateY;
 
   /**
    * @param iconURI
    */
-  PtolemyModelElementShape(String iconURI, int translateX, int translateY) {
+  public PtolemyModelElementShape(String iconURI, int translateX, int translateY) {
     this.iconURI = iconURI;
-    this.translateX = translateX;
-    this.translateY = translateY;
   }
 
   @Override
   protected void fillShape(Graphics graphics) {
+
+    graphics.drawRectangle(getBounds());
+    graphics.translate(getLocation());
     try {
       EditorIcon iconDef = (EditorIcon) WorkflowUtils.readFrom(URI.create(iconURI));
+      for(VisibleAttribute a : iconDef.attributeList(VisibleAttribute.class)) {
+        DrawingStrategy drawingStrategy = drawingStrategies.get(a.getClass());
+        if(drawingStrategy != null) {
+          drawingStrategy.draw(a, graphics);
+        }
+      }
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
