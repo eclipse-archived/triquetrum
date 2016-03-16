@@ -12,6 +12,8 @@ package org.eclipse.triquetrum.workflow.editor;
 
 import java.io.PrintStream;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
@@ -86,6 +88,15 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
   public void stop(BundleContext context) throws Exception {
     wfExecSvcTracker.close();
     super.stop(context);
+  }
+
+  public static void log(int severity, String message, Throwable t) {
+    IStatus status = new Status(severity, getID(), 0, message, t);
+    getDefault().getLog().log(status);
+  }
+
+  public static void logError(String message, Throwable t) {
+    log(IStatus.ERROR, message, t);
   }
 
   public WorkflowExecutionService getWorkflowExecutionService() {

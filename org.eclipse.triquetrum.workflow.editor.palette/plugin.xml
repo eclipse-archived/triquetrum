@@ -131,7 +131,8 @@
         <entry
               class="ptolemy.actor.lib.MovingAverage"
               displayName="MovingAverage"
-              icon="icons/actor.gif"
+              icon="icons/MovingAverageIcon.xml"
+              iconType="ptolemy"
               type="Actor">
         </entry>
 	      <entry

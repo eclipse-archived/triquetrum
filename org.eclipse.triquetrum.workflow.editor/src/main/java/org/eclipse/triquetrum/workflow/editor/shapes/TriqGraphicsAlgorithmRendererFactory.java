@@ -45,7 +45,7 @@ public class TriqGraphicsAlgorithmRendererFactory implements IGraphicsAlgorithmR
     }
     switch(iconType) {
     case TriqFeatureProvider.ICONTYPE_PTOLEMY :
-    // TODO ptolemy icon shape
+      return new PtolemyModelElementShape(iconResource, translateX, translateY);
     case TriqFeatureProvider.ICONTYPE_SVG :
     default :
         return new SvgModelElementShape(iconResource, translateX, translateY);

@@ -79,7 +79,7 @@ public class ModelHandleImpl implements ModelHandle {
 	public CompositeActor getModel() throws TriqException {
     if (model == null && getResourceLocation()!=null) {
       try {
-        model = WorkflowUtils.readFrom(getResourceLocation());
+        model = (CompositeActor) WorkflowUtils.readFrom(getResourceLocation());
       } catch (Exception e) {
         throw new TriqException(ErrorCode.MODEL_LOADING_ERROR, "Error parsing model definition for " + code + " v " + version, e);
       }

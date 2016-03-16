@@ -12,8 +12,14 @@ Require-Bundle: org.eclipse.graphiti;bundle-version="0.12.0",
  org.eclipse.core.runtime;bundle-version="3.11.0",
  org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.100"
 Import-Package: org.apache.batik.bridge;version="1.6.0",
+ org.apache.batik.css.engine;version="1.6.0",
+ org.apache.batik.dom;version="1.6.1",
  org.apache.batik.dom.svg;version="1.6.0",
  org.apache.batik.gvt;version="1.6.0",
+ org.apache.batik.gvt.renderer;version="1.6.0",
+ org.apache.batik.svggen;version="1.6.0",
+ org.apache.batik.transcoder;version="1.6.0",
+ org.apache.batik.transcoder.image;version="1.6.0",
  org.apache.batik.util;version="1.6.0",
  org.apache.commons.io;version="2.2.0",
  org.apache.commons.lang;version="2.6.0",
@@ -74,11 +80,14 @@ Import-Package: org.apache.batik.bridge;version="1.6.0",
  org.eclipse.ui.wizards.newresource,
  org.ptolemy.commons;version="10.1.0",
  org.slf4j;version="1.7.2",
+ org.w3c.dom.svg;version="1.1.0",
  ptolemy.actor;version="10.1.0",
  ptolemy.data.expr;version="10.1.0",
  ptolemy.kernel;version="10.1.0",
  ptolemy.kernel.util;version="10.1.0",
- ptolemy.moml;version="10.1.0"
+ ptolemy.moml;version="10.1.0",
+ ptolemy.vergil.icon;version="11.0.0",
+ ptolemy.vergil.kernel.attributes;version="11.0.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin
 Service-Component: OSGI-INF/colorRendererService.xml
 Bundle-ActivationPolicy: lazy

@@ -10,36 +10,41 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.shapes;
 
+import java.net.URI;
+
+import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRenderer;
-import org.eclipse.triquetrum.workflow.editor.shapes.svg.SVGFigure;
+import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
 
-public class SvgModelElementShape extends RectangleFigure implements IGraphicsAlgorithmRenderer {
+import ptolemy.kernel.util.NamedObj;
+import ptolemy.vergil.icon.EditorIcon;
 
-  private String svgURI;
+public class PtolemyModelElementShape extends RectangleFigure implements IGraphicsAlgorithmRenderer {
+
+  private String iconURI;
   private int translateX;
   private int translateY;
 
   /**
-   * @param svgURI
+   * @param iconURI
    */
-  SvgModelElementShape(String svgURI, int translateX, int translateY) {
-    this.svgURI = svgURI;
+  PtolemyModelElementShape(String iconURI, int translateX, int translateY) {
+    this.iconURI = iconURI;
     this.translateX = translateX;
     this.translateY = translateY;
   }
 
   @Override
   protected void fillShape(Graphics graphics) {
-    // TODO figure out a way to get the SVG translation/moving working with some Batik API or whatever
-    SVGFigure figure = new SVGFigure();
-    figure.setTranslateX(translateX);
-    figure.setTranslateY(translateY);
-    figure.setURI(svgURI);
-    figure.setBounds(this.getBounds());
-    figure.paint(graphics);
+    try {
+      EditorIcon iconDef = (EditorIcon) WorkflowUtils.readFrom(URI.create(iconURI));
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   @Override

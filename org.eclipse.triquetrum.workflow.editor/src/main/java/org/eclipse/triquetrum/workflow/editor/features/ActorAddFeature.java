@@ -139,6 +139,9 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       int translateX = 0;
       int translateY = 0;
       try {
+        // TODO figure out a way to obtain location/size info from the external figure itself,
+        // i.o. having to implement duplicate technical deps/knowledge here about the type of external icon
+        // and how to parse it etc.
         double[] size = getLocationInfo(iconResource);
         int minX = (int) size[0];
         int minY = (int) size[1];
@@ -163,32 +166,11 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
         e.printStackTrace();
       }
       gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, width + 15, height);
-      GraphicsAlgorithm extFigure = Graphiti.getGaCreateService().createPlatformGraphicsAlgorithm(invisibleRectangle, "const");
-      if(translateX!=0) {
-        Property property = MmFactory.eINSTANCE.createProperty();
-        property.setKey("translateX");
-        property.setValue(Integer.toString(translateX));
-        extFigure.getProperties().add(property);
-      }
-      if(translateY!=0) {
-        Property property = MmFactory.eINSTANCE.createProperty();
-        property.setKey("translateY");
-        property.setValue(Integer.toString(translateY));
-        extFigure.getProperties().add(property);
-      }
-      {
-        Property property = MmFactory.eINSTANCE.createProperty();
-        property.setKey("iconType");
-        property.setValue(iconType);
-        extFigure.getProperties().add(property);
-      }
-      {
-        Property property = MmFactory.eINSTANCE.createProperty();
-        property.setKey("iconResource");
-        property.setValue(iconResource);
-        extFigure.getProperties().add(property);
-      }
-      gaService.setLocationAndSize(extFigure, SHAPE_X_OFFSET, 0, width, height);
+      buildExternallyDefinedShape(gaService, invisibleRectangle, iconType, iconResource, width, height, translateX, translateY);
+    } else if(TriqFeatureProvider.ICONTYPE_PTOLEMY.equalsIgnoreCase(iconType)) {
+      yOffsetForPorts = PORT_Y_OFFSET_MIN;
+      gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, width + 15, height);
+      buildExternallyDefinedShape(gaService, invisibleRectangle, iconType, iconResource, width, height, 0, 0);
     } else {
       gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, width + 15, height);
       {
@@ -322,6 +304,37 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     return containerShape;
   }
 
+  protected GraphicsAlgorithm buildExternallyDefinedShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, String iconType, String iconResource,
+      int width, int height, int translateX, int translateY) {
+    GraphicsAlgorithm extFigure = Graphiti.getGaCreateService().createPlatformGraphicsAlgorithm(invisibleRectangle, iconType);
+    if(translateX!=0) {
+      Property property = MmFactory.eINSTANCE.createProperty();
+      property.setKey("translateX");
+      property.setValue(Integer.toString(translateX));
+      extFigure.getProperties().add(property);
+    }
+    if(translateY!=0) {
+      Property property = MmFactory.eINSTANCE.createProperty();
+      property.setKey("translateY");
+      property.setValue(Integer.toString(translateY));
+      extFigure.getProperties().add(property);
+    }
+    {
+      Property property = MmFactory.eINSTANCE.createProperty();
+      property.setKey("iconType");
+      property.setValue(iconType);
+      extFigure.getProperties().add(property);
+    }
+    {
+      Property property = MmFactory.eINSTANCE.createProperty();
+      property.setKey("iconResource");
+      property.setValue(iconResource);
+      extFigure.getProperties().add(property);
+    }
+    gaService.setLocationAndSize(extFigure, SHAPE_X_OFFSET, 0, width, height);
+    return extFigure;
+  }
+
   /**
    *
    * @param uri
@@ -339,8 +352,8 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     context.setDynamic(true);
     GVTBuilder builder = new GVTBuilder();
     GraphicsNode root = builder.build(context, doc);
-    double height = root.getPrimitiveBounds().getHeight();
-    double width = root.getPrimitiveBounds().getWidth();
+    double height = root.getGeometryBounds().getHeight();
+    double width = root.getGeometryBounds().getWidth();
     double minX = root.getGeometryBounds().getMinX();
     double minY = root.getGeometryBounds().getMinY();
     return new double[] {minX, minY, width, height};
