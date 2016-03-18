@@ -10,36 +10,56 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.shapes.svg;
 
+import java.io.IOException;
+
+import org.apache.batik.bridge.BridgeContext;
+import org.apache.batik.bridge.DocumentLoader;
+import org.apache.batik.bridge.GVTBuilder;
+import org.apache.batik.bridge.UserAgent;
+import org.apache.batik.bridge.UserAgentAdapter;
+import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
+import org.apache.batik.gvt.GraphicsNode;
+import org.apache.batik.util.XMLResourceDescriptor;
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRenderer;
+import org.eclipse.graphiti.platform.ga.IRendererContext;
+import org.eclipse.triquetrum.workflow.editor.shapes.AbstractCustomModelElementShape;
+import org.w3c.dom.Document;
 
-public class SvgModelElementShape extends RectangleFigure implements IGraphicsAlgorithmRenderer {
-
-  private String svgURI;
-  private int translateX;
-  private int translateY;
+public class SvgModelElementShape extends AbstractCustomModelElementShape {
 
   /**
-   * @param svgURI
+   * @param properties
    */
-  public SvgModelElementShape(String svgURI, int translateX, int translateY) {
-    this.svgURI = svgURI;
-    this.translateX = translateX;
-    this.translateY = translateY;
+  public  SvgModelElementShape(IRendererContext rendererContext) {
+    super(rendererContext);
   }
 
   @Override
   protected void fillShape(Graphics graphics) {
-    // TODO figure out a way to get the SVG translation/moving working with some Batik API or whatever
-    SVGFigure figure = new SVGFigure();
-    figure.setTranslateX(translateX);
-    figure.setTranslateY(translateY);
-    figure.setURI(svgURI);
-    figure.setBounds(this.getBounds());
-    figure.paint(graphics);
+    try {
+      double[] locationInfo = getLocationInfo(getIconURI());
+      int minX = (int) locationInfo[0];
+      int minY = (int) locationInfo[1];
+
+      int width = (int) locationInfo[2];
+      int height = (int) locationInfo[3];
+      setGaWidth(ga, width, height);
+//      setGaWidth(ga.getParentGraphicsAlgorithm(), width, height);
+
+      SVGFigure figure = new SVGFigure();
+      // move SVG figure from its defined top-left to origin (0,0) top-left
+      figure.setTranslateX(-minX);
+      figure.setTranslateY(-minY);
+      figure.setURI(getIconURI());
+      figure.setBounds(this.getBounds());
+      figure.paint(graphics);
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
+
 
   @Override
   protected void outlineShape(Graphics graphics) {
@@ -55,4 +75,28 @@ public class SvgModelElementShape extends RectangleFigure implements IGraphicsAl
 
     graphics.drawRectangle(r);
   }
+
+  /**
+  *
+  * @param uri
+  * @return [minX, minY, width,height] of the contained SVG
+  * @throws IOException
+  */
+ private double[] getLocationInfo(String uri) throws IOException {
+   String parser = XMLResourceDescriptor.getXMLParserClassName();
+   parser = parser !=null ? parser : "org.apache.xerces.parsers.SAXParser";
+   SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
+   Document doc = factory.createDocument(uri);
+   UserAgent agent = new UserAgentAdapter();
+   DocumentLoader loader = new DocumentLoader(agent);
+   BridgeContext context = new BridgeContext(agent, loader);
+   context.setDynamic(true);
+   GVTBuilder builder = new GVTBuilder();
+   GraphicsNode root = builder.build(context, doc);
+   double height = root.getGeometryBounds().getHeight();
+   double width = root.getGeometryBounds().getWidth();
+   double minX = root.getGeometryBounds().getMinX();
+   double minY = root.getGeometryBounds().getMinY();
+   return new double[] {minX, minY, width, height};
+ }
 }

@@ -20,37 +20,26 @@ import org.eclipse.triquetrum.workflow.editor.shapes.svg.SvgModelElementShape;
 
 public class TriqGraphicsAlgorithmRendererFactory implements IGraphicsAlgorithmRendererFactory {
 
+  public TriqGraphicsAlgorithmRendererFactory() {
+    TriqGarFactorytracker.setGarFactory(this);
+  }
+
   @Override
   public IGraphicsAlgorithmRenderer createGraphicsAlgorithmRenderer(IRendererContext rendererContext) {
-    String iconResource = null;
-    String iconType = TriqFeatureProvider.ICONTYPE_SVG;
-    int translateX = 0;
-    int translateY = 0;
+    String iconType = null;
     for (Property property: rendererContext.getPlatformGraphicsAlgorithm().getProperties()) {
-      switch(property.getKey()) {
-      case "iconResource" :
-        iconResource = property.getValue();
-        break;
-      case "iconType" :
+      if("iconType".equalsIgnoreCase(property.getKey())) {
         iconType = property.getValue();
         break;
-      case "translateX" :
-        translateX = Integer.parseInt(property.getValue());
-        break;
-      case "translateY" :
-        translateY = Integer.parseInt(property.getValue());
-        break;
-      default :
-        break;
       }
-
     }
     switch(iconType) {
     case TriqFeatureProvider.ICONTYPE_PTOLEMY :
-      return new PtolemyModelElementShape(iconResource, translateX, translateY);
+      return new PtolemyModelElementShape(rendererContext);
     case TriqFeatureProvider.ICONTYPE_SVG :
+      return new SvgModelElementShape(rendererContext);
     default :
-        return new SvgModelElementShape(iconResource, translateX, translateY);
+      return null;
     }
   }
 

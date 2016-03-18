@@ -3,7 +3,7 @@
     "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
 <property name="MovingAverageIcon" class="ptolemy.vergil.icon.EditorIcon">
     <property name="rectangle" class="ptolemy.vergil.kernel.attributes.RectangleAttribute">
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-5.0, 0.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-35.0, -20.0]">
         </property>
         <property name="width" class="ptolemy.data.expr.Parameter" value="60">
         </property>

@@ -1,20 +1,32 @@
+/*******************************************************************************
+ * Copyright (c) 2016 iSencia Belgium NV.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *    Erwin De Ley - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.shapes.ptolemy;
 
 import org.eclipse.draw2d.Graphics;
-import org.eclipse.swt.SWT;
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.swt.graphics.Color;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ptolemy.data.DoubleToken;
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.Location;
 import ptolemy.vergil.kernel.attributes.LineAttribute;
 
-public class LineDrawingStrategy implements DrawingStrategy<LineAttribute> {
+public class LineDrawingStrategy extends AbstractDrawingStrategy<LineAttribute> {
+  private final static Logger LOGGER = LoggerFactory.getLogger(LineDrawingStrategy.class);
 
   @Override
   public void draw(LineAttribute lineAttr, Graphics graphics) {
     Color fgColor = graphics.getForegroundColor();
-    graphics.setAntialias(SWT.ON);
     java.awt.Color color = lineAttr.lineColor.asColor();
     if (color != null) {
         // TODO figure out if and how such colors must be managed and disposed etc
@@ -27,16 +39,23 @@ public class LineDrawingStrategy implements DrawingStrategy<LineAttribute> {
       graphics.setLineWidthFloat(lineWidth);
       int x2_step = (int) ((DoubleToken)lineAttr.x.getToken()).doubleValue();
       int y2_step = (int) ((DoubleToken)lineAttr.y.getToken()).doubleValue();
-      Location location = (Location) lineAttr.getAttribute("_location");
-      int x1 = (int)location.getLocation()[0];
-      int y1 = (int)location.getLocation()[1];
-      graphics.drawLine(x1+30, y1+20, x1+x2_step+30, y1+y2_step+20);
+      Point tlp = getTopLeftLocation(lineAttr, graphics);
+      graphics.drawLine(tlp, tlp.getTranslated(x2_step, y2_step));
     } catch (IllegalActionException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      LOGGER.error("Error reading dimensions for "+lineAttr.getFullName(), e);
     }
-
     graphics.setForegroundColor(fgColor);
   }
 
+  @Override
+  protected Dimension getDimension(LineAttribute lineAttr, Graphics graphics) {
+    try {
+      int x2_step = (int) ((DoubleToken)lineAttr.x.getToken()).doubleValue();
+      int y2_step = (int) ((DoubleToken)lineAttr.y.getToken()).doubleValue();
+      return new Dimension(x2_step, y2_step);
+    } catch (IllegalActionException e) {
+      LOGGER.error("Error reading dimensions for "+lineAttr.getFullName(), e);
+      return new Dimension(0,0);
+    }
+  }
 }
