@@ -27,11 +27,13 @@ import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.IFeature;
+import org.eclipse.graphiti.features.ILayoutFeature;
 import org.eclipse.graphiti.features.IResizeShapeFeature;
 import org.eclipse.graphiti.features.IUpdateFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
+import org.eclipse.graphiti.features.context.ILayoutContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
@@ -49,6 +51,7 @@ import org.eclipse.triquetrum.workflow.editor.features.DirectorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.DirectorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ModelElementLayoutFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementNameDirectEditFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
@@ -94,6 +97,16 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
 
   public Map<String, IConfigurationElement> getRootgroupsByName() {
     return rootgroupsByName;
+  }
+
+  @Override
+  public ILayoutFeature getLayoutFeature(ILayoutContext context) {
+    PictogramElement pictogramElement = context.getPictogramElement();
+    Object bo = getBusinessObjectForPictogramElement(pictogramElement);
+    if (bo instanceof Actor || bo instanceof Director) {
+        return new ModelElementLayoutFeature(this);
+    }
+    return super.getLayoutFeature(context);
   }
 
   @Override
