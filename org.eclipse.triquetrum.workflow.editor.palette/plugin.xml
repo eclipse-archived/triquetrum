@@ -61,6 +61,8 @@
           <entry
                 class="ptolemy.actor.lib.io.CSVReader"
                 displayName="CSVReader"
+                icon="icons/CSVReaderIcon.svg"
+                iconType="svg"
                 type="Actor">
           </entry>
         </group>
@@ -113,21 +115,24 @@
         <entry
               class="ptolemy.actor.lib.RecordDisassembler"
               displayName="RecordDisassembler"
-              icon="icons/actor.gif"
+              icon="icons/RecordDisassemblerIcon.svg"
+              iconType="svg"
               type="Actor">
         </entry>
       </group>
       <group displayName="Transformation" icon="icons/actor.gif">
 	      <entry
-	            class="ptolemy.actor.lib.AddSubtract"
-	            displayName="AddSubtract"
-    	        icon="icons/actor.gif"
-	            type="Actor">
+             class="ptolemy.actor.lib.AddSubtract"
+             displayName="AddSubtract"
+             icon="icons/AddSubtractIcon.svg"
+             iconType="svg"
+             type="Actor">
 	      </entry>
         <entry
               class="ptolemy.actor.lib.MovingAverage"
               displayName="MovingAverage"
-              icon="icons/actor.gif"
+              icon="icons/MovingAverageIcon.xml"
+              iconType="ptolemy"
               type="Actor">
         </entry>
 	      <entry

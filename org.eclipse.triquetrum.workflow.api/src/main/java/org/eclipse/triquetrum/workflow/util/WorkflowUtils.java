@@ -28,6 +28,7 @@ import ptolemy.actor.CompositeActor;
 import ptolemy.data.expr.Parameter;
 import ptolemy.kernel.Entity;
 import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.Workspace;
 import ptolemy.moml.MoMLParser;
 
@@ -46,7 +47,7 @@ public class WorkflowUtils {
    * @throws MalformedURLException
    * @throws Exception
    */
-  public static CompositeActor readFrom(URI modelResourceLocator) throws MalformedURLException, Exception {
+  public static NamedObj readFrom(URI modelResourceLocator) throws MalformedURLException, Exception {
     return readFrom(null, modelResourceLocator, null);
   }
 
@@ -61,7 +62,7 @@ public class WorkflowUtils {
    * @throws MalformedURLException
    * @throws Exception
    */
-  public static CompositeActor readFrom(URI modelResourceLocator, VersionSpecification version) throws MalformedURLException, Exception {
+  public static NamedObj readFrom(URI modelResourceLocator, VersionSpecification version) throws MalformedURLException, Exception {
     return readFrom(null, modelResourceLocator, version);
   }
 
@@ -77,12 +78,12 @@ public class WorkflowUtils {
    * @throws MalformedURLException
    * @throws Exception
    */
-  public static CompositeActor readFrom(URI modelsRootLocator, URI modelResourceLocator, VersionSpecification version) throws MalformedURLException, Exception {
+  public static NamedObj readFrom(URI modelsRootLocator, URI modelResourceLocator, VersionSpecification version) throws MalformedURLException, Exception {
     MoMLParser parser = new MoMLParser(null, version, null);
     URL modelURL = modelResourceLocator.toURL();
     MoMLParser.purgeModelRecord(modelURL);
     URL baseURL = modelsRootLocator != null ? modelsRootLocator.toURL() : null;
-    return (CompositeActor) parser.parse(baseURL, modelURL);
+    return parser.parse(baseURL, modelURL);
   }
 
   /**

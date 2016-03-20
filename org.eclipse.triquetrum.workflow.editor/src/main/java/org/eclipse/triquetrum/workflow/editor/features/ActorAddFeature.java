@@ -17,10 +17,12 @@ import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.impl.AbstractAddShapeFeature;
+import org.eclipse.graphiti.mm.MmFactory;
+import org.eclipse.graphiti.mm.Property;
+import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Image;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
-import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
@@ -35,6 +37,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
@@ -42,15 +45,16 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO refactor ActorAddFeature for its handling of custom/external icon definitions
 public class ActorAddFeature extends AbstractAddShapeFeature {
 
   private final static Logger LOGGER = LoggerFactory.getLogger(ActorAddFeature.class);
 
-  private static final int SHAPE_X_OFFSET = 8;
+  public static final int SHAPE_X_OFFSET = 8;
   private static final int ICON_X_OFFSET = SHAPE_X_OFFSET + 3;
   private static final int ICON_Y_OFFSET = 3;
   private static final int ICON_SIZE = 16;
-  private static final int PORT_Y_OFFSET = 28;
+  public static final int PORT_SIZE = 12;
 
   private static final IColorConstant ACTOR_NAME_FOREGROUND = IColorConstant.BLACK;
   private static final IColorConstant PARAM_FOREGROUND = IColorConstant.DARK_GRAY;
@@ -84,14 +88,6 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
         return true;
       }
     }
-
-    // Object newObject = context.getNewObject();
-    // if (newObject instanceof Actor) {
-    // // need to check that the actor belongs to the same CompositeActor as the one associated with the diagram
-    // Actor actor = (Actor) newObject;
-    // Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
-    // return (topLevelForDiagram == null || topLevelForDiagram.equals(actor.getContainer()));
-    // }
     return false;
   }
 
@@ -107,49 +103,108 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     int xLocation = context.getX();
     int yLocation = context.getY();
 
-    // CONTAINER SHAPE WITH ROUNDED RECTANGLE
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
     ICreateService createService = Graphiti.getCreateService();
     IGaService gaService = Graphiti.getGaService();
     ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
+    link(containerShape, addedActor, "ACTOR");
 
-    // define a default size for the shape
-    int width = 100;
-    int height = 60;
+    GraphicsAlgorithm invisibleRectangle = null;
+    invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
 
-    Rectangle invisibleRectangle; // need to access it later
+    GraphicsAlgorithm actorShapeGA = null;
 
+    String iconResource = (String) context.getProperty("icon");
+    String iconType = (String) context.getProperty("iconType");
+
+    switch (iconType) {
+    case TriqFeatureProvider.ICONTYPE_SVG:
+    case TriqFeatureProvider.ICONTYPE_PTOLEMY:
+      actorShapeGA = buildExternallyDefinedShape(gaService, invisibleRectangle, containerShape, iconType, iconResource);
+      break;
+    default:
+      actorShapeGA = buildDefaultShape(gaService, invisibleRectangle, containerShape, addedActor, iconResource);
+    }
+
+    int width = actorShapeGA.getWidth();
+    int height = actorShapeGA.getHeight();
+    gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, width + 15, height);
+
+    // SHAPES FOR PORTS; added both on default shapes and on custom/externally-defined icons (SVG, ptolemy icons)
     {
-      invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
-      gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, width + 15, height);
-
-      // create and set graphics algorithm
-      RoundedRectangle roundedRectangle = gaService.createRoundedRectangle(invisibleRectangle, 5, 5);
-      roundedRectangle.setForeground(manageColor(ACTOR_FOREGROUND));
-      roundedRectangle.setBackground(manageColor(ACTOR_BACKGROUND));
-      roundedRectangle.setLineWidth(2);
-      gaService.setLocationAndSize(roundedRectangle, SHAPE_X_OFFSET, 0, width, height);
-
-      // if added Class has no resource we add it to the resource
-      // of the diagram
-      // in a real scenario the business model would have its own resource
-      // if (addedActor.eResource() == null) {
-      // getDiagram().eResource().getContents().add(addedActor);
-      // }
-      // create link and wire it
-      link(containerShape, addedActor, "ACTOR");
-
-      // add the actor's icon
-      String iconId = (String) context.getProperty("icon");
-      if (!StringUtils.isBlank(iconId)) {
-        try {
-          final Shape imageShape = peCreateService.createShape(containerShape, false);
-          final Image image = gaService.createImage(imageShape, iconId);
-          addedActor.setIconId(iconId);
-          gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
-        } catch (Exception e) {
-          LOGGER.error("Error trying to add actor icon in it shape", e);
+      int halfPortSize = PORT_SIZE / 2;
+      // add output port anchor
+      int pIndex = 0;
+      int pCount = addedActor.getOutputPorts().size();
+      if (pCount > 0) {
+        int yOffsetForPorts = height / (2 * pCount);
+        yOffsetForPorts = yOffsetForPorts > halfPortSize ? yOffsetForPorts : halfPortSize;
+        for (Port p : (List<Port>) addedActor.getOutputPorts()) {
+          FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
+          anchor.setLocation(createService.createPoint(15 + width, yOffsetForPorts + (pIndex++) * PORT_SIZE));
+          anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
+          link(anchor, p, "OUTPUT");
+          // assign a rectangle graphics algorithm for the box relative anchor
+          // note, that the rectangle is inside the border of the rectangle shape
+          final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
+          portShape.setForeground(manageColor(PORT_FOREGROUND));
+          IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
+          portShape.setBackground(manageColor(portColour));
+          portShape.setLineWidth(1);
+          gaService.setLocationAndSize(portShape, -PORT_SIZE, -halfPortSize, PORT_SIZE, PORT_SIZE);
         }
+      }
+      pIndex = 0;
+      pCount = addedActor.getInputPorts().size();
+      if (pCount > 0) {
+        int yOffsetForPorts = height / (2 * pCount);
+        yOffsetForPorts = yOffsetForPorts > halfPortSize ? yOffsetForPorts : halfPortSize;
+        for (Port p : (List<Port>) addedActor.getInputPorts()) {
+          FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
+          anchor.setLocation(createService.createPoint(0, yOffsetForPorts + (pIndex++) * PORT_SIZE));
+          anchor.setUseAnchorLocationAsConnectionEndpoint(true);
+          anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
+          link(anchor, p, "INPUT");
+          // assign a rectangle graphics algorithm for the box relative anchor
+          // note, that the rectangle is inside the border of the rectangle shape
+          final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
+          portShape.setForeground(manageColor(PORT_FOREGROUND));
+          IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
+          portShape.setBackground(manageColor(portColour));
+          portShape.setLineWidth(1);
+          gaService.setLocationAndSize(portShape, 0, -halfPortSize, PORT_SIZE, PORT_SIZE);
+        }
+      }
+    }
+
+    layoutPictogramElement(containerShape);
+
+    return containerShape;
+  }
+
+  protected GraphicsAlgorithm buildDefaultShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape, Actor addedActor,
+      String iconResource) {
+
+    IPeCreateService peCreateService = Graphiti.getPeCreateService();
+    int width = 100;
+    int height = 61;
+
+    // create and set graphics algorithm
+    RoundedRectangle actorShapeGA = gaService.createRoundedRectangle(invisibleRectangle, 5, 5);
+    actorShapeGA.setForeground(manageColor(ACTOR_FOREGROUND));
+    actorShapeGA.setBackground(manageColor(ACTOR_BACKGROUND));
+    actorShapeGA.setLineWidth(2);
+    gaService.setLocationAndSize(actorShapeGA, SHAPE_X_OFFSET, 0, width, height);
+
+    // add the actor's icon
+    if (!StringUtils.isBlank(iconResource)) {
+      try {
+        final Shape imageShape = peCreateService.createShape(containerShape, false);
+        final Image image = gaService.createImage(imageShape, iconResource);
+        addedActor.setIconId(iconResource);
+        gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
+      } catch (Exception e) {
+        LOGGER.error("Error trying to add actor icon in it shape", e);
       }
     }
 
@@ -175,7 +230,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
       // vertical alignment has as default value "center"
       text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
-      gaService.setLocationAndSize(text, SHAPE_X_OFFSET+20, 0, width-25, 20);
+      gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 20, 0, width - 25, 20);
 
       // create link and wire it
       link(shape, addedActor, "ACTOR");
@@ -222,44 +277,26 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       }
     }
 
-    // SHAPES FOR PORTS
+    return actorShapeGA;
+  }
+
+  protected GraphicsAlgorithm buildExternallyDefinedShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape,
+      String iconType, String iconResource) {
+
+    GraphicsAlgorithm extFigure = Graphiti.getGaCreateService().createPlatformGraphicsAlgorithm(invisibleRectangle, iconType);
     {
-      // add output port anchor
-      int pIndex = 0;
-      for (Port p : (List<Port>) addedActor.getOutputPorts()) {
-        FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
-        anchor.setLocation(createService.createPoint(15 + width, PORT_Y_OFFSET + (pIndex++) * 12));
-        anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-        link(anchor, p, "OUTPUT");
-        // assign a rectangle graphics algorithm for the box relative anchor
-        // note, that the rectangle is inside the border of the rectangle shape
-        final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, 12, 6, 0, 12 });
-        portShape.setForeground(manageColor(PORT_FOREGROUND));
-        IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
-        portShape.setBackground(manageColor(portColour));
-        portShape.setLineWidth(1);
-        gaService.setLocationAndSize(portShape, -12, -6, 12, 12);
-      }
-      pIndex = 0;
-      for (Port p : (List<Port>) addedActor.getInputPorts()) {
-        FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
-        anchor.setLocation(createService.createPoint(0, PORT_Y_OFFSET + (pIndex++) * 12));
-        anchor.setUseAnchorLocationAsConnectionEndpoint(true);
-        anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-        link(anchor, p, "INPUT");
-        // assign a rectangle graphics algorithm for the box relative anchor
-        // note, that the rectangle is inside the border of the rectangle shape
-        final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, 12, 6, 0, 12 });
-        portShape.setForeground(manageColor(PORT_FOREGROUND));
-        IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
-        portShape.setBackground(manageColor(portColour));
-        portShape.setLineWidth(1);
-        gaService.setLocationAndSize(portShape, 0, -6, 12, 12);
-      }
-
-      layoutPictogramElement(containerShape);
+      Property property = MmFactory.eINSTANCE.createProperty();
+      property.setKey("iconType");
+      property.setValue(iconType);
+      extFigure.getProperties().add(property);
     }
-
-    return containerShape;
+    {
+      Property property = MmFactory.eINSTANCE.createProperty();
+      property.setKey("iconResource");
+      property.setValue(iconResource);
+      extFigure.getProperties().add(property);
+    }
+    gaService.setLocationAndSize(extFigure, SHAPE_X_OFFSET, 0, 40, 40);
+    return extFigure;
   }
 }

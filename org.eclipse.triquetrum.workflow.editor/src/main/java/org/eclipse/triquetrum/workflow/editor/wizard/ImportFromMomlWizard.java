@@ -78,7 +78,7 @@ public class ImportFromMomlWizard extends Wizard implements IImportWizard {
       destFolder = destProject.getFolder("workflows"); //$NON-NLS-1$
     }
     try {
-      CompositeActor ptolemyModel = WorkflowUtils.readFrom(momlPath.toFile().toURI());
+      CompositeActor ptolemyModel = (CompositeActor) WorkflowUtils.readFrom(momlPath.toFile().toURI());
       // create an empty diagram with the correct type and name
       Diagram diagram = Graphiti.getPeCreateService().createDiagram(TriqDiagramTypeProvider.DIAGRAMTYPE, momlPath.removeFileExtension().lastSegment(), true);
       // now create diagram elements for all moml model elements

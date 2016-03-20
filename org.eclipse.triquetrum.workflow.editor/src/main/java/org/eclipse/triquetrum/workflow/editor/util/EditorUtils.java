@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.PlatformGraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.styles.Color;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
@@ -230,5 +231,34 @@ public class EditorUtils {
       }
     }
     return ga;
+  }
+
+  /**
+   *
+   * @param containerShape
+   * @return true if the containerShape contains an externally defined figure
+   * (based on svg or ptolemy)
+   */
+  public static boolean containsExternallyDefinedFigure(ContainerShape containerShape) {
+    boolean extFigure = (containerShape.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm);
+    if(!extFigure) {
+      // check if the platform shape is somewhere in there
+      for(Shape childShape : containerShape.getChildren()) {
+        if(childShape.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm) {
+          extFigure=true;
+          break;
+        }
+      }
+    }
+    if(!extFigure) {
+      // check if the platform shape is somewhere in there
+      for(GraphicsAlgorithm childShape : containerShape.getGraphicsAlgorithm().getGraphicsAlgorithmChildren()) {
+        if(childShape instanceof PlatformGraphicsAlgorithm) {
+          extFigure=true;
+          break;
+        }
+      }
+    }
+    return extFigure;
   }
 }
