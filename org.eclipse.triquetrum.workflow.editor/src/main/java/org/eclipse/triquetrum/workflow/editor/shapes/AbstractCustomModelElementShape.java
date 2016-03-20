@@ -21,12 +21,15 @@ import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
+import org.eclipse.graphiti.features.IFeatureProvider;
+import org.eclipse.graphiti.features.IResizeShapeFeature;
+import org.eclipse.graphiti.features.context.impl.ResizeShapeContext;
 import org.eclipse.graphiti.mm.MmFactory;
 import org.eclipse.graphiti.mm.Property;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRenderer;
 import org.eclipse.graphiti.platform.ga.IRendererContext;
-import org.eclipse.graphiti.services.Graphiti;
 
 public abstract class AbstractCustomModelElementShape extends RectangleFigure implements IGraphicsAlgorithmRenderer {
 
@@ -69,9 +72,10 @@ public abstract class AbstractCustomModelElementShape extends RectangleFigure im
     ga.getProperties().add(property);
   }
 
-  protected void setGaWidth(GraphicsAlgorithm ga, int width, int height) {
-    if (ga.getWidth() != width || ga.getHeight() != height) {
+  protected void setInitialSize(GraphicsAlgorithm ga, int width, int height) {
+    if(!getGaProperty("renderDone").isPresent()) {
       final TransactionalEditingDomain editingDomain = dtp.getDiagramBehavior().getEditingDomain();
+      final IFeatureProvider fp = dtp.getFeatureProvider();
 
       final RecordingCommand command = new RecordingCommand(editingDomain, getIconURI()) {
         private IStatus result = null;
@@ -79,8 +83,17 @@ public abstract class AbstractCustomModelElementShape extends RectangleFigure im
         @Override
         protected void doExecute() {
           try {
-            Graphiti.getGaService().setSize(ga, width, height);
-            Graphiti.getGaService().setSize(ga.getParentGraphicsAlgorithm(), width+15, height);
+            GraphicsAlgorithm parentGA = ga.getParentGraphicsAlgorithm();
+            ResizeShapeContext context = new ResizeShapeContext((Shape) parentGA.getPictogramElement());
+            context.setSize(width+15, height);
+            context.setX(parentGA.getX());
+            context.setY(parentGA.getY());
+            context.putProperty("forced", "true");
+            IResizeShapeFeature resizeShapeFeature = fp.getResizeShapeFeature(context);
+            if(resizeShapeFeature!=null) {
+              resizeShapeFeature.resizeShape(context);
+            }
+            addGaProperty("renderDone", "true");
             result = Status.OK_STATUS;
           } catch (OperationCanceledException e) {
             result = Status.CANCEL_STATUS;

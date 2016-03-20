@@ -1,5 +1,6 @@
 /**
- * Copyright (c) 2008 Borland Software Corporation
+ * Copyright (c) 2008 Borland Software Corporation,
+ * 2016 iSencia Belgium NV
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0

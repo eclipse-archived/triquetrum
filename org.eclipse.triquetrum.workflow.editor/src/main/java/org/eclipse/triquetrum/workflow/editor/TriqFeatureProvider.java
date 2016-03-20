@@ -53,6 +53,7 @@ import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeat
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementLayoutFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementNameDirectEditFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ModelElementResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
@@ -179,6 +180,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     Object bo = getBusinessObjectForPictogramElement(pictogramElement);
     if (bo instanceof Annotation) {
       return new AnnotationResizeFeature(this);
+    } else if (bo instanceof NamedObj) {
+      return new ModelElementResizeFeature(this);
     }
     return super.getResizeShapeFeature(context);
   }

@@ -24,42 +24,53 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.graphiti.platform.ga.IRendererContext;
 import org.eclipse.triquetrum.workflow.editor.shapes.AbstractCustomModelElementShape;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
 public class SvgModelElementShape extends AbstractCustomModelElementShape {
+  private final static Logger LOGGER = LoggerFactory.getLogger(SvgModelElementShape.class);
+
+  private Rectangle svgShapeBounds;
+  private SVGFigure figure;
 
   /**
    * @param properties
    */
-  public  SvgModelElementShape(IRendererContext rendererContext) {
+  public SvgModelElementShape(IRendererContext rendererContext) {
     super(rendererContext);
   }
 
   @Override
   protected void fillShape(Graphics graphics) {
+    LOGGER.trace("SVG fillShape - entry - for {}", getIconURI());
     try {
-      double[] locationInfo = getLocationInfo(getIconURI());
-      int minX = (int) locationInfo[0];
-      int minY = (int) locationInfo[1];
+      svgShapeBounds = svgShapeBounds != null ? svgShapeBounds : determineExtremeBounds(getIconURI());
+      int minX = svgShapeBounds.x;
+      int minY = svgShapeBounds.y;
 
-      int width = (int) locationInfo[2];
-      int height = (int) locationInfo[3];
-      setGaWidth(ga, width, height);
-//      setGaWidth(ga.getParentGraphicsAlgorithm(), width, height);
+      int width = svgShapeBounds.width;
+      int height = svgShapeBounds.height;
+      setInitialSize(ga, width, height);
 
-      SVGFigure figure = new SVGFigure();
-      // move SVG figure from its defined top-left to origin (0,0) top-left
-      figure.setTranslateX(-minX);
-      figure.setTranslateY(-minY);
-      figure.setURI(getIconURI());
-      figure.setBounds(this.getBounds());
+      // Simple instance caching to reduce redrawing overhead doesn't work here as it seems
+      // we need to reconstruct the figure after all, when its shape is being moved.
+      // TODO figure out a way in graphiti to differentiate plain redrawing due to selection/changes
+      // somewhere else in the diagram, vs when this figure's shape effectively needs redrawing...
+//      if (figure == null) {
+        figure = new SVGFigure();
+        // move SVG figure from its defined top-left to origin (0,0) top-left
+        figure.setTranslateX(-minX);
+        figure.setTranslateY(-minY);
+        figure.setURI(getIconURI());
+        figure.setBounds(this.getBounds());
+//      }
       figure.paint(graphics);
     } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      LOGGER.error("Error drawing SVG shape "+getIconURI(), e);
     }
+    LOGGER.trace("SVG fillShape - exit - for {}", getIconURI());
   }
-
 
   @Override
   protected void outlineShape(Graphics graphics) {
@@ -77,26 +88,30 @@ public class SvgModelElementShape extends AbstractCustomModelElementShape {
   }
 
   /**
-  *
-  * @param uri
-  * @return [minX, minY, width,height] of the contained SVG
-  * @throws IOException
-  */
- private double[] getLocationInfo(String uri) throws IOException {
-   String parser = XMLResourceDescriptor.getXMLParserClassName();
-   parser = parser !=null ? parser : "org.apache.xerces.parsers.SAXParser";
-   SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
-   Document doc = factory.createDocument(uri);
-   UserAgent agent = new UserAgentAdapter();
-   DocumentLoader loader = new DocumentLoader(agent);
-   BridgeContext context = new BridgeContext(agent, loader);
-   context.setDynamic(true);
-   GVTBuilder builder = new GVTBuilder();
-   GraphicsNode root = builder.build(context, doc);
-   double height = root.getGeometryBounds().getHeight();
-   double width = root.getGeometryBounds().getWidth();
-   double minX = root.getGeometryBounds().getMinX();
-   double minY = root.getGeometryBounds().getMinY();
-   return new double[] {minX, minY, width, height};
- }
+   *
+   * @param uri
+   * @return [minX, minY, width,height] of the contained SVG
+   * @throws IOException
+   */
+  private Rectangle determineExtremeBounds(String uri) throws IOException {
+    LOGGER.trace("SVG determineExtremeBounds - entry - for {}", uri);
+    String parser = XMLResourceDescriptor.getXMLParserClassName();
+    parser = parser != null ? parser : "org.apache.xerces.parsers.SAXParser";
+    SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
+    Document doc = factory.createDocument(uri);
+    UserAgent agent = new UserAgentAdapter();
+    DocumentLoader loader = new DocumentLoader(agent);
+    BridgeContext context = new BridgeContext(agent, loader);
+    context.setDynamic(true);
+    GVTBuilder builder = new GVTBuilder();
+    GraphicsNode root = builder.build(context, doc);
+    int height = (int) root.getGeometryBounds().getHeight();
+    int width = (int) root.getGeometryBounds().getWidth();
+    int minX = (int) root.getGeometryBounds().getMinX();
+    int minY = (int) root.getGeometryBounds().getMinY();
+
+    Rectangle result = new Rectangle(minX, minY, width, height);
+    LOGGER.trace("SVG determineExtremeBounds - exit - for {} - bounds {}", uri, result);
+    return result;
+  }
 }
