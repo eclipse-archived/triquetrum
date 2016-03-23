@@ -20,7 +20,7 @@ The text below describes in detail how this has been implemented.
 
 The default shape for an actor in a Triquetrum workflow diagram is an evolution of the EClass shape in [Graphiti's tutorial](http://help.eclipse.org/mars/topic/org.eclipse.graphiti.doc/resources/docu/gfw/scenario-description.htm?cp=36_1_0) :
 
-![Default actor shape](/images/DefaultActorShape.JPG "default actor shape")
+![Default actor shape](../images/DefaultActorShape.JPG "default actor shape")
 
 As in the Graphiti tutorial, the "main" shape is a rounded rectangle. The differences with the tutorial shapes are :
 * adding input and output ports
@@ -30,7 +30,7 @@ As in the Graphiti tutorial, the "main" shape is a rounded rectangle. The differ
 Our goal is for externally-defined custom figure definitions to replace the rounded rectangle and its contents, while maintaining similar port layouts.
 For example, for Ptolemy II's MovingAverage actor :
 
-![MovingAverage actor shape](/images/PtolemyActorShape.JPG "MovingAverage actor shape")
+![MovingAverage actor shape](../images/PtolemyActorShape.JPG "MovingAverage actor shape")
 
 This actor shape is defined in a file similar to (just a part of it):
 
@@ -176,7 +176,7 @@ As an example, Ptolemy II's CSVReader actor has an icon defined as :
 
 which should result in something like :
 
-![CSVReader actor shape](/images/SvgActorShape.JPG "CSVReader actor shape")
+![CSVReader actor shape](../images/SvgActorShape.JPG "CSVReader actor shape")
 
 Rendering the actor shape involves following steps :
 1. Determine the bounds of the defined shape
