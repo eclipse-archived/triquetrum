@@ -23,6 +23,7 @@ The default shape for an actor in a Triquetrum workflow diagram is an evolution 
 ![Default actor shape](../images/DefaultActorShape.JPG "default actor shape")
 
 As in the Graphiti tutorial, the "main" shape is a rounded rectangle. The differences with the tutorial shapes are :
+
 * adding input and output ports
 * showing configuration parameters (will probably change)
 * adding a small icon image at the top-left
@@ -62,10 +63,12 @@ This actor shape is defined in a file similar to (just a part of it):
 
 ## Graphiti support for custom figures
 Information on how to plug-in/reuse externally defined custom figures was obtained via the [Graphiti forum](https://www.eclipse.org/forums/index.php/f/187/), e.g. at :
+
 * [Using SVG figures?](https://www.eclipse.org/forums/index.php/m/650289/)
 * [Support for using SVG figures/shapes](https://www.eclipse.org/forums/index.php/t/1075351/)
 
 and via a short code example at *Code and Stuff*:
+
 * [Graphiti PlatformGraphicsAlgorithms](http://satreth.blogspot.be/2012/03/graphiti-platform-gas.html)
 
 This boils down to 3 steps :
@@ -96,6 +99,7 @@ Concretely this means that the AddFeature has no way to obtain detailed formatti
 A simple solution would be to enforce standard sizes for all model elements, but this is not acceptable in our case. To be able to handle arbitrary sizes, while maintaining the encapsulation of the actual shape definition technology, the custom shapes in Triquetrum are able to force a resizing of their Graphiti container shape. The details on how this is done are described below.
 
 In Triquetrum, the contents of the editor palette are defined using extensions. Two of the elements that must be specified for a palette entry are :
+
 * *iconType* : `svg`, `ptolemy`, `img`
 * *icon* : a plugin relative path to the image file, to be used as the icon for this palette entry.
 For `img`, the icon file is assumed to contain a 16x16 image that will be shown at the top-left corner of a default shape for the corresponding diagram element.
@@ -307,6 +311,7 @@ We have described an approach to use Graphiti's available mechanisms for renderi
 The most important issue to address was to support custom sizes in those figure definitions. This has been addressed by having the custom figure implementations invoke a Graphiti resize feature.
 
 At this stage of Triquetrum, the above approach caters to our needs. But there is still room for improvement on several aspects :
+
 * SVG figures render as plain SWT Images and thus loose their nice scaling.
 * We need better control on the frequency of invoking the fillShape() method. Graphiti (or GEF or Draw2D?) seem to be invoking it way too much, and this induces a performance overhead.
 * It could be a good idea to provide shortcuts in Graphiti to allow accessing the custom figure information from inside the AddFeature implementation.
@@ -316,6 +321,7 @@ This would lead to more uniformity between handling Graphiti native shapes and c
 > The full source code can be found at the [Triquetrum Github repository](https://github.com/eclipse/triquetrum).
 
 You can discover and follow Triquetrum via :
+
 * The project site at : https://projects.eclipse.org/projects/technology.triquetrum
 * Source repository at : https://github.com/eclipse/triquetrum
 * Mailing list : https://dev.eclipse.org/mailman/listinfo/triquetrum-dev
