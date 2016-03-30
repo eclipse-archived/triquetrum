@@ -22,12 +22,11 @@ import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
-import org.eclipse.triquetrum.workflow.model.Actor;
 
 public class ModelElementLayoutFeature extends AbstractLayoutFeature {
 
@@ -40,20 +39,20 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
 	}
 
 	public boolean canLayout(ILayoutContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), "__BO_CATEGORY");
-    return "ACTOR".equals(boCategory) || "DIRECTOR".equals(boCategory);
+    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), BoCategories.BO_CATEGORY_PROPNAME);
+    return BoCategories.ACTOR.equals(boCategory) || BoCategories.DIRECTOR.equals(boCategory);
 	}
 
 	public boolean layout(ILayoutContext context) {
 		boolean anythingChanged = false;
-    PictogramElement pictogramElement = context.getPictogramElement();
-		Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-		Actor actor = (bo instanceof Actor) ? (Actor) bo : null;;
     ContainerShape containerShape = (ContainerShape) context.getPictogramElement();
 		GraphicsAlgorithm containerGa = containerShape.getGraphicsAlgorithm();
 		// the containerGa is the invisible rectangle
 		// containing the visible rectangle as its (first and only) child
 		GraphicsAlgorithm rectangle = containerGa.getGraphicsAlgorithmChildren().get(0);
+
+    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), BoCategories.BO_CATEGORY_PROPNAME);
+    boolean isActor = BoCategories.ACTOR.equals(boCategory);
 
 		boolean containsExtFigure = EditorUtils.containsExternallyDefinedFigure(containerShape);
 
@@ -82,7 +81,7 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
 		}
 
 		// width of visible rectangle (smaller than invisible rectangle)
-		int rectangleWidth = containerGa.getWidth() - 15;
+		int rectangleWidth = isActor ? containerGa.getWidth() - 15 : containerGa.getWidth();
 		if (rectangle.getWidth() != rectangleWidth) {
 			rectangle.setWidth(rectangleWidth);
 			anythingChanged = true;
@@ -95,14 +94,15 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
   			GraphicsAlgorithm ga = shape.getGraphicsAlgorithm();
   			IDimension size = gaService.calculateSize(ga);
   			if (rectangleWidth != size.getWidth()) {
-  				if (ga instanceof Polyline) {
+  				int shapeXOffset = isActor ? ActorAddFeature.SHAPE_X_OFFSET : DirectorAddFeature.SHAPE_X_OFFSET;
+          if (ga instanceof Polyline) {
   					Polyline polyline = (Polyline) ga;
   					Point secondPoint = polyline.getPoints().get(1);
-  					Point newSecondPoint = gaService.createPoint(ActorAddFeature.SHAPE_X_OFFSET + rectangleWidth, secondPoint.getY());
+  					Point newSecondPoint = gaService.createPoint(shapeXOffset + rectangleWidth, secondPoint.getY());
   					polyline.getPoints().set(1, newSecondPoint);
   					anythingChanged = true;
   				} else if (ga instanceof Text) {
-  		      gaService.setLocationAndSize(ga, ActorAddFeature.SHAPE_X_OFFSET + 20, 0, rectangleWidth - 25, 20);
+  		      gaService.setLocationAndSize(ga, shapeXOffset + 20, ga.getY(), rectangleWidth - 25, ga.getHeight());
           } else if (ga instanceof Image) {
   				  // remain unchanged
   				} else {
@@ -115,14 +115,14 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
 
     for(Anchor anchor : containerShape.getAnchors()) {
       FixPointAnchor fpa = (FixPointAnchor) anchor;
-      String boCategory = Graphiti.getPeService().getPropertyValue(anchor, "__BO_CATEGORY");
+      boCategory = Graphiti.getPeService().getPropertyValue(anchor, BoCategories.BO_CATEGORY_PROPNAME);
       // TODO determine rescaled port Y position in a better way
       // this Y-rescaling works for increasing heights
       // but may lead to disappearing ports when shrinking a shape along Y
-      if("OUTPUT".equals(boCategory)) {
+      if(BoCategories.OUTPUT_PORT.equals(boCategory)) {
         fpa.setLocation(gaService.createPoint(15 + rectangleWidth, (int) (fpa.getLocation().getY() * heightChangeRatio)));
         anythingChanged = true;
-      } else if("INPUT".equals(boCategory)) {
+      } else if(BoCategories.INPUT_PORT.equals(boCategory)) {
         fpa.setLocation(gaService.createPoint(fpa.getLocation().getX(), (int) (fpa.getLocation().getY() * heightChangeRatio)));
         anythingChanged = true;
       }

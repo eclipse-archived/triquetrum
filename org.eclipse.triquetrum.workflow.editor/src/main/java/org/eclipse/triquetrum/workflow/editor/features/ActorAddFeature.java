@@ -37,6 +37,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -61,9 +62,9 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
 
   private static final IColorConstant ACTOR_FOREGROUND = new ColorConstant(98, 131, 167);
   private static final IColorConstant ACTOR_BACKGROUND = new ColorConstant(187, 218, 247);
-  private static final IColorConstant PORT_FOREGROUND = IColorConstant.BLACK;
-  private static final IColorConstant PORT_BACKGROUND_MULTIPORT = IColorConstant.WHITE;
-  private static final IColorConstant PORT_BACKGROUND_SINGLEPORT = IColorConstant.BLACK;
+  public static final IColorConstant PORT_FOREGROUND = IColorConstant.BLACK;
+  public static final IColorConstant PORT_BACKGROUND_MULTIPORT = IColorConstant.WHITE;
+  public static final IColorConstant PORT_BACKGROUND_SINGLEPORT = IColorConstant.BLACK;
 
   public ActorAddFeature(IFeatureProvider fp) {
     super(fp);
@@ -76,7 +77,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     if (businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CATEGORY", category);
+    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category);
     Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
   }
 
@@ -107,7 +108,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     ICreateService createService = Graphiti.getCreateService();
     IGaService gaService = Graphiti.getGaService();
     ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
-    link(containerShape, addedActor, "ACTOR");
+    link(containerShape, addedActor, BoCategories.ACTOR);
 
     GraphicsAlgorithm invisibleRectangle = null;
     invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
@@ -143,9 +144,8 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
           anchor.setLocation(createService.createPoint(15 + width, yOffsetForPorts + (pIndex++) * PORT_SIZE));
           anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-          link(anchor, p, "OUTPUT");
-          // assign a rectangle graphics algorithm for the box relative anchor
-          // note, that the rectangle is inside the border of the rectangle shape
+          link(anchor, p, BoCategories.OUTPUT_PORT);
+
           final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
           portShape.setForeground(manageColor(PORT_FOREGROUND));
           IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
@@ -161,18 +161,17 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
         yOffsetForPorts = yOffsetForPorts > halfPortSize ? yOffsetForPorts : halfPortSize;
         for (Port p : (List<Port>) addedActor.getInputPorts()) {
           FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
-          anchor.setLocation(createService.createPoint(0, yOffsetForPorts + (pIndex++) * PORT_SIZE));
           anchor.setUseAnchorLocationAsConnectionEndpoint(true);
           anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-          link(anchor, p, "INPUT");
-          // assign a rectangle graphics algorithm for the box relative anchor
-          // note, that the rectangle is inside the border of the rectangle shape
+          link(anchor, p, BoCategories.INPUT_PORT);
+
           final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
           portShape.setForeground(manageColor(PORT_FOREGROUND));
           IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
           portShape.setBackground(manageColor(portColour));
           portShape.setLineWidth(1);
           gaService.setLocationAndSize(portShape, 0, -halfPortSize, PORT_SIZE, PORT_SIZE);
+          anchor.setLocation(createService.createPoint(0, yOffsetForPorts + (pIndex++) * PORT_SIZE));
         }
       }
     }
@@ -233,7 +232,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 20, 0, width - 25, 20);
 
       // create link and wire it
-      link(shape, addedActor, "ACTOR");
+      link(shape, addedActor, BoCategories.ACTOR);
 
       // provide information to support direct-editing directly
       // after object creation (must be activated additionally)

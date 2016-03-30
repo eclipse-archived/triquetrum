@@ -14,6 +14,8 @@
 <plugin>
    <extension
          point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodels/Port.view"/>
+
 <file filePath="viewmodels/Annotation.view"/>
 <file filePath="viewmodels/Parameter.view"/>
 <file filePath="viewmodels/Attribute.view"/>

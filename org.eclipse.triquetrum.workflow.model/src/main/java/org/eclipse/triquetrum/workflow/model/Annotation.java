@@ -34,7 +34,7 @@ package org.eclipse.triquetrum.workflow.model;
 public interface Annotation extends Attribute {
   /**
    * Returns the value of the '<em><b>Text</b></em>' attribute.
-   * The default value is <code>"Double click to edit text."</code>.
+   * The default value is <code>"Configure to edit text."</code>.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Text</em>' attribute isn't clear,
@@ -44,7 +44,7 @@ public interface Annotation extends Attribute {
    * @return the value of the '<em>Text</em>' attribute.
    * @see #setText(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation_Text()
-   * @model default="Double click to edit text."
+   * @model default="Configure to edit text."
    * @generated
    */
   String getText();
@@ -169,7 +169,7 @@ public interface Annotation extends Attribute {
 
   /**
    * Returns the value of the '<em><b>Color</b></em>' attribute.
-   * The default value is <code>"{0.0,0.0,0.0,1.0}"</code>.
+   * The default value is <code>"0,0,0,255"</code>.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Color</em>' reference isn't clear,
@@ -179,7 +179,7 @@ public interface Annotation extends Attribute {
    * @return the value of the '<em>Color</em>' attribute.
    * @see #setColor(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation_Color()
-   * @model default="{0.0,0.0,0.0,1.0}" required="true"
+   * @model default="0,0,0,255" required="true"
    * @generated
    */
   String getColor();

@@ -21,7 +21,6 @@ import org.eclipse.triquetrum.workflow.editor.ExecutionStatusManager;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
-import org.slf4j.Logger;
 
 public abstract class AbstractExecutionManagementFeature extends AbstractCustomFeature {
 

@@ -105,17 +105,14 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
    */
   private Relation createRelation(Port source, Port target) throws IllegalActionException {
     Relation relation = TriqFactory.eINSTANCE.createRelation();
-    relation.setName(EditorUtils.buildUniqueName(source, "_R"));
-//    relation.setContainer(source.getContainer().getContainer());
     relation.getLinkedPorts().add(source);
     relation.getLinkedPorts().add(target);
     NamedObj portContainer = source.getContainer();
-    if(portContainer instanceof CompositeActor) {
-      // this is for ports that are defined on a composite actor (i.e. a submodel)
-      ((CompositeActor)portContainer).getRelations().add(relation);
-    } else {
-      ((CompositeActor)portContainer.getContainer()).getRelations().add(relation);
+    while(!(portContainer instanceof CompositeActor)) {
+      portContainer = portContainer.getContainer();
     }
+    relation.setName(EditorUtils.buildUniqueName(portContainer, "_R"));
+    ((CompositeActor)portContainer).getRelations().add(relation);
     return relation;
   }
 }

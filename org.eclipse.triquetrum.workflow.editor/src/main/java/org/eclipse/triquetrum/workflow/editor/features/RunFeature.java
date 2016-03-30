@@ -18,7 +18,6 @@ import org.eclipse.triquetrum.workflow.ProcessEventListener;
 import org.eclipse.triquetrum.workflow.ProcessHandle;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService.StartMode;
-import org.eclipse.triquetrum.workflow.editor.ExecutionStatusManager;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.eclipse.triquetrum.workflow.editor.util.EclipseUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
