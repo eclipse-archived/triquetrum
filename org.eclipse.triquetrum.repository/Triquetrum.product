@@ -86,6 +86,7 @@
       <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.8.0.20160216-1319"/>
       <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.8.0.20160216-1319"/>
       <feature id="org.eclipse.gmf.runtime.thirdparty" version="1.9.0.201506060219"/>
+      <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature" version="1.8.0.20160216-1319"/>
    </features>
 
    <configurations>
