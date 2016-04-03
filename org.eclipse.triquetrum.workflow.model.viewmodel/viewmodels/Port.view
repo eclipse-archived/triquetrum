@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ASCII"?>
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_aF3rkO88EeWuEscv5RMxLw" name="Port" ecorePath="/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore">
+  <rootEClass href="http://www.eclipse.org/triquetrum#//Port"/>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_aGKmgO88EeWuEscv5RMxLw" name="Control name">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_aGKmge88EeWuEscv5RMxLw">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_aGKmjO88EeWuEscv5RMxLw" name="Control input">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_aGKmje88EeWuEscv5RMxLw">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/input"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_aGKmju88EeWuEscv5RMxLw" name="Control output">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_aGKmj-88EeWuEscv5RMxLw">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/output"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_aGKmku88EeWuEscv5RMxLw" name="Control multiPort">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_aGKmk-88EeWuEscv5RMxLw">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/multiPort"/>
+    </domainModelReference>
+  </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_aGKmhO88EeWuEscv5RMxLw" name="Control wrappedType" readonly="true">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_aGKmhe88EeWuEscv5RMxLw">
+      <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/wrappedType"/>
+    </domainModelReference>
+  </children>
+</org.eclipse.emf.ecp.view.model:View>

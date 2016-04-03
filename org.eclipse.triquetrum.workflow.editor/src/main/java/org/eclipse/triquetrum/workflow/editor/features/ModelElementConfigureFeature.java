@@ -17,6 +17,7 @@ import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
@@ -62,8 +63,8 @@ public class ModelElementConfigureFeature extends AbstractCustomFeature {
     }
     // prevent double click action on actor's name's Text field
     if (pe != null) {
-      String boCategory = Graphiti.getPeService().getPropertyValue(pe, "__BO_CATEGORY");
-      ret = (("ACTOR".equals(boCategory) || "DIRECTOR".equals(boCategory)
+      String boCategory = Graphiti.getPeService().getPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME);
+      ret = ((BoCategories.ACTOR.equals(boCategory) || "DIRECTOR".equals(boCategory)
           || ("ANNOTATION".equals(boCategory)) || ("PARAMETER".equals(boCategory)) || ("PORT".equals(boCategory)))
           && !(pe.getGraphicsAlgorithm() instanceof Text));
     }

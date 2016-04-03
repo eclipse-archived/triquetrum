@@ -29,6 +29,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.slf4j.Logger;
@@ -38,7 +39,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
 
   private final static Logger LOGGER = LoggerFactory.getLogger(DirectorAddFeature.class);
 
-  private static final int SHAPE_X_OFFSET = 0;
+  public static final int SHAPE_X_OFFSET = 0;
   private static final int ICON_X_OFFSET = SHAPE_X_OFFSET + 3;
   private static final int ICON_Y_OFFSET = 3;
   private static final int ICON_SIZE = 16;
@@ -59,7 +60,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
     if(businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj)businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CATEGORY", category);
+    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category);
     Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
   }
 

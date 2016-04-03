@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.4"?>
-<!--
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?eclipse version="3.4"?><!--
      Copyright (c) 2015 iSencia Belgium NV.
      All rights reserved. This program and the accompanying materials
      are made available under the terms of the Eclipse Public License v1.0
@@ -9,15 +8,17 @@
 
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
- -->
+ --><plugin>
+   <extension point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodels/Port.view"/>
 
-<plugin>
-   <extension
-         point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
 <file filePath="viewmodels/Annotation.view"/>
 <file filePath="viewmodels/Parameter.view"/>
 <file filePath="viewmodels/Attribute.view"/>
 <file filePath="viewmodels/Director.view"/>
 <file filePath="viewmodels/Actor.view"/>
    </extension>
+<extension point="org.eclipse.emf.ecp.view.template">
+<viewTemplate xmi="viewmodels/TableValidationColumnOff.template"/>
+</extension>
 </plugin>

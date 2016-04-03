@@ -20,6 +20,7 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.model.Director;
 
 public class DirectorUpdateFeature extends AbstractUpdateFeature {
@@ -30,7 +31,7 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), "__BO_CATEGORY");
+    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), BoCategories.BO_CATEGORY_PROPNAME);
     return ("DIRECTOR".equals(boCategory));
   }
 
@@ -48,7 +49,7 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
       elemName = director.getName();
 
       for (Shape shape : cs.getChildren()) {
-        String boCategory = Graphiti.getPeService().getPropertyValue(shape, "__BO_CATEGORY");
+        String boCategory = Graphiti.getPeService().getPropertyValue(shape, BoCategories.BO_CATEGORY_PROPNAME);
         if (shape.getGraphicsAlgorithm() instanceof Text) {
           Text text = (Text) shape.getGraphicsAlgorithm();
           if ("DIRECTOR".equalsIgnoreCase(boCategory)) {
@@ -82,7 +83,7 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
       Director director = (Director) bo;
       
       for (Shape shape : cs.getChildren()) {
-        String boCategory = Graphiti.getPeService().getPropertyValue(shape, "__BO_CATEGORY");
+        String boCategory = Graphiti.getPeService().getPropertyValue(shape, BoCategories.BO_CATEGORY_PROPNAME);
         if("DIRECTOR".equals(boCategory)) {
           Text text = (Text) shape.getGraphicsAlgorithm();
           text.setValue(director.getName());

@@ -25,6 +25,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -52,7 +53,7 @@ public class AnnotationAddFeature extends AbstractAddShapeFeature {
     if (businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CATEGORY", category);
+    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category);
     Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
   }
 
