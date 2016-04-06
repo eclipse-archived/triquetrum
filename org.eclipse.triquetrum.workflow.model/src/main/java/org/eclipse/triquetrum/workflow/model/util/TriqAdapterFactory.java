@@ -120,6 +120,14 @@ public class TriqAdapterFactory extends AdapterFactoryImpl {
         return createRelationAdapter();
       }
       @Override
+      public Adapter caseLocation(Location object) {
+        return createLocationAdapter();
+      }
+      @Override
+      public Adapter caseVertex(Vertex object) {
+        return createVertexAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object) {
         return createEObjectAdapter();
       }
@@ -290,6 +298,34 @@ public class TriqAdapterFactory extends AdapterFactoryImpl {
    * @generated
    */
   public Adapter createRelationAdapter() {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Location <em>Location</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.Location
+   * @generated
+   */
+  public Adapter createLocationAdapter() {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.triquetrum.workflow.model.Vertex <em>Vertex</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.triquetrum.workflow.model.Vertex
+   * @generated
+   */
+  public Adapter createVertexAdapter() {
     return null;
   }
 

@@ -22,6 +22,7 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
+import org.eclipse.triquetrum.workflow.model.Vertex;
 
 import ptolemy.kernel.util.IllegalActionException;
 
@@ -33,39 +34,54 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   }
 
   public boolean canCreate(ICreateConnectionContext context) {
-    // return true if both anchors belong to a Port
-    Port source = getPort(context.getSourceAnchor());
-    Port target = getPort(context.getTargetAnchor());
-    if (isPortPotentialConnectionStart(source)
-        && isPortPotentialConnectionTarget(target)) {
+    // return true if both anchors belong to a Port or Vertex and can accept the connection
+    NamedObj source = getAnchorBO(context.getSourceAnchor());
+    NamedObj target = getAnchorBO(context.getTargetAnchor());
+    if (isPotentialConnectionStart(source) && isPotentialConnectionTarget(target)) {
       return true;
     }
     return false;
   }
 
   public boolean canStartConnection(ICreateConnectionContext context) {
-    // return true if start anchor belongs to a Port
-    Port port = getPort(context.getSourceAnchor());
-    return isPortPotentialConnectionStart(port);
+    // return true if start anchor belongs to a Port or Vertex
+    NamedObj port = getAnchorBO(context.getSourceAnchor());
+    return isPotentialConnectionStart(port);
   }
 
-  private boolean isPortPotentialConnectionStart(Port port) {
-    return (port!=null) && (port.canAcceptNewConnection()) && ((port.isOutput() && !(port.getContainer() instanceof CompositeActor))
-        || (port.isInput() && (port.getContainer() instanceof CompositeActor)));
+  private boolean isPotentialConnectionStart(NamedObj src) {
+    if (src == null) {
+      return false;
+    }
+    if (src instanceof Port) {
+      Port p = (Port) src;
+      return (p.canAcceptNewConnection())
+          && ((p.isOutput() && !(p.getContainer() instanceof CompositeActor))
+              || (p.isInput() && (src.getContainer() instanceof CompositeActor)));
+    }
+    return (src instanceof Vertex);
   }
 
-  private boolean isPortPotentialConnectionTarget(Port port) {
-    return (port!=null) && (port.canAcceptNewConnection()) && ((port.isOutput() && (port.getContainer() instanceof CompositeActor))
-        || (port.isInput() && !(port.getContainer() instanceof CompositeActor)));
+  private boolean isPotentialConnectionTarget(NamedObj target) {
+    if (target == null) {
+      return false;
+    }
+    if (target instanceof Port) {
+      Port p = (Port) target;
+      return (p.canAcceptNewConnection())
+          && ((p.isOutput() && (p.getContainer() instanceof CompositeActor))
+              || (p.isInput() && !(p.getContainer() instanceof CompositeActor)));
+    }
+    return (target instanceof Vertex);
   }
 
   public Connection create(ICreateConnectionContext context) {
     try {
       Connection newConnection = null;
 
-      // get Ports which should be connected
-      Port source = getPort(context.getSourceAnchor());
-      Port target = getPort(context.getTargetAnchor());
+      // get Ports or Vertices which should be connected
+      NamedObj source = getAnchorBO(context.getSourceAnchor());
+      NamedObj target = getAnchorBO(context.getTargetAnchor());
 
       if (source != null && target != null) {
         // create new business object
@@ -84,15 +100,18 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   }
 
   /**
-   * Returns the Port belonging to the anchor, or null if not available.
+   * Returns the Port or Vertex belonging to the anchor, or null if not available.
    */
-  private Port getPort(Anchor anchor) {
+  private NamedObj getAnchorBO(Anchor anchor) {
     if (anchor != null) {
       Object object = getBusinessObjectForPictogramElement(anchor);
       if (object instanceof Port) {
         return (Port) object;
+      }
+      if (object instanceof Vertex) {
+        return (Vertex) object;
       } else {
-        System.out.println("what's this???? "+object);
+        throw new IllegalArgumentException("Anchor " + anchor + " linked to invalid object "+object);
       }
     }
     return null;
@@ -103,16 +122,44 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
    *
    * @throws IllegalActionException
    */
-  private Relation createRelation(Port source, Port target) throws IllegalActionException {
-    Relation relation = TriqFactory.eINSTANCE.createRelation();
-    relation.getLinkedPorts().add(source);
-    relation.getLinkedPorts().add(target);
-    NamedObj portContainer = source.getContainer();
-    while(!(portContainer instanceof CompositeActor)) {
-      portContainer = portContainer.getContainer();
+  private Relation createRelation(NamedObj source, NamedObj target) throws IllegalActionException {
+    // TODO refactor this double instanceof chaining
+    Relation relation = null;
+    boolean srcIsVertex = false;
+    boolean onlyTargetIsVertex = false;
+    if(source instanceof Vertex) {
+      // use the vertex's relation
+      relation = (Relation)source.getContainer();
+      srcIsVertex = true;
+    } else if(target instanceof Vertex) {
+      // use the vertex's relation
+      relation = (Relation)target.getContainer();
+      onlyTargetIsVertex = true;
+    } else {
+      // create a new relation directly linking 2 ports
+      relation = TriqFactory.eINSTANCE.createRelation();
+      NamedObj relationContainer = source.getContainer();
+      while (!(relationContainer instanceof CompositeActor)) {
+        relationContainer = relationContainer.getContainer();
+      }
+      relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
+      ((CompositeActor) relationContainer).getRelations().add(relation);
     }
-    relation.setName(EditorUtils.buildUniqueName(portContainer, "_R"));
-    ((CompositeActor)portContainer).getRelations().add(relation);
+    if(srcIsVertex) {
+      // no need to link to the relation as we're using the src's relation anyway
+    } else {
+      relation.getLinkedPorts().add((Port)source);
+    }
+    if(target instanceof Port) {
+      relation.getLinkedPorts().add((Port)target);
+    } else {
+      Relation targetRelation = (Relation) target.getContainer();
+      if(onlyTargetIsVertex) {
+        // no need to link to the relation as we're using the target's relation anyway
+      } else {
+        relation.getLinkedRelations().add(targetRelation);
+      }
+    }
     return relation;
   }
 }

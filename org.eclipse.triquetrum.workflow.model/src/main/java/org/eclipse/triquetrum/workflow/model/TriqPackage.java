@@ -1500,13 +1500,22 @@ public interface TriqPackage extends EPackage {
   int RELATION__LINKED_PORTS = NAMED_OBJ_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Linked Relations</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Relation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RELATION_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 1;
+  int RELATION_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 2;
 
   /**
    * The operation id for the '<em>Get Container</em>' operation.
@@ -1545,6 +1554,260 @@ public interface TriqPackage extends EPackage {
   int RELATION_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.LocationImpl <em>Location</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.triquetrum.workflow.model.impl.LocationImpl
+   * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getLocation()
+   * @generated
+   */
+  int LOCATION = 11;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION__NAME = ATTRIBUTE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION__ATTRIBUTES = ATTRIBUTE__ATTRIBUTES;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION__WRAPPED_TYPE = ATTRIBUTE__WRAPPED_TYPE;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION__WRAPPED_OBJECT = ATTRIBUTE__WRAPPED_OBJECT;
+
+  /**
+   * The feature id for the '<em><b>Deep Complete</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION__DEEP_COMPLETE = ATTRIBUTE__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION__ICON_ID = ATTRIBUTE__ICON_ID;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION__EXPRESSION = ATTRIBUTE_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Location</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION_FEATURE_COUNT = ATTRIBUTE_FEATURE_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Get Container</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION___GET_CONTAINER = ATTRIBUTE___GET_CONTAINER;
+
+  /**
+   * The operation id for the '<em>Top Level</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION___TOP_LEVEL = ATTRIBUTE___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Get Location</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION___GET_LOCATION = ATTRIBUTE_OPERATION_COUNT + 0;
+
+  /**
+   * The number of operations of the '<em>Location</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION_OPERATION_COUNT = ATTRIBUTE_OPERATION_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.VertexImpl <em>Vertex</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.triquetrum.workflow.model.impl.VertexImpl
+   * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getVertex()
+   * @generated
+   */
+  int VERTEX = 12;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX__NAME = LOCATION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX__ATTRIBUTES = LOCATION__ATTRIBUTES;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX__WRAPPED_TYPE = LOCATION__WRAPPED_TYPE;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX__WRAPPED_OBJECT = LOCATION__WRAPPED_OBJECT;
+
+  /**
+   * The feature id for the '<em><b>Deep Complete</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX__DEEP_COMPLETE = LOCATION__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX__ICON_ID = LOCATION__ICON_ID;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX__EXPRESSION = LOCATION__EXPRESSION;
+
+  /**
+   * The number of structural features of the '<em>Vertex</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX_FEATURE_COUNT = LOCATION_FEATURE_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Get Container</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX___GET_CONTAINER = LOCATION___GET_CONTAINER;
+
+  /**
+   * The operation id for the '<em>Top Level</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX___TOP_LEVEL = LOCATION___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX___SET_PROPERTY__STRING_STRING_STRING = LOCATION___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Get Location</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX___GET_LOCATION = LOCATION___GET_LOCATION;
+
+  /**
+   * The number of operations of the '<em>Vertex</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX_OPERATION_COUNT = LOCATION_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '<em>Ptolemy Named Obj</em>' data type.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1552,7 +1815,7 @@ public interface TriqPackage extends EPackage {
    * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getPtolemyNamedObj()
    * @generated
    */
-  int PTOLEMY_NAMED_OBJ = 11;
+  int PTOLEMY_NAMED_OBJ = 13;
 
 
   /**
@@ -1979,6 +2242,58 @@ public interface TriqPackage extends EPackage {
   EReference getRelation_LinkedPorts();
 
   /**
+   * Returns the meta object for the reference list '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Linked Relations</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations()
+   * @see #getRelation()
+   * @generated
+   */
+  EReference getRelation_LinkedRelations();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.Location <em>Location</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Location</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Location
+   * @generated
+   */
+  EClass getLocation();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.triquetrum.workflow.model.Location#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Expression</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Location#getExpression()
+   * @see #getLocation()
+   * @generated
+   */
+  EAttribute getLocation_Expression();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Location#getLocation() <em>Get Location</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Location</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Location#getLocation()
+   * @generated
+   */
+  EOperation getLocation__GetLocation();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.Vertex <em>Vertex</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Vertex</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Vertex
+   * @generated
+   */
+  EClass getVertex();
+
+  /**
    * Returns the meta object for data type '{@link ptolemy.kernel.util.NamedObj <em>Ptolemy Named Obj</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2353,6 +2668,50 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EReference RELATION__LINKED_PORTS = eINSTANCE.getRelation_LinkedPorts();
+
+    /**
+     * The meta object literal for the '<em><b>Linked Relations</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference RELATION__LINKED_RELATIONS = eINSTANCE.getRelation_LinkedRelations();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.LocationImpl <em>Location</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.triquetrum.workflow.model.impl.LocationImpl
+     * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getLocation()
+     * @generated
+     */
+    EClass LOCATION = eINSTANCE.getLocation();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LOCATION__EXPRESSION = eINSTANCE.getLocation_Expression();
+
+    /**
+     * The meta object literal for the '<em><b>Get Location</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation LOCATION___GET_LOCATION = eINSTANCE.getLocation__GetLocation();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.VertexImpl <em>Vertex</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.triquetrum.workflow.model.impl.VertexImpl
+     * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getVertex()
+     * @generated
+     */
+    EClass VERTEX = eINSTANCE.getVertex();
 
     /**
      * The meta object literal for the '<em>Ptolemy Named Obj</em>' data type.

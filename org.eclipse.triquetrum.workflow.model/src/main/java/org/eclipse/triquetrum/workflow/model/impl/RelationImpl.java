@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
@@ -36,6 +37,7 @@ import ptolemy.kernel.util.NameDuplicationException;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedPorts <em>Linked Ports</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedRelations <em>Linked Relations</em>}</li>
  * </ul>
  *
  * @generated
@@ -50,6 +52,16 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    * @ordered
    */
   protected EList<Port> linkedPorts;
+
+  /**
+   * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLinkedRelations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Relation> linkedRelations;
 
   /**
    * <!-- begin-user-doc -->
@@ -80,6 +92,18 @@ public class RelationImpl extends NamedObjImpl implements Relation {
       linkedPorts = new EObjectWithInverseResolvingEList.ManyInverse<Port>(Port.class, this, TriqPackage.RELATION__LINKED_PORTS, TriqPackage.PORT__LINKED_RELATIONS);
     }
     return linkedPorts;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Relation> getLinkedRelations() {
+    if (linkedRelations == null) {
+      linkedRelations = new EObjectResolvingEList<Relation>(Relation.class, this, TriqPackage.RELATION__LINKED_RELATIONS);
+    }
+    return linkedRelations;
   }
 
   @Override
@@ -160,6 +184,8 @@ public class RelationImpl extends NamedObjImpl implements Relation {
     switch (featureID) {
       case TriqPackage.RELATION__LINKED_PORTS:
         return getLinkedPorts();
+      case TriqPackage.RELATION__LINKED_RELATIONS:
+        return getLinkedRelations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -177,6 +203,10 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         getLinkedPorts().clear();
         getLinkedPorts().addAll((Collection<? extends Port>)newValue);
         return;
+      case TriqPackage.RELATION__LINKED_RELATIONS:
+        getLinkedRelations().clear();
+        getLinkedRelations().addAll((Collection<? extends Relation>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -192,6 +222,9 @@ public class RelationImpl extends NamedObjImpl implements Relation {
       case TriqPackage.RELATION__LINKED_PORTS:
         getLinkedPorts().clear();
         return;
+      case TriqPackage.RELATION__LINKED_RELATIONS:
+        getLinkedRelations().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -206,6 +239,8 @@ public class RelationImpl extends NamedObjImpl implements Relation {
     switch (featureID) {
       case TriqPackage.RELATION__LINKED_PORTS:
         return linkedPorts != null && !linkedPorts.isEmpty();
+      case TriqPackage.RELATION__LINKED_RELATIONS:
+        return linkedRelations != null && !linkedRelations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

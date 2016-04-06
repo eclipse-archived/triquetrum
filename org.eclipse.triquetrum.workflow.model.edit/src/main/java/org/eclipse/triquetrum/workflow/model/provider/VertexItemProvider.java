@@ -17,26 +17,24 @@ import java.util.List;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 
-import org.eclipse.triquetrum.workflow.model.Relation;
-import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.Vertex;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.triquetrum.workflow.model.Relation} object.
+ * This is the item provider adapter for a {@link org.eclipse.triquetrum.workflow.model.Vertex} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RelationItemProvider extends NamedObjItemProvider {
+public class VertexItemProvider extends LocationItemProvider {
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public RelationItemProvider(AdapterFactory adapterFactory) {
+  public VertexItemProvider(AdapterFactory adapterFactory) {
     super(adapterFactory);
   }
 
@@ -51,65 +49,19 @@ public class RelationItemProvider extends NamedObjItemProvider {
     if (itemPropertyDescriptors == null) {
       super.getPropertyDescriptors(object);
 
-      addLinkedPortsPropertyDescriptor(object);
-      addLinkedRelationsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Linked Ports feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addLinkedPortsPropertyDescriptor(Object object) {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_Relation_linkedPorts_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkedPorts_feature", "_UI_Relation_type"),
-         TriqPackage.Literals.RELATION__LINKED_PORTS,
-         true,
-         false,
-         true,
-         null,
-         null,
-         null));
-  }
-
-  /**
-   * This adds a property descriptor for the Linked Relations feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addLinkedRelationsPropertyDescriptor(Object object) {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_Relation_linkedRelations_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkedRelations_feature", "_UI_Relation_type"),
-         TriqPackage.Literals.RELATION__LINKED_RELATIONS,
-         true,
-         false,
-         true,
-         null,
-         null,
-         null));
-  }
-
-  /**
-   * This returns Relation.gif.
+   * This returns Vertex.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
   public Object getImage(Object object) {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/Relation"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/Vertex"));
   }
 
   /**
@@ -120,10 +72,10 @@ public class RelationItemProvider extends NamedObjItemProvider {
    */
   @Override
   public String getText(Object object) {
-    String label = ((Relation)object).getName();
+    String label = ((Vertex)object).getName();
     return label == null || label.length() == 0 ?
-      getString("_UI_Relation_type") :
-      getString("_UI_Relation_type") + " " + label;
+      getString("_UI_Vertex_type") :
+      getString("_UI_Vertex_type") + " " + label;
   }
   
 

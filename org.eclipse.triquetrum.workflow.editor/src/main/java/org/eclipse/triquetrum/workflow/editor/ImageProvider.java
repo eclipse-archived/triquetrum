@@ -32,6 +32,7 @@ public class ImageProvider extends AbstractImageProvider {
     addImageFilePath(ImageConstants.IMG_DIRECTOR, ROOT_FOLDER_FOR_IMG + "director.gif");
     addImageFilePath(ImageConstants.IMG_INPUTPORT, ROOT_FOLDER_FOR_IMG + "input.gif");
     addImageFilePath(ImageConstants.IMG_OUTPUTPORT, ROOT_FOLDER_FOR_IMG + "output.gif");
+    addImageFilePath(ImageConstants.IMG_CONNECTION, ROOT_FOLDER_FOR_IMG + "connection.gif");
     addImageFilePath(ImageConstants.IMG_PARAMETER, ROOT_FOLDER_FOR_IMG + "parameter.gif");
 
     addImageFilePath(ImageConstants.IMG_PAUSE_WORKFLOW, ROOT_FOLDER_FOR_IMG + "pause_workflow.gif");
