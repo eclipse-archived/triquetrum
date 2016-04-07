@@ -29,5 +29,7 @@ public interface RelationValidator {
 
   boolean validateLinkedRelations(EList<Relation> value);
 
+  boolean validateLinkingRelations(EList<Relation> value);
+
   boolean validateContainer(CompositeEntity value);
 }

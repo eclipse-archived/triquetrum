@@ -15,14 +15,16 @@ import org.eclipse.graphiti.features.context.IReconnectionContext;
 import org.eclipse.graphiti.features.impl.DefaultReconnectionFeature;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
-import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
-import org.eclipse.triquetrum.workflow.model.Vertex;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+// TODO build logic for the special case where we reconnect away from a vertex.
+// in that case we typically need create a new relation instance as well, not just unlink&link anchors&ports,
+// or we end up with a relation that is not totally connected in the diagram.
+// E.g. when starting with a const connected to a vertex that is then connected to a display actor, and then moving the const connection away from the vertex,
+// to directly connect to another display actor, we can end up with the vertex still connected to one port as before,
+// combined with a plain 2-port connection between the two other actors (const and 2nd display).
+// When running this model it still behaves as though all are connected via the vertex!
 public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
-  private final static Logger LOGGER = LoggerFactory.getLogger(ConnectionReconnectFeature.class);
 
   public ConnectionReconnectFeature(IFeatureProvider fp) {
     super(fp);
@@ -35,26 +37,8 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
     Relation relation = (Relation) getBusinessObjectForPictogramElement(context.getConnection());
     NamedObj oldBO = (NamedObj) getBusinessObjectForPictogramElement(oldAnchor);
     NamedObj newBO = (NamedObj) getBusinessObjectForPictogramElement(newAnchor);
-    unlink(relation, oldBO);
-    link(relation, newBO);
+    relation.unlink(oldBO);
+    relation.link(newBO);
     super.postReconnect(context);
   }
-
-  private void unlink(Relation relation, NamedObj anchorBO) {
-    LOGGER.trace("unlink {} - {}", relation, anchorBO);
-    if(anchorBO instanceof Port) {
-      relation.getLinkedPorts().remove(anchorBO);
-    } else if(anchorBO instanceof Vertex) {
-      relation.getLinkedRelations().remove(anchorBO.getContainer());
-    }
-  }
-  private void link(Relation relation, NamedObj anchorBO) {
-    LOGGER.trace("link {} - {}", relation, anchorBO);
-    if(anchorBO instanceof Port) {
-      relation.getLinkedPorts().add((Port) anchorBO);
-    } else if(anchorBO instanceof Vertex) {
-      relation.getLinkedRelations().add((Relation) anchorBO.getContainer());
-    }
-  }
-
 }

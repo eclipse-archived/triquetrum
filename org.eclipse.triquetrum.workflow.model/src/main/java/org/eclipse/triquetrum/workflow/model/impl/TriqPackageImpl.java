@@ -573,6 +573,42 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getRelation_LinkingRelations() {
+    return (EReference)relationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getRelation__Link__NamedObj() {
+    return relationEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getRelation__Unlink__NamedObj() {
+    return relationEClass.getEOperations().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getRelation__IsConnected() {
+    return relationEClass.getEOperations().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getLocation() {
     return locationEClass;
   }
@@ -692,6 +728,10 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     relationEClass = createEClass(RELATION);
     createEReference(relationEClass, RELATION__LINKED_PORTS);
     createEReference(relationEClass, RELATION__LINKED_RELATIONS);
+    createEReference(relationEClass, RELATION__LINKING_RELATIONS);
+    createEOperation(relationEClass, RELATION___LINK__NAMEDOBJ);
+    createEOperation(relationEClass, RELATION___UNLINK__NAMEDOBJ);
+    createEOperation(relationEClass, RELATION___IS_CONNECTED);
 
     locationEClass = createEClass(LOCATION);
     createEAttribute(locationEClass, LOCATION__EXPRESSION);
@@ -804,7 +844,16 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
 
     initEClass(relationEClass, Relation.class, "Relation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRelation_LinkedRelations(), this.getRelation(), null, "linkedRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRelation_LinkedRelations(), this.getRelation(), this.getRelation_LinkingRelations(), "linkedRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRelation_LinkingRelations(), this.getRelation(), this.getRelation_LinkedRelations(), "linkingRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    op = initEOperation(getRelation__Link__NamedObj(), null, "link", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, this.getNamedObj(), "linkedThing", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getRelation__Unlink__NamedObj(), null, "unlink", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, this.getNamedObj(), "linkedThing", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getRelation__IsConnected(), ecorePackage.getEBoolean(), "isConnected", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(locationEClass, Location.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLocation_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

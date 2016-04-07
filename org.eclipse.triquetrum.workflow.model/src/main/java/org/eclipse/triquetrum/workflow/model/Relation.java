@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation()
@@ -51,6 +52,7 @@ public interface Relation extends NamedObj {
   /**
    * Returns the value of the '<em><b>Linked Relations</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Relation}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}'.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Linked Relations</em>' reference list isn't clear,
@@ -59,9 +61,52 @@ public interface Relation extends NamedObj {
    * <!-- end-user-doc -->
    * @return the value of the '<em>Linked Relations</em>' reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation_LinkedRelations()
-   * @model
+   * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations
+   * @model opposite="linkingRelations"
    * @generated
    */
   EList<Relation> getLinkedRelations();
+
+  /**
+   * Returns the value of the '<em><b>Linking Relations</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Relation}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}'.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Linking Relations</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Linking Relations</em>' reference list.
+   * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation_LinkingRelations()
+   * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations
+   * @model opposite="linkedRelations"
+   * @generated
+   */
+  EList<Relation> getLinkingRelations();
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  void link(NamedObj linkedThing);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  void unlink(NamedObj linkedThing);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model kind="operation"
+   * @generated
+   */
+  boolean isConnected();
 
 } // Relation

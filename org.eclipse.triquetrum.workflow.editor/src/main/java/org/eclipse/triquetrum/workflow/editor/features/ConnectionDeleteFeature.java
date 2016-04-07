@@ -38,12 +38,10 @@ public class ConnectionDeleteFeature extends DefaultDeleteFeature {
   @Override
   protected void deleteBusinessObject(Object bo) {
     Relation relation = (Relation) bo;
-    if (relation != null) {
-      if(relation.getLinkedPorts().isEmpty() && relation.getLinkedRelations().isEmpty()) {
-        // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
-        // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
-        EcoreUtil.delete(relation, true);
-      }
+    if (relation != null && !relation.isConnected()) {
+      // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
+      // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
+      EcoreUtil.delete(relation, true);
     }
   }
 }

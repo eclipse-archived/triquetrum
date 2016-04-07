@@ -1509,13 +1509,22 @@ public interface TriqPackage extends EPackage {
   int RELATION__LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Linking Relations</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__LINKING_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Relation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RELATION_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 2;
+  int RELATION_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 3;
 
   /**
    * The operation id for the '<em>Get Container</em>' operation.
@@ -1545,13 +1554,40 @@ public interface TriqPackage extends EPackage {
   int RELATION___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Link</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___LINK__NAMEDOBJ = NAMED_OBJ_OPERATION_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Unlink</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___UNLINK__NAMEDOBJ = NAMED_OBJ_OPERATION_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Is Connected</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___IS_CONNECTED = NAMED_OBJ_OPERATION_COUNT + 2;
+
+  /**
    * The number of operations of the '<em>Relation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RELATION_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 0;
+  int RELATION_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.LocationImpl <em>Location</em>}' class.
@@ -2253,6 +2289,47 @@ public interface TriqPackage extends EPackage {
   EReference getRelation_LinkedRelations();
 
   /**
+   * Returns the meta object for the reference list '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Linking Relations</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations()
+   * @see #getRelation()
+   * @generated
+   */
+  EReference getRelation_LinkingRelations();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Relation#link(org.eclipse.triquetrum.workflow.model.NamedObj) <em>Link</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Link</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Relation#link(org.eclipse.triquetrum.workflow.model.NamedObj)
+   * @generated
+   */
+  EOperation getRelation__Link__NamedObj();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Relation#unlink(org.eclipse.triquetrum.workflow.model.NamedObj) <em>Unlink</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Unlink</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Relation#unlink(org.eclipse.triquetrum.workflow.model.NamedObj)
+   * @generated
+   */
+  EOperation getRelation__Unlink__NamedObj();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Relation#isConnected() <em>Is Connected</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Is Connected</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Relation#isConnected()
+   * @generated
+   */
+  EOperation getRelation__IsConnected();
+
+  /**
    * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.Location <em>Location</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2676,6 +2753,38 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EReference RELATION__LINKED_RELATIONS = eINSTANCE.getRelation_LinkedRelations();
+
+    /**
+     * The meta object literal for the '<em><b>Linking Relations</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference RELATION__LINKING_RELATIONS = eINSTANCE.getRelation_LinkingRelations();
+
+    /**
+     * The meta object literal for the '<em><b>Link</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation RELATION___LINK__NAMEDOBJ = eINSTANCE.getRelation__Link__NamedObj();
+
+    /**
+     * The meta object literal for the '<em><b>Unlink</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation RELATION___UNLINK__NAMEDOBJ = eINSTANCE.getRelation__Unlink__NamedObj();
+
+    /**
+     * The meta object literal for the '<em><b>Is Connected</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation RELATION___IS_CONNECTED = eINSTANCE.getRelation__IsConnected();
 
     /**
      * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.LocationImpl <em>Location</em>}' class.

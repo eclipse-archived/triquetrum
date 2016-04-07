@@ -69,10 +69,19 @@
         defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//NamedObj">
+    <eOperations name="link">
+      <eParameters name="linkedThing" eType="#//NamedObj"/>
+    </eOperations>
+    <eOperations name="unlink">
+      <eParameters name="linkedThing" eType="#//NamedObj"/>
+    </eOperations>
+    <eOperations name="isConnected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedPorts" upperBound="-1"
         eType="#//Port" eOpposite="#//Port/linkedRelations"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
-        eType="#//Relation"/>
+        eType="#//Relation" eOpposite="#//Relation/linkingRelations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="linkingRelations" upperBound="-1"
+        eType="#//Relation" eOpposite="#//Relation/linkedRelations"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//Attribute">
     <eOperations name="getLocation" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>

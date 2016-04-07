@@ -123,18 +123,15 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
    * @throws IllegalActionException
    */
   private Relation createRelation(NamedObj source, NamedObj target) throws IllegalActionException {
-    // TODO refactor this double instanceof chaining
     Relation relation = null;
-    boolean srcIsVertex = false;
-    boolean onlyTargetIsVertex = false;
     if(source instanceof Vertex) {
       // use the vertex's relation
       relation = (Relation)source.getContainer();
-      srcIsVertex = true;
+      relation.link(target);
     } else if(target instanceof Vertex) {
       // use the vertex's relation
       relation = (Relation)target.getContainer();
-      onlyTargetIsVertex = true;
+      relation.link(source);
     } else {
       // create a new relation directly linking 2 ports
       relation = TriqFactory.eINSTANCE.createRelation();
@@ -144,21 +141,8 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
       }
       relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
       ((CompositeActor) relationContainer).getRelations().add(relation);
-    }
-    if(srcIsVertex) {
-      // no need to link to the relation as we're using the src's relation anyway
-    } else {
-      relation.getLinkedPorts().add((Port)source);
-    }
-    if(target instanceof Port) {
-      relation.getLinkedPorts().add((Port)target);
-    } else {
-      Relation targetRelation = (Relation) target.getContainer();
-      if(onlyTargetIsVertex) {
-        // no need to link to the relation as we're using the target's relation anyway
-      } else {
-        relation.getLinkedRelations().add(targetRelation);
-      }
+      relation.link(source);
+      relation.link(target);
     }
     return relation;
   }

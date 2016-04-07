@@ -17,9 +17,7 @@ import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
-import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
-import org.eclipse.triquetrum.workflow.model.Vertex;
 
 public class ConnectionRemoveFeature extends DefaultRemoveFeature {
 
@@ -45,9 +43,9 @@ public class ConnectionRemoveFeature extends DefaultRemoveFeature {
     if (relation != null) {
       NamedObj startBO = (NamedObj) getBusinessObjectForPictogramElement(connectionPE.getStart());
       NamedObj endBO = (NamedObj) getBusinessObjectForPictogramElement(connectionPE.getEnd());
-      unlink(relation, startBO);
-      unlink(relation, endBO);
-      if(relation.getLinkedPorts().isEmpty() && relation.getLinkedRelations().isEmpty()) {
+      relation.unlink(startBO);
+      relation.unlink(endBO);
+      if(!relation.isConnected()) {
         // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
         // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
         EcoreUtil.delete(relation, true);
@@ -55,13 +53,4 @@ public class ConnectionRemoveFeature extends DefaultRemoveFeature {
     }
     super.remove(context);
   }
-
-  private void unlink(Relation relation, NamedObj startBO) {
-    if(startBO instanceof Port) {
-      relation.getLinkedPorts().remove(startBO);
-    } else if(startBO instanceof Vertex) {
-      relation.getLinkedRelations().remove(startBO.getContainer());
-    }
-  }
-
 }
