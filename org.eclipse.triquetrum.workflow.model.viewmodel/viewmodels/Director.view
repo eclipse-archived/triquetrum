@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_6xV2MJFYEeWvBZR0GUhhyg" name="Director" ecorePath="/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_6xV2MJFYEeWvBZR0GUhhyg" name="Director" ecorePath="/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore">
   <rootEClass href="http://www.eclipse.org/triquetrum#//Director"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_6x0-YJFYEeWvBZR0GUhhyg" name="Control name">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_6x0-YZFYEeWvBZR0GUhhyg">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
     </domainModelReference>
   </children>
+  <children xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_QOWAwP8qEeW2OOcg0VU0Iw" name="attributes" addRemoveDisabled="true">
+    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_XaEAkP8qEeW2OOcg0VU0Iw">
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_Y9UjEP8qEeW2OOcg0VU0Iw">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
+      </columnDomainModelReferences>
+      <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_mMzcJP8qEeW2OOcg0VU0Iw">
+        <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Parameter/expression"/>
+      </columnDomainModelReferences>
+      <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_XaEAkf8qEeW2OOcg0VU0Iw">
+        <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//NamedObj/attributes"/>
+      </domainModelReference>
+    </domainModelReference>
+  </children>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_6x0-ZJFYEeWvBZR0GUhhyg" name="Control wrappedType" readonly="true">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_6x0-ZZFYEeWvBZR0GUhhyg">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/wrappedType"/>
-    </domainModelReference>
-  </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_6x0-YpFYEeWvBZR0GUhhyg" name="Control attributes">
-    <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_6x0-Y5FYEeWvBZR0GUhhyg">
-      <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//NamedObj/attributes"/>
     </domainModelReference>
   </children>
 </org.eclipse.emf.ecp.view.model:View>
