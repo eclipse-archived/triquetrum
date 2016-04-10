@@ -136,6 +136,10 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
   public Object getToolTip(GraphicsAlgorithm ga) {
     PictogramElement pe = ga.getPictogramElement();
     Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
+    if(bo instanceof Vertex) {
+      // For a vertex, we want to show the name of the containing relation
+      bo = ((Vertex) bo).getContainer();
+    }
     if (bo instanceof NamedObj) {
       String name = ((NamedObj) bo).getName();
       if (name != null && !(name.length() == 0)) {

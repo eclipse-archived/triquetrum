@@ -124,14 +124,14 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
    */
   private Relation createRelation(NamedObj source, NamedObj target) throws IllegalActionException {
     Relation relation = null;
-    if(source instanceof Vertex) {
-      // use the vertex's relation
-      relation = (Relation)source.getContainer();
-      relation.link(target);
-    } else if(target instanceof Vertex) {
+    if(target instanceof Vertex) {
       // use the vertex's relation
       relation = (Relation)target.getContainer();
       relation.link(source);
+    } else if(source instanceof Vertex) {
+      // use the vertex's relation
+      relation = (Relation)source.getContainer();
+      relation.link(target);
     } else {
       // create a new relation directly linking 2 ports
       relation = TriqFactory.eINSTANCE.createRelation();

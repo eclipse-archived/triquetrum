@@ -10,12 +10,18 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IReconnectionContext;
 import org.eclipse.graphiti.features.impl.DefaultReconnectionFeature;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
+import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
+import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Relation;
+import org.eclipse.triquetrum.workflow.model.TriqFactory;
+import org.eclipse.triquetrum.workflow.model.Vertex;
 
 // TODO build logic for the special case where we reconnect away from a vertex.
 // in that case we typically need create a new relation instance as well, not just unlink&link anchors&ports,
@@ -26,6 +32,8 @@ import org.eclipse.triquetrum.workflow.model.Relation;
 // When running this model it still behaves as though all are connected via the vertex!
 public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
 
+  boolean hasDoneChanges = false;
+
   public ConnectionReconnectFeature(IFeatureProvider fp) {
     super(fp);
   }
@@ -34,11 +42,52 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
   public void postReconnect(IReconnectionContext context) {
     Anchor oldAnchor = context.getOldAnchor();
     Anchor newAnchor = context.getNewAnchor();
-    Relation relation = (Relation) getBusinessObjectForPictogramElement(context.getConnection());
-    NamedObj oldBO = (NamedObj) getBusinessObjectForPictogramElement(oldAnchor);
-    NamedObj newBO = (NamedObj) getBusinessObjectForPictogramElement(newAnchor);
-    relation.unlink(oldBO);
-    relation.link(newBO);
+    if (newAnchor != oldAnchor) {
+      Connection connection = context.getConnection();
+      Relation relation = (Relation) getBusinessObjectForPictogramElement(connection);
+      // Now we need to figure out if the reconnected connection can remain in the original relation,
+      // or if it needs to create a new relation.
+      // We do this by looking at both connection ends :
+      // - If they're both ports, we need a new relation.
+      // - If one is a vertex, we can link to that one's existing relation.
+
+      Relation newRelation = null;
+      Anchor endAnchor = connection.getEnd();
+      NamedObj endBO = (NamedObj) getBusinessObjectForPictogramElement(endAnchor);
+      Anchor startAnchor = connection.getStart();
+      NamedObj startBO = (NamedObj) getBusinessObjectForPictogramElement(startAnchor);
+
+      if (endBO instanceof Vertex) {
+        newRelation = (Relation) endBO.getContainer();
+      } else {
+        if (startBO instanceof Vertex) {
+          newRelation = (Relation) startBO.getContainer();
+        } else {
+          NamedObj relationContainer = relation.getContainer();
+          newRelation = TriqFactory.eINSTANCE.createRelation();
+          newRelation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
+          ((CompositeActor) relationContainer).getRelations().add(newRelation);
+        }
+      }
+      relation.unlink(startBO);
+      relation.unlink(endBO);
+      newRelation.link(startBO);
+      newRelation.link(endBO);
+      // Only check this after all the unlink/link actions, as relation and newRelation might be the same instance,
+      // so we don't want to delete relation yet before doing the new links!
+      if(!relation.isConnected()) {
+        // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
+        // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
+        EcoreUtil.delete(relation, true);
+      }
+      link(connection, newRelation);
+      hasDoneChanges = true;
+    }
     super.postReconnect(context);
+  }
+
+  @Override
+  public boolean hasDoneChanges() {
+    return hasDoneChanges;
   }
 }

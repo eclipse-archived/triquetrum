@@ -27,7 +27,6 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.Vertex;
-import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
 
 import ptolemy.kernel.ComponentRelation;
 import ptolemy.kernel.util.IllegalActionException;
@@ -160,9 +159,11 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    * @generated NOT
    */
   public boolean isConnected() {
+
     return !getLinkedPorts().isEmpty()
         || !getLinkedRelations().isEmpty()
-        || !getLinkingRelations().isEmpty();
+        || !getLinkingRelations().isEmpty()
+        || !getWrappedObject().attributeList(ptolemy.moml.Vertex.class).isEmpty();
 
   }
 
@@ -274,7 +275,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   public void buildWrappedObject() {
     try {
       ptolemy.kernel.CompositeEntity container = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
-      wrappedObject = PtolemyUtil._createRelation(container, null, getName());
+      wrappedObject = container.newRelation(getName());
       for (Port p : getLinkedPorts()) {
         ((ptolemy.kernel.Port) p.getWrappedObject()).link(getWrappedObject());
       }
