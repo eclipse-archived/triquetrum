@@ -152,17 +152,12 @@ public class EntityImpl extends NamedObjImpl implements Entity {
   // This is where we can hook in a ptolemy object construction, including its container
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
+    ptolemy.kernel.CompositeEntity oldPtContainer = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
     super.eBasicSetContainer(newContainer);
-    ptolemy.kernel.CompositeEntity container = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    if (wrappedObject == null) {
-      if (wrappedType != null) {
-        buildWrappedObject();
-      } else {
-        System.err.println("wrappedType unknown at container setting time for " + this);
-      }
-    } else {
+    ptolemy.kernel.CompositeEntity newPtContainer = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
+    if(oldPtContainer!=newPtContainer) {
       try {
-        ((ComponentEntity<?>) wrappedObject).setContainer(container);
+        getWrappedObject().setContainer(newPtContainer);
       } catch (IllegalActionException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -209,11 +204,15 @@ public class EntityImpl extends NamedObjImpl implements Entity {
         }
         setDeepComplete(true);
       }
-      // TODO see if/how to refresh actor with ports in the diagram
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
+  }
+
+  @Override
+  public ComponentEntity<?> getWrappedObject() {
+    return (ComponentEntity<?>) wrappedObject;
   }
 
   /**

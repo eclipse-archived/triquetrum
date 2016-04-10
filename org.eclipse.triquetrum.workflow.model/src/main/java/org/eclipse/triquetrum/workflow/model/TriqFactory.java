@@ -129,6 +129,24 @@ public interface TriqFactory extends EFactory {
   Relation createRelation();
 
   /**
+   * Returns a new object of class '<em>Location</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Location</em>'.
+   * @generated
+   */
+  Location createLocation();
+
+  /**
+   * Returns a new object of class '<em>Vertex</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Vertex</em>'.
+   * @generated
+   */
+  Vertex createVertex();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

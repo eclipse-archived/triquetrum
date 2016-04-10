@@ -29,6 +29,7 @@ import org.eclipse.graphiti.features.IDeleteFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.IFeature;
 import org.eclipse.graphiti.features.ILayoutFeature;
+import org.eclipse.graphiti.features.IReconnectionFeature;
 import org.eclipse.graphiti.features.IRemoveFeature;
 import org.eclipse.graphiti.features.IResizeShapeFeature;
 import org.eclipse.graphiti.features.IUpdateFeature;
@@ -38,10 +39,12 @@ import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.ILayoutContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
+import org.eclipse.graphiti.features.context.IReconnectionContext;
 import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
+import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
@@ -52,6 +55,8 @@ import org.eclipse.triquetrum.workflow.editor.features.AnnotationResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionCreateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ConnectionDeleteFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ConnectionReconnectFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionRemoveFeature;
 import org.eclipse.triquetrum.workflow.editor.features.DirectorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.DirectorUpdateFeature;
@@ -63,6 +68,7 @@ import org.eclipse.triquetrum.workflow.editor.features.ModelElementResizeFeature
 import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
+import org.eclipse.triquetrum.workflow.editor.features.VertexAddFeature;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.Director;
@@ -70,6 +76,7 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
+import org.eclipse.triquetrum.workflow.model.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -154,6 +161,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new ActorAddFeature(this);
     } else if (context.getNewObject() instanceof Relation) {
       return new ConnectionAddFeature(this);
+    } else if (context.getNewObject() instanceof Vertex) {
+      return new VertexAddFeature(this);
     } else if (context.getNewObject() instanceof Port) {
       return new PortAddFeature(this);
     } else if (context.getNewObject() instanceof Parameter) {
@@ -194,10 +203,12 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
 
   @Override
   public IDeleteFeature getDeleteFeature(IDeleteContext context) {
-    PictogramElement pictogramElement = context.getPictogramElement();
-    Object bo = getBusinessObjectForPictogramElement(pictogramElement);
+    PictogramElement pe = context.getPictogramElement();
+    Object bo = getBusinessObjectForPictogramElement(pe);
     if (bo instanceof Actor) {
       return new ActorDeleteFeature(this);
+    } else if (pe instanceof Connection) {
+      return new ConnectionDeleteFeature(this);
     }
     return super.getDeleteFeature(context);
   }
@@ -211,6 +222,12 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     }
     return super.getRemoveFeature(context);
   }
+
+  @Override
+  public IReconnectionFeature getReconnectionFeature(IReconnectionContext context) {
+    return new ConnectionReconnectFeature(this);
+  }
+
   @Override
   public IDirectEditingFeature getDirectEditingFeature(IDirectEditingContext context) {
     PictogramElement pe = context.getPictogramElement();

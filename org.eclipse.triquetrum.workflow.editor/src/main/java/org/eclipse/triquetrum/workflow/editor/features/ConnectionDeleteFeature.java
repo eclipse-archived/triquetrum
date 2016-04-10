@@ -12,21 +12,20 @@ package org.eclipse.triquetrum.workflow.editor.features;
 
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
-import org.eclipse.graphiti.features.context.IRemoveContext;
-import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
+import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 import org.eclipse.triquetrum.workflow.model.Relation;
 
-public class ConnectionRemoveFeature extends DefaultRemoveFeature {
+public class ConnectionDeleteFeature extends DefaultDeleteFeature {
 
-  public ConnectionRemoveFeature(IFeatureProvider fp) {
+  public ConnectionDeleteFeature(IFeatureProvider fp) {
     super(fp);
   }
 
   @Override
-  public boolean canRemove(IRemoveContext context) {
+  public boolean canDelete(IDeleteContext context) {
     PictogramElement connectionPE = context.getPictogramElement();
     if (connectionPE instanceof Connection) {
       Object bo = getBusinessObjectForPictogramElement(context.getPictogramElement());
@@ -37,20 +36,12 @@ public class ConnectionRemoveFeature extends DefaultRemoveFeature {
   }
 
   @Override
-  public void remove(IRemoveContext context) {
-    Connection connectionPE = (Connection) context.getPictogramElement();
-    Relation relation = (Relation) getBusinessObjectForPictogramElement(connectionPE);
-    if (relation != null) {
-      NamedObj startBO = (NamedObj) getBusinessObjectForPictogramElement(connectionPE.getStart());
-      NamedObj endBO = (NamedObj) getBusinessObjectForPictogramElement(connectionPE.getEnd());
-      relation.unlink(startBO);
-      relation.unlink(endBO);
-      if(!relation.isConnected()) {
-        // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
-        // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
-        EcoreUtil.delete(relation, true);
-      }
+  protected void deleteBusinessObject(Object bo) {
+    Relation relation = (Relation) bo;
+    if (relation != null && !relation.isConnected()) {
+      // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
+      // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
+      EcoreUtil.delete(relation, true);
     }
-    super.remove(context);
   }
 }

@@ -57,5 +57,16 @@ Package model <http://www.eclipse.org/triquetrum>
 
   Class Relation -> NamedObj
     Reference linkedPorts : Port<<0..*>>
+    Reference linkedRelations : Relation<<0..*>>
+    Reference linkingRelations : Relation<<0..*>>
+    Operation link(NamedObj) : void
+    Operation unlink(NamedObj) : void
+    Operation isConnected() : EBoolean
+
+  Class Location -> Attribute
+    Attribute expression : EString
+    Operation getLocation() : EDouble<<0..*>>
+
+  Class Vertex -> Location
 
   DataType PtolemyNamedObj <ptolemy.kernel.util.NamedObj>

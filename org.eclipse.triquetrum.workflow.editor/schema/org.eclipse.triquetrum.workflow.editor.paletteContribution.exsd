@@ -99,6 +99,8 @@ It can be a Java implementation or an actor-oriented implementation.
                   </enumeration>
                   <enumeration value="Annotation">
                   </enumeration>
+                  <enumeration value="Vertex">
+                  </enumeration>
                </restriction>
             </simpleType>
          </attribute>

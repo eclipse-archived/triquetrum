@@ -275,16 +275,12 @@ public class PortImpl extends NamedObjImpl implements Port {
   // This is where we can hook in a ptolemy object construction, including its container
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
+    ptolemy.kernel.Entity<?> oldPtContainer = (ptolemy.kernel.Entity<?>) (getContainer() != null ? getContainer().getWrappedObject() : null);
     super.eBasicSetContainer(newContainer);
-    ptolemy.kernel.Entity<?> container = (ptolemy.kernel.Entity<?>) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    if (wrappedObject == null) {
-        buildWrappedObject();
-    } else {
+    ptolemy.kernel.Entity<?> newPtContainer = (ptolemy.kernel.Entity<?>) (getContainer() != null ? getContainer().getWrappedObject() : null);
+    if(oldPtContainer!=newPtContainer) {
       try {
-        getWrappedObject().setContainer(container);
-        getWrappedObject().setInput(input);
-        getWrappedObject().setOutput(output);
-        getWrappedObject().setMultiport(multiPort);
+        getWrappedObject().setContainer(newPtContainer);
       } catch (IllegalActionException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
@@ -302,6 +298,7 @@ public class PortImpl extends NamedObjImpl implements Port {
       wrappedObject = PtolemyUtil._createPort(container, getWrappedType(), getName());
       getWrappedObject().setInput(isInput());
       getWrappedObject().setOutput(isOutput());
+      getWrappedObject().setMultiport(multiPort);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

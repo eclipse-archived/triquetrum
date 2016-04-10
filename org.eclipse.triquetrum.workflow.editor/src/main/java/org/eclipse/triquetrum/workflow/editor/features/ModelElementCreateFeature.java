@@ -27,8 +27,12 @@ import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
+import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.Vertex;
+
+import ptolemy.kernel.util.IllegalActionException;
 
 
 /**
@@ -132,6 +136,11 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
         model.setDirector((Director) result);
       } else if (result instanceof Entity) {
         model.getEntities().add((Entity) result);
+      } else if (result instanceof Vertex) {
+        Relation relation = TriqFactory.eINSTANCE.createRelation();
+        relation.setName(EditorUtils.buildUniqueName(model, "_R"));
+        model.getRelations().add(relation);
+        relation.getAttributes().add((Vertex)result);
       } else if (result instanceof Attribute) {
         model.getAttributes().add((Attribute) result);
       } else if (result instanceof Port) {
@@ -157,4 +166,5 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       throw new RuntimeException(e);
     }
   }
+
 }

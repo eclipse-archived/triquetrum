@@ -26,6 +26,7 @@ public interface ImageConstants {
   String IMG_DIRECTOR = PRE + "director";
   String IMG_INPUTPORT = PRE + "inputport";
   String IMG_OUTPUTPORT = PRE + "outputport";
+  String IMG_CONNECTION = PRE + "connection";
   String IMG_PARAMETER = PRE + "parameter";
 
   String IMG_PAUSE_WORKFLOW = PRE + "pause";

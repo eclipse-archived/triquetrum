@@ -19,24 +19,26 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
-import org.eclipse.triquetrum.workflow.model.Relation;
+import org.eclipse.triquetrum.workflow.model.Location;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.triquetrum.workflow.model.Relation} object.
+ * This is the item provider adapter for a {@link org.eclipse.triquetrum.workflow.model.Location} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class RelationItemProvider extends NamedObjItemProvider {
+public class LocationItemProvider extends AttributeItemProvider {
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  public RelationItemProvider(AdapterFactory adapterFactory) {
+  public LocationItemProvider(AdapterFactory adapterFactory) {
     super(adapterFactory);
   }
 
@@ -51,88 +53,42 @@ public class RelationItemProvider extends NamedObjItemProvider {
     if (itemPropertyDescriptors == null) {
       super.getPropertyDescriptors(object);
 
-      addLinkedPortsPropertyDescriptor(object);
-      addLinkedRelationsPropertyDescriptor(object);
-      addLinkingRelationsPropertyDescriptor(object);
+      addExpressionPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Linked Ports feature.
+   * This adds a property descriptor for the Expression feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addLinkedPortsPropertyDescriptor(Object object) {
+  protected void addExpressionPropertyDescriptor(Object object) {
     itemPropertyDescriptors.add
       (createItemPropertyDescriptor
         (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
          getResourceLocator(),
-         getString("_UI_Relation_linkedPorts_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkedPorts_feature", "_UI_Relation_type"),
-         TriqPackage.Literals.RELATION__LINKED_PORTS,
+         getString("_UI_Location_expression_feature"),
+         getString("_UI_PropertyDescriptor_description", "_UI_Location_expression_feature", "_UI_Location_type"),
+         TriqPackage.Literals.LOCATION__EXPRESSION,
          true,
          false,
-         true,
-         null,
+         false,
+         ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
          null,
          null));
   }
 
   /**
-   * This adds a property descriptor for the Linked Relations feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addLinkedRelationsPropertyDescriptor(Object object) {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_Relation_linkedRelations_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkedRelations_feature", "_UI_Relation_type"),
-         TriqPackage.Literals.RELATION__LINKED_RELATIONS,
-         true,
-         false,
-         true,
-         null,
-         null,
-         null));
-  }
-
-  /**
-   * This adds a property descriptor for the Linking Relations feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addLinkingRelationsPropertyDescriptor(Object object) {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_Relation_linkingRelations_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkingRelations_feature", "_UI_Relation_type"),
-         TriqPackage.Literals.RELATION__LINKING_RELATIONS,
-         true,
-         false,
-         true,
-         null,
-         null,
-         null));
-  }
-
-  /**
-   * This returns Relation.gif.
+   * This returns Location.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
   public Object getImage(Object object) {
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/Relation"));
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/Location"));
   }
 
   /**
@@ -143,10 +99,10 @@ public class RelationItemProvider extends NamedObjItemProvider {
    */
   @Override
   public String getText(Object object) {
-    String label = ((Relation)object).getName();
+    String label = ((Location)object).getName();
     return label == null || label.length() == 0 ?
-      getString("_UI_Relation_type") :
-      getString("_UI_Relation_type") + " " + label;
+      getString("_UI_Location_type") :
+      getString("_UI_Location_type") + " " + label;
   }
   
 
@@ -160,6 +116,12 @@ public class RelationItemProvider extends NamedObjItemProvider {
   @Override
   public void notifyChanged(Notification notification) {
     updateChildren(notification);
+
+    switch (notification.getFeatureID(Location.class)) {
+      case TriqPackage.LOCATION__EXPRESSION:
+        fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+        return;
+    }
     super.notifyChanged(notification);
   }
 

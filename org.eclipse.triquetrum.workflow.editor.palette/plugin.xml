@@ -35,6 +35,11 @@
               icon="icons/value_field.gif"
               type="Parameter">
         </entry>
+        <entry
+              class="ptolemy.moml.Vertex"
+              displayName="Vertex"
+              type="Vertex">
+        </entry>
       </group>
       <group displayName="Directors" icon="icons/director.gif">
         <entry

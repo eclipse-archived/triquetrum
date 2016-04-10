@@ -7,6 +7,7 @@ public interface BoCategories {
   String ACTOR = "ACTOR";
   String DIRECTOR = "DIRECTOR";
   String PARAMETER = "PARAMETER";
+  String RELATION = "RELATION";
   String PORT = "PORT";
   String INPUT_PORT = "INPUT";
   String OUTPUT_PORT = "OUTPUT";

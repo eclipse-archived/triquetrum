@@ -42,17 +42,12 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
   // This is where we can hook in a ptolemy object construction, including its container
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
+    NamedObj oldPtContainer = (NamedObj) (getContainer() != null ? getContainer().getWrappedObject() : null);
     super.eBasicSetContainer(newContainer);
-    NamedObj container = (NamedObj) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    if (wrappedObject == null) {
-      if (wrappedType != null) {
-        buildWrappedObject();
-      } else {
-        System.err.println("wrappedType unknown at container setting time for " + this);
-      }
-    } else {
+    NamedObj newPtContainer = (NamedObj) (getContainer() != null ? getContainer().getWrappedObject() : null);
+    if(oldPtContainer!=newPtContainer) {
       try {
-        ((ptolemy.kernel.util.Attribute)wrappedObject).setContainer(container);
+        getWrappedObject().setContainer(newPtContainer);
       } catch (IllegalActionException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
