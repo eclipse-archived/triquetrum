@@ -140,10 +140,12 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    */
   public void link(NamedObj linkedThing) {
     if (linkedThing instanceof Port) {
-      getLinkedPorts().add((Port) linkedThing);
+      if (!getLinkedPorts().contains(linkedThing)) {
+        getLinkedPorts().add((Port) linkedThing);
+      }
     } else if (linkedThing instanceof Vertex) {
       Relation toBeLinked = (Relation) linkedThing.getContainer();
-      if (this != toBeLinked) {
+      if (this != toBeLinked && !getLinkedRelations().contains(toBeLinked)) {
         getLinkedRelations().add(toBeLinked);
       }
     }
@@ -184,7 +186,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
     return (CompositeEntity) eContainer();
   }
 
-
   // TODO evaluate if it's worth the trouble to go for a full-blown EMF adapter + adapterfactory setup
   /**
    * This is where we react to changes in linked ports and relations, to keep the wrapped Ptolemy model up-to-date.
@@ -198,7 +199,12 @@ public class RelationImpl extends NamedObjImpl implements Relation {
       case Notification.ADD:
         Port addedPort = (Port) notification.getNewValue();
         try {
-          ((ptolemy.kernel.Port) addedPort.getWrappedObject()).link(getWrappedObject());
+          ptolemy.kernel.Port ptPort = (ptolemy.kernel.Port) addedPort.getWrappedObject();
+          // TODO evaluate : this implies that in Triquetrum a port can only be linked once to a given relation.
+          // Although this seems logical, Ptolemy does not impose this constraint...
+          if (!ptPort.isLinked(getWrappedObject())) {
+            ptPort.link(getWrappedObject());
+          }
         } catch (IllegalActionException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -208,7 +214,12 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         List<Port> addedPorts = (List<Port>) notification.getNewValue();
         for (Port p : addedPorts) {
           try {
-            ((ptolemy.kernel.Port) p.getWrappedObject()).link(getWrappedObject());
+            ptolemy.kernel.Port ptPort = (ptolemy.kernel.Port) p.getWrappedObject();
+            // TODO evaluate : this implies that in Triquetrum a port can only be linked once to a given relation.
+            // Although this seems logical, Ptolemy does not impose this constraint...
+            if (!ptPort.isLinked(getWrappedObject())) {
+              ptPort.link(getWrappedObject());
+            }
           } catch (IllegalActionException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -232,7 +243,9 @@ public class RelationImpl extends NamedObjImpl implements Relation {
       case Notification.ADD:
         Relation addedRelation = (Relation) notification.getNewValue();
         try {
-          getWrappedObject().link((ptolemy.kernel.Relation) addedRelation.getWrappedObject());
+          if(!getWrappedObject().linkedObjectsList().contains(addedRelation.getWrappedObject())) {
+            getWrappedObject().link((ptolemy.kernel.Relation) addedRelation.getWrappedObject());
+          }
         } catch (IllegalActionException e1) {
           // TODO Auto-generated catch block
           e1.printStackTrace();
@@ -242,7 +255,9 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         List<Relation> addedRelations = (List<Relation>) notification.getNewValue();
         for (Relation r : addedRelations) {
           try {
-            getWrappedObject().link((ptolemy.kernel.Relation) r.getWrappedObject());
+            if(!getWrappedObject().linkedObjectsList().contains(r.getWrappedObject())) {
+              getWrappedObject().link((ptolemy.kernel.Relation) r.getWrappedObject());
+            }
           } catch (IllegalActionException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
