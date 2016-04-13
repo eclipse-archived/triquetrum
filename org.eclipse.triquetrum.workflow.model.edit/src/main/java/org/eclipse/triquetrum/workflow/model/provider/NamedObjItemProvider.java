@@ -302,6 +302,16 @@ public class NamedObjItemProvider
       (createChildParameter
         (TriqPackage.Literals.NAMED_OBJ__ATTRIBUTES,
          TriqFactory.eINSTANCE.createDirector()));
+
+    newChildDescriptors.add
+      (createChildParameter
+        (TriqPackage.Literals.NAMED_OBJ__ATTRIBUTES,
+         TriqFactory.eINSTANCE.createLocation()));
+
+    newChildDescriptors.add
+      (createChildParameter
+        (TriqPackage.Literals.NAMED_OBJ__ATTRIBUTES,
+         TriqFactory.eINSTANCE.createVertex()));
   }
 
   /**

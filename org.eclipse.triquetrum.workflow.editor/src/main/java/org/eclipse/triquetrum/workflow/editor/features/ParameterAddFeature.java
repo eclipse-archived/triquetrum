@@ -28,6 +28,7 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 
@@ -60,7 +61,7 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
     if (businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CATEGORY", category);
+    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category);
     Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
   }
 

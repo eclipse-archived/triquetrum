@@ -52,7 +52,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    * @generated
    * @ordered
    */
-  protected static final String NAME_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = "new";
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -171,7 +171,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void setName(String newName) {
     String oldName = name;

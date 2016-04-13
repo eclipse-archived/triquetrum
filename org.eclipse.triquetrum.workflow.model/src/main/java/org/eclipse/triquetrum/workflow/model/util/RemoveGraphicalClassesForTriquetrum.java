@@ -31,6 +31,17 @@ public class RemoveGraphicalClassesForTriquetrum extends RemoveGraphicalClasses 
     public RemoveGraphicalClassesForTriquetrum() {
       remove("ptolemy.actor.lib.gui.Display");
       remove("ptolemy.actor.lib.gui.XYPlotter");
+
+      remove("ptolemy.vergil.icon.EditorIcon");
+      remove("ptolemy.vergil.kernel.attributes.ArcAttribute");
+      remove("ptolemy.vergil.kernel.attributes.ArrowAttribute");
+      remove("ptolemy.vergil.kernel.attributes.EllipseAttribute");
+      remove("ptolemy.vergil.kernel.attributes.ImageAttribute");
+      remove("ptolemy.vergil.kernel.attributes.LineAttribute");
+      remove("ptolemy.vergil.kernel.attributes.RectangleAttribute");
+      remove("ptolemy.vergil.kernel.attributes.ResizablePolygonAttribute");
+      remove("ptolemy.vergil.kernel.attributes.TextAttribute");
+      remove("ptolemy.vergil.kernel.attributes.VisibleAttribute");
       // TODO add more when they become supported in Triquetrum
     }
 }

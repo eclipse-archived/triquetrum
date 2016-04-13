@@ -29,6 +29,7 @@ import org.eclipse.graphiti.services.ICreateService;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
 
@@ -54,7 +55,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
     if (businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CATEGORY", category);
+    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category);
     Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
   }
 
@@ -100,7 +101,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
         final Polyline rectangle = gaService.createPlainPolyline(anchor, new int[]{0,0,0,20});
         rectangle.setLineStyle(LineStyle.DASH);
         gaService.setLocationAndSize(rectangle, 0, 0, 1, 20);
-        link(anchor, addedPort, "INPUT");
+        link(anchor, addedPort, BoCategories.INPUT_PORT);
         // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
         int xy[] = new int[] { 10,0, 20,10, 10,20, 10,15, 0,15, 0,5, 10,5 };
         Polygon portShape = gaService.createPolygon(invisibleRectangle, xy);
@@ -112,7 +113,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
         final Polyline rectangle = gaService.createPlainPolyline(anchor, new int[]{0,0,0,20});
         rectangle.setLineStyle(LineStyle.DASH);
         gaService.setLocationAndSize(rectangle, 0, 0, 1, 20);
-        link(anchor, addedPort, "OUTPUT");
+        link(anchor, addedPort, BoCategories.OUTPUT_PORT);
         anchor.setVisible(true);
         // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
         int xy[] = new int[] { 10,0, 20,10, 10,20, 10,15, 0,15, 0,5, 10,5 };
@@ -127,7 +128,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
       if(anchorMap != null && addedPort.getWrappedObject() != null) {
         anchorMap.put(addedPort.getWrappedObject().getFullName(), anchor);
       }
-      link(containerShape, addedPort, "PORT");
+      link(containerShape, addedPort, BoCategories.PORT);
     }
 
     layoutPictogramElement(containerShape);

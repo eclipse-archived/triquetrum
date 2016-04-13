@@ -10,10 +10,16 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor;
 
+import org.eclipse.emf.common.ui.URIEditorInput;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
+import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
 import org.eclipse.triquetrum.workflow.editor.outline.DiagramEditorOutlinePage;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 public class TriqDiagramEditor extends DiagramEditor {
@@ -25,6 +31,19 @@ public class TriqDiagramEditor extends DiagramEditor {
       return outlinePage;
     }
     return super.getAdapter(type);
+  }
+
+  @Override
+  protected DiagramEditorInput convertToDiagramEditorInput(IEditorInput input) throws PartInitException {
+    try {
+      return super.convertToDiagramEditorInput(input);
+    } catch (PartInitException e) {
+      // Graphiti by default does not support opening diagram files outside of the workspace.
+      // This is related to incompatibilities between EMF URIEditorInput and eclipse's FileStoreEditorInput,
+      // for which the default DiagramEditor's adapting code is not adapted by default...
+      URI uri = EditUIUtil.getURI(input);
+      return super.convertToDiagramEditorInput(new URIEditorInput(uri));
+    }
   }
 
   @Override

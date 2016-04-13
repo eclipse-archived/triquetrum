@@ -10,13 +10,18 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.util;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.PlatformGraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.styles.Color;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.internal.parts.DiagramEditPart;
@@ -28,13 +33,14 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
-import org.eclipse.triquetrum.workflow.model.CompositeEntity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 
+import ptolemy.kernel.Entity;
 import ptolemy.kernel.util.Attribute;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.Locatable;
@@ -127,7 +133,7 @@ public class EditorUtils {
    * Creates a unique name for a new model element, in its container. The relatedObj should be either the container or a sibling of the to-be-created element,
    * i.e. it should be in the same container as the new element.
    * <p>
-   * This method delegates to ptolemy.kernel.CompositeEntity.uniqueName(String)
+   * This method delegates to ptolemy.kernel.Entity.uniqueName(String)
    * </p>
    *
    * @param relatedObj
@@ -138,13 +144,13 @@ public class EditorUtils {
    */
   public static String buildUniqueName(NamedObj relatedObj, String prefix) {
     NamedObj container = relatedObj;
-    while ((container != null) && !(container instanceof CompositeEntity)) {
+    while ((container != null) && !(container instanceof org.eclipse.triquetrum.workflow.model.Entity)) {
       container = container.getContainer();
     }
     if (container == null) {
       return prefix;
     } else {
-      return ((ptolemy.kernel.CompositeEntity) container.getWrappedObject()).uniqueName(prefix);
+      return ((Entity<?>) container.getWrappedObject()).uniqueName(prefix);
     }
   }
 
@@ -266,5 +272,55 @@ public class EditorUtils {
       }
     }
     return ga;
+  }
+
+  /**
+   *
+   * @param pe
+   * @return true if the containerShape contains an externally defined figure
+   * (based on svg or ptolemy)
+   */
+  public static boolean containsExternallyDefinedFigure(PictogramElement pe) {
+    boolean extFigure = (pe.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm);
+    if(!extFigure && (pe instanceof ContainerShape)) {
+      // check if the platform shape is somewhere in there
+      for(Shape childShape : ((ContainerShape)pe).getChildren()) {
+        if(childShape.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm) {
+          extFigure=true;
+          break;
+        }
+      }
+    }
+    if(!extFigure) {
+      // check if the platform shape is somewhere in there
+      for(GraphicsAlgorithm childShape : pe.getGraphicsAlgorithm().getGraphicsAlgorithmChildren()) {
+        if(childShape instanceof PlatformGraphicsAlgorithm) {
+          extFigure=true;
+          break;
+        }
+      }
+    }
+    return extFigure;
+  }
+
+  /**
+   * Returns a freshly created list of INPUT or OUTPUT port anchors for the given actor shape (or composite actor shape).
+   * The list can be manipulated/changed without risk of impacting the original actorShape definition
+   * (at least when the contained anchors properties are not touched!).
+   *
+   * @param actorShape
+   * @param portIoType BoCategories.INPUT_PORT or OUTPUT_PORT
+   * @return
+   */
+  public static List<Anchor> getContainedPorts(ContainerShape actorShape, String portIoType) {
+    List<Anchor> portShapes = new LinkedList<>();
+    for(Anchor anchor : actorShape.getAnchors()) {
+      FixPointAnchor fpa = (FixPointAnchor) anchor;
+      String boCategory = Graphiti.getPeService().getPropertyValue(anchor, BoCategories.BO_CATEGORY_PROPNAME);
+      if(portIoType.equals(boCategory)) {
+        portShapes.add(fpa);
+      }
+    }
+    return portShapes;
   }
 }

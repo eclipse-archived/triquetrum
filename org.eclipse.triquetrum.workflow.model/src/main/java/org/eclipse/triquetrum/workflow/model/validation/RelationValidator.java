@@ -14,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
 import org.eclipse.triquetrum.workflow.model.Port;
+import org.eclipse.triquetrum.workflow.model.Relation;
 
 /**
  * A sample validator interface for {@link org.eclipse.triquetrum.workflow.model.Relation}.
@@ -25,6 +26,10 @@ public interface RelationValidator {
   boolean validate();
 
   boolean validateLinkedPorts(EList<Port> value);
+
+  boolean validateLinkedRelations(EList<Relation> value);
+
+  boolean validateLinkingRelations(EList<Relation> value);
 
   boolean validateContainer(CompositeEntity value);
 }

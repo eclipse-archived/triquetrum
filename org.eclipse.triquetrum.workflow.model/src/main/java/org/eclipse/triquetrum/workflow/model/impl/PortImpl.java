@@ -170,9 +170,15 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
+<<<<<<< HEAD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    *
    * @generated
+=======
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+>>>>>>> master
    */
   public void setOutput(boolean newOutput) {
     boolean oldOutput = output;
@@ -218,9 +224,15 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
+<<<<<<< HEAD
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    *
    * @generated
+=======
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+>>>>>>> master
    */
   public void setMultiPort(boolean newMultiPort) {
     boolean oldMultiPort = multiPort;

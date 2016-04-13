@@ -52,6 +52,8 @@ public class RelationItemProvider extends NamedObjItemProvider {
       super.getPropertyDescriptors(object);
 
       addLinkedPortsPropertyDescriptor(object);
+      addLinkedRelationsPropertyDescriptor(object);
+      addLinkingRelationsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -70,6 +72,50 @@ public class RelationItemProvider extends NamedObjItemProvider {
          getString("_UI_Relation_linkedPorts_feature"),
          getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkedPorts_feature", "_UI_Relation_type"),
          TriqPackage.Literals.RELATION__LINKED_PORTS,
+         true,
+         false,
+         true,
+         null,
+         null,
+         null));
+  }
+
+  /**
+   * This adds a property descriptor for the Linked Relations feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addLinkedRelationsPropertyDescriptor(Object object) {
+    itemPropertyDescriptors.add
+      (createItemPropertyDescriptor
+        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+         getResourceLocator(),
+         getString("_UI_Relation_linkedRelations_feature"),
+         getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkedRelations_feature", "_UI_Relation_type"),
+         TriqPackage.Literals.RELATION__LINKED_RELATIONS,
+         true,
+         false,
+         true,
+         null,
+         null,
+         null));
+  }
+
+  /**
+   * This adds a property descriptor for the Linking Relations feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addLinkingRelationsPropertyDescriptor(Object object) {
+    itemPropertyDescriptors.add
+      (createItemPropertyDescriptor
+        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+         getResourceLocator(),
+         getString("_UI_Relation_linkingRelations_feature"),
+         getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkingRelations_feature", "_UI_Relation_type"),
+         TriqPackage.Literals.RELATION__LINKING_RELATIONS,
          true,
          false,
          true,

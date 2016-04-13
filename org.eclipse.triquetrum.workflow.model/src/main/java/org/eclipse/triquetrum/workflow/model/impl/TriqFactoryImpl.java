@@ -76,6 +76,8 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
       case TriqPackage.COMPOSITE_ACTOR: return createCompositeActor();
       case TriqPackage.PORT: return createPort();
       case TriqPackage.RELATION: return createRelation();
+      case TriqPackage.LOCATION: return createLocation();
+      case TriqPackage.VERTEX: return createVertex();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -219,6 +221,26 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
   public Relation createRelation() {
     RelationImpl relation = new RelationImpl();
     return relation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Location createLocation() {
+    LocationImpl location = new LocationImpl();
+    return location;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Vertex createVertex() {
+    VertexImpl vertex = new VertexImpl();
+    return vertex;
   }
 
   /**

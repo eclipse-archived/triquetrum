@@ -19,6 +19,7 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.AbstractCreateFeature;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
@@ -26,8 +27,12 @@ import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
+import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.Vertex;
+
+import ptolemy.kernel.util.IllegalActionException;
 
 /**
  * Creates a new model element based on a drag-n-drop from the palette, after prompting the user for the name, or via an import of an existing Ptolemy II model.
@@ -45,19 +50,20 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
   private String category;
   private String elementName;
   private String wrappedClass;
-  private String imageId;
+  private String iconResource;
+  private String iconType;
   private Map<String, String> properties = new HashMap<>();
 
   private ptolemy.kernel.util.NamedObj wrappedObject;
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String group, String category, String elementName, String wrappedClass, String imageId,
-      Map<String, String> properties) {
+  public ModelElementCreateFeature(IFeatureProvider fp, String group, String category, String elementName, String wrappedClass, String iconResource, String iconType, Map<String, String> properties) {
     super(fp, elementName, "Create a " + elementName);
     this.group = group;
     this.category = category;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
-    this.imageId = imageId;
+    this.iconResource = iconResource;
+    this.iconType = iconType;
     if (properties != null) {
       this.properties.putAll(properties);
     }
@@ -86,7 +92,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
 
   @Override
   public String getCreateImageId() {
-    return imageId;
+    return TriqFeatureProvider.ICONTYPE_IMG.equalsIgnoreCase(iconType) ? iconResource : TriqFeatureProvider.DEFAULT_ACTOR_IMG;
   }
 
   public ptolemy.kernel.util.NamedObj getWrappedObject() {
@@ -147,6 +153,11 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
         model.setDirector((Director) result);
       } else if (result instanceof Entity) {
         model.getEntities().add((Entity) result);
+      } else if (result instanceof Vertex) {
+        Relation relation = TriqFactory.eINSTANCE.createRelation();
+        relation.setName(EditorUtils.buildUniqueName(model, "_R"));
+        model.getRelations().add(relation);
+        relation.getAttributes().add((Vertex)result);
       } else if (result instanceof Attribute) {
         model.getAttributes().add((Attribute) result);
       } else if (result instanceof Port) {
@@ -160,7 +171,8 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       }
 
       // set the icon in the create context, so the add feature can add it in the element's shape
-      context.putProperty("icon", getCreateImageId());
+      context.putProperty("icon", iconResource);
+      context.putProperty("iconType", iconType);
       // do the add
       addGraphicalRepresentation(context, result);
       // activate direct editing after object creation
@@ -171,4 +183,5 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       throw new RuntimeException(e);
     }
   }
+
 }

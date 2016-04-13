@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.categorization.model="http://org/eclipse/emf/ecp/view/categorization/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_Tx__kI-eEeWBUtRbl8e3Rw" name="Actor" ecorePath="/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.categorization.model="http://org/eclipse/emf/ecp/view/categorization/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_Tx__kI-eEeWBUtRbl8e3Rw" name="Actor" ecorePath="/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore">
   <rootEClass href="http://www.eclipse.org/triquetrum#//Actor"/>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_TzAFII-eEeWBUtRbl8e3Rw" name="Control name">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_TzAFIY-eEeWBUtRbl8e3Rw">
@@ -13,23 +13,59 @@
   </children>
   <children xsi:type="org.eclipse.emf.ecp.view.categorization.model:CategorizationElement" xmi:id="_3vdP8I-fEeWBUtRbl8e3Rw">
     <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Category" xmi:id="_BBVrAI-gEeWBUtRbl8e3Rw" name="Attributes">
-      <composite xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_TzAFIo-eEeWBUtRbl8e3Rw" name="Control attributes">
-        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_TzAsMI-eEeWBUtRbl8e3Rw">
-          <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//NamedObj/attributes"/>
+      <composite xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_bH1ecPcJEeWmBvkTrM3ocw" name="attributes" addRemoveDisabled="true">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_lONRgPcJEeWmBvkTrM3ocw">
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_v4m-sPcJEeWmBvkTrM3ocw">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
+          </columnDomainModelReferences>
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_8XLYNPcJEeWmBvkTrM3ocw">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Parameter/expression"/>
+          </columnDomainModelReferences>
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_lONRgfcJEeWmBvkTrM3ocw">
+            <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//NamedObj/attributes"/>
+          </domainModelReference>
         </domainModelReference>
       </composite>
     </categorizations>
     <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Category" xmi:id="_8I-08I-fEeWBUtRbl8e3Rw" name="Input ports">
-      <composite xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_TzAsN4-eEeWBUtRbl8e3Rw" name="Control inputPorts">
-        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_TzAsOI-eEeWBUtRbl8e3Rw">
-          <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//Entity/inputPorts"/>
+      <composite xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_h1iaoPcLEeWmBvkTrM3ocw" name="Input ports">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_kWPc0PcLEeWmBvkTrM3ocw">
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_m3Oy4PcLEeWmBvkTrM3ocw">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
+          </columnDomainModelReferences>
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_m3Oy5fcLEeWmBvkTrM3ocw">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/input"/>
+          </columnDomainModelReferences>
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_m3Oy5vcLEeWmBvkTrM3ocw">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/output"/>
+          </columnDomainModelReferences>
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_m3Oy5_cLEeWmBvkTrM3ocw">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/multiPort"/>
+          </columnDomainModelReferences>
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_kWPc0fcLEeWmBvkTrM3ocw">
+            <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//Entity/inputPorts"/>
+          </domainModelReference>
         </domainModelReference>
       </composite>
     </categorizations>
     <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Category" xmi:id="_5BxzcI-fEeWBUtRbl8e3Rw" name="Output ports">
-      <composite xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_TzAsOY-eEeWBUtRbl8e3Rw" name="Control outputPorts">
-        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_TzAsOo-eEeWBUtRbl8e3Rw">
-          <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//Entity/outputPorts"/>
+      <composite xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_Ce2PUPmiEeWuDvPXRdeGPg" name="Output ports">
+        <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_HTwv0PmiEeWuDvPXRdeGPg">
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_JnpeAPmiEeWuDvPXRdeGPg">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
+          </columnDomainModelReferences>
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_JnpeBfmiEeWuDvPXRdeGPg">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/input"/>
+          </columnDomainModelReferences>
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_JnpeBvmiEeWuDvPXRdeGPg">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/output"/>
+          </columnDomainModelReferences>
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_JnpeB_miEeWuDvPXRdeGPg">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/multiPort"/>
+          </columnDomainModelReferences>
+          <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_HTwv0fmiEeWuDvPXRdeGPg">
+            <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//Entity/outputPorts"/>
+          </domainModelReference>
         </domainModelReference>
       </composite>
     </categorizations>

@@ -26,20 +26,20 @@ import ptolemy.vergil.kernel.attributes.TextAttribute;
  * The following features are implemented:
  * </p>
  * <ul>
- * <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#getText <em>Text</em>}</li>
- * <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#getFontFamily <em>Font Family</em>}</li>
- * <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#getTextSize <em>Text Size</em>}</li>
- * <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#isBold <em>Bold</em>}</li>
- * <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#isItalic <em>Italic</em>}</li>
- * <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#getColor <em>Color</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#getText <em>Text</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#getFontFamily <em>Font Family</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#getTextSize <em>Text Size</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#isBold <em>Bold</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#isItalic <em>Italic</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.AnnotationImpl#getColor <em>Color</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class AnnotationImpl extends AttributeImpl implements Annotation {
   /**
-   * The default value of the '{@link #getText() <em>Text</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The default value of the '{@link #getText() <em>Text</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getText()
    * @generated
    * @ordered
@@ -47,8 +47,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected static final String TEXT_EDEFAULT = "Configure to edit text.";
 
   /**
-   * The cached value of the '{@link #getText() <em>Text</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The cached value of the '{@link #getText() <em>Text</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getText()
    * @generated
    * @ordered
@@ -56,8 +56,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected String text = TEXT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getFontFamily() <em>Font Family</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The default value of the '{@link #getFontFamily() <em>Font Family</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFontFamily()
    * @generated
    * @ordered
@@ -65,8 +65,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected static final String FONT_FAMILY_EDEFAULT = "Arial";
 
   /**
-   * The cached value of the '{@link #getFontFamily() <em>Font Family</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The cached value of the '{@link #getFontFamily() <em>Font Family</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFontFamily()
    * @generated
    * @ordered
@@ -74,8 +74,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected String fontFamily = FONT_FAMILY_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getTextSize() <em>Text Size</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The default value of the '{@link #getTextSize() <em>Text Size</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getTextSize()
    * @generated
    * @ordered
@@ -83,8 +83,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected static final int TEXT_SIZE_EDEFAULT = 8;
 
   /**
-   * The cached value of the '{@link #getTextSize() <em>Text Size</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The cached value of the '{@link #getTextSize() <em>Text Size</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getTextSize()
    * @generated
    * @ordered
@@ -92,8 +92,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected int textSize = TEXT_SIZE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isBold() <em>Bold</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The default value of the '{@link #isBold() <em>Bold</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isBold()
    * @generated
    * @ordered
@@ -101,8 +101,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected static final boolean BOLD_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isBold() <em>Bold</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The cached value of the '{@link #isBold() <em>Bold</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isBold()
    * @generated
    * @ordered
@@ -110,8 +110,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected boolean bold = BOLD_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isItalic() <em>Italic</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The default value of the '{@link #isItalic() <em>Italic</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isItalic()
    * @generated
    * @ordered
@@ -119,8 +119,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected static final boolean ITALIC_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isItalic() <em>Italic</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The cached value of the '{@link #isItalic() <em>Italic</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isItalic()
    * @generated
    * @ordered
@@ -128,8 +128,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected boolean italic = ITALIC_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getColor() <em>Color</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The default value of the '{@link #getColor() <em>Color</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getColor()
    * @generated
    * @ordered
@@ -137,8 +137,8 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected static final String COLOR_EDEFAULT = "0,0,0,255";
 
   /**
-   * The cached value of the '{@link #getColor() <em>Color</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * The cached value of the '{@link #getColor() <em>Color</em>}' attribute.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getColor()
    * @generated
    * @ordered
@@ -147,7 +147,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   protected AnnotationImpl() {
@@ -156,7 +155,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
@@ -220,7 +218,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public String getText() {
@@ -229,7 +226,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public void setText(String newText) {
@@ -241,7 +237,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public String getFontFamily() {
@@ -250,7 +245,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public void setFontFamily(String newFontFamily) {
@@ -262,7 +256,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public int getTextSize() {
@@ -271,7 +264,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public void setTextSize(int newTextSize) {
@@ -283,7 +275,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public boolean isBold() {
@@ -292,7 +283,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public void setBold(boolean newBold) {
@@ -304,7 +294,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public boolean isItalic() {
@@ -313,7 +302,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public void setItalic(boolean newItalic) {
@@ -325,7 +313,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   public String getColor() {
@@ -334,7 +321,6 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> TODO check compatibility between the color string presentations in Triq and Ptolemy II <!-- end-user-doc -->
-   *
    * @generated
    */
   public void setColor(String newColor) {
@@ -346,121 +332,115 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-    case TriqPackage.ANNOTATION__TEXT:
-      return getText();
-    case TriqPackage.ANNOTATION__FONT_FAMILY:
-      return getFontFamily();
-    case TriqPackage.ANNOTATION__TEXT_SIZE:
-      return getTextSize();
-    case TriqPackage.ANNOTATION__BOLD:
-      return isBold();
-    case TriqPackage.ANNOTATION__ITALIC:
-      return isItalic();
-    case TriqPackage.ANNOTATION__COLOR:
-      return getColor();
+      case TriqPackage.ANNOTATION__TEXT:
+        return getText();
+      case TriqPackage.ANNOTATION__FONT_FAMILY:
+        return getFontFamily();
+      case TriqPackage.ANNOTATION__TEXT_SIZE:
+        return getTextSize();
+      case TriqPackage.ANNOTATION__BOLD:
+        return isBold();
+      case TriqPackage.ANNOTATION__ITALIC:
+        return isItalic();
+      case TriqPackage.ANNOTATION__COLOR:
+        return getColor();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-    case TriqPackage.ANNOTATION__TEXT:
-      setText((String) newValue);
-      return;
-    case TriqPackage.ANNOTATION__FONT_FAMILY:
-      setFontFamily((String) newValue);
-      return;
-    case TriqPackage.ANNOTATION__TEXT_SIZE:
-      setTextSize((Integer) newValue);
-      return;
-    case TriqPackage.ANNOTATION__BOLD:
-      setBold((Boolean) newValue);
-      return;
-    case TriqPackage.ANNOTATION__ITALIC:
-      setItalic((Boolean) newValue);
-      return;
-    case TriqPackage.ANNOTATION__COLOR:
-      setColor((String) newValue);
-      return;
+      case TriqPackage.ANNOTATION__TEXT:
+        setText((String)newValue);
+        return;
+      case TriqPackage.ANNOTATION__FONT_FAMILY:
+        setFontFamily((String)newValue);
+        return;
+      case TriqPackage.ANNOTATION__TEXT_SIZE:
+        setTextSize((Integer)newValue);
+        return;
+      case TriqPackage.ANNOTATION__BOLD:
+        setBold((Boolean)newValue);
+        return;
+      case TriqPackage.ANNOTATION__ITALIC:
+        setItalic((Boolean)newValue);
+        return;
+      case TriqPackage.ANNOTATION__COLOR:
+        setColor((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-    case TriqPackage.ANNOTATION__TEXT:
-      setText(TEXT_EDEFAULT);
-      return;
-    case TriqPackage.ANNOTATION__FONT_FAMILY:
-      setFontFamily(FONT_FAMILY_EDEFAULT);
-      return;
-    case TriqPackage.ANNOTATION__TEXT_SIZE:
-      setTextSize(TEXT_SIZE_EDEFAULT);
-      return;
-    case TriqPackage.ANNOTATION__BOLD:
-      setBold(BOLD_EDEFAULT);
-      return;
-    case TriqPackage.ANNOTATION__ITALIC:
-      setItalic(ITALIC_EDEFAULT);
-      return;
-    case TriqPackage.ANNOTATION__COLOR:
-      setColor(COLOR_EDEFAULT);
-      return;
+      case TriqPackage.ANNOTATION__TEXT:
+        setText(TEXT_EDEFAULT);
+        return;
+      case TriqPackage.ANNOTATION__FONT_FAMILY:
+        setFontFamily(FONT_FAMILY_EDEFAULT);
+        return;
+      case TriqPackage.ANNOTATION__TEXT_SIZE:
+        setTextSize(TEXT_SIZE_EDEFAULT);
+        return;
+      case TriqPackage.ANNOTATION__BOLD:
+        setBold(BOLD_EDEFAULT);
+        return;
+      case TriqPackage.ANNOTATION__ITALIC:
+        setItalic(ITALIC_EDEFAULT);
+        return;
+      case TriqPackage.ANNOTATION__COLOR:
+        setColor(COLOR_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-    case TriqPackage.ANNOTATION__TEXT:
-      return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
-    case TriqPackage.ANNOTATION__FONT_FAMILY:
-      return FONT_FAMILY_EDEFAULT == null ? fontFamily != null : !FONT_FAMILY_EDEFAULT.equals(fontFamily);
-    case TriqPackage.ANNOTATION__TEXT_SIZE:
-      return textSize != TEXT_SIZE_EDEFAULT;
-    case TriqPackage.ANNOTATION__BOLD:
-      return bold != BOLD_EDEFAULT;
-    case TriqPackage.ANNOTATION__ITALIC:
-      return italic != ITALIC_EDEFAULT;
-    case TriqPackage.ANNOTATION__COLOR:
-      return COLOR_EDEFAULT == null ? color != null : !COLOR_EDEFAULT.equals(color);
+      case TriqPackage.ANNOTATION__TEXT:
+        return TEXT_EDEFAULT == null ? text != null : !TEXT_EDEFAULT.equals(text);
+      case TriqPackage.ANNOTATION__FONT_FAMILY:
+        return FONT_FAMILY_EDEFAULT == null ? fontFamily != null : !FONT_FAMILY_EDEFAULT.equals(fontFamily);
+      case TriqPackage.ANNOTATION__TEXT_SIZE:
+        return textSize != TEXT_SIZE_EDEFAULT;
+      case TriqPackage.ANNOTATION__BOLD:
+        return bold != BOLD_EDEFAULT;
+      case TriqPackage.ANNOTATION__ITALIC:
+        return italic != ITALIC_EDEFAULT;
+      case TriqPackage.ANNOTATION__COLOR:
+        return COLOR_EDEFAULT == null ? color != null : !COLOR_EDEFAULT.equals(color);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
   public String toString() {
-    if (eIsProxy())
-      return super.toString();
+    if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (text: ");

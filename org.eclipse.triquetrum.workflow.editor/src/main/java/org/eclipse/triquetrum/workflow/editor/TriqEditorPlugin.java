@@ -12,6 +12,9 @@ package org.eclipse.triquetrum.workflow.editor;
 
 import java.io.PrintStream;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emfforms.spi.common.report.ReportService;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
@@ -88,10 +91,24 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
     super.stop(context);
   }
 
+  public static void log(int severity, String message, Throwable t) {
+    IStatus status = new Status(severity, getID(), 0, message, t);
+    getDefault().getLog().log(status);
+  }
+
+  public static void logError(String message, Throwable t) {
+    log(IStatus.ERROR, message, t);
+  }
+
   public WorkflowExecutionService getWorkflowExecutionService() {
     return executionService;
   }
 
+  public ReportService getReportService() {
+    final BundleContext bundleContext = getBundle().getBundleContext();
+    final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
+    return bundleContext.getService(serviceReference);
+  }
 
   private MessageConsole findConsole(String name) {
     IConsoleManager conMan = ConsolePlugin.getDefault().getConsoleManager();
