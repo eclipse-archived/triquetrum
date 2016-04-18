@@ -19,6 +19,7 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.AbstractCreateFeature;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Attribute;
@@ -31,8 +32,6 @@ import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.Vertex;
-
-import ptolemy.kernel.util.IllegalActionException;
 
 /**
  * Creates a new model element based on a drag-n-drop from the palette, after prompting the user for the name, or via an import of an existing Ptolemy II model.
@@ -50,8 +49,8 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
   private String category;
   private String elementName;
   private String wrappedClass;
-  private String iconResource;
-  private String iconType;
+  private String iconResource = ImageConstants.IMG_ACTOR;
+  private String iconType = TriqFeatureProvider.ICONTYPE_IMG;
   private Map<String, String> properties = new HashMap<>();
 
   private ptolemy.kernel.util.NamedObj wrappedObject;

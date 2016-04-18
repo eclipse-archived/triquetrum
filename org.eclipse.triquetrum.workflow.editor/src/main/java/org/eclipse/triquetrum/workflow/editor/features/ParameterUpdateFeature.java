@@ -35,8 +35,8 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), BoCategories.BO_CATEGORY_PROPNAME);
-    return ("PARAMETER".equals(boCategory));
+    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
+    return (BoCategories.Parameter.equals(boCategory));
   }
 
   @Override
@@ -51,8 +51,8 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
       if (bo instanceof Parameter && pictogramElement instanceof Shape) {
         p = (Parameter) bo;
         Shape shape = (Shape) pictogramElement;
-        String boCategory = Graphiti.getPeService().getPropertyValue(shape, BoCategories.BO_CATEGORY_PROPNAME);
-        if ("PARAMETER".equalsIgnoreCase(boCategory)) {
+        BoCategories boCategory = BoCategories.retrieveFrom(shape);
+        if (BoCategories.Parameter.equals(boCategory)) {
           // parameters can not change name, only the value can change
           String boValue = Graphiti.getPeService().getPropertyValue(shape, "__BO_VALUE");
           parameterChanged = p.getExpression() != null && !p.getExpression().equals(boValue);
@@ -75,15 +75,15 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Parameter && pictogramElement instanceof Shape) {
       Parameter param = (Parameter) bo;
       Shape shape = (Shape) pictogramElement;
-      String boCategory = Graphiti.getPeService().getPropertyValue(shape, BoCategories.BO_CATEGORY_PROPNAME);
-      if ("PARAMETER".equals(boCategory)) {
+      BoCategories boCategory = BoCategories.retrieveFrom(shape);
+      if (BoCategories.Parameter.equals(boCategory)) {
         Text text = null;
         if (shape.getGraphicsAlgorithm() instanceof Text) {
           text = (Text) shape.getGraphicsAlgorithm();
         } else if (shape instanceof ContainerShape) {
           for (Shape childShape : ((ContainerShape) shape).getChildren()) {
-            boCategory = Graphiti.getPeService().getPropertyValue(childShape, BoCategories.BO_CATEGORY_PROPNAME);
-            if ("PARAMETER".equals(boCategory)) {
+            boCategory = BoCategories.retrieveFrom(childShape);
+            if (BoCategories.Parameter.equals(boCategory)) {
               if (childShape.getGraphicsAlgorithm() instanceof Text) {
                 text = (Text) childShape.getGraphicsAlgorithm();
                 break;

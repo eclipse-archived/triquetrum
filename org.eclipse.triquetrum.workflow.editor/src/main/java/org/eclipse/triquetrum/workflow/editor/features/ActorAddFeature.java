@@ -73,14 +73,14 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, String category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategories category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
     if (businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category);
+    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category.name());
     Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
   }
 
@@ -111,7 +111,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     ICreateService createService = Graphiti.getCreateService();
     IGaService gaService = Graphiti.getGaService();
     ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
-    link(containerShape, addedActor, BoCategories.ACTOR);
+    link(containerShape, addedActor, BoCategories.Actor);
 
     GraphicsAlgorithm invisibleRectangle = null;
     invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
@@ -147,7 +147,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
           anchor.setLocation(createService.createPoint(15 + width, yOffsetForPorts + (pIndex++) * PORT_SIZE));
           anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-          link(anchor, p, BoCategories.OUTPUT_PORT);
+          link(anchor, p, BoCategories.Output);
 
           final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
           portShape.setForeground(manageColor(PORT_FOREGROUND));
@@ -172,7 +172,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
           anchor.setUseAnchorLocationAsConnectionEndpoint(true);
           anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-          link(anchor, p, BoCategories.INPUT_PORT);
+          link(anchor, p, BoCategories.Input);
 
           final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
           portShape.setForeground(manageColor(PORT_FOREGROUND));
@@ -247,7 +247,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 20, 0, width - 25, 20);
 
       // create link and wire it
-      link(shape, addedActor, BoCategories.ACTOR);
+      link(shape, addedActor, BoCategories.Actor);
 
       // provide information to support direct-editing directly
       // after object creation (must be activated additionally)
@@ -262,34 +262,34 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
 
     // SHAPES for basic configurable parameters (other parameters will be in the
     // Configure dialogue, but not shown by default in the actor shape)
-    {
-      int pIndex = 0;
-      for (Parameter param : addedActor.getParameters()) {
-        // create shape for text
-        Shape shape = peCreateService.createShape(containerShape, false);
-
-        // create and set text graphics algorithm
-        String pName = param.getName();
-        String pVal = param.getExpression();
-        pName = (pName.length() > 12) ? pName.substring(0, 12) : pName;
-        pVal = (pVal.length() > 12) ? pVal.substring(0, 12) : pVal;
-
-        Text text = gaService.createText(shape, pName + " : " + pVal);
-        // IUiLayoutService uil = GraphitiUi.getUiLayoutService();
-        // IDimension dim = uil.calculateTextSize(text.getValue(),
-        // text.getFont());
-
-        text.setForeground(manageColor(PARAM_FOREGROUND));
-        text.setHorizontalAlignment(Orientation.ALIGNMENT_LEFT);
-        // vertical alignment has as default value "center"
-        text.setFont(gaService.manageFont(getDiagram(), IGaService.DEFAULT_FONT, 8));
-        gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 5, 22 + 15 * pIndex++, width, 20);
-
-        // create link and wire it
-        link(shape, param, "PARAMETER");
-        Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
-      }
-    }
+//    {
+//      int pIndex = 0;
+//      for (Parameter param : addedActor.getParameters()) {
+//        // create shape for text
+//        Shape shape = peCreateService.createShape(containerShape, false);
+//
+//        // create and set text graphics algorithm
+//        String pName = param.getName();
+//        String pVal = param.getExpression();
+//        pName = (pName.length() > 12) ? pName.substring(0, 12) : pName;
+//        pVal = (pVal.length() > 12) ? pVal.substring(0, 12) : pVal;
+//
+//        Text text = gaService.createText(shape, pName + " : " + pVal);
+//        // IUiLayoutService uil = GraphitiUi.getUiLayoutService();
+//        // IDimension dim = uil.calculateTextSize(text.getValue(),
+//        // text.getFont());
+//
+//        text.setForeground(manageColor(PARAM_FOREGROUND));
+//        text.setHorizontalAlignment(Orientation.ALIGNMENT_LEFT);
+//        // vertical alignment has as default value "center"
+//        text.setFont(gaService.manageFont(getDiagram(), IGaService.DEFAULT_FONT, 8));
+//        gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 5, 22 + 15 * pIndex++, width, 20);
+//
+//        // create link and wire it
+//        link(shape, param, BoCategories.Parameter);
+//        Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
+//      }
+//    }
 
     return actorShapeGA;
   }

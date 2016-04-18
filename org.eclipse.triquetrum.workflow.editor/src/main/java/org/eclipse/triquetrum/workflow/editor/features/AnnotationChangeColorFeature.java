@@ -14,7 +14,6 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
@@ -56,8 +55,8 @@ public class AnnotationChangeColorFeature extends AbstractCustomFeature {
       }
     }
     if (pe != null) {
-      String boCategory = Graphiti.getPeService().getPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME);
-      ret = ("ANNOTATION".equals(boCategory));
+      BoCategories boCategory = BoCategories.retrieveFrom(pe);
+      ret = (BoCategories.Annotation.equals(boCategory));
     }
     return ret;
 	}

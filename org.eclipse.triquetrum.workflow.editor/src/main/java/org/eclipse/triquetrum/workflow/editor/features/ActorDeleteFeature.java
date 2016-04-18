@@ -15,7 +15,6 @@ import java.util.HashSet;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDeleteContext;
-import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 import org.eclipse.triquetrum.workflow.editor.BoCategories;
 import org.eclipse.triquetrum.workflow.model.Actor;
@@ -30,8 +29,8 @@ public class ActorDeleteFeature extends DefaultDeleteFeature {
 
   @Override
   public boolean canDelete(IDeleteContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), BoCategories.BO_CATEGORY_PROPNAME);
-    return (BoCategories.ACTOR.equals(boCategory));
+    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
+    return (BoCategories.Actor.equals(boCategory));
   }
 
 

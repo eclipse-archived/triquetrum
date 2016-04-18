@@ -42,14 +42,14 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, String category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategories category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
     if (businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category);
+    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category.name());
     Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
   }
 
@@ -86,8 +86,8 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     // TODO check if we need multiple anchors?
     ChopboxAnchor anchor = peCreateService.createChopboxAnchor(containerShape);
     anchor.setReferencedGraphicsAlgorithm(diamond);
-    link(anchor, addedVertex, BoCategories.RELATION);
-    link(containerShape, addedVertex, BoCategories.RELATION);
+    link(anchor, addedVertex, BoCategories.Relation);
+    link(containerShape, addedVertex, BoCategories.Relation);
 
     // TODO find a way to get the full name from our Triq NamedObj,
     // then we don't need to depend on the presence of the wrapped object.

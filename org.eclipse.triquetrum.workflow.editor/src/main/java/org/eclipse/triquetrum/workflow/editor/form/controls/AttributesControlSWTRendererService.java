@@ -1,7 +1,6 @@
 package org.eclipse.triquetrum.workflow.editor.form.controls;
 
 import org.eclipse.core.databinding.property.value.IValueProperty;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecp.view.spi.context.ViewModelContext;
 import org.eclipse.emf.ecp.view.spi.model.VControl;

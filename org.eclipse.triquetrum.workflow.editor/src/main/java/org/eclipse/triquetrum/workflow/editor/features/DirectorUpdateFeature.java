@@ -31,8 +31,8 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), BoCategories.BO_CATEGORY_PROPNAME);
-    return ("DIRECTOR".equals(boCategory));
+    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
+    return (BoCategories.Director.equals(boCategory));
   }
 
   @Override
@@ -49,14 +49,14 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
       elemName = director.getName();
 
       for (Shape shape : cs.getChildren()) {
-        String boCategory = Graphiti.getPeService().getPropertyValue(shape, BoCategories.BO_CATEGORY_PROPNAME);
+        BoCategories boCategory = BoCategories.retrieveFrom(shape);
         if (shape.getGraphicsAlgorithm() instanceof Text) {
           Text text = (Text) shape.getGraphicsAlgorithm();
-          if ("DIRECTOR".equalsIgnoreCase(boCategory)) {
+          if (BoCategories.Director.equals(boCategory)) {
             // it's the text field with the name of the actor
             String actorNameInGraph = text.getValue();
             elemNameChanged = !elemName.equals(actorNameInGraph);
-          } 
+          }
         }
       }
     }
@@ -81,10 +81,10 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
     if((pe instanceof ContainerShape) && (bo instanceof Director)) {
       ContainerShape cs = (ContainerShape) pe;
       Director director = (Director) bo;
-      
+
       for (Shape shape : cs.getChildren()) {
-        String boCategory = Graphiti.getPeService().getPropertyValue(shape, BoCategories.BO_CATEGORY_PROPNAME);
-        if("DIRECTOR".equals(boCategory)) {
+        BoCategories boCategory = BoCategories.retrieveFrom(shape);
+        if(BoCategories.Director.equals(boCategory)) {
           Text text = (Text) shape.getGraphicsAlgorithm();
           text.setValue(director.getName());
           result = true;

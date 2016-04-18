@@ -1,14 +1,26 @@
 package org.eclipse.triquetrum.workflow.editor;
 
-public interface BoCategories {
+import org.apache.commons.lang.StringUtils;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.services.Graphiti;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-  String BO_CATEGORY_PROPNAME = "__BO_CATEGORY";
+public enum BoCategories {
+  Actor, Director, Parameter, Attribute, Annotation, Relation, Vertex, Port, Input, Output;
 
-  String ACTOR = "ACTOR";
-  String DIRECTOR = "DIRECTOR";
-  String PARAMETER = "PARAMETER";
-  String RELATION = "RELATION";
-  String PORT = "PORT";
-  String INPUT_PORT = "INPUT";
-  String OUTPUT_PORT = "OUTPUT";
+  public final static String BO_CATEGORY_PROPNAME = "__BO_CATEGORY";
+  private final static Logger LOGGER = LoggerFactory.getLogger(BoCategories.class);
+
+  public static BoCategories retrieveFrom(PictogramElement pe) {
+    String boCategoryStr = Graphiti.getPeService().getPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME);
+    if (!StringUtils.isBlank(boCategoryStr)) {
+      try {
+        return BoCategories.valueOf(boCategoryStr);
+      } catch (Exception e) {
+        LOGGER.error("Invalid BO Category for " + pe, e);
+      }
+    }
+    return null;
+  }
 }

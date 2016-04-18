@@ -37,6 +37,7 @@ import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
+import ptolemy.actor.Actor;
 import ptolemy.actor.Director;
 import ptolemy.actor.IOPort;
 import ptolemy.actor.IORelation;
@@ -129,13 +130,12 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
       createModelElement(model, featureProvider, entity, model);
     }
 
-    // TODO the code above only allows to import ptolemy model elements that are configured in the editor palette!
-    // so we may need to handle a generic creation feature here that works on the info as found in the ptolemy model,
-    // and would only fail if the underlying ptolemy implementation class is not found in the Triq runtime??
-
     linkRelations(ptolemyModel, model, featureProvider);
   }
 
+  // TODO the code below only allows to import ptolemy model elements that are configured in the editor palette!
+  // so we may need to handle a generic creation feature here that works on the info as found in the ptolemy model,
+  // and would only fail if the underlying ptolemy implementation class is not found in the Triq runtime??
   protected org.eclipse.triquetrum.workflow.model.NamedObj createModelElement(org.eclipse.triquetrum.workflow.model.CompositeActor model,
       IFeatureProvider featureProvider, NamedObj ptObject, org.eclipse.triquetrum.workflow.model.NamedObj triqContainer) {
 
@@ -163,6 +163,12 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
           result = (org.eclipse.triquetrum.workflow.model.NamedObj) mecf.create(context)[0];
           break;
         }
+      }
+    }
+    if(result==null) {
+      // seems to be about a model element for which no preconfigured ModelElementCreateFeature was found
+      if(ptObject instanceof Actor) {
+
       }
     }
     return result;
