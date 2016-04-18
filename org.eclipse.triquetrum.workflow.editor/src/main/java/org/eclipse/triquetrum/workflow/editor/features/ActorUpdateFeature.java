@@ -83,7 +83,6 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
     String actorName = null;
     int inputPortCount = 0;
     int outputPortCount = 0;
-    int parameterCount = 0;
     boolean actorNameChanged = false;
     List<String> changedParameters = new ArrayList<String>();
 
@@ -98,7 +97,6 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
 
       if (!EditorUtils.containsExternallyDefinedFigure(pictogramElement)) {
         actorName = actor.getName();
-        parameterCount = actor.getParameters().size();
 
         for (Shape shape : cs.getChildren()) {
           String boName = Graphiti.getPeService().getPropertyValue(shape, FeatureConstants.BO_NAME);
@@ -109,14 +107,6 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
               // it's the text field with the name of the actor
               String actorNameInGraph = text.getValue();
               actorNameChanged = !actorName.equals(actorNameInGraph);
-            } else if (BoCategory.Parameter.equals(boCategory)) {
-              // parameters can not change name, only the value can change
-              String boValue = Graphiti.getPeService().getPropertyValue(shape, "__BO_VALUE");
-              Parameter p = (Parameter) actor.getChild(boName);
-              if (p != null && !p.getExpression().equals(boValue)) {
-                changedParameters.add(boName);
-              }
-              parameterCount--;
             }
           }
         }
@@ -135,15 +125,11 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
       }
     }
     // build diff result and store some useful info in the update context
-    if (actorNameChanged || (changedParameters.size() > 0) || (parameterCount != 0) || (inputPortCount != 0) || (outputPortCount != 0)) {
+    if (actorNameChanged || (changedParameters.size() > 0) || (inputPortCount != 0) || (outputPortCount != 0)) {
       StringBuilder diffResultBldr = new StringBuilder();
       if (actorNameChanged) {
         diffResultBldr.append("Actor name changed; ");
         context.putProperty("ACTORNAME_CHANGED", "true");
-      }
-      if (changedParameters.size() > 0 || (parameterCount != 0)) {
-        diffResultBldr.append("Parameter change; ");
-        context.putProperty("PARAMETER_CHANGED", changedParameters);
       }
       if (inputPortCount != 0 || outputPortCount != 0) {
         diffResultBldr.append("Port change; ");
