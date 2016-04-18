@@ -20,7 +20,7 @@ import org.eclipse.graphiti.mm.algorithms.styles.Color;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.slf4j.Logger;
@@ -38,8 +38,8 @@ public class AnnotationUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
-    return (BoCategories.Annotation.equals(boCategory));
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    return (BoCategory.Annotation.equals(boCategory));
   }
 
   @Override
@@ -51,8 +51,8 @@ public class AnnotationUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Annotation && pictogramElement instanceof Shape) {
       annotation = (Annotation) bo;
       Shape shape = (Shape) pictogramElement;
-      BoCategories boCategory = BoCategories.retrieveFrom(shape);
-      if (BoCategories.Annotation.equals(boCategory)) {
+      BoCategory boCategory = BoCategory.retrieveFrom(shape);
+      if (BoCategory.Annotation.equals(boCategory)) {
         MultiText text = EditorUtils.getGraphicsAlgorithmOfShape(shape, MultiText.class);
         if (text != null) {
           String boValue = text.getValue();
@@ -85,8 +85,8 @@ public class AnnotationUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Annotation && pictogramElement instanceof Shape) {
       Annotation annotation = (Annotation) bo;
       Shape shape = (Shape) pictogramElement;
-      BoCategories boCategory = BoCategories.retrieveFrom(shape);
-      if (BoCategories.Annotation.equals(boCategory)) {
+      BoCategory boCategory = BoCategory.retrieveFrom(shape);
+      if (BoCategory.Annotation.equals(boCategory)) {
         MultiText text = EditorUtils.getGraphicsAlgorithmOfShape(shape, MultiText.class);
         if (text != null) {
           text.setValue(annotation.getText());

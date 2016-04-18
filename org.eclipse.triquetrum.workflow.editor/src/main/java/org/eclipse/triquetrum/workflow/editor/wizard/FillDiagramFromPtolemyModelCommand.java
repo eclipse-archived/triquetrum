@@ -28,6 +28,8 @@ import org.eclipse.graphiti.features.context.impl.CreateContext;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
+import org.eclipse.triquetrum.ErrorCode;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider;
 import org.eclipse.triquetrum.workflow.editor.features.FeatureConstants;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
@@ -36,8 +38,9 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.Vertex;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import ptolemy.actor.Actor;
 import ptolemy.actor.Director;
 import ptolemy.actor.IOPort;
 import ptolemy.actor.IORelation;
@@ -53,6 +56,7 @@ import ptolemy.vergil.kernel.attributes.TextAttribute;
  *
  */
 public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
+  private final static Logger LOGGER = LoggerFactory.getLogger(FillDiagramFromPtolemyModelCommand.class);
 
   private TransactionalEditingDomain editingDomain;
   private Diagram diagram;
@@ -165,10 +169,16 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
         }
       }
     }
-    if(result==null) {
+    if (result == null) {
       // seems to be about a model element for which no preconfigured ModelElementCreateFeature was found
-      if(ptObject instanceof Actor) {
-
+      BoCategory meCategory = BoCategory.valueOf(ptObject.getClass());
+      if (meCategory != null) {
+        ModelElementCreateFeature mecf = new ModelElementCreateFeature(featureProvider, null, meCategory, ptObject.getName());
+        mecf.setWrappedObject(ptObject);
+        result = (org.eclipse.triquetrum.workflow.model.NamedObj) mecf.create(context)[0];
+      } else {
+        // TODO implement some better error handling reaching into the user's import GUI
+        LOGGER.error(ErrorCode.WARN + " - Unsupported Ptolemy model element " + ptObject);
       }
     }
     return result;

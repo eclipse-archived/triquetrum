@@ -33,7 +33,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -309,14 +309,14 @@ public class EditorUtils {
    * (at least when the contained anchors properties are not touched!).
    *
    * @param actorShape
-   * @param portIoType BoCategories.INPUT_PORT or OUTPUT_PORT
+   * @param portIoType BoCategories.Input or Output
    * @return
    */
-  public static List<Anchor> getContainedPorts(ContainerShape actorShape, String portIoType) {
+  public static List<Anchor> getContainedPorts(ContainerShape actorShape, BoCategory portIoType) {
     List<Anchor> portShapes = new LinkedList<>();
     for(Anchor anchor : actorShape.getAnchors()) {
       FixPointAnchor fpa = (FixPointAnchor) anchor;
-      String boCategory = Graphiti.getPeService().getPropertyValue(anchor, BoCategories.BO_CATEGORY_PROPNAME);
+      BoCategory boCategory = BoCategory.retrieveFrom(anchor);
       if(portIoType.equals(boCategory)) {
         portShapes.add(fpa);
       }

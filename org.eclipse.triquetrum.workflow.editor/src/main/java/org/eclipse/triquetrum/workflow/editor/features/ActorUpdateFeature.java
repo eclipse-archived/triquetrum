@@ -37,7 +37,7 @@ import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.ICreateService;
 import org.eclipse.graphiti.util.IColorConstant;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -55,8 +55,8 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
-    return (BoCategories.Actor.equals(boCategory));
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    return (BoCategory.Actor.equals(boCategory));
   }
 
   /**
@@ -101,15 +101,15 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
         parameterCount = actor.getParameters().size();
 
         for (Shape shape : cs.getChildren()) {
-          String boName = Graphiti.getPeService().getPropertyValue(shape, "__BO_NAME");
-          BoCategories boCategory = BoCategories.retrieveFrom(shape);
+          String boName = Graphiti.getPeService().getPropertyValue(shape, FeatureConstants.BO_NAME);
+          BoCategory boCategory = BoCategory.retrieveFrom(shape);
           if (shape.getGraphicsAlgorithm() instanceof Text) {
             Text text = (Text) shape.getGraphicsAlgorithm();
-            if (BoCategories.Actor.equals(boCategory)) {
+            if (BoCategory.Actor.equals(boCategory)) {
               // it's the text field with the name of the actor
               String actorNameInGraph = text.getValue();
               actorNameChanged = !actorName.equals(actorNameInGraph);
-            } else if (BoCategories.Parameter.equals(boCategory)) {
+            } else if (BoCategory.Parameter.equals(boCategory)) {
               // parameters can not change name, only the value can change
               String boValue = Graphiti.getPeService().getPropertyValue(shape, "__BO_VALUE");
               Parameter p = (Parameter) actor.getChild(boName);
@@ -125,11 +125,11 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
       // e.g. when we support changing the order of the ports, or renaming ports,
       // it's no longer sufficient to just count ports...
       for (Anchor anchor : cs.getAnchors()) {
-        BoCategories boCategory = BoCategories.retrieveFrom(anchor);
-        if (BoCategories.Input.equals(boCategory)) {
+        BoCategory boCategory = BoCategory.retrieveFrom(anchor);
+        if (BoCategory.Input.equals(boCategory)) {
           inputPortCount--;
         }
-        if (BoCategories.Output.equals(boCategory)) {
+        if (BoCategory.Output.equals(boCategory)) {
           outputPortCount--;
         }
       }
@@ -167,13 +167,13 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
       Actor actor = (Actor) bo;
 
       for (Shape shape : cs.getChildren()) {
-        BoCategories boCategory = BoCategories.retrieveFrom(shape);
-        if (BoCategories.Actor.equals(boCategory) && shape.getGraphicsAlgorithm() instanceof Text) {
+        BoCategory boCategory = BoCategory.retrieveFrom(shape);
+        if (BoCategory.Actor.equals(boCategory) && shape.getGraphicsAlgorithm() instanceof Text) {
           Text text = (Text) shape.getGraphicsAlgorithm();
           text.setValue(actor.getName());
           result = true;
-          Graphiti.getPeService().setPropertyValue(shape, "__BO_NAME", actor.getName());
-        } else if (BoCategories.Parameter.equals(boCategory)) {
+          Graphiti.getPeService().setPropertyValue(shape, FeatureConstants.BO_NAME, actor.getName());
+        } else if (BoCategory.Parameter.equals(boCategory)) {
           Text text = (Text) shape.getGraphicsAlgorithm();
           Parameter param = (Parameter) getBusinessObjectForPictogramElement(shape);
           String pName = param.getName();
@@ -188,8 +188,8 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
 
       if (portsChange) {
         // current graphical port representations
-        List<Anchor> inputPortAnchors = EditorUtils.getContainedPorts(cs, BoCategories.Input.name());
-        List<Anchor> outputPortAnchors = EditorUtils.getContainedPorts(cs, BoCategories.Output.name());
+        List<Anchor> inputPortAnchors = EditorUtils.getContainedPorts(cs, BoCategory.Input);
+        List<Anchor> outputPortAnchors = EditorUtils.getContainedPorts(cs, BoCategory.Output);
 
         // the up-to-date ports in the triq actor
         EList<Port> inputPorts = actor.getInputPorts();
@@ -272,7 +272,7 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
     int anchorX = p.isOutput() ? (15 + width) : 0;
     anchor.setLocation(createService.createPoint(anchorX, yOffsetForPorts + i * ActorAddFeature.PORT_SIZE));
     anchor.setReferencedGraphicsAlgorithm(containerGA);
-    link(anchor, p, p.isOutput() ? BoCategories.Output : BoCategories.Input);
+    link(anchor, p, p.isOutput() ? BoCategory.Output : BoCategory.Input);
 
     final Polygon portShape = Graphiti.getGaService().createPlainPolygon(anchor, new int[] { 0, 0, ActorAddFeature.PORT_SIZE, halfPortSize, 0, ActorAddFeature.PORT_SIZE });
     portShape.setForeground(manageColor(ActorAddFeature.PORT_FOREGROUND));
@@ -300,14 +300,14 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
     }
   }
 
-  protected void link(PictogramElement pe, Object businessObject, BoCategories category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategory category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
+    category.storeIn(pe);
     if (businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category.name());
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
+    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 }

@@ -17,7 +17,7 @@ import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 
@@ -34,11 +34,11 @@ public class ModelElementNameDirectEditFeature extends AbstractDirectEditingFeat
   @Override
   public boolean canDirectEdit(IDirectEditingContext context) {
     GraphicsAlgorithm ga = context.getGraphicsAlgorithm();
-    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
     // The name of an actor (or other model element) is the only
     // Text element that is linked to it as its business object
-    return ((BoCategories.Actor.equals(boCategory) || BoCategories.Director.equals(boCategory)
-        || (BoCategories.Port.equals(boCategory)))
+    return ((BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory)
+        || (BoCategory.Port.equals(boCategory)))
         && (ga instanceof Text));
   }
 

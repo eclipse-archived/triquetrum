@@ -20,7 +20,7 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 
@@ -35,8 +35,8 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
-    return (BoCategories.Parameter.equals(boCategory));
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    return (BoCategory.Parameter.equals(boCategory));
   }
 
   @Override
@@ -51,8 +51,8 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
       if (bo instanceof Parameter && pictogramElement instanceof Shape) {
         p = (Parameter) bo;
         Shape shape = (Shape) pictogramElement;
-        BoCategories boCategory = BoCategories.retrieveFrom(shape);
-        if (BoCategories.Parameter.equals(boCategory)) {
+        BoCategory boCategory = BoCategory.retrieveFrom(shape);
+        if (BoCategory.Parameter.equals(boCategory)) {
           // parameters can not change name, only the value can change
           String boValue = Graphiti.getPeService().getPropertyValue(shape, "__BO_VALUE");
           parameterChanged = p.getExpression() != null && !p.getExpression().equals(boValue);
@@ -75,15 +75,15 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Parameter && pictogramElement instanceof Shape) {
       Parameter param = (Parameter) bo;
       Shape shape = (Shape) pictogramElement;
-      BoCategories boCategory = BoCategories.retrieveFrom(shape);
-      if (BoCategories.Parameter.equals(boCategory)) {
+      BoCategory boCategory = BoCategory.retrieveFrom(shape);
+      if (BoCategory.Parameter.equals(boCategory)) {
         Text text = null;
         if (shape.getGraphicsAlgorithm() instanceof Text) {
           text = (Text) shape.getGraphicsAlgorithm();
         } else if (shape instanceof ContainerShape) {
           for (Shape childShape : ((ContainerShape) shape).getChildren()) {
-            boCategory = BoCategories.retrieveFrom(childShape);
-            if (BoCategories.Parameter.equals(boCategory)) {
+            boCategory = BoCategory.retrieveFrom(childShape);
+            if (BoCategory.Parameter.equals(boCategory)) {
               if (childShape.getGraphicsAlgorithm() instanceof Text) {
                 text = (Text) childShape.getGraphicsAlgorithm();
                 break;

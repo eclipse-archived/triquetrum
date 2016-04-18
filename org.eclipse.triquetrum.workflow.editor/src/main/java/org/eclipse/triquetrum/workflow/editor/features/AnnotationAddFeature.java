@@ -25,7 +25,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -46,15 +46,15 @@ public class AnnotationAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, BoCategories category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategory category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
+    category.storeIn(pe);
     if (businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category.name());
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
+    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
   public boolean canAdd(IAddContext context) {
@@ -96,7 +96,7 @@ public class AnnotationAddFeature extends AbstractAddShapeFeature {
     text.setFont(gaService.manageFont(getDiagram(), addedAnnotation.getFontFamily(), textSize, addedAnnotation.isItalic(), addedAnnotation.isBold()));
     gaService.setLocationAndSize(text, X_OFFSET_TEXT, 0, WIDTH - X_OFFSET_TEXT, (textSize+SPACING_INTERLINE)*HEIGHT_LINES);
 
-    link(containerShape, addedAnnotation, BoCategories.Annotation);
+    link(containerShape, addedAnnotation, BoCategory.Annotation);
 
     layoutPictogramElement(containerShape);
 

@@ -40,7 +40,7 @@ import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.ErrorCode;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -73,15 +73,15 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, BoCategories category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategory category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
+    category.storeIn(pe);
     if (businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category.name());
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
+    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
   public boolean canAdd(IAddContext context) {
@@ -111,7 +111,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     ICreateService createService = Graphiti.getCreateService();
     IGaService gaService = Graphiti.getGaService();
     ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
-    link(containerShape, addedActor, BoCategories.Actor);
+    link(containerShape, addedActor, BoCategory.Actor);
 
     GraphicsAlgorithm invisibleRectangle = null;
     invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
@@ -147,7 +147,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
           anchor.setLocation(createService.createPoint(15 + width, yOffsetForPorts + (pIndex++) * PORT_SIZE));
           anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-          link(anchor, p, BoCategories.Output);
+          link(anchor, p, BoCategory.Output);
 
           final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
           portShape.setForeground(manageColor(PORT_FOREGROUND));
@@ -172,7 +172,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
           anchor.setUseAnchorLocationAsConnectionEndpoint(true);
           anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-          link(anchor, p, BoCategories.Input);
+          link(anchor, p, BoCategory.Input);
 
           final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
           portShape.setForeground(manageColor(PORT_FOREGROUND));
@@ -247,7 +247,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 20, 0, width - 25, 20);
 
       // create link and wire it
-      link(shape, addedActor, BoCategories.Actor);
+      link(shape, addedActor, BoCategory.Actor);
 
       // provide information to support direct-editing directly
       // after object creation (must be activated additionally)

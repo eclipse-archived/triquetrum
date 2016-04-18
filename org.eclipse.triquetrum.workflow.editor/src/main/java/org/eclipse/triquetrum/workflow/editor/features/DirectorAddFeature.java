@@ -29,7 +29,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.slf4j.Logger;
@@ -53,15 +53,15 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, BoCategories category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategory category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated Triq model element
     // so we can easily distinguish and identify them later on for updates etc
+    category.storeIn(pe);
     if(businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj)businessObject).getName());
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj)businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category.name());
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
+    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
   public boolean canAdd(IAddContext context) {
@@ -111,7 +111,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
       gaService.setLocationAndSize(roundedRectangle, SHAPE_X_OFFSET, 0, width, height);
 
       // create link and wire it
-      link(containerShape, addedDirector, BoCategories.Director);
+      link(containerShape, addedDirector, BoCategory.Director);
 
       // add the actor's icon
       String iconId = (String) context.getProperty("icon");
@@ -151,7 +151,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
       gaService.setLocationAndSize(text, SHAPE_X_OFFSET+20, 0, width-25, 20);
 
       // create link and wire it
-      link(shape, addedDirector, BoCategories.Director);
+      link(shape, addedDirector, BoCategory.Director);
     }
 
     // don't show director params in graphical model

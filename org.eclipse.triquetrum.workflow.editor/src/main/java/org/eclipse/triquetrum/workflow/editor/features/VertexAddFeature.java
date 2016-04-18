@@ -25,7 +25,7 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
@@ -42,15 +42,15 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, BoCategories category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategory category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
+    category.storeIn(pe);
     if (businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, BoCategories.BO_CATEGORY_PROPNAME, category.name());
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
+    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
   public boolean canAdd(IAddContext context) {
@@ -86,8 +86,8 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     // TODO check if we need multiple anchors?
     ChopboxAnchor anchor = peCreateService.createChopboxAnchor(containerShape);
     anchor.setReferencedGraphicsAlgorithm(diamond);
-    link(anchor, addedVertex, BoCategories.Relation);
-    link(containerShape, addedVertex, BoCategories.Relation);
+    link(anchor, addedVertex, BoCategory.Relation);
+    link(containerShape, addedVertex, BoCategory.Relation);
 
     // TODO find a way to get the full name from our Triq NamedObj,
     // then we don't need to depend on the presence of the wrapped object.

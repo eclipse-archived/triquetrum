@@ -25,7 +25,7 @@ import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 
 public class ModelElementLayoutFeature extends AbstractLayoutFeature {
@@ -39,8 +39,8 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
   }
 
   public boolean canLayout(ILayoutContext context) {
-    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
-    return BoCategories.Actor.equals(boCategory) || BoCategories.Director.equals(boCategory);
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    return BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory);
   }
 
   public boolean layout(ILayoutContext context) {
@@ -51,8 +51,8 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     // containing the visible rectangle as its (first and only) child
     GraphicsAlgorithm rectangle = containerGa.getGraphicsAlgorithmChildren().get(0);
 
-    BoCategories boCategory = BoCategories.retrieveFrom(context.getPictogramElement());
-    boolean isActor = BoCategories.Actor.equals(boCategory);
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    boolean isActor = BoCategory.Actor.equals(boCategory);
 
     boolean containsExtFigure = EditorUtils.containsExternallyDefinedFigure(containerShape);
 
@@ -115,14 +115,14 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
 
     for (Anchor anchor : containerShape.getAnchors()) {
       FixPointAnchor fpa = (FixPointAnchor) anchor;
-      boCategory = BoCategories.retrieveFrom(anchor);
+      boCategory = BoCategory.retrieveFrom(anchor);
       // TODO determine rescaled port Y position in a better way
       // this Y-rescaling works for increasing heights
       // but may lead to disappearing ports when shrinking a shape along Y
-      if (BoCategories.Output.equals(boCategory)) {
+      if (BoCategory.Output.equals(boCategory)) {
         fpa.setLocation(gaService.createPoint(15 + rectangleWidth, (int) (fpa.getLocation().getY() * heightChangeRatio)));
         anythingChanged = true;
-      } else if (BoCategories.Input.equals(boCategory)) {
+      } else if (BoCategory.Input.equals(boCategory)) {
         fpa.setLocation(gaService.createPoint(fpa.getLocation().getX(), (int) (fpa.getLocation().getY() * heightChangeRatio)));
         anythingChanged = true;
       }

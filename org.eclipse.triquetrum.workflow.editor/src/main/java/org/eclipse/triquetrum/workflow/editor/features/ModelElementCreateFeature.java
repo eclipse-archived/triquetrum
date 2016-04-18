@@ -19,6 +19,7 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.AbstractCreateFeature;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
@@ -46,7 +47,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
 
   private String group;
 
-  private String category;
+  private BoCategory category;
   private String elementName;
   private String wrappedClass;
   private String iconResource = ImageConstants.IMG_ACTOR;
@@ -55,20 +56,27 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
 
   private ptolemy.kernel.util.NamedObj wrappedObject;
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String group, String category, String elementName, String wrappedClass, String iconResource, String iconType, Map<String, String> properties) {
+  public ModelElementCreateFeature(IFeatureProvider fp, String group, BoCategory category, String elementName) {
+    super(fp, elementName, "Create a " + elementName);
+    this.group = group;
+    this.category = category;
+    this.elementName = elementName;
+  }
+
+  public ModelElementCreateFeature(IFeatureProvider fp, String group, BoCategory category, String elementName, String wrappedClass, String iconResource, String iconType, Map<String, String> properties) {
     super(fp, elementName, "Create a " + elementName);
     this.group = group;
     this.category = category;
     this.elementName = elementName;
     this.wrappedClass = wrappedClass;
-    this.iconResource = iconResource;
-    this.iconType = iconType;
+    this.iconResource = iconResource != null ? iconResource : this.iconResource;
+    this.iconType = iconType != null ? iconType : this.iconType;
     if (properties != null) {
       this.properties.putAll(properties);
     }
   }
 
-  public String getCategory() {
+  public BoCategory getCategory() {
     return category;
   }
 
@@ -107,7 +115,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       return false;
     } else {
       // make sure we can only set 1 Director per model level
-      EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category);
+      EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category.name());
       if (TriqPackage.DIRECTOR == eClassifier.getClassifierID()) {
         CompositeActor model = EditorUtils.getSelectedModel();
         return model == null || model.getDirector() == null;
@@ -133,7 +141,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       }
 
       // create new model element
-      EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category);
+      EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category.name());
       NamedObj result = (NamedObj) TriqFactory.eINSTANCE.create((EClass) eClassifier);
       if (wrappedObject == null) {
         result.setName(EditorUtils.buildUniqueName(model, elementName));
