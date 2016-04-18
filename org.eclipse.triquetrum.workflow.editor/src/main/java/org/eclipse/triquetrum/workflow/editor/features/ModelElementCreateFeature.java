@@ -154,9 +154,12 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       } else if (result instanceof Entity) {
         model.getEntities().add((Entity) result);
       } else if (result instanceof Vertex) {
-        Relation relation = TriqFactory.eINSTANCE.createRelation();
-        relation.setName(EditorUtils.buildUniqueName(model, "_R"));
-        model.getRelations().add(relation);
+        Relation relation = (Relation) context.getProperty(FeatureConstants.CONTAINER);
+        if(relation==null) {
+          relation = TriqFactory.eINSTANCE.createRelation();
+          relation.setName(EditorUtils.buildUniqueName(model, "_R"));
+          model.getRelations().add(relation);
+        }
         relation.getAttributes().add((Vertex)result);
       } else if (result instanceof Attribute) {
         model.getAttributes().add((Attribute) result);

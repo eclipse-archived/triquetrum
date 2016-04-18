@@ -150,6 +150,14 @@ public interface NamedObj extends EObject {
   void initializeFrom(ptolemy.kernel.util.NamedObj ptObject);
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model kind="operation"
+   * @generated
+   */
+  String getFullName();
+
+  /**
    * Returns the value of the '<em><b>Wrapped Object</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

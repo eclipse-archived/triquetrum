@@ -93,7 +93,7 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     // then we don't need to depend on the presence of the wrapped object.
     Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
     if(anchorMap != null && addedVertex.getWrappedObject() != null) {
-      anchorMap.put(addedVertex.getWrappedObject().getFullName(), anchor);
+      anchorMap.put(addedVertex.getFullName(), anchor);
     }
 
     layoutPictogramElement(containerShape);

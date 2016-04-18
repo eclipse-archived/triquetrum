@@ -13,6 +13,7 @@
     <eOperations name="initializeFrom">
       <eParameters name="ptObject" eType="#//PtolemyNamedObj"/>
     </eOperations>
+    <eOperations name="getFullName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="new"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
@@ -80,6 +81,7 @@
       <eParameters name="linkedThing" eType="#//NamedObj"/>
     </eOperations>
     <eOperations name="isConnected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="getVertex" eType="#//Vertex"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedPorts" upperBound="-1"
         eType="#//Port" eOpposite="#//Port/linkedRelations"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"

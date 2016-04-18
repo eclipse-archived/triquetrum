@@ -19,11 +19,7 @@ import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.Parameter;
-import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
-
-import ptolemy.kernel.util.NamedObj;
-import ptolemy.kernel.util.Settable;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Director</b></em>'. <!-- end-user-doc -->
@@ -37,27 +33,6 @@ public class DirectorImpl extends AttributeImpl implements Director {
    */
   protected DirectorImpl() {
     super();
-  }
-
-  @Override
-  public void initializeFrom(NamedObj ptObject) {
-    if (!isDeepComplete()) {
-      if (!(ptObject instanceof ptolemy.actor.Director)) {
-        throw new IllegalArgumentException(ptObject + " should be a Director");
-      }
-      super.initializeFrom(ptObject);
-      for (ptolemy.data.expr.Parameter parameter : ptObject.attributeList(ptolemy.data.expr.Parameter.class)) {
-        // for the moment, only add FULLy user-visible parameters in the editor model
-        if (Settable.FULL.equals(parameter.getVisibility())) {
-          Parameter newParam = TriqFactory.eINSTANCE.createParameter();
-          newParam.setName(parameter.getName());
-          newParam.setWrappedType(parameter.getClass().getName());
-          newParam.setExpression(parameter.getExpression());
-          getAttributes().add(newParam);
-        }
-      }
-      setDeepComplete(true);
-    }
   }
 
   @Override
