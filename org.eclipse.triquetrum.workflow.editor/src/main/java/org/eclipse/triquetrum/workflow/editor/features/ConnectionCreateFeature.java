@@ -24,13 +24,24 @@ import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
+import ptolemy.actor.IORelation;
 import ptolemy.kernel.util.IllegalActionException;
 
 public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
 
+  private IORelation wrappedObject;
+
   public ConnectionCreateFeature(IFeatureProvider fp) {
     // provide name and description for the UI, e.g. the palette
     super(fp, "Relation", "Create Connection");
+  }
+
+  public IORelation getWrappedObject() {
+    return wrappedObject;
+  }
+
+  public void setWrappedObject(IORelation wrappedObject) {
+    this.wrappedObject = wrappedObject;
   }
 
   public boolean canCreate(ICreateConnectionContext context) {
@@ -139,7 +150,11 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
       while (!(relationContainer instanceof CompositeActor)) {
         relationContainer = relationContainer.getContainer();
       }
-      relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
+      if(wrappedObject!=null) {
+        relation.setWrappedObject(wrappedObject);
+      } else {
+        relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
+      }
       ((CompositeActor) relationContainer).getRelations().add(relation);
       relation.link(source);
       relation.link(target);

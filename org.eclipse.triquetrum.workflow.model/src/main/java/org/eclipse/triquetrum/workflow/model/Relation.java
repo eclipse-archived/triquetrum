@@ -109,4 +109,12 @@ public interface Relation extends NamedObj {
    */
   boolean isConnected();
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model kind="operation"
+   * @generated
+   */
+  Vertex getVertex();
+
 } // Relation

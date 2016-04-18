@@ -20,14 +20,17 @@ import org.eclipse.graphiti.mm.algorithms.styles.Color;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Annotation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  */
 public class AnnotationUpdateFeature extends AbstractUpdateFeature {
+  private final static Logger LOGGER = LoggerFactory.getLogger(AnnotationUpdateFeature.class);
 
   public AnnotationUpdateFeature(IFeatureProvider fp) {
     super(fp);
@@ -35,8 +38,8 @@ public class AnnotationUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), BoCategories.BO_CATEGORY_PROPNAME);
-    return ("ANNOTATION".equals(boCategory));
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    return (BoCategory.Annotation.equals(boCategory));
   }
 
   @Override
@@ -48,8 +51,8 @@ public class AnnotationUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Annotation && pictogramElement instanceof Shape) {
       annotation = (Annotation) bo;
       Shape shape = (Shape) pictogramElement;
-      String boCategory = Graphiti.getPeService().getPropertyValue(shape, BoCategories.BO_CATEGORY_PROPNAME);
-      if ("ANNOTATION".equalsIgnoreCase(boCategory)) {
+      BoCategory boCategory = BoCategory.retrieveFrom(shape);
+      if (BoCategory.Annotation.equals(boCategory)) {
         MultiText text = EditorUtils.getGraphicsAlgorithmOfShape(shape, MultiText.class);
         if (text != null) {
           String boValue = text.getValue();
@@ -62,7 +65,7 @@ public class AnnotationUpdateFeature extends AbstractUpdateFeature {
               || (!annotation.getFontFamily().equals(currentTextFont));
         } else {
           // should not happen
-          System.err.println("Inconsistent shape tree in " + shape);
+          LOGGER.error("Inconsistent shape tree in " + shape);
         }
       }
     }
@@ -82,8 +85,8 @@ public class AnnotationUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Annotation && pictogramElement instanceof Shape) {
       Annotation annotation = (Annotation) bo;
       Shape shape = (Shape) pictogramElement;
-      String boCategory = Graphiti.getPeService().getPropertyValue(shape, BoCategories.BO_CATEGORY_PROPNAME);
-      if ("ANNOTATION".equals(boCategory)) {
+      BoCategory boCategory = BoCategory.retrieveFrom(shape);
+      if (BoCategory.Annotation.equals(boCategory)) {
         MultiText text = EditorUtils.getGraphicsAlgorithmOfShape(shape, MultiText.class);
         if (text != null) {
           text.setValue(annotation.getText());

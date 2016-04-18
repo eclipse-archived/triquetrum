@@ -33,7 +33,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.triquetrum.workflow.editor.BoCategories;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -41,9 +41,13 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 
 import ptolemy.kernel.Entity;
+import ptolemy.kernel.util.Attribute;
+import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.Locatable;
+import ptolemy.kernel.util.Location;
+import ptolemy.kernel.util.NameDuplicationException;
 
 public class EditorUtils {
-
 
   /**
    * Opens a dialog to change the color.
@@ -217,6 +221,38 @@ public class EditorUtils {
   }
 
   /**
+   * Set the location info on the model element, more precisely on the wrapped Ptolemy II model object.
+   *
+   * Graphiti maintains location info in the graphical algorithm linked to the shape&business object.
+   * But to guarantee that an export to a Ptolemy MOML file also has the location info, we need to push locations to the Ptolemy layer as well.
+   *
+   * @param modelElement the Triquetrum model element wrapping a Ptolemy model element
+   * @param x
+   * @param y
+   * @throws IllegalActionException
+   * @throws NameDuplicationException when adding the location attribute failed because there was already another linked child object with a same name.
+   */
+  public static void setLocation(NamedObj modelElement, double x, double y) throws IllegalActionException, NameDuplicationException {
+    ptolemy.kernel.util.NamedObj ptObject = modelElement.getWrappedObject();
+    double[] location = new double[] { x, y };
+    if (ptObject instanceof Locatable) {
+      ((Locatable) ptObject).setLocation(location);
+      ptolemy.kernel.util.NamedObj cont = ptObject.getContainer();
+      cont.attributeChanged((Attribute) ptObject);
+    }
+    List<Locatable> attributes = ptObject.attributeList(Locatable.class);
+    if (attributes == null)
+      return;
+    if (attributes.size() > 0) {
+      Locatable locationAttribute = (Locatable) attributes.get(0);
+      locationAttribute.setLocation(location);
+      ptObject.attributeChanged((Attribute) attributes.get(0));
+    } else {
+      new Location(ptObject, "_location").setLocation(location);
+    }
+  }
+
+  /**
    *
    * @param shape
    * @param gaClass
@@ -273,14 +309,14 @@ public class EditorUtils {
    * (at least when the contained anchors properties are not touched!).
    *
    * @param actorShape
-   * @param portIoType BoCategories.INPUT_PORT or OUTPUT_PORT
+   * @param portIoType BoCategories.Input or Output
    * @return
    */
-  public static List<Anchor> getContainedPorts(ContainerShape actorShape, String portIoType) {
+  public static List<Anchor> getContainedPorts(ContainerShape actorShape, BoCategory portIoType) {
     List<Anchor> portShapes = new LinkedList<>();
     for(Anchor anchor : actorShape.getAnchors()) {
       FixPointAnchor fpa = (FixPointAnchor) anchor;
-      String boCategory = Graphiti.getPeService().getPropertyValue(anchor, BoCategories.BO_CATEGORY_PROPNAME);
+      BoCategory boCategory = BoCategory.retrieveFrom(anchor);
       if(portIoType.equals(boCategory)) {
         portShapes.add(fpa);
       }

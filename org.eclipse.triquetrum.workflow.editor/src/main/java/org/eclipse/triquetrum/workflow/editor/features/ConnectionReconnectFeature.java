@@ -45,6 +45,7 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
     if (newAnchor != oldAnchor) {
       Connection connection = context.getConnection();
       Relation relation = (Relation) getBusinessObjectForPictogramElement(connection);
+      NamedObj oldBO = (NamedObj) getBusinessObjectForPictogramElement(oldAnchor);
       // Now we need to figure out if the reconnected connection can remain in the original relation,
       // or if it needs to create a new relation.
       // We do this by looking at both connection ends :
@@ -69,6 +70,7 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
           ((CompositeActor) relationContainer).getRelations().add(newRelation);
         }
       }
+      relation.unlink(oldBO);
       relation.unlink(startBO);
       relation.unlink(endBO);
       newRelation.link(startBO);

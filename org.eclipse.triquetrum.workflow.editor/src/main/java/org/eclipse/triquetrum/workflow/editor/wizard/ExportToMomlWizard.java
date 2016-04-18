@@ -62,7 +62,6 @@ public class ExportToMomlWizard extends Wizard implements IExportWizard {
 
   @Override
   public boolean performFinish() {
-    System.out.println(page.getAbsoluteExportFolderPath());
     return page.finish();
   }
 

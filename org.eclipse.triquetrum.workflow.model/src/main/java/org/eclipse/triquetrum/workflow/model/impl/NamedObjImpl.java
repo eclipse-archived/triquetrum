@@ -28,8 +28,7 @@ import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
-import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
+import ptolemy.kernel.util.Settable;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Named Obj</b></em>'. <!-- end-user-doc -->
@@ -113,8 +112,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The default value of the '{@link #isDeepComplete() <em>Deep Complete</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isDeepComplete()
    * @generated
    * @ordered
@@ -123,8 +121,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The cached value of the '{@link #isDeepComplete() <em>Deep Complete</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isDeepComplete()
    * @generated
    * @ordered
@@ -133,8 +130,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The default value of the '{@link #getIconId() <em>Icon Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getIconId()
    * @generated
    * @ordered
@@ -143,8 +139,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The cached value of the '{@link #getIconId() <em>Icon Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getIconId()
    * @generated
    * @ordered
@@ -178,21 +173,12 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated NOT
    */
   public void setName(String newName) {
     String oldName = name;
     name = newName;
-    if(getWrappedObject() != null) {
-      ptolemy.kernel.util.NamedObj ptObject = (ptolemy.kernel.util.NamedObj)getWrappedObject();
-      try {
-        ptObject.setName(newName);
-        ptObject.setDisplayName(newName);
-      } catch (IllegalActionException | NameDuplicationException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__NAME, oldName, name));
   }
@@ -244,12 +230,12 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   @Override
   public void setWrappedType(String newWrappedType) {
     // only allow changing the wrapped type when no instance is wrapped yet
-    if (getWrappedObject() == null) {
-      String oldWrappedType = wrappedType;
-      wrappedType = newWrappedType;
-      if (eNotificationRequired())
-        eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__WRAPPED_TYPE, oldWrappedType, wrappedType));
-    }
+    // if (getWrappedObject() == null) {
+    String oldWrappedType = wrappedType;
+    wrappedType = newWrappedType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__WRAPPED_TYPE, oldWrappedType, wrappedType));
+    // }
   }
 
   /**
@@ -277,17 +263,17 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * By default this creates a Parameter (if value is not null) or an Attribute (if value is null) on this NamedObj.
-   * Sub-classes may override this method to implement custom behaviour for particular properties.
+   * <!-- begin-user-doc --> By default this creates a Parameter (if value is not null) or an Attribute (if value is null) on this NamedObj. Sub-classes may
+   * override this method to implement custom behaviour for particular properties.
    * <p>
    * Currently the className is ignored!
    * </p>
    * <!-- end-user-doc -->
+   *
    * @generated NOT
    */
   public void setProperty(String name, String value, String className) {
-    if(value==null) {
+    if (value == null) {
       Attribute attribute = TriqFactory.eINSTANCE.createAttribute();
       attribute.setName(name);
       this.getAttributes().add(attribute);
@@ -298,6 +284,16 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       parameter.setExpression(value);
       this.getAttributes().add(parameter);
     }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * @generated
+   */
+  public void buildWrappedObject() {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -316,18 +312,23 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    *
    * Another approach, mutually exclusive with this setter, is to create a Triq EMF model from scratch. Then the wrappedType can be set with the class name of
    * the underlying Ptolemy II element, which will be used to create the Ptolemy II element when needed. <!-- end-user-doc -->
-   * @generated
+   *
+   * @generated NOT
    */
   public void setWrappedObject(ptolemy.kernel.util.NamedObj newWrappedObject) {
     ptolemy.kernel.util.NamedObj oldWrappedObject = wrappedObject;
     wrappedObject = newWrappedObject;
+    if (wrappedObject != null) {
+      setWrappedType(wrappedObject.getClass().getName());
+      // need to postpone this until the container is set...
+//      initializeFrom(wrappedObject);
+    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__WRAPPED_OBJECT, oldWrappedObject, wrappedObject));
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public boolean isDeepComplete() {
@@ -335,8 +336,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setDeepComplete(boolean newDeepComplete) {
@@ -347,8 +347,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public String getIconId() {
@@ -356,8 +355,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setIconId(String newIconId) {
@@ -379,14 +377,56 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       ptolemy.kernel.util.NamedObj container = (ptolemy.kernel.util.NamedObj) getContainer().getWrappedObject();
       if (container == null) {
         // it seems our container doesn't know its wrapped object yet
-        ((NamedObjImpl)newContainer).buildWrappedObject();
+        ((NamedObjImpl) newContainer).buildWrappedObject();
       }
-      buildWrappedObject();
+      if (wrappedObject == null) {
+        buildWrappedObject();
+      }
+      initializeFrom(getWrappedObject());
     }
   }
 
-  @Override
-  public void buildWrappedObject() {
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
+   * @generated NOT
+   */
+  public void initializeFrom(ptolemy.kernel.util.NamedObj ptObject) {
+    if (!isDeepComplete()) {
+      setName(ptObject.getName());
+      setWrappedType(ptObject.getClass().getName());
+      for (ptolemy.data.expr.Parameter parameter : ptObject.attributeList(ptolemy.data.expr.Parameter.class)) {
+        // for the moment, only add FULLy user-visible parameters in the editor model
+        if (Settable.FULL.equals(parameter.getVisibility())) {
+          Parameter newParam = TriqFactory.eINSTANCE.createParameter();
+          newParam.setName(parameter.getName());
+          newParam.setWrappedType(parameter.getClass().getName());
+          newParam.setExpression(parameter.getExpression());
+          getAttributes().add(newParam);
+        }
+      }
+      setDeepComplete(true);
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public String getFullName() {
+    if(getWrappedObject()!=null) {
+      return getWrappedObject().getFullName();
+    } else {
+      StringBuilder strB = new StringBuilder(getName());
+      NamedObj ctr = getContainer();
+      while(ctr!=null) {
+        strB.insert(0, ctr.getName()+".");
+        ctr = ctr.getContainer();
+      }
+      return strB.toString();
+    }
+
   }
 
   /**
@@ -522,6 +562,14 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       case TriqPackage.NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING:
         setProperty((String)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2));
         return null;
+      case TriqPackage.NAMED_OBJ___BUILD_WRAPPED_OBJECT:
+        buildWrappedObject();
+        return null;
+      case TriqPackage.NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ:
+        initializeFrom((ptolemy.kernel.util.NamedObj)arguments.get(0));
+        return null;
+      case TriqPackage.NAMED_OBJ___GET_FULL_NAME:
+        return getFullName();
     }
     return super.eInvoke(operationID, arguments);
   }
