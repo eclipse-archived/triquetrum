@@ -58,7 +58,7 @@ public class WizardUtils {
     }
 
     String editorID = TriqDiagramEditor.EDITOR_ID;
-    String editorExtension = "tdml"; //$NON-NLS-1$
+    String editorExtension = TriqDiagramEditor.DIAGRAM_FILE_EXTENSION; //$NON-NLS-1$
     String diagramTypeProviderId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagramTypeId);
     String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$
     IEditorDescriptor specificEditor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(namingConventionID);

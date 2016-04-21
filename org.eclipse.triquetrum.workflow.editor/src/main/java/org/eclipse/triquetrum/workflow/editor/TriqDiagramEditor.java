@@ -10,6 +10,12 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor;
 
+import java.io.File;
+import java.util.Arrays;
+
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
@@ -17,13 +23,19 @@ import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.triquetrum.workflow.editor.outline.DiagramEditorOutlinePage;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.part.EditorActionBarContributor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 public class TriqDiagramEditor extends DiagramEditor {
   public final static String EDITOR_ID = "org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor";
+  public final static String DIAGRAM_FILE_EXTENSION = "tdml";
 
   public Object getAdapter(@SuppressWarnings("rawtypes") Class type) {
     if (IContentOutlinePage.class.equals(type)) {
@@ -47,10 +59,91 @@ public class TriqDiagramEditor extends DiagramEditor {
   }
 
   @Override
+  public boolean isSaveAsAllowed() {
+    return true;
+  }
+
+  @Override
+  public void doSaveAs() {
+    String[] files = selectSaveAsDestinationPath(getSite().getShell());
+    if (files.length > 0) {
+      URI uri = URI.createFileURI(files[0]);
+      URIEditorInput editorInput = new URIEditorInput(uri);
+      (getEditingDomain().getResourceSet().getResources().get(0)).setURI(uri);
+      (getEditingDomain().getResourceSet().getResources().get(0)).setModified(true);
+      String fileName = editorInput.getName();
+      String diagramName = fileName.substring(0, fileName.lastIndexOf('.'));
+      getEditingDomain().getCommandStack().execute(new AbstractCommand() {
+        String oldName;
+        @Override
+        public boolean canExecute() {
+          return true;
+        }
+        @Override
+        public void redo() {
+          if (oldName != null) {
+            getDiagramTypeProvider().getDiagram().setName(oldName);
+          }
+        }
+        @Override
+        public void execute() {
+          oldName = getDiagramTypeProvider().getDiagram().getName();
+          getDiagramTypeProvider().getDiagram().setName(diagramName);
+        }
+      });
+      setInputWithNotify(editorInput);
+      setPartName(diagramName);
+      getSite().getShell().setText(uri.toString());
+      IActionBars actionBars = ((EditorActionBarContributor) getEditorSite().getActionBarContributor()).getActionBars();
+      IProgressMonitor progressMonitor = actionBars.getStatusLineManager() != null ? actionBars.getStatusLineManager().getProgressMonitor()
+          : new NullProgressMonitor();
+
+      doSave(progressMonitor);
+    }
+  }
+
+  public static String[] selectSaveAsDestinationPath(Shell shell) {
+    FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
+
+    String[] fileExtensionFilters = new String[] { "*."+DIAGRAM_FILE_EXTENSION };
+    ;
+    fileDialog.setFilterExtensions(fileExtensionFilters);
+    fileDialog.open();
+
+    String[] filenames = fileDialog.getFileNames();
+    String[] result = new String[filenames.length];
+    String path = fileDialog.getFilterPath() + File.separator;
+    String extension = null;
+
+    int i = fileDialog.getFilterIndex();
+    if (i != -1 && i != fileExtensionFilters.length) {
+      String filter = fileExtensionFilters[i];
+      int dot = filter.lastIndexOf('.');
+      if (dot == 1 && filter.charAt(0) == '*') {
+        extension = filter.substring(dot);
+      }
+    }
+
+    // Build the result by adding the selected path and, if needed, auto-appending the extension.
+    //
+    if (extension != null) {
+      for (i = 0; i < filenames.length; i++) {
+        String filename = path + filenames[i];
+        int dot = filename.lastIndexOf('.');
+        if (dot == -1 || !Arrays.asList(fileExtensionFilters).contains("*" + filename.substring(dot))) {
+          filename += extension;
+        }
+        result[i] = filename;
+      }
+    }
+    return result;
+  }
+
+  @Override
   public void setFocus() {
     super.setFocus();
     Diagram d = getDiagramTypeProvider().getDiagram();
-    if(d!=null) {
+    if (d != null) {
       ExecutionStatusManager.getInstance().fireStatusChanged(d.getName());
     }
   }
