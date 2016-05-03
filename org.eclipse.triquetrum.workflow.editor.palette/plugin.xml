@@ -73,6 +73,14 @@
         </group>
       </group>
       <group displayName="Sinks" icon="icons/sink.gif">
+        <group displayName="Visualization" icon="icons/display.gif">
+          <entry
+                class="ptolemy.actor.lib.gui.Display"
+                displayName="Display"
+                icon="icons/display.gif"
+                type="Actor">
+          </entry>
+        </group>
 	      <entry
 	            class="ptolemy.actor.lib.Discard"
 	            displayName="Discard"
@@ -144,14 +152,6 @@
 	            class="ptolemy.actor.lib.TrigFunction"
 	            displayName="TrigFunction"
     	        icon="icons/actor.gif"
-	            type="Actor">
-	      </entry>
-      </group>
-      <group displayName="Visualization" icon="icons/display.gif">
-	      <entry
-	            class="ptolemy.actor.lib.gui.Display"
-	            displayName="Display"
-    	        icon="icons/display.gif"
 	            type="Actor">
 	      </entry>
       </group>

@@ -1,0 +1,268 @@
+package org.eclipse.triquetrum.workflow.editor.palette.ui;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.eclipse.draw2d.FigureCanvas;
+import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gef.TreeEditPart;
+import org.eclipse.gef.editparts.RootTreeEditPart;
+import org.eclipse.gef.ui.palette.PaletteViewer;
+import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
+import org.eclipse.gef.ui.parts.TreeViewer;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.FocusListener;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.KeyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.events.MouseTrackListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.widgets.Widget;
+
+/**
+ * Try to merge features of {@link TreeViewer} into the {@link PaletteViewer}
+ *
+ *
+ */
+public class PaletteTreeViewer extends PaletteViewer {
+  private boolean ignore = false;
+
+  class EventDispatcher implements MouseListener, MouseMoveListener,
+      KeyListener, MouseTrackListener, FocusListener {
+    protected static final int ANY_BUTTON = SWT.BUTTON1 | SWT.BUTTON2
+        | SWT.BUTTON3;
+
+    public void keyPressed(KeyEvent kee) {
+      getEditDomain().keyDown(kee, PaletteTreeViewer.this);
+    }
+
+    public void keyReleased(KeyEvent kee) {
+      getEditDomain().keyUp(kee, PaletteTreeViewer.this);
+    }
+
+    public void mouseDoubleClick(MouseEvent me) {
+      getEditDomain().mouseDoubleClick(me, PaletteTreeViewer.this);
+    }
+
+    public void mouseDown(MouseEvent me) {
+      getEditDomain().mouseDown(me, PaletteTreeViewer.this);
+    }
+
+    public void mouseEnter(MouseEvent me) {
+      getEditDomain().viewerEntered(me, PaletteTreeViewer.this);
+    }
+
+    public void mouseExit(MouseEvent me) {
+      getEditDomain().viewerExited(me, PaletteTreeViewer.this);
+    }
+
+    public void mouseHover(MouseEvent me) {
+      getEditDomain().mouseHover(me, PaletteTreeViewer.this);
+    }
+
+    public void mouseMove(MouseEvent me) {
+      if ((me.stateMask & ANY_BUTTON) != 0)
+        getEditDomain().mouseDrag(me, PaletteTreeViewer.this);
+      else
+        getEditDomain().mouseMove(me, PaletteTreeViewer.this);
+    }
+
+    public void mouseUp(MouseEvent me) {
+      getEditDomain().mouseUp(me, PaletteTreeViewer.this);
+    }
+
+    public void focusGained(FocusEvent event) {
+      getEditDomain().focusGained(event, PaletteTreeViewer.this);
+    }
+
+    public void focusLost(FocusEvent event) {
+      getEditDomain().focusLost(event, PaletteTreeViewer.this);
+    }
+  }
+
+  private EventDispatcher dispatcher;
+  private FigureCanvas figCanvas;
+
+  public PaletteTreeViewer() {
+    super();
+    dispatcher = new EventDispatcher();
+    setKeyHandler(new GraphicalViewerKeyHandler(this));
+    setEditPartFactory(new PaletteTreeEditPartFactory());
+    addDragSourceListener(new TreeViewerTransferDragListener(this));
+    addDropTargetListener(new TreeViewerTransferDropListener(this));
+  }
+
+  // hack to  use a dummy canvas to please the graphical base classes
+  @Override
+  protected FigureCanvas getFigureCanvas() {
+    if (figCanvas==null) {
+      figCanvas = new FigureCanvas(getControl().getParent());
+    }
+    return figCanvas;
+  }
+
+  @Override
+  protected void createDefaultRoot() {
+    try {
+      setRootEditPart(new RootTreeEditPart());
+    } catch (ClassCastException e) {
+      // to catch the wrong cast to a GraphicalEditPart in the GraphicalViewerImpl.setRootEditPart implementation
+    }
+  }
+
+  /**
+   * Creates the default tree and sets it as the control. The default styles
+   * will show scrollbars as needed, and allows for multiple selection.
+   * <p>
+   * Doesn't use the default createControl method name, as that one is made final in
+   * the ScrollingGraphicalViewer base class...
+   * </p>
+   * @param parent
+   *            The parent for the Tree
+   * @return the control
+   */
+  public Control createTreeControl(Composite parent) {
+    Tree tree = new Tree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
+    setControl(tree);
+    return tree;
+  }
+
+  /**
+   * @see org.eclipse.gef.EditPartViewer#findObjectAtExcluding(Point,
+   *      Collection, EditPartViewer.Conditional)
+   */
+  public EditPart findObjectAtExcluding(Point pt, Collection exclude,
+      Conditional condition) {
+    if (getControl() == null)
+      return null;
+
+    Tree tree = (Tree) getControl();
+    Rectangle area = tree.getClientArea();
+    if (pt.x < area.x || pt.y < area.y || pt.x >= area.x + area.width
+        || pt.y >= area.y + area.height)
+      return null;
+
+    EditPart result = null;
+    TreeItem tie = tree.getItem(new org.eclipse.swt.graphics.Point(pt.x,
+        pt.y));
+
+    if (tie != null) {
+      result = (EditPart) tie.getData();
+    } else {
+      result = (EditPart) tree.getData();
+    }
+    while (result != null) {
+      if ((condition == null || condition.evaluate(result))
+          && !exclude.contains(result))
+        return result;
+      result = result.getParent();
+    }
+    return null;
+  }
+
+  /**
+   * @see org.eclipse.gef.ui.parts.AbstractEditPartViewer#fireSelectionChanged()
+   */
+  protected void fireSelectionChanged() {
+    super.fireSelectionChanged();
+    showSelectionInTree();
+  }
+
+  /**
+   * "Hooks up" a Control, i.e. sets it as the control for the
+   * RootTreeEditPart, adds necessary listener for proper operation, etc.
+   */
+  protected void hookControl() {
+    if (getControl() == null)
+      return;
+
+    final Tree tree = (Tree) getControl();
+    tree.addFocusListener(dispatcher);
+    tree.addMouseListener(dispatcher);
+    tree.addMouseMoveListener(dispatcher);
+    tree.addKeyListener(dispatcher);
+    tree.addMouseTrackListener(dispatcher);
+    tree.addSelectionListener(new SelectionListener() {
+      public void widgetSelected(SelectionEvent e) {
+        TreeItem[] ties = tree.getSelection();
+        Object newSelection[] = new Object[ties.length];
+        for (int i = 0; i < ties.length; i++)
+          newSelection[i] = ties[i].getData();
+        ignore = true;
+        setSelection(new StructuredSelection(newSelection));
+        ignore = false;
+      }
+
+      public void widgetDefaultSelected(SelectionEvent e) {
+        widgetSelected(e);
+      }
+    });
+    TreeEditPart tep = (TreeEditPart) getRootEditPart();
+    tep.setWidget(tree);
+    try {
+    super.hookControl();
+    } catch (ClassCastException e) {
+      // to catch the wrong cast to graphical widget etc in the super-classes
+    }
+  }
+
+  /**
+   * @see org.eclipse.gef.ui.parts.AbstractEditPartViewer#reveal(org.eclipse.gef.EditPart)
+   */
+  public void reveal(EditPart part) {
+    if (!(part instanceof TreeEditPart))
+      return;
+    TreeEditPart treePart = (TreeEditPart) part;
+    Tree tree = (Tree) getControl();
+    Widget widget = treePart.getWidget();
+    if (widget instanceof TreeItem)
+      tree.showItem((TreeItem) widget);
+  }
+
+  private void showSelectionInTree() {
+    if (ignore || getControl() == null || getControl().isDisposed())
+      return;
+    List selection = getSelectedEditParts();
+    Tree tree = (Tree) getControl();
+    List treeParts = new ArrayList();
+    for (int i = 0; i < selection.size(); i++) {
+      TreeEditPart part = (TreeEditPart) selection.get(i);
+      if (part.getWidget() instanceof TreeItem)
+        treeParts.add(part);
+    }
+    TreeItem[] treeItems = new TreeItem[treeParts.size()];
+    for (int i = 0; i < treeParts.size(); i++) {
+      TreeEditPart part = (TreeEditPart) treeParts.get(i);
+      treeItems[i] = (TreeItem) part.getWidget();
+    }
+    tree.setSelection(treeItems);
+  }
+
+  /**
+   * Unhooks a control so that it can be reset. This method deactivates the
+   * contents, removes the Control as being the Control of the
+   * RootTreeEditPart, etc. It does not remove the listeners because it is
+   * causing errors, although that would be a desirable outcome.
+   */
+  protected void unhookControl() {
+    if (getControl() == null)
+      return;
+    super.unhookControl();
+    // Ideally, you would want to remove the listeners here
+    TreeEditPart tep = (TreeEditPart) getRootEditPart();
+    tep.setWidget(null);
+  }
+}

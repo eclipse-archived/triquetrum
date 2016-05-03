@@ -23,6 +23,7 @@ public class ImageProvider extends AbstractImageProvider {
   protected void addAvailableImages() {
     addImageFilePath(ImageConstants.IMG_COLOR_CHANGE, ROOT_FOLDER_FOR_IMG + "color-palette.gif");
     addImageFilePath(ImageConstants.IMG_CONFIGURE, ROOT_FOLDER_FOR_IMG + "configure.gif");
+    addImageFilePath(ImageConstants.IMG_FOLDER, ROOT_FOLDER_FOR_IMG + "fldr_obj.gif");
 
     addImageFilePath(ImageConstants.IMG_OUTLINE_TREE, ROOT_FOLDER_FOR_IMG + "tree.gif");
     addImageFilePath(ImageConstants.IMG_OUTLINE_THUMBNAIL, ROOT_FOLDER_FOR_IMG + "thumbnail.gif");
