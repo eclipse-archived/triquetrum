@@ -10,15 +10,8 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
-import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
-import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.context.IDoubleClickContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.context.impl.CreateConnectionContext;
@@ -28,16 +21,11 @@ import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.palette.IObjectCreationToolEntry;
-import org.eclipse.graphiti.palette.IPaletteCompartmentEntry;
-import org.eclipse.graphiti.palette.IToolEntry;
-import org.eclipse.graphiti.palette.impl.PaletteCompartmentEntry;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.tb.ContextButtonEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.graphiti.tb.IContextButtonPadData;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeature;
-import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PauseFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ResumeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.RunFeature;
@@ -147,49 +135,6 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
       }
     }
     return super.getToolTip(ga);
-  }
-
-  @Override
-  public IPaletteCompartmentEntry[] getPalette() {
-    final Map<String, IPaletteCompartmentEntry> paletteCompartments = new TreeMap<>();
-
-    TriqFeatureProvider tbp = (TriqFeatureProvider) getDiagramTypeProvider().getFeatureProvider();
-    IPaletteCompartmentEntry[] entries = super.getPalette();
-    for (IPaletteCompartmentEntry pcEntry : entries) {
-      List<IToolEntry> toolEntries = pcEntry.getToolEntries();
-      for (IToolEntry tlEntry : toolEntries) {
-        if (tlEntry instanceof IObjectCreationToolEntry) {
-          IObjectCreationToolEntry octEntry = (IObjectCreationToolEntry) tlEntry;
-          ICreateFeature createFeature = octEntry.getCreateFeature();
-          IPaletteCompartmentEntry compartment = paletteCompartments.get(pcEntry.getLabel());
-          if (createFeature instanceof ModelElementCreateFeature) {
-            ModelElementCreateFeature mecFt = (ModelElementCreateFeature) createFeature;
-            if (mecFt.getGroup() != null) {
-              IConfigurationElement rootGrpElement = tbp.getRootgroupsByName().get(mecFt.getGroup());
-              if (rootGrpElement != null) {
-                compartment = paletteCompartments.get(mecFt.getGroup());
-                if (compartment == null) {
-                  String iconResource = rootGrpElement.getAttribute("icon");
-                  if (iconResource != null) {
-                    ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(rootGrpElement.getContributor().getName(),
-                        iconResource, iconResource);
-                  }
-                  compartment = new PaletteCompartmentEntry(mecFt.getGroup(), iconResource);
-                  paletteCompartments.put(compartment.getLabel(), compartment);
-                }
-              }
-            }
-          }
-          if (compartment == null) {
-            compartment = new PaletteCompartmentEntry(pcEntry.getLabel(), pcEntry.getIconId());
-            paletteCompartments.put(compartment.getLabel(), compartment);
-          }
-          compartment.getToolEntries().add(tlEntry);
-        }
-      }
-    }
-
-    return new ArrayList<>(paletteCompartments.values()).toArray(new IPaletteCompartmentEntry[0]);
   }
 
   @Override

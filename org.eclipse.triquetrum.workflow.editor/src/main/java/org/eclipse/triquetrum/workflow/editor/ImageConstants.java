@@ -33,4 +33,6 @@ public interface ImageConstants {
   String IMG_RUN_WORKFLOW = PRE + "run";
   String IMG_STEP_WORKFLOW = PRE + "step";
   String IMG_STOP_WORKFLOW = PRE + "stop";
+
+  String IMG_FOLDER = PRE + "folder";
 }
