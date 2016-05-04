@@ -11,6 +11,7 @@
 package org.eclipse.triquetrum.workflow.editor;
 
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -65,9 +66,9 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
     wfExecSvcTracker.open();
   }
 
-  /* It seems the initialisation of the console msg streams, and their substitution in sysout and syserr
-   * don't work well when done too early in the application startup (e.g. in the plugin.start()).
-   * So we provide this method to get this done as late as possible, e.g. only when running a workflow.
+  /*
+   * It seems the initialisation of the console msg streams, and their substitution in sysout and syserr don't work well when done too early in the application
+   * startup (e.g. in the plugin.start()). So we provide this method to get this done as late as possible, e.g. only when running a workflow.
    */
   public void initConsoleLogging() {
     if (outStream == null) {
@@ -75,13 +76,21 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
       outStream = myConsole.newMessageStream();
       outStream.setActivateOnWrite(true);
       outStream.setColor(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
-      PrintStream outPS = new PrintStream(outStream);
-      System.setOut(outPS); // link standard output stream to the console
+      try {
+        PrintStream outPS = new PrintStream(outStream, true, "UTF-8");
+        System.setOut(outPS); // link standard output stream to the console
+      } catch (UnsupportedEncodingException e) {
+        logError("Error configuring stdOut redirection to console", e);
+      }
       errStream = myConsole.newMessageStream();
       errStream.setActivateOnWrite(true);
       errStream.setColor(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-      PrintStream errPS = new PrintStream(errStream);
-      System.setErr(errPS); // link error output stream to the console
+      try {
+        PrintStream errPS = new PrintStream(errStream, true, "UTF-8");
+        System.setErr(errPS); // link error output stream to the console
+      } catch (UnsupportedEncodingException e) {
+        logError("Error configuring stdErr redirection to console", e);
+      }
     }
   }
 
@@ -128,7 +137,7 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
     return new ServiceTrackerCustomizer<WorkflowExecutionService, WorkflowExecutionService>() {
       public void removedService(ServiceReference<WorkflowExecutionService> ref, WorkflowExecutionService svc) {
         synchronized (TriqEditorPlugin.this) {
-          if(svc == TriqEditorPlugin.this.executionService) {
+          if (svc == TriqEditorPlugin.this.executionService) {
             TriqEditorPlugin.this.executionService = null;
           } else {
             return;

@@ -14,7 +14,7 @@ import ptolemy.data.Token;
 import ptolemy.kernel.util.Nameable;
 
 /**
- * 
+ *
  * TODO : evaluate if can replace the simplistic assignment to one input Token, with a more complete assignment to an actor's "input set"?
  *
  */
@@ -95,7 +95,7 @@ public class TriqException extends Exception {
   public ErrorCode getErrorCode() {
     return errorCode;
   }
-  
+
   public ErrorCode.Severity getSeverity() {
     return errorCode.getSeverity();
   }
@@ -127,21 +127,4 @@ public class TriqException extends Exception {
   public String getSimpleMessage() {
     return super.getMessage();
   }
-
-  /**
-   * Compares the exceptions' ErrorCode severities and in second priority also their actual numerical code.
-   * Does an inverted order, i.e. to sort by "most-important" first.
-   */
-  public int compareTo(TriqException o) {
-    if(o == this)
-      return 0;
-    if(o == null)
-      return -1;
-    int res =  - getErrorCode().getSeverity().compareTo(o.getErrorCode().getSeverity());
-    if(res == 0) {
-      res = getErrorCode().getCode().compareTo(o.getErrorCode().getCode());
-    }
-    return res;
-  }
-
 }

@@ -13,7 +13,6 @@ package org.eclipse.triquetrum.workflow.editor;
 import java.io.File;
 import java.util.Arrays;
 
-import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.command.AbstractCommand;
@@ -21,22 +20,11 @@ import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.gef.commands.CommandStack;
-import org.eclipse.gef.dnd.TemplateTransfer;
-import org.eclipse.gef.palette.PaletteEntry;
-import org.eclipse.gef.requests.CreationFactory;
-import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
-import org.eclipse.jface.util.TransferDragSourceListener;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.dnd.DragSourceAdapter;
-import org.eclipse.swt.dnd.DragSourceEvent;
-import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
@@ -160,60 +148,5 @@ public class TriqDiagramEditor extends DiagramEditor {
   @Override
   public CommandStack getCommandStack() {
     return super.getCommandStack();
-  }
-
-  public class SelectionDragAdapter extends DragSourceAdapter implements TransferDragSourceListener {
-    private TreeViewer fViewer;
-
-    public SelectionDragAdapter(TreeViewer viewer) {
-      Assert.isNotNull(viewer);
-      fViewer = viewer;
-    }
-
-    public Transfer getTransfer() {
-      return TemplateTransfer.getInstance();
-    }
-
-    public void dragStart(DragSourceEvent event) {
-      ISelection _selection = fViewer.getSelection();
-      boolean doit = !_selection.isEmpty();
-      if (doit) {
-        if (_selection instanceof ITreeSelection) {
-          ITreeSelection selection = (ITreeSelection) _selection;
-          final Object selected = selection.getFirstElement();
-          if (selected instanceof PaletteEntry) {
-            TemplateTransfer.getInstance().setTemplate(new PaletteItemDefCreationFactory((PaletteEntry) selected));
-          }
-        } else {
-          doit = false;
-        }
-      }
-      event.doit = doit;
-    }
-
-    public void dragSetData(DragSourceEvent event) {
-      event.data = TemplateTransfer.getInstance().getTemplate();
-    }
-
-    public void dragFinished(DragSourceEvent event) {
-      TemplateTransfer.getInstance().setTemplate(null);
-    }
-  }
-
-  public class PaletteItemDefCreationFactory implements CreationFactory {
-    PaletteEntry selected;
-
-    public PaletteItemDefCreationFactory(PaletteEntry selected) {
-      this.selected = selected;
-    }
-
-    public Object getObjectType() {
-      return ICreateFeature.class;
-    }
-
-    public Object getNewObject() {
-//      return new ModelElementCreateFeature(selected, getDiagramTypeProvider().getFeatureProvider());
-      return null;
-    }
   }
 }
