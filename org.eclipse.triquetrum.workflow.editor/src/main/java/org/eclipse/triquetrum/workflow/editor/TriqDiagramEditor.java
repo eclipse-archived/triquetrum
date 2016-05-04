@@ -27,10 +27,12 @@ import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.triquetrum.workflow.editor.outline.DiagramEditorOutlinePage;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorActionBarContributor;
+import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 
 public class TriqDiagramEditor extends DiagramEditor {
   public final static String EDITOR_ID = "org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor";
@@ -40,6 +42,14 @@ public class TriqDiagramEditor extends DiagramEditor {
   @Override
   protected DiagramBehavior createDiagramBehavior() {
     return new TriqDiagramBehavior(this);
+  }
+
+  public Object getAdapter(@SuppressWarnings("rawtypes") Class type) {
+    if (IContentOutlinePage.class.equals(type)) {
+      DiagramEditorOutlinePage outlinePage = new DiagramEditorOutlinePage(this);
+      return outlinePage;
+    }
+    return super.getAdapter(type);
   }
 
   @Override
