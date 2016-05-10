@@ -31,6 +31,9 @@ public class PaletteTreeProvider implements ITreeContentProvider {
    * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(Object)
    */
   public Object[] getChildren(Object parentElement) {
+    if(parentElement instanceof List) {
+      return ((List)parentElement).toArray();
+    }
     if (parentElement instanceof EditPart) {
       List children = ((EditPart) parentElement).getChildren();
       if (!children.isEmpty()) {

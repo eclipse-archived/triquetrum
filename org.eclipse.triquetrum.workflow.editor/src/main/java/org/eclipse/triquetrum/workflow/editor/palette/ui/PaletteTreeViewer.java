@@ -78,7 +78,7 @@ public class PaletteTreeViewer extends PaletteViewer {
   @Override
   public void setPaletteRoot(PaletteRoot root) {
     super.setPaletteRoot(root);
-    ((FilteredTree) getControl()).getViewer().setInput(getRootEditPart());
+    ((FilteredTree) getControl()).getViewer().setInput(getRootEditPart().getContents().getChildren());
   }
 
   /**
