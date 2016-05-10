@@ -63,14 +63,17 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
   }
 
   public void handlePaletteEntry(PaletteContainer parent, IConfigurationElement parentGroupElem, IConfigurationElement cfgElem) {
+    String label = cfgElem.getAttribute("displayName");
     String iconType = cfgElem.getAttribute("iconType");
     iconType = StringUtils.isBlank(iconType) ? TriqFeatureProvider.ICONTYPE_IMG : iconType;
     String iconResource = cfgElem.getAttribute("icon");
-    iconResource = !StringUtils.isBlank(iconResource) ? iconResource : TriqFeatureProvider.DEFAULT_ACTOR_IMG;
-    iconResource = TriqFeatureProvider.ICONTYPE_IMG.equalsIgnoreCase(iconType) ? iconResource : TriqFeatureProvider.DEFAULT_ACTOR_IMG;
-    getDiagramTypeProvider().getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource, iconResource);
-    String label = cfgElem.getAttribute("displayName");
-    ImageDescriptor imgDescriptor = TriqEditorPlugin.imageDescriptorFromPlugin(cfgElem.getDeclaringExtension().getContributor().getName(), iconResource);
+    iconResource = !StringUtils.isBlank(iconResource) ? iconResource : null;
+    iconResource = TriqFeatureProvider.ICONTYPE_IMG.equalsIgnoreCase(iconType) ? iconResource : null;
+    ImageDescriptor imgDescriptor = null;
+    if(iconResource!=null) {
+      getDiagramTypeProvider().getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource, iconResource);
+      imgDescriptor = TriqEditorPlugin.imageDescriptorFromPlugin(cfgElem.getDeclaringExtension().getContributor().getName(), iconResource);
+    }
     switch (cfgElem.getName()) {
     case "entry": {
       String clazz = cfgElem.getAttribute("class");
@@ -82,7 +85,6 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
       break;
     }
     case "group": {
-//      PaletteGroup pg = new PaletteGroup(label);
       PaletteTreeNode pg = new PaletteTreeNode(label);
       pg.setSmallIcon(imgDescriptor);
       parent.add(pg);

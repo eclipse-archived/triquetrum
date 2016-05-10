@@ -20,6 +20,7 @@ import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 
 /**
  * Tree EditPart for palette tree node.
@@ -34,11 +35,8 @@ public class PaletteTreeNodeEditPart extends PaletteEntryEditPart {
     super(model);
   }
 
-  /**
-   * Creates and installs pertinent EditPolicies.
-   */
-  protected void createEditPolicies() {
-    super.createEditPolicies();
+  protected String getDefaultImageID() {
+    return ImageConstants.IMG_FOLDER;
   }
 
   @Override
