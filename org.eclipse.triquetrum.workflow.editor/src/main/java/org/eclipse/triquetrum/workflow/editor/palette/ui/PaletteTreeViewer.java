@@ -96,7 +96,7 @@ public class PaletteTreeViewer extends PaletteViewer {
     FilteredTree tree = new FilteredTree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL, filter, true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     tree.getViewer().setContentProvider(new PaletteTreeProvider());
-    tree.getViewer().setLabelProvider(new PaletteLabelProvider(tree.getViewer()));
+    tree.getViewer().setLabelProvider(new PaletteLabelProvider(this));
     setControl(tree);
     return tree;
   }
