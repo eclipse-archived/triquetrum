@@ -40,6 +40,7 @@ Read along to find out how this was done!
 Graphiti offers a multi-step approach to defining a custom palette view.
 
 1. Define a custom DiagramEditor if you haven't already done so, e.g. a TriqDiagramEditor, and register that on the "org.eclipse.ui.editors" extension point in your plugin.xml. E.g. :
+
    ```xml
    ...
    <extension point="org.eclipse.ui.editors">
@@ -58,6 +59,7 @@ Graphiti offers a multi-step approach to defining a custom palette view.
    ...
    ```
 2. Define a custom DiagramBehavior implementation in your custom DiagramEditor. E.g.
+
    ```
    public class TriqDiagramEditor extends DiagramEditor {
    ...
@@ -69,6 +71,7 @@ Graphiti offers a multi-step approach to defining a custom palette view.
    }
    ```
 3. In the custom DiagramBehavior, create a custom PaletteBehavior. E.g. :
+
    ```
    public class TriqDiagramBehavior extends DiagramBehavior {
    ...
@@ -80,6 +83,7 @@ Graphiti offers a multi-step approach to defining a custom palette view.
    }
    ```
 4. Finally, in your custom PaletteBehavior, create a custom PaletteViewerProvider, e.g. a PaletteTreeViewerProvider.
+
    ```
    public class TriqPaletteBehavior extends DefaultPaletteBehavior {
    ...
