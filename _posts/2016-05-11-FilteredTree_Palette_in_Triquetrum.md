@@ -108,6 +108,7 @@ As a consequence it's not straightforward to just replace the default palette vi
 To complicate matters even further Triquetrum needs to be able to search or filter in the palette so we would really like to use org.eclipse.ui.dialogs.FilteredTree. And that one contains its own TreeViewer implementation, conflicting again with what GEF's PaletteViewer requires.
 
 To conclude, the goal is to be able to :
+
 * build a palette containing "normal" Graphiti/GEF EditParts for PaletteEntries, ToolEntries etc so the standard drag-n-drop works with linking to Graphiti's CreateFeatures.
 * present the palette as a FilteredTree
 * allow the user to decide on using either the flyout palette or the separate palette page as is standard for GEF editors
@@ -170,6 +171,7 @@ Finally, by registering a PaletteTreeProvider and a PaletteLabelProvider the tre
 > The full source code can be found at the [Triquetrum Github repository](https://github.com/eclipse/triquetrum).
 
 You can discover and follow Triquetrum via :
+
 * The project [site](https://projects.eclipse.org/projects/technology.triquetrum)
 * Source [repository](https://github.com/eclipse/triquetrum)
 * Mailing [list](https://dev.eclipse.org/mailman/listinfo/triquetrum-dev)
