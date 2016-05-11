@@ -170,7 +170,7 @@ Finally, by registering a PaletteTreeProvider and a PaletteLabelProvider the tre
 > The full source code can be found at the [Triquetrum Github repository](https://github.com/eclipse/triquetrum).
 
 You can discover and follow Triquetrum via :
-* [The project site](https://projects.eclipse.org/projects/technology.triquetrum)
-* [Source repository](https://github.com/eclipse/triquetrum)
-* [Mailing list](https://dev.eclipse.org/mailman/listinfo/triquetrum-dev)
+* The project [site](https://projects.eclipse.org/projects/technology.triquetrum)
+* Source [repository](https://github.com/eclipse/triquetrum)
+* Mailing [list](https://dev.eclipse.org/mailman/listinfo/triquetrum-dev)
 
