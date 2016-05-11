@@ -1,6 +1,6 @@
 ---
 layout: post
-title: A Graphiti palette with a FilteredTree in Triquetrum's workflow editor
+title: A Graphiti palette with a FilteredTree in Triquetrum
 ---
 
 
