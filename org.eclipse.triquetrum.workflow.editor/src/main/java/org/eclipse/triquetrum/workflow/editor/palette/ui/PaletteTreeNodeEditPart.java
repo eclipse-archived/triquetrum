@@ -16,20 +16,12 @@ import java.util.List;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;
-import org.eclipse.jface.resource.FontDescriptor;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 
 /**
  * Tree EditPart for palette tree node.
- * TODO : check about normal font resource handling.
- * for now we just try to minimize font resource leaking by assigning a single static instance.
  */
 public class PaletteTreeNodeEditPart extends PaletteEntryEditPart {
-
-  private static Font BOLD_FONT;
 
   public PaletteTreeNodeEditPart(PaletteContainer model) {
     super(model);
@@ -42,14 +34,6 @@ public class PaletteTreeNodeEditPart extends PaletteEntryEditPart {
   @Override
   public void refresh() {
     super.refresh();
-    if (getWidget() instanceof TreeItem) {
-      if (BOLD_FONT == null) {
-        Font f = ((TreeItem) getWidget()).getFont();
-        FontDescriptor boldDescriptor = FontDescriptor.createFrom(f).setStyle(SWT.BOLD);
-        BOLD_FONT = boldDescriptor.createFont(getWidget().getDisplay());
-      }
-      ((TreeItem) getWidget()).setFont(BOLD_FONT);
-    }
     refreshChildrenContents();
   }
 
