@@ -33,8 +33,6 @@ import org.eclipse.triquetrum.workflow.editor.palette.ui.PaletteTreeViewerProvid
  * Interprets Triquetrum PaletteContribution extensions and constructs a palette group/entry hierarchy.
  *
  * The underlying model reuses PaletteEntry and PaletteGroup classes from GEF.
- *
- * TODO : react on dynamically registered extra palette contributions, registered in a running workbench.
  */
 public class TriqPaletteBehavior extends DefaultPaletteBehavior {
 
@@ -54,8 +52,10 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
   protected PaletteRoot createPaletteRoot() {
     TriqPaletteRoot result = new TriqPaletteRoot(getDiagramTypeProvider());
     IExtensionPoint extPoint = Platform.getExtensionRegistry().getExtensionPoint(PALETTE_CONTRIBUTION_EXTENSION_ID);
-    for (IExtension ext : extPoint.getExtensions()) {
-      for (IConfigurationElement cfgElem : ext.getConfigurationElements()) {
+    IExtension[] extensions = extPoint.getExtensions();
+    for (IExtension ext : extensions) {
+      IConfigurationElement[] cfgElements = ext.getConfigurationElements();
+      for (IConfigurationElement cfgElem : cfgElements) {
         handlePaletteEntry(result, null, cfgElem);
       }
     }
