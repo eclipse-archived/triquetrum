@@ -65,7 +65,7 @@ public class ModelElementConfigureFeature extends AbstractCustomFeature {
       BoCategory boCategory = BoCategory.retrieveFrom(pe);
       ret = ((BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory)
           || (BoCategory.Annotation.equals(boCategory)) || (BoCategory.Port.equals(boCategory)))
-          && !(pe.getGraphicsAlgorithm() instanceof Text));
+          && !(pe.getGraphicsAlgorithm() instanceof Text)) || BoCategory.Parameter.equals(boCategory);
     }
     return ret;
   }
