@@ -12,6 +12,7 @@ package org.eclipse.triquetrum.workflow.editor.shapes.ptolemy;
 
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.jface.resource.ResourceManager;
 
 import ptolemy.vergil.kernel.attributes.VisibleAttribute;
 
@@ -31,15 +32,17 @@ public interface DrawingStrategy<A extends VisibleAttribute> {
    * </p>
    * @param visibleAttribute
    * @param graphics needed for some shapes to obtain info on sizes of text etc
+   * @param resourceManager to be used to manage the creation of new SWT resources such as images, fonts, colours
    * @return
    */
-  Rectangle getBounds(A visibleAttribute, Graphics graphics);
+  Rectangle getBounds(A visibleAttribute, Graphics graphics, ResourceManager resourceManager);
 
   /**
    *
-   * @param visibleAttribute
-   * @param graphics
+   * @param visibleAttribute the thing defining what must be drawn
+   * @param graphics the utility to actually get something drawn on the canvas
+   * @param resourceManager to be used to manage the creation of new SWT resources such as images, fonts, colours
    */
-  void draw(A visibleAttribute, Graphics graphics);
+  void draw(A visibleAttribute, Graphics graphics, ResourceManager resourceManager);
 
 }

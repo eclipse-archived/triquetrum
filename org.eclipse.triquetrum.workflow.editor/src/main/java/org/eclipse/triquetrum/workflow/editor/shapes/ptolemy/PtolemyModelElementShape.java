@@ -18,6 +18,8 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.graphiti.platform.ga.IRendererContext;
+import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.triquetrum.workflow.editor.TriqDiagramBehavior;
 import org.eclipse.triquetrum.workflow.editor.shapes.AbstractCustomModelElementShape;
 import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
 import org.slf4j.Logger;
@@ -42,9 +44,11 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
 
   private Rectangle ptShapeBounds;
   private EditorIcon iconDef;
+  private ResourceManager resourceManager;
 
   public PtolemyModelElementShape(IRendererContext rendererContext) {
     super(rendererContext);
+    this.resourceManager = ((TriqDiagramBehavior)rendererContext.getDiagramTypeProvider().getDiagramBehavior()).getResourceManager();
   }
 
   @Override
@@ -70,7 +74,7 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
       for (VisibleAttribute a : iconDef.attributeList(VisibleAttribute.class)) {
         DrawingStrategy drawingStrategy = drawingStrategies.get(a.getClass());
         if (drawingStrategy != null) {
-          drawingStrategy.draw(a, graphics);
+          drawingStrategy.draw(a, graphics, resourceManager);
         }
       }
       setInitialSize(ga, width + 2, height + 2);
@@ -102,7 +106,7 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
     for (VisibleAttribute a : iconDef.attributeList(VisibleAttribute.class)) {
       DrawingStrategy drawingStrategy = drawingStrategies.get(a.getClass());
       if (drawingStrategy != null) {
-        Rectangle aBounds = drawingStrategy.getBounds(a, graphics);
+        Rectangle aBounds = drawingStrategy.getBounds(a, graphics, resourceManager);
         LOGGER.debug("Bounds for {} : {}", a, aBounds);
         tlp.x = Math.min(tlp.x, aBounds.x);
         tlp.y = Math.min(tlp.y, aBounds.y);

@@ -13,7 +13,9 @@ package org.eclipse.triquetrum.workflow.editor.shapes.ptolemy;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,12 +27,11 @@ public class RectangleDrawingStrategy extends AbstractDrawingStrategy<RectangleA
   private final static Logger LOGGER = LoggerFactory.getLogger(RectangleDrawingStrategy.class);
 
   @Override
-  public void draw(RectangleAttribute rectangleAttr, Graphics graphics) {
+  public void draw(RectangleAttribute rectangleAttr, Graphics graphics, ResourceManager resourceManager) {
     Color fgColor = graphics.getBackgroundColor();
     java.awt.Color color = rectangleAttr.fillColor.asColor();
     if (color != null) {
-      // TODO figure out if and how such colors must be managed and disposed etc
-      Color rgb = new Color(null, color.getRed(), color.getGreen(), color.getBlue());
+      Color rgb = resourceManager.createColor(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
       graphics.setBackgroundColor(rgb);
     }
 
@@ -46,7 +47,7 @@ public class RectangleDrawingStrategy extends AbstractDrawingStrategy<RectangleA
   }
 
   @Override
-  protected Dimension getDimension(RectangleAttribute rectangleAttr, Graphics graphics) {
+  protected Dimension getDimension(RectangleAttribute rectangleAttr, Graphics graphics, ResourceManager resourceManager) {
     try {
       int width = (int) ((DoubleToken) rectangleAttr.width.getToken()).doubleValue();
       int height = (int) ((DoubleToken) rectangleAttr.height.getToken()).doubleValue();
