@@ -13,10 +13,13 @@ package org.eclipse.triquetrum.workflow.editor.shapes.ptolemy;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.jface.resource.FontDescriptor;
+import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.RGB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,23 +32,22 @@ public class TextDrawingStrategy extends AbstractDrawingStrategy<TextAttribute> 
   private final static Logger LOGGER = LoggerFactory.getLogger(TextDrawingStrategy.class);
 
   @Override
-  public void draw(TextAttribute textAttr, Graphics graphics) {
+  public void draw(TextAttribute textAttr, Graphics graphics, ResourceManager resourceManager) {
     Color fgColor = graphics.getForegroundColor();
     java.awt.Color color = textAttr.textColor.asColor();
     if (color != null) {
-        // TODO figure out if and how such colors must be managed and disposed etc
-        Color rgb = new Color(null, color.getRed(), color.getGreen(), color.getBlue());
-        graphics.setForegroundColor(rgb);
+      Color rgb = resourceManager.createColor(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
+      graphics.setForegroundColor(rgb);
     }
 
     try {
       String text = textAttr.text.getExpression();
-      int fontSize = ((IntToken)textAttr.textSize.getToken()).intValue();
+      int fontSize = ((IntToken) textAttr.textSize.getToken()).intValue();
       String fontFamily = textAttr.fontFamily.stringValue();
-      boolean italic = ((BooleanToken)textAttr.italic.getToken()).booleanValue();
-      boolean bold = ((BooleanToken)textAttr.bold.getToken()).booleanValue();
-      int style = SWT.NORMAL | (italic?SWT.ITALIC:SWT.NORMAL) | (bold?SWT.BOLD:SWT.NORMAL);
-      Font f = new Font(null, fontFamily, fontSize, style);
+      boolean italic = ((BooleanToken) textAttr.italic.getToken()).booleanValue();
+      boolean bold = ((BooleanToken) textAttr.bold.getToken()).booleanValue();
+      int style = SWT.NORMAL | (italic ? SWT.ITALIC : SWT.NORMAL) | (bold ? SWT.BOLD : SWT.NORMAL);
+      Font f = resourceManager.createFont(FontDescriptor.createFrom(fontFamily, fontSize, style));
       graphics.setFont(f);
 
       Point tlp = getTopLeftLocation(textAttr, graphics);
@@ -57,25 +59,25 @@ public class TextDrawingStrategy extends AbstractDrawingStrategy<TextAttribute> 
   }
 
   @Override
-  protected Dimension getDimension(TextAttribute textAttr, Graphics graphics) {
+  protected Dimension getDimension(TextAttribute textAttr, Graphics graphics, ResourceManager resourceManager) {
     try {
       String text = textAttr.text.getExpression();
-      int fontSize = ((IntToken)textAttr.textSize.getToken()).intValue();
+      int fontSize = ((IntToken) textAttr.textSize.getToken()).intValue();
       String fontFamily = textAttr.fontFamily.stringValue();
-      boolean italic = ((BooleanToken)textAttr.italic.getToken()).booleanValue();
-      boolean bold = ((BooleanToken)textAttr.bold.getToken()).booleanValue();
-      int style = SWT.NORMAL | (italic?SWT.ITALIC:SWT.NORMAL) | (bold?SWT.BOLD:SWT.NORMAL);
-      Font f = new Font(null, fontFamily, fontSize, style);
+      boolean italic = ((BooleanToken) textAttr.italic.getToken()).booleanValue();
+      boolean bold = ((BooleanToken) textAttr.bold.getToken()).booleanValue();
+      int style = SWT.NORMAL | (italic ? SWT.ITALIC : SWT.NORMAL) | (bold ? SWT.BOLD : SWT.NORMAL);
+      Font f = resourceManager.createFont(FontDescriptor.createFrom(fontFamily, fontSize, style));
       Font oldFont = graphics.getFont();
       graphics.setFont(f);
       FontMetrics fm = graphics.getFontMetrics();
       final int width = text.length() * fm.getAverageCharWidth();
-      final int height = fm.getHeight ();
+      final int height = fm.getHeight();
       graphics.setFont(oldFont);
       return new Dimension(width, height);
     } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for "+textAttr.getFullName(), e);
-      return new Dimension(0,0);
+      LOGGER.error("Error reading dimensions for " + textAttr.getFullName(), e);
+      return new Dimension(0, 0);
     }
   }
 }

@@ -14,6 +14,7 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.jface.resource.ResourceManager;
 
 import ptolemy.kernel.util.Location;
 import ptolemy.vergil.kernel.attributes.VisibleAttribute;
@@ -21,8 +22,8 @@ import ptolemy.vergil.kernel.attributes.VisibleAttribute;
 public abstract class AbstractDrawingStrategy<A extends VisibleAttribute> implements DrawingStrategy<A> {
 
   @Override
-  public Rectangle getBounds(A visibleAttribute, Graphics graphics) {
-    return new Rectangle(getTopLeftLocation(visibleAttribute, graphics), getDimension(visibleAttribute, graphics));
+  public Rectangle getBounds(A visibleAttribute, Graphics graphics, ResourceManager resourceManager) {
+    return new Rectangle(getTopLeftLocation(visibleAttribute, graphics), getDimension(visibleAttribute, graphics, resourceManager));
   }
 
   protected Point getTopLeftLocation(A visibleAttribute, Graphics graphics) {
@@ -32,5 +33,5 @@ public abstract class AbstractDrawingStrategy<A extends VisibleAttribute> implem
     return new Point(x1, y1);
   }
 
-  protected abstract Dimension getDimension(A visibleAttribute, Graphics graphics);
+  protected abstract Dimension getDimension(A visibleAttribute, Graphics graphics, ResourceManager resourceManager);
 }
