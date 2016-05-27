@@ -21,7 +21,7 @@
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.nebula.visualization.feature.feature.group" version="0.9.9.201601121647"/>
-<repository location="http://download.eclipse.org/technology/nebula/archives/Q42015/release/"/>
+<repository location="http://archive.eclipse.org/nebula/Q42015/release/"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.ecf.core.feature.feature.group" version="1.1.0.v20150810-1719"/>
