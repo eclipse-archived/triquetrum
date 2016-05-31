@@ -1,7 +1,5 @@
 package org.eclipse.triquetrum.processing.model;
 
-import org.eclipse.triquetrum.processing.service.TaskProcessingBroker;
-
 /**
  * A simple solution to easily allow access to the default {@link TriqFactory}
  * implementation instance that should be available in a Triquetrum runtime.
@@ -58,7 +56,7 @@ public class TriqFactoryTracker {
    *
    * @param factory the processing model factory instance that should no longer be used as default factory in this Triquetrum runtime.
    */
-  public static void unsetDefaultFactory(TaskProcessingBroker factory) {
+  public static void unsetDefaultFactory(TriqFactory factory) {
     if((TriqFactoryTracker.factory != null) && (TriqFactoryTracker.factory == factory)) {
       TriqFactoryTracker.factory = null;
     }
