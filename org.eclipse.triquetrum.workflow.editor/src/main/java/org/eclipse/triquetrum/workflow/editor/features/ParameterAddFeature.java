@@ -28,6 +28,7 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 
@@ -53,15 +54,15 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, String category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategory category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
+    category.storeIn(pe);
     if (businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CATEGORY", category);
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
+    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
   public boolean canAdd(IAddContext context) {
@@ -106,8 +107,8 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
 //    gaService.setLocation(text, 0, 0);
     gaService.setLocationAndSize(text, 10, 0, WIDTH, HEIGHT);
 
-    link(shape, addedParameter, "PARAMETER");
-    link(containerShape, addedParameter, "PARAMETER");
+    link(shape, addedParameter, BoCategory.Parameter);
+    link(containerShape, addedParameter, BoCategory.Parameter);
     Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", addedParameter.getExpression());
 
     // provide information to support direct-editing directly

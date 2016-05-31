@@ -20,6 +20,7 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.model.Director;
 
 public class DirectorUpdateFeature extends AbstractUpdateFeature {
@@ -30,8 +31,8 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), "__BO_CATEGORY");
-    return ("DIRECTOR".equals(boCategory));
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    return (BoCategory.Director.equals(boCategory));
   }
 
   @Override
@@ -48,14 +49,14 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
       elemName = director.getName();
 
       for (Shape shape : cs.getChildren()) {
-        String boCategory = Graphiti.getPeService().getPropertyValue(shape, "__BO_CATEGORY");
+        BoCategory boCategory = BoCategory.retrieveFrom(shape);
         if (shape.getGraphicsAlgorithm() instanceof Text) {
           Text text = (Text) shape.getGraphicsAlgorithm();
-          if ("DIRECTOR".equalsIgnoreCase(boCategory)) {
+          if (BoCategory.Director.equals(boCategory)) {
             // it's the text field with the name of the actor
             String actorNameInGraph = text.getValue();
             elemNameChanged = !elemName.equals(actorNameInGraph);
-          } 
+          }
         }
       }
     }
@@ -80,14 +81,14 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
     if((pe instanceof ContainerShape) && (bo instanceof Director)) {
       ContainerShape cs = (ContainerShape) pe;
       Director director = (Director) bo;
-      
+
       for (Shape shape : cs.getChildren()) {
-        String boCategory = Graphiti.getPeService().getPropertyValue(shape, "__BO_CATEGORY");
-        if("DIRECTOR".equals(boCategory)) {
+        BoCategory boCategory = BoCategory.retrieveFrom(shape);
+        if(BoCategory.Director.equals(boCategory)) {
           Text text = (Text) shape.getGraphicsAlgorithm();
           text.setValue(director.getName());
           result = true;
-          Graphiti.getPeService().setPropertyValue(shape, "__BO_NAME",director.getName());
+          Graphiti.getPeService().setPropertyValue(shape, FeatureConstants.BO_NAME,director.getName());
         }
       }
     }

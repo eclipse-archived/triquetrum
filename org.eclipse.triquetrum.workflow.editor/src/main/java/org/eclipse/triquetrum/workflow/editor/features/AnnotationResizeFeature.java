@@ -17,6 +17,7 @@ import org.eclipse.graphiti.mm.algorithms.MultiText;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 
@@ -33,8 +34,8 @@ public class AnnotationResizeFeature extends DefaultResizeShapeFeature {
   }
 
   public boolean canResizeShape(IResizeShapeContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), "__BO_CATEGORY");
-    return ("ANNOTATION".equals(boCategory));
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    return (BoCategory.Annotation.equals(boCategory));
   };
 
   @Override
@@ -47,8 +48,8 @@ public class AnnotationResizeFeature extends DefaultResizeShapeFeature {
     if (bo instanceof Annotation && pictogramElement instanceof Shape) {
       Annotation annotation = (Annotation) bo;
       Shape shape = (Shape) pictogramElement;
-      String boCategory = Graphiti.getPeService().getPropertyValue(shape, "__BO_CATEGORY");
-      if ("ANNOTATION".equals(boCategory)) {
+      BoCategory boCategory = BoCategory.retrieveFrom(shape);
+      if (BoCategory.Annotation.equals(boCategory)) {
         MultiText text = EditorUtils.getGraphicsAlgorithmOfShape(shape, MultiText.class);
         if (text != null) {
           text.setWidth(width-5);

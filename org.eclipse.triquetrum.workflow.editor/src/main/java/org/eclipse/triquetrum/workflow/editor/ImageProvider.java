@@ -23,6 +23,7 @@ public class ImageProvider extends AbstractImageProvider {
   protected void addAvailableImages() {
     addImageFilePath(ImageConstants.IMG_COLOR_CHANGE, ROOT_FOLDER_FOR_IMG + "color-palette.gif");
     addImageFilePath(ImageConstants.IMG_CONFIGURE, ROOT_FOLDER_FOR_IMG + "configure.gif");
+    addImageFilePath(ImageConstants.IMG_FOLDER, ROOT_FOLDER_FOR_IMG + "fldr_obj.gif");
 
     addImageFilePath(ImageConstants.IMG_OUTLINE_TREE, ROOT_FOLDER_FOR_IMG + "tree.gif");
     addImageFilePath(ImageConstants.IMG_OUTLINE_THUMBNAIL, ROOT_FOLDER_FOR_IMG + "thumbnail.gif");
@@ -32,6 +33,7 @@ public class ImageProvider extends AbstractImageProvider {
     addImageFilePath(ImageConstants.IMG_DIRECTOR, ROOT_FOLDER_FOR_IMG + "director.gif");
     addImageFilePath(ImageConstants.IMG_INPUTPORT, ROOT_FOLDER_FOR_IMG + "input.gif");
     addImageFilePath(ImageConstants.IMG_OUTPUTPORT, ROOT_FOLDER_FOR_IMG + "output.gif");
+    addImageFilePath(ImageConstants.IMG_CONNECTION, ROOT_FOLDER_FOR_IMG + "connection.gif");
     addImageFilePath(ImageConstants.IMG_PARAMETER, ROOT_FOLDER_FOR_IMG + "parameter.gif");
 
     addImageFilePath(ImageConstants.IMG_PAUSE_WORKFLOW, ROOT_FOLDER_FOR_IMG + "pause_workflow.gif");

@@ -24,12 +24,14 @@ import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.Entity;
+import org.eclipse.triquetrum.workflow.model.Location;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.Vertex;
 
 /**
  * <!-- begin-user-doc -->
@@ -114,6 +116,20 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * @generated
    */
   private EClass relationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass locationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass vertexEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -271,6 +287,33 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    */
   public EOperation getNamedObj__SetProperty__String_String_String() {
     return namedObjEClass.getEOperations().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getNamedObj__BuildWrappedObject() {
+    return namedObjEClass.getEOperations().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getNamedObj__InitializeFrom__NamedObj() {
+    return namedObjEClass.getEOperations().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getNamedObj__GetFullName() {
+    return namedObjEClass.getEOperations().get(5);
   }
 
   /**
@@ -548,6 +591,96 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getRelation_LinkedRelations() {
+    return (EReference)relationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRelation_LinkingRelations() {
+    return (EReference)relationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getRelation__Link__NamedObj() {
+    return relationEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getRelation__Unlink__NamedObj() {
+    return relationEClass.getEOperations().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getRelation__IsConnected() {
+    return relationEClass.getEOperations().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getRelation__GetVertex() {
+    return relationEClass.getEOperations().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLocation() {
+    return locationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLocation_Expression() {
+    return (EAttribute)locationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getLocation__GetLocation() {
+    return locationEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getVertex() {
+    return vertexEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EDataType getPtolemyNamedObj() {
     return ptolemyNamedObjEDataType;
   }
@@ -590,6 +723,9 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEOperation(namedObjEClass, NAMED_OBJ___GET_CONTAINER);
     createEOperation(namedObjEClass, NAMED_OBJ___TOP_LEVEL);
     createEOperation(namedObjEClass, NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING);
+    createEOperation(namedObjEClass, NAMED_OBJ___BUILD_WRAPPED_OBJECT);
+    createEOperation(namedObjEClass, NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ);
+    createEOperation(namedObjEClass, NAMED_OBJ___GET_FULL_NAME);
 
     attributeEClass = createEClass(ATTRIBUTE);
 
@@ -630,6 +766,18 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
 
     relationEClass = createEClass(RELATION);
     createEReference(relationEClass, RELATION__LINKED_PORTS);
+    createEReference(relationEClass, RELATION__LINKED_RELATIONS);
+    createEReference(relationEClass, RELATION__LINKING_RELATIONS);
+    createEOperation(relationEClass, RELATION___LINK__NAMEDOBJ);
+    createEOperation(relationEClass, RELATION___UNLINK__NAMEDOBJ);
+    createEOperation(relationEClass, RELATION___IS_CONNECTED);
+    createEOperation(relationEClass, RELATION___GET_VERTEX);
+
+    locationEClass = createEClass(LOCATION);
+    createEAttribute(locationEClass, LOCATION__EXPRESSION);
+    createEOperation(locationEClass, LOCATION___GET_LOCATION);
+
+    vertexEClass = createEClass(VERTEX);
 
     // Create data types
     ptolemyNamedObjEDataType = createEDataType(PTOLEMY_NAMED_OBJ);
@@ -673,10 +821,12 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     compositeActorEClass.getESuperTypes().add(this.getCompositeEntity());
     portEClass.getESuperTypes().add(this.getNamedObj());
     relationEClass.getESuperTypes().add(this.getNamedObj());
+    locationEClass.getESuperTypes().add(this.getAttribute());
+    vertexEClass.getESuperTypes().add(this.getLocation());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(namedObjEClass, NamedObj.class, "NamedObj", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getNamedObj_Name(), ecorePackage.getEString(), "name", null, 1, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_Name(), ecorePackage.getEString(), "name", "new", 1, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getNamedObj_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_WrappedType(), ecorePackage.getEString(), "wrappedType", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getNamedObj_WrappedObject(), this.getPtolemyNamedObj(), "wrappedObject", null, 0, 1, NamedObj.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -692,15 +842,22 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "className", 0, 1, IS_UNIQUE, IS_ORDERED);
 
+    initEOperation(getNamedObj__BuildWrappedObject(), null, "buildWrappedObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getNamedObj__InitializeFrom__NamedObj(), null, "initializeFrom", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, this.getPtolemyNamedObj(), "ptObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getNamedObj__GetFullName(), ecorePackage.getEString(), "getFullName", 0, 1, IS_UNIQUE, IS_ORDERED);
+
     initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAnnotation_Text(), ecorePackage.getEString(), "text", "Double click to edit text.", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Text(), ecorePackage.getEString(), "text", "Configure to edit text.", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAnnotation_FontFamily(), ecorePackage.getEString(), "fontFamily", "Arial", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAnnotation_TextSize(), ecorePackage.getEInt(), "textSize", "8", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAnnotation_Bold(), ecorePackage.getEBoolean(), "bold", "false", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAnnotation_Italic(), ecorePackage.getEBoolean(), "italic", "false", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAnnotation_Color(), ecorePackage.getEString(), "color", "{0.0,0.0,0.0,1.0}", 1, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Color(), ecorePackage.getEString(), "color", "0,0,0,255", 1, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getParameter_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -734,6 +891,25 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
 
     initEClass(relationEClass, Relation.class, "Relation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRelation_LinkedRelations(), this.getRelation(), this.getRelation_LinkingRelations(), "linkedRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRelation_LinkingRelations(), this.getRelation(), this.getRelation_LinkedRelations(), "linkingRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    op = initEOperation(getRelation__Link__NamedObj(), null, "link", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, this.getNamedObj(), "linkedThing", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getRelation__Unlink__NamedObj(), null, "unlink", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, this.getNamedObj(), "linkedThing", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getRelation__IsConnected(), ecorePackage.getEBoolean(), "isConnected", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getRelation__GetVertex(), this.getVertex(), "getVertex", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEClass(locationEClass, Location.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLocation_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEOperation(getLocation__GetLocation(), ecorePackage.getEDouble(), "getLocation", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+    initEClass(vertexEClass, Vertex.class, "Vertex", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Initialize data types
     initEDataType(ptolemyNamedObjEDataType, ptolemy.kernel.util.NamedObj.class, "PtolemyNamedObj", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

@@ -30,11 +30,9 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditorInput;
-import org.eclipse.graphiti.ui.internal.services.GraphitiUiInternal;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.editor.util.FileService;
-import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -44,17 +42,6 @@ import org.eclipse.ui.PlatformUI;
  *
  */
 public class WizardUtils {
-
-  /**
-   *
-   * @param workflowFile
-   * @return a workflow EMF model from the given file
-   */
-  public static CompositeActor getExistingWorkflow(final IFile workflowFile) {
-    Diagram diagram = GraphitiUiInternal.getEmfService().getDiagramFromFile(workflowFile, new ResourceSetImpl());
-
-    return (CompositeActor) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
-  }
 
   /**
    *
@@ -71,7 +58,7 @@ public class WizardUtils {
     }
 
     String editorID = TriqDiagramEditor.EDITOR_ID;
-    String editorExtension = "tdml"; //$NON-NLS-1$
+    String editorExtension = TriqDiagramEditor.DIAGRAM_FILE_EXTENSION; //$NON-NLS-1$
     String diagramTypeProviderId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagramTypeId);
     String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$
     IEditorDescriptor specificEditor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(namingConventionID);

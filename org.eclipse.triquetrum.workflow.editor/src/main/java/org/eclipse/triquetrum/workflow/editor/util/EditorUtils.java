@@ -10,13 +10,18 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.util;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.PlatformGraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.styles.Color;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.internal.parts.DiagramEditPart;
@@ -28,15 +33,21 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
-import org.eclipse.triquetrum.workflow.model.CompositeEntity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 
-public class EditorUtils {
+import ptolemy.kernel.Entity;
+import ptolemy.kernel.util.Attribute;
+import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.Locatable;
+import ptolemy.kernel.util.Location;
+import ptolemy.kernel.util.NameDuplicationException;
 
+public class EditorUtils {
 
   /**
    * Opens a dialog to change the color.
@@ -122,7 +133,7 @@ public class EditorUtils {
    * Creates a unique name for a new model element, in its container. The relatedObj should be either the container or a sibling of the to-be-created element,
    * i.e. it should be in the same container as the new element.
    * <p>
-   * This method delegates to ptolemy.kernel.CompositeEntity.uniqueName(String)
+   * This method delegates to ptolemy.kernel.Entity.uniqueName(String)
    * </p>
    *
    * @param relatedObj
@@ -133,13 +144,13 @@ public class EditorUtils {
    */
   public static String buildUniqueName(NamedObj relatedObj, String prefix) {
     NamedObj container = relatedObj;
-    while ((container != null) && !(container instanceof CompositeEntity)) {
+    while ((container != null) && !(container instanceof org.eclipse.triquetrum.workflow.model.Entity)) {
       container = container.getContainer();
     }
     if (container == null) {
       return prefix;
     } else {
-      return ((ptolemy.kernel.CompositeEntity) container.getWrappedObject()).uniqueName(prefix);
+      return ((Entity<?>) container.getWrappedObject()).uniqueName(prefix);
     }
   }
 
@@ -148,7 +159,6 @@ public class EditorUtils {
    *
    * @return the diagram from the selected diagram editor
    */
-  @SuppressWarnings("restriction")
   public static Diagram getSelectedDiagram() {
     Diagram result = null;
     IWorkbenchPage page = EclipseUtils.getPage();
@@ -211,6 +221,38 @@ public class EditorUtils {
   }
 
   /**
+   * Set the location info on the model element, more precisely on the wrapped Ptolemy II model object.
+   *
+   * Graphiti maintains location info in the graphical algorithm linked to the shape&business object.
+   * But to guarantee that an export to a Ptolemy MOML file also has the location info, we need to push locations to the Ptolemy layer as well.
+   *
+   * @param modelElement the Triquetrum model element wrapping a Ptolemy model element
+   * @param x
+   * @param y
+   * @throws IllegalActionException
+   * @throws NameDuplicationException when adding the location attribute failed because there was already another linked child object with a same name.
+   */
+  public static void setLocation(NamedObj modelElement, double x, double y) throws IllegalActionException, NameDuplicationException {
+    ptolemy.kernel.util.NamedObj ptObject = modelElement.getWrappedObject();
+    double[] location = new double[] { x, y };
+    if (ptObject instanceof Locatable) {
+      ((Locatable) ptObject).setLocation(location);
+      ptolemy.kernel.util.NamedObj cont = ptObject.getContainer();
+      cont.attributeChanged((Attribute) ptObject);
+    }
+    List<Locatable> attributes = ptObject.attributeList(Locatable.class);
+    if (attributes == null)
+      return;
+    if (attributes.size() > 0) {
+      Locatable locationAttribute = (Locatable) attributes.get(0);
+      locationAttribute.setLocation(location);
+      ptObject.attributeChanged((Attribute) attributes.get(0));
+    } else {
+      new Location(ptObject, "_location").setLocation(location);
+    }
+  }
+
+  /**
    *
    * @param shape
    * @param gaClass
@@ -230,5 +272,55 @@ public class EditorUtils {
       }
     }
     return ga;
+  }
+
+  /**
+   *
+   * @param pe
+   * @return true if the containerShape contains an externally defined figure
+   * (based on svg or ptolemy)
+   */
+  public static boolean containsExternallyDefinedFigure(PictogramElement pe) {
+    boolean extFigure = (pe.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm);
+    if(!extFigure && (pe instanceof ContainerShape)) {
+      // check if the platform shape is somewhere in there
+      for(Shape childShape : ((ContainerShape)pe).getChildren()) {
+        if(childShape.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm) {
+          extFigure=true;
+          break;
+        }
+      }
+    }
+    if(!extFigure) {
+      // check if the platform shape is somewhere in there
+      for(GraphicsAlgorithm childShape : pe.getGraphicsAlgorithm().getGraphicsAlgorithmChildren()) {
+        if(childShape instanceof PlatformGraphicsAlgorithm) {
+          extFigure=true;
+          break;
+        }
+      }
+    }
+    return extFigure;
+  }
+
+  /**
+   * Returns a freshly created list of INPUT or OUTPUT port anchors for the given actor shape (or composite actor shape).
+   * The list can be manipulated/changed without risk of impacting the original actorShape definition
+   * (at least when the contained anchors properties are not touched!).
+   *
+   * @param actorShape
+   * @param portIoType BoCategories.Input or Output
+   * @return
+   */
+  public static List<Anchor> getContainedPorts(ContainerShape actorShape, BoCategory portIoType) {
+    List<Anchor> portShapes = new LinkedList<>();
+    for(Anchor anchor : actorShape.getAnchors()) {
+      FixPointAnchor fpa = (FixPointAnchor) anchor;
+      BoCategory boCategory = BoCategory.retrieveFrom(anchor);
+      if(portIoType.equals(boCategory)) {
+        portShapes.add(fpa);
+      }
+    }
+    return portShapes;
   }
 }

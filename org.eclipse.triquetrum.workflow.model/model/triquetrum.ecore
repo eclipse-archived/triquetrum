@@ -9,7 +9,13 @@
       <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eParameters name="className" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="buildWrappedObject"/>
+    <eOperations name="initializeFrom">
+      <eParameters name="ptObject" eType="#//PtolemyNamedObj"/>
+    </eOperations>
+    <eOperations name="getFullName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="new"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
         eType="#//Attribute" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="wrappedType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -68,8 +74,25 @@
         defaultValueLiteral="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//NamedObj">
+    <eOperations name="link">
+      <eParameters name="linkedThing" eType="#//NamedObj"/>
+    </eOperations>
+    <eOperations name="unlink">
+      <eParameters name="linkedThing" eType="#//NamedObj"/>
+    </eOperations>
+    <eOperations name="isConnected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="getVertex" eType="#//Vertex"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedPorts" upperBound="-1"
         eType="#//Port" eOpposite="#//Port/linkedRelations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
+        eType="#//Relation" eOpposite="#//Relation/linkingRelations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="linkingRelations" upperBound="-1"
+        eType="#//Relation" eOpposite="#//Relation/linkedRelations"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//Attribute">
+    <eOperations name="getLocation" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Vertex" eSuperTypes="#//Location"/>
   <eClassifiers xsi:type="ecore:EDataType" name="PtolemyNamedObj" instanceClassName="ptolemy.kernel.util.NamedObj"/>
 </ecore:EPackage>

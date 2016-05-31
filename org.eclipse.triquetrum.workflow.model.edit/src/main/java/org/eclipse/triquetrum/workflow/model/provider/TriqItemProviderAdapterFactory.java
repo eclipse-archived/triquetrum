@@ -333,6 +333,52 @@ public class TriqItemProviderAdapterFactory extends TriqAdapterFactory implement
   }
 
   /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Location} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected LocationItemProvider locationItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Location}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createLocationAdapter() {
+    if (locationItemProvider == null) {
+      locationItemProvider = new LocationItemProvider(this);
+    }
+
+    return locationItemProvider;
+  }
+
+  /**
+   * This keeps track of the one adapter used for all {@link org.eclipse.triquetrum.workflow.model.Vertex} instances.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected VertexItemProvider vertexItemProvider;
+
+  /**
+   * This creates an adapter for a {@link org.eclipse.triquetrum.workflow.model.Vertex}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Adapter createVertexAdapter() {
+    if (vertexItemProvider == null) {
+      vertexItemProvider = new VertexItemProvider(this);
+    }
+
+    return vertexItemProvider;
+  }
+
+  /**
    * This returns the root adapter factory that contains this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -442,6 +488,8 @@ public class TriqItemProviderAdapterFactory extends TriqAdapterFactory implement
     if (compositeActorItemProvider != null) compositeActorItemProvider.dispose();
     if (portItemProvider != null) portItemProvider.dispose();
     if (relationItemProvider != null) relationItemProvider.dispose();
+    if (locationItemProvider != null) locationItemProvider.dispose();
+    if (vertexItemProvider != null) vertexItemProvider.dispose();
   }
 
 }

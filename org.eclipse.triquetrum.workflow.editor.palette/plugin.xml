@@ -35,8 +35,13 @@
               icon="icons/value_field.gif"
               type="Parameter">
         </entry>
+        <entry
+              class="ptolemy.moml.Vertex"
+              displayName="Vertex"
+              type="Vertex">
+        </entry>
       </group>
-      <group displayName="Directors" icon="icons/director.gif">
+      <group displayName="Directors">
         <entry
               class="ptolemy.domains.sdf.kernel.SDFDirector"
               displayName="SDF director"
@@ -44,7 +49,7 @@
               type="Director">
         </entry>
       </group>
-      <group displayName="Sources" icon="icons/source.gif">
+      <group displayName="Sources">
 	      <entry
 	            class="ptolemy.actor.lib.Const"
 	            displayName="Constant"
@@ -61,11 +66,21 @@
           <entry
                 class="ptolemy.actor.lib.io.CSVReader"
                 displayName="CSVReader"
+                icon="icons/CSVReaderIcon.svg"
+                iconType="svg"
                 type="Actor">
           </entry>
         </group>
       </group>
-      <group displayName="Sinks" icon="icons/sink.gif">
+      <group displayName="Sinks">
+        <group displayName="Visualization" icon="icons/display.gif">
+          <entry
+                class="ptolemy.actor.lib.gui.Display"
+                displayName="Display"
+                icon="icons/display.gif"
+                type="Actor">
+          </entry>
+        </group>
 	      <entry
 	            class="ptolemy.actor.lib.Discard"
 	            displayName="Discard"
@@ -113,35 +128,30 @@
         <entry
               class="ptolemy.actor.lib.RecordDisassembler"
               displayName="RecordDisassembler"
-              icon="icons/actor.gif"
+              icon="icons/RecordDisassemblerIcon.svg"
+              iconType="svg"
               type="Actor">
         </entry>
       </group>
-      <group displayName="Transformation" icon="icons/actor.gif">
+      <group displayName="Transformation">
 	      <entry
-	            class="ptolemy.actor.lib.AddSubtract"
-	            displayName="AddSubtract"
-    	        icon="icons/actor.gif"
-	            type="Actor">
+             class="ptolemy.actor.lib.AddSubtract"
+             displayName="AddSubtract"
+             icon="icons/AddSubtractIcon.svg"
+             iconType="svg"
+             type="Actor">
 	      </entry>
         <entry
               class="ptolemy.actor.lib.MovingAverage"
               displayName="MovingAverage"
-              icon="icons/actor.gif"
+              icon="icons/MovingAverageIcon.xml"
+              iconType="ptolemy"
               type="Actor">
         </entry>
 	      <entry
 	            class="ptolemy.actor.lib.TrigFunction"
 	            displayName="TrigFunction"
     	        icon="icons/actor.gif"
-	            type="Actor">
-	      </entry>
-      </group>
-      <group displayName="Visualization" icon="icons/display.gif">
-	      <entry
-	            class="ptolemy.actor.lib.gui.Display"
-	            displayName="Display"
-    	        icon="icons/display.gif"
 	            type="Actor">
 	      </entry>
       </group>

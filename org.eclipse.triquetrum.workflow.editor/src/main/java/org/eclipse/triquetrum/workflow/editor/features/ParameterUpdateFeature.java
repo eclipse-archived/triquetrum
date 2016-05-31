@@ -20,6 +20,8 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 
 /**
@@ -33,31 +35,35 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    String boCategory = Graphiti.getPeService().getPropertyValue(context.getPictogramElement(), "__BO_CATEGORY");
-    return ("PARAMETER".equals(boCategory));
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    return (BoCategory.Parameter.equals(boCategory));
   }
 
   @Override
   public IReason updateNeeded(IUpdateContext context) {
     PictogramElement pictogramElement = context.getPictogramElement();
-    Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-    boolean parameterChanged = false;
-    Parameter p = null;
-    if (bo instanceof Parameter && pictogramElement instanceof Shape) {
-      p = (Parameter) bo;
-      Shape shape = (Shape) pictogramElement;
-      String boCategory = Graphiti.getPeService().getPropertyValue(shape, "__BO_CATEGORY");
-      if ("PARAMETER".equalsIgnoreCase(boCategory)) {
-        // parameters can not change name, only the value can change
-        String boValue = Graphiti.getPeService().getPropertyValue(shape, "__BO_VALUE");
-        parameterChanged = p.getExpression() != null && !p.getExpression().equals(boValue);
-      }
-    }
-    if (parameterChanged) {
-      context.putProperty("PARAMETER_CHANGED", p.getName());
-      return Reason.createTrueReason("Parameter change");
-    } else {
+    if (EditorUtils.containsExternallyDefinedFigure(pictogramElement)) {
       return Reason.createFalseReason();
+    } else {
+      Object bo = getBusinessObjectForPictogramElement(pictogramElement);
+      boolean parameterChanged = false;
+      Parameter p = null;
+      if (bo instanceof Parameter && pictogramElement instanceof Shape) {
+        p = (Parameter) bo;
+        Shape shape = (Shape) pictogramElement;
+        BoCategory boCategory = BoCategory.retrieveFrom(shape);
+        if (BoCategory.Parameter.equals(boCategory)) {
+          // parameters can not change name, only the value can change
+          String boValue = Graphiti.getPeService().getPropertyValue(shape, "__BO_VALUE");
+          parameterChanged = p.getExpression() != null && !p.getExpression().equals(boValue);
+        }
+      }
+      if (parameterChanged) {
+        context.putProperty("PARAMETER_CHANGED", p.getName());
+        return Reason.createTrueReason("Parameter change");
+      } else {
+        return Reason.createFalseReason();
+      }
     }
   }
 
@@ -69,15 +75,15 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Parameter && pictogramElement instanceof Shape) {
       Parameter param = (Parameter) bo;
       Shape shape = (Shape) pictogramElement;
-      String boCategory = Graphiti.getPeService().getPropertyValue(shape, "__BO_CATEGORY");
-      if ("PARAMETER".equals(boCategory)) {
+      BoCategory boCategory = BoCategory.retrieveFrom(shape);
+      if (BoCategory.Parameter.equals(boCategory)) {
         Text text = null;
         if (shape.getGraphicsAlgorithm() instanceof Text) {
           text = (Text) shape.getGraphicsAlgorithm();
         } else if (shape instanceof ContainerShape) {
           for (Shape childShape : ((ContainerShape) shape).getChildren()) {
-            boCategory = Graphiti.getPeService().getPropertyValue(childShape, "__BO_CATEGORY");
-            if ("PARAMETER".equals(boCategory)) {
+            boCategory = BoCategory.retrieveFrom(childShape);
+            if (BoCategory.Parameter.equals(boCategory)) {
               if (childShape.getGraphicsAlgorithm() instanceof Text) {
                 text = (Text) childShape.getGraphicsAlgorithm();
                 break;

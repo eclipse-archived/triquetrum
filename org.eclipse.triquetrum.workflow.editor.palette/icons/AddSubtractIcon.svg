@@ -1,0 +1,5 @@
+<svg x="0px" y="0px" width="40" height="40">
+<rect x="0" y="0" width="40" height="40" style="fill:white"/>
+<text x="7" y="15" style="font-size:18">+ </text>
+<text x="7" y="19" style="font-size:18">_ </text>
+</svg>

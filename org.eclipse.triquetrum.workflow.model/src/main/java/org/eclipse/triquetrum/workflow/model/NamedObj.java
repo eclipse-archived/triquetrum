@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface NamedObj extends EObject {
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * The default value is <code>"new"</code>.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -47,7 +48,7 @@ public interface NamedObj extends EObject {
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_Name()
-   * @model required="true"
+   * @model default="new" required="true"
    * @generated
    */
   String getName();
@@ -133,6 +134,30 @@ public interface NamedObj extends EObject {
   void setProperty(String name, String value, String className);
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  void buildWrappedObject();
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model ptObjectDataType="org.eclipse.triquetrum.workflow.model.PtolemyNamedObj"
+   * @generated
+   */
+  void initializeFrom(ptolemy.kernel.util.NamedObj ptObject);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model kind="operation"
+   * @generated
+   */
+  String getFullName();
+
+  /**
    * Returns the value of the '<em><b>Wrapped Object</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -207,10 +232,8 @@ public interface NamedObj extends EObject {
    */
   void setIconId(String value);
 
-  void buildWrappedObject();
-  
   /**
-   * 
+   *
    * @param name
    * @return the contained element with the given simple name or null if not present
    */

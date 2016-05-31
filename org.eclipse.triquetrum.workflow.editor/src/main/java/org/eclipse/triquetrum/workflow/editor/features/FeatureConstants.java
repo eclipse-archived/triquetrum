@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 iSencia Belgium NV.
+ * Copyright (c) 2016 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,15 +8,13 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.editor.shapes;
+package org.eclipse.triquetrum.workflow.editor.features;
 
-/**
- * 
- * integrate svg-based model element icon definitions.
- * 
- * cfr diva.canvas.toolbox.SVGParser.createPaintedObject(String, String, String) for inspiration
- *
- */
-public class ShapeBuilderFromSVG {
+public interface FeatureConstants {
 
+  String ANCHORMAP_NAME = "anchorMap";
+  String CONTAINER = "container";
+
+  String BO_CLASS = "__BO_CLASS";
+  String BO_NAME =  "__BO_NAME";
 }

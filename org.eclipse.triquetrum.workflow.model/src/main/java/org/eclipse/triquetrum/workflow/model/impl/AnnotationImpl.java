@@ -11,22 +11,17 @@
 package org.eclipse.triquetrum.workflow.model.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
-import ptolemy.data.BooleanToken;
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
+import ptolemy.kernel.util.NamedObj;
 import ptolemy.vergil.kernel.attributes.TextAttribute;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Annotation</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Annotation</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -44,8 +39,7 @@ import ptolemy.vergil.kernel.attributes.TextAttribute;
 public class AnnotationImpl extends AttributeImpl implements Annotation {
   /**
    * The default value of the '{@link #getText() <em>Text</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getText()
    * @generated
    * @ordered
@@ -54,8 +48,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The cached value of the '{@link #getText() <em>Text</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getText()
    * @generated
    * @ordered
@@ -64,8 +57,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The default value of the '{@link #getFontFamily() <em>Font Family</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFontFamily()
    * @generated
    * @ordered
@@ -74,8 +66,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The cached value of the '{@link #getFontFamily() <em>Font Family</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getFontFamily()
    * @generated
    * @ordered
@@ -84,8 +75,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The default value of the '{@link #getTextSize() <em>Text Size</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getTextSize()
    * @generated
    * @ordered
@@ -94,8 +84,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The cached value of the '{@link #getTextSize() <em>Text Size</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getTextSize()
    * @generated
    * @ordered
@@ -104,8 +93,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The default value of the '{@link #isBold() <em>Bold</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isBold()
    * @generated
    * @ordered
@@ -114,8 +102,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The cached value of the '{@link #isBold() <em>Bold</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isBold()
    * @generated
    * @ordered
@@ -124,8 +111,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The default value of the '{@link #isItalic() <em>Italic</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isItalic()
    * @generated
    * @ordered
@@ -134,8 +120,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The cached value of the '{@link #isItalic() <em>Italic</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isItalic()
    * @generated
    * @ordered
@@ -144,8 +129,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The default value of the '{@link #getColor() <em>Color</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getColor()
    * @generated
    * @ordered
@@ -154,8 +138,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
 
   /**
    * The cached value of the '{@link #getColor() <em>Color</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getColor()
    * @generated
    * @ordered
@@ -163,8 +146,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   protected String color = COLOR_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected AnnotationImpl() {
@@ -172,8 +154,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -181,9 +162,62 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
     return TriqPackage.Literals.ANNOTATION;
   }
 
+  @Override
+  public void buildWrappedObject() {
+    super.buildWrappedObject();
+    try {
+      if (getText() != null) {
+        if (!(wrappedObject instanceof TextAttribute)) {
+          throw new Exception("Property cannot be assigned a value: " + getName() + " (instance of " + wrappedType + ")");
+        } else {
+          TextAttribute ptObject = (TextAttribute) wrappedObject;
+          ptObject.text.setExpression(getText());
+          ptObject.textSize.setExpression(Integer.toString(getTextSize()));
+          ptObject.fontFamily.setExpression(getFontFamily());
+          ptObject.bold.setExpression(Boolean.toString(isBold()));
+          ptObject.italic.setExpression(Boolean.toString(isItalic()));
+          // Propagate. This has the side effect of marking the object overridden.
+          ptObject.text.propagateValue();
+          ptObject.textSize.propagateValue();
+          ptObject.fontFamily.propagateValue();
+          ptObject.bold.propagateValue();
+          ptObject.italic.propagateValue();
+        }
+      }
+    } catch (IllegalActionException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void initializeFrom(NamedObj ptObject) {
+    if (!isDeepComplete()) {
+      if (!(ptObject instanceof TextAttribute)) {
+        throw new IllegalArgumentException(ptObject + " should be a TextAttribute");
+      }
+      super.initializeFrom(ptObject);
+      TextAttribute textAttr = (TextAttribute) ptObject;
+      setText(textAttr.text.getExpression());
+      setFontFamily(textAttr.fontFamily.getExpression());
+      setTextSize(Integer.parseInt(textAttr.textSize.getExpression()));
+      setBold(Boolean.getBoolean(textAttr.bold.getExpression()));
+      setItalic(Boolean.getBoolean(textAttr.italic.getExpression()));
+
+      setDeepComplete(true);
+    }
+  }
+
+  @Override
+  public TextAttribute getWrappedObject() {
+    return (TextAttribute) wrappedObject;
+  }
+
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public String getText() {
@@ -191,29 +225,18 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setText(String newText) {
     String oldText = text;
     text = newText;
-    if(getWrappedObject() != null) {
-      TextAttribute ptObject = (TextAttribute)getWrappedObject();
-      try {
-        ptObject.text.setExpression(newText);
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__TEXT, oldText, text));
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public String getFontFamily() {
@@ -221,30 +244,18 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setFontFamily(String newFontFamily) {
     String oldFontFamily = fontFamily;
     fontFamily = newFontFamily;
-    if(getWrappedObject() != null) {
-      TextAttribute ptObject = (TextAttribute)getWrappedObject();
-      ptObject.fontFamily.setExpression(newFontFamily);
-      try {
-        ptObject.fontFamily.validate();
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__FONT_FAMILY, oldFontFamily, fontFamily));
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public int getTextSize() {
@@ -252,8 +263,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setTextSize(int newTextSize) {
@@ -264,8 +274,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public boolean isBold() {
@@ -273,29 +282,18 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setBold(boolean newBold) {
     boolean oldBold = bold;
     bold = newBold;
-    if(getWrappedObject() != null) {
-      TextAttribute ptObject = (TextAttribute)getWrappedObject();
-      try {
-        ptObject.bold.setToken(BooleanToken.getInstance(newBold));
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__BOLD, oldBold, bold));
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public boolean isItalic() {
@@ -303,29 +301,18 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setItalic(boolean newItalic) {
     boolean oldItalic = italic;
     italic = newItalic;
-    if(getWrappedObject() != null) {
-      TextAttribute ptObject = (TextAttribute)getWrappedObject();
-      try {
-        ptObject.italic.setToken(BooleanToken.getInstance(newItalic));
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__ITALIC, oldItalic, italic));
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public String getColor() {
@@ -333,31 +320,18 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * TODO check compatibility between the color string presentations in Triq and Ptolemy II
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> TODO check compatibility between the color string presentations in Triq and Ptolemy II <!-- end-user-doc -->
    * @generated
    */
   public void setColor(String newColor) {
     String oldColor = color;
     color = newColor;
-    if(getWrappedObject() != null) {
-      TextAttribute ptObject = (TextAttribute)getWrappedObject();
-      ptObject.textColor.setExpression(newColor);
-      try {
-        ptObject.textColor.validate();
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.ANNOTATION__COLOR, oldColor, color));
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -380,8 +354,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -410,8 +383,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -440,8 +412,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -464,8 +435,7 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -489,4 +459,4 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
     return result.toString();
   }
 
-} //AnnotationImpl
+} // AnnotationImpl

@@ -13,9 +13,11 @@ package org.eclipse.triquetrum.workflow.editor;
 import java.util.Collection;
 
 import org.eclipse.graphiti.dt.AbstractDiagramTypeProvider;
+import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRendererFactory;
 import org.eclipse.graphiti.tb.IToolBehaviorProvider;
 import org.eclipse.graphiti.ui.internal.platform.ExtensionManager;
 import org.eclipse.graphiti.ui.platform.IImageProvider;
+import org.eclipse.triquetrum.workflow.editor.shapes.TriqGraphicsAlgorithmRendererFactory;
 
 public class TriqDiagramTypeProvider extends AbstractDiagramTypeProvider {
 
@@ -24,6 +26,7 @@ public class TriqDiagramTypeProvider extends AbstractDiagramTypeProvider {
 
   private IToolBehaviorProvider[] toolBehaviorProviders;
   private ImageProvider imageProvider;
+  private IGraphicsAlgorithmRendererFactory factory;
 
   public TriqDiagramTypeProvider() {
     setFeatureProvider(new TriqFeatureProvider(this));
@@ -51,6 +54,14 @@ public class TriqDiagramTypeProvider extends AbstractDiagramTypeProvider {
       toolBehaviorProviders = new IToolBehaviorProvider[] { new TriqToolBehaviorProvider(this) };
     }
     return toolBehaviorProviders;
+  }
+
+  @Override
+  public IGraphicsAlgorithmRendererFactory getGraphicsAlgorithmRendererFactory() {
+    if (factory == null) {
+      factory = new TriqGraphicsAlgorithmRendererFactory();
+    }
+    return factory;
   }
 
   @Override

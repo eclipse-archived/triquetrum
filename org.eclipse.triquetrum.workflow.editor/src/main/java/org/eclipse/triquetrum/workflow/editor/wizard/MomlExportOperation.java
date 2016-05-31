@@ -27,19 +27,32 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.Shape;
+import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.ui.internal.services.GraphitiUiInternal;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.operation.ModalContext;
 import org.eclipse.osgi.util.NLS;
+import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.eclipse.triquetrum.workflow.model.CompositeEntity;
+import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.IOverwriteQuery;
 
+import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.NameDuplicationException;
+
+@SuppressWarnings("restriction")
 public class MomlExportOperation implements IRunnableWithProgress {
   private IPath path;
 
   private IProgressMonitor monitor;
 
-  private List resourcesToExport;
+  private List<?> resourcesToExport;
 
   private IOverwriteQuery overwriteCallback;
 
@@ -74,7 +87,7 @@ public class MomlExportOperation implements IRunnableWithProgress {
    * Create an instance of this class. Use this constructor if you wish to export specific resources with a common parent resource (affects container directory
    * creation)
    */
-  public MomlExportOperation(IResource res, List resources, String destinationPath, IOverwriteQuery overwriteImplementor) {
+  public MomlExportOperation(IResource res, List<?> resources, String destinationPath, IOverwriteQuery overwriteImplementor) {
     this(res, destinationPath, overwriteImplementor);
     resourcesToExport = resources;
   }
@@ -109,7 +122,7 @@ public class MomlExportOperation implements IRunnableWithProgress {
    */
   protected int countSelectedResources() throws CoreException {
     int result = 0;
-    Iterator resources = resourcesToExport.iterator();
+    Iterator<?> resources = resourcesToExport.iterator();
 
     while (resources.hasNext()) {
       result += countChildrenOf((IResource) resources.next());
@@ -235,15 +248,14 @@ public class MomlExportOperation implements IRunnableWithProgress {
     }
 
     try {
-//    exporter.write(file, fullPath);
-      // TODO generate the moml file here
       // 1. obtain Diagram for the file
+      Diagram diagram = GraphitiUiInternal.getEmfService().getDiagramFromFile(file, new ResourceSetImpl());
       // 2. find root CompositeActor
-      CompositeActor toplevel = WizardUtils.getExistingWorkflow(file);
-      System.out.println(toplevel.getWrappedObject().exportMoML());
+      CompositeActor toplevel =  (CompositeActor) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
+      // 3. push location info of diagram model elements to the Ptolemy II model elements
+      pushLocations(diagram, toplevel);
+      // 4. exportMOML to the destination file
       FileUtils.writeStringToFile(new File(fullPath.toOSString()), toplevel.getWrappedObject().exportMoML());
-
-      // 3. exportMOML to the destination file
     } catch (IOException e) {
       errorTable.add(new Status(IStatus.ERROR, PlatformUI.PLUGIN_ID, 0, NLS.bind("Error exporting {0}: {1}", fullPath, e.getMessage()), e));
     }
@@ -253,10 +265,35 @@ public class MomlExportOperation implements IRunnableWithProgress {
   }
 
   /**
+   * Iterate over the shape's (deep) children and push the Graphiti diagram's location info
+   * to the corresponding model elements.
+   *
+   * @param modelContainer
+   * @param modelElement
+   */
+  private void pushLocations(ContainerShape modelContainer, CompositeEntity modelElement) {
+    for(Shape modelShape : modelContainer.getChildren()) {
+      double x = modelShape.getGraphicsAlgorithm().getX();
+      double y = modelShape.getGraphicsAlgorithm().getY();
+      NamedObj bo = (NamedObj) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(modelShape);
+      // TODO think about validating the obtained bo against its container modelElement?
+      try {
+        EditorUtils.setLocation(bo, x, y);
+      } catch (IllegalActionException | NameDuplicationException e) {
+        errorTable.add(new Status(IStatus.WARNING, PlatformUI.PLUGIN_ID, 0, NLS.bind("Error setting location for {0}: {1}", bo.getName(), e.getMessage()), e));
+      }
+      // a composite entity should always have a container shape but one never knows, so let's double-check
+      if((modelShape instanceof ContainerShape) && (bo instanceof CompositeEntity)) {
+        pushLocations((ContainerShape) modelShape, (CompositeEntity)bo);
+      }
+    }
+  }
+
+  /**
    * Export the resources contained in the previously-defined resourcesToExport collection
    */
   protected void exportSpecifiedResources() throws InterruptedException {
-    Iterator resources = resourcesToExport.iterator();
+    Iterator<?> resources = resourcesToExport.iterator();
     IPath initPath = (IPath) path.clone();
 
     while (resources.hasNext()) {
@@ -326,7 +363,7 @@ public class MomlExportOperation implements IRunnableWithProgress {
    * @param child
    *          org.eclipse.core.resources.IResource
    */
-  protected boolean isDescendent(List resources, IResource child) {
+  protected boolean isDescendent(List<?> resources, IResource child) {
     if (child.getType() == IResource.PROJECT) {
       return false;
     }

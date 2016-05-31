@@ -13,12 +13,13 @@ package org.eclipse.triquetrum.workflow.repository.impl.filesystem;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -66,8 +67,8 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
   public WorkflowRepositoryServiceImpl(File rootFolder) {
     LOGGER.info("Creating FlowRepositoryService on folder {}", rootFolder);
     this.rootFolder = rootFolder;
-    if (!rootFolder.exists()) {
-      rootFolder.mkdirs();
+    if (!rootFolder.exists() && !rootFolder.mkdirs()) {
+      throw new RuntimeException(new IOException(rootFolder.getPath() + " could not be created"));
     } else if (!rootFolder.isDirectory()) {
       throw new IllegalArgumentException(rootFolder.getPath() + " is not a folder");
     }
@@ -76,7 +77,9 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
   public void clearRepository() {
     try {
       FileUtils.deleteDirectory(rootFolder);
-      rootFolder.mkdirs();
+      if (!rootFolder.mkdirs()) {
+        LOGGER.error(ErrorCode.ERROR + " - Failed to recreate clean repository directory");
+      }
     } catch (IOException e) {
       LOGGER.error(ErrorCode.ERROR + " - Failed to clear repository directory", e);
     }
@@ -96,7 +99,9 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
       ModelHandle flowHandle = null;
       VersionSpecification vSpec = new ThreeDigitVersionSpecification(1, 0, 0);
       File versionFolder = new File(newFlowFolder, vSpec.toString());
-      versionFolder.mkdirs();
+      if (!versionFolder.mkdirs()) {
+        throw new RuntimeException(new IOException("Error creating folder " + versionFolder));
+      }
       File destinationFile = new File(versionFolder, flow.getName() + ".moml");
       if ((!destinationFile.exists() || destinationFile.canWrite())) {
         BufferedWriter outputWriter = null;
@@ -146,22 +151,24 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
       throw new EntryNotFoundException(ErrorCode.MODEL_SAVING_ERROR_FUNC, "Flow code unknown " + flowCode);
     } else {
       ModelHandle flowHandle = null;
-      ThreeDigitVersionSpecification vSpec = ((ThreeDigitVersionSpecification)handle.getVersion()).increaseMinor();
+      ThreeDigitVersionSpecification vSpec = ((ThreeDigitVersionSpecification) handle.getVersion()).increaseMinor();
       File versionFolder = new File(flowRootFolder, vSpec.toString());
-      while(versionFolder.exists()) {
+      while (versionFolder.exists()) {
         vSpec = vSpec.increaseMinor();
         versionFolder = new File(flowRootFolder, vSpec.toString());
       }
-      versionFolder.mkdirs();
+      if (!versionFolder.mkdirs()) {
+        throw new RuntimeException(new IOException("Error creating folder " + versionFolder));
+      }
       File destinationFile = new File(versionFolder, updatedFlow.getName() + ".moml");
       if ((!destinationFile.exists() || destinationFile.canWrite())) {
         BufferedWriter outputWriter = null;
         try {
-          outputWriter = new BufferedWriter(new FileWriter(destinationFile));
+          outputWriter = new BufferedWriter(new FileWriterWithEncoding(destinationFile, StandardCharsets.UTF_8));
           updatedFlow.exportMoML(outputWriter);
           flowHandle = new ModelHandleImpl(flowCode, vSpec, destinationFile.toURI(), updatedFlow);
           writeMetaData(flowCode, VERSION_MOSTRECENT, vSpec.toString());
-          if(activate) {
+          if (activate) {
             activateModelRevision(flowHandle);
           }
         } catch (IOException e) {
@@ -220,7 +227,7 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
       ModelHandle flow = null;
       String requestedVersion = version.toString();
       flow = readAndBuildModelHandle(flowRootFolder.getName(), new File(flowRootFolder, requestedVersion));
-      if(flow==null) {
+      if (flow == null) {
         throw new EntryNotFoundException("Version " + requestedVersion + " not found for flow code " + flowCode);
       } else {
         return flow;
@@ -236,11 +243,15 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
   @Override
   public String[] getAllModelCodes() {
     File[] subFolders = rootFolder.listFiles(new DirectoryFilter());
-    String[] flowCodes = new String[subFolders.length];
-    for (int i = 0; i < subFolders.length; ++i) {
-      flowCodes[i] = subFolders[i].getName();
+    if (subFolders != null) {
+      String[] flowCodes = new String[subFolders.length];
+      for (int i = 0; i < subFolders.length; ++i) {
+        flowCodes[i] = subFolders[i].getName();
+      }
+      return flowCodes;
+    } else {
+      return new String[0];
     }
-    return flowCodes;
   }
 
   @Override
@@ -251,10 +262,13 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
     } else {
       ArrayList<ModelHandle> results = new ArrayList<ModelHandle>();
       File[] versionFolders = codeFolder.listFiles(new DirectoryFilter());
-      for (File versionFolder : versionFolders) {
-        ModelHandle fh = readAndBuildModelHandle(flowCode, versionFolder);
-        if (fh != null) {
-          results.add(fh);
+      // prophylactic null check to keep FindBugs happy
+      if (versionFolders != null) {
+        for (File versionFolder : versionFolders) {
+          ModelHandle fh = readAndBuildModelHandle(flowCode, versionFolder);
+          if (fh != null) {
+            results.add(fh);
+          }
         }
       }
       return results.toArray(new ModelHandle[results.size()]);
@@ -286,8 +300,13 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
             return name.endsWith("moml") || name.endsWith("xml");
           }
         });
-        File modelFile = modelFiles[0];
-        return new ModelHandleImpl(code, vSpec, modelFile.toURI(), null);
+        if (modelFiles != null && modelFiles.length > 0) {
+          File modelFile = modelFiles[0];
+          return new ModelHandleImpl(code, vSpec, modelFile.toURI(), null);
+        } else {
+          LOGGER.warn(ErrorCode.MODEL_LOADING_ERROR + " - No model file found for " + code + " in " + versionFolder);
+          return null;
+        }
       } catch (Exception e) {
         LOGGER.warn(ErrorCode.MODEL_LOADING_ERROR + " - Error building model handle for " + code + " in " + versionFolder, e);
         return null;
@@ -314,8 +333,8 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
    */
   private void writeMetaData(String flowCode, Properties flowMetaDataProps) throws IOException {
     File flowRootFolder = new File(rootFolder, flowCode);
-    File metaDataFile2 = new File(flowRootFolder, ".metadata");
-    Writer metaDataWriter = new FileWriter(metaDataFile2);
+    File metaDataFile = new File(flowRootFolder, ".metadata");
+    Writer metaDataWriter = new FileWriterWithEncoding(metaDataFile, StandardCharsets.UTF_8);
     try {
       flowMetaDataProps.store(metaDataWriter, flowCode);
     } finally {
@@ -338,7 +357,10 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
       if (metaDataFile.exists()) {
         Reader metaDataReader = null;
         try {
-          metaDataReader = new FileReader(metaDataFile);
+          // use this complicated construction i.o. plain FileReader, to keep FindBugs "as happy as Pharell Williams"
+          // cfr https://myshittycode.com/2014/03/26/findbug-solving-dm_default_encoding-warning-when-using-filewriter/
+          // it seems there's no FileReaderWithEncoding in commons IO...
+          metaDataReader = new InputStreamReader(new FileInputStream(metaDataFile), Charset.forName("UTF-8").newDecoder());
           flowMetaDataProps.load(metaDataReader);
         } catch (Exception e) {
 

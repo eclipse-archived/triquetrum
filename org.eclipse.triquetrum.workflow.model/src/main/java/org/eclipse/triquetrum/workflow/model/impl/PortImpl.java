@@ -29,12 +29,10 @@ import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
 
 import ptolemy.actor.IOPort;
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
+import ptolemy.kernel.util.NamedObj;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Port</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Port</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -50,8 +48,7 @@ import ptolemy.kernel.util.NameDuplicationException;
 public class PortImpl extends NamedObjImpl implements Port {
   /**
    * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isInput()
    * @generated
    * @ordered
@@ -60,8 +57,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isInput() <em>Input</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isInput()
    * @generated
    * @ordered
@@ -70,8 +66,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The default value of the '{@link #isOutput() <em>Output</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isOutput()
    * @generated
    * @ordered
@@ -80,8 +75,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isOutput()
    * @generated
    * @ordered
@@ -90,8 +84,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getLinkedRelations()
    * @generated
    * @ordered
@@ -100,8 +93,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The default value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isMultiPort()
    * @generated
    * @ordered
@@ -110,8 +102,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #isMultiPort()
    * @generated
    * @ordered
@@ -119,8 +110,8 @@ public class PortImpl extends NamedObjImpl implements Port {
   protected boolean multiPort = MULTI_PORT_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated NOT
    */
   protected PortImpl() {
@@ -130,8 +121,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -140,8 +130,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public boolean isInput() {
@@ -149,15 +138,15 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated NOT
    */
   public void setInput(boolean newInput) {
     boolean oldInput = input;
     input = newInput;
-    if(getWrappedObject() != null) {
-      IOPort ptObject = (IOPort)getWrappedObject();
+    if (getWrappedObject() != null) {
+      IOPort ptObject = (IOPort) getWrappedObject();
       try {
         ptObject.setInput(newInput);
       } catch (IllegalActionException e) {
@@ -170,8 +159,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public boolean isOutput() {
@@ -179,43 +167,32 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setOutput(boolean newOutput) {
     boolean oldOutput = output;
     output = newOutput;
-    if(getWrappedObject() != null) {
-      IOPort ptObject = (IOPort)getWrappedObject();
-      try {
-        ptObject.setOutput(newOutput);
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__OUTPUT, oldOutput, output));
   }
 
   @Override
   public void setProperty(String name, String value, String className) {
-    switch(name) {
-      case "input" :
-        setInput(value==null || "true".equals(value));
-        break;
-      case "output" :
-        setOutput(value==null || "true".equals(value));
-        break;
-      default :
-        super.setProperty(name, value, className);
+    switch (name) {
+    case "input":
+      setInput(value == null || "true".equals(value));
+      break;
+    case "output":
+      setOutput(value == null || "true".equals(value));
+      break;
+    default:
+      super.setProperty(name, value, className);
     }
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EList<Relation> getLinkedRelations() {
@@ -226,8 +203,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public boolean isMultiPort() {
@@ -235,32 +211,20 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public void setMultiPort(boolean newMultiPort) {
     boolean oldMultiPort = multiPort;
     multiPort = newMultiPort;
-    if(getWrappedObject() != null) {
-      IOPort ptObject = (IOPort)getWrappedObject();
-      try {
-        ptObject.setMultiport(newMultiPort);
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__MULTI_PORT, oldMultiPort, multiPort));
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * Checks whether the port can accept a new connection.
-   * For single ports, this means that if there is already a connection, the new request must be refused.
-   * For multi ports there is currently no constraint.
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> Checks whether the port can accept a new connection. For single ports, this means that if there is already a connection, the new
+   * request must be refused. For multi ports there is currently no constraint. <!-- end-user-doc -->
+   *
    * @generated NOT
    */
   public boolean canAcceptNewConnection() {
@@ -272,29 +236,6 @@ public class PortImpl extends NamedObjImpl implements Port {
     return (Entity) eContainer();
   }
 
-  // This is where we can hook in a ptolemy object construction, including its container
-  @Override
-  protected void eBasicSetContainer(InternalEObject newContainer) {
-    super.eBasicSetContainer(newContainer);
-    ptolemy.kernel.Entity<?> container = (ptolemy.kernel.Entity<?>) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    if (wrappedObject == null) {
-        buildWrappedObject();
-    } else {
-      try {
-        getWrappedObject().setContainer(container);
-        getWrappedObject().setInput(input);
-        getWrappedObject().setOutput(output);
-        getWrappedObject().setMultiport(multiPort);
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (NameDuplicationException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-  }
-
   @Override
   public void buildWrappedObject() {
     try {
@@ -302,9 +243,25 @@ public class PortImpl extends NamedObjImpl implements Port {
       wrappedObject = PtolemyUtil._createPort(container, getWrappedType(), getName());
       getWrappedObject().setInput(isInput());
       getWrappedObject().setOutput(isOutput());
+      getWrappedObject().setMultiport(isMultiPort());
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void initializeFrom(NamedObj ptObject) {
+    if (!isDeepComplete()) {
+      if (!(ptObject instanceof IOPort)) {
+        throw new IllegalArgumentException(ptObject + " should be an IOPort");
+      }
+      super.initializeFrom(ptObject);
+      IOPort port = (IOPort) ptObject;
+      setInput(port.isInput());
+      setOutput(port.isOutput());
+      setMultiPort(port.isMultiport());
+      setDeepComplete(true);
     }
   }
 
@@ -314,8 +271,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -329,8 +285,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -343,8 +298,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -363,8 +317,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -389,8 +342,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -413,8 +365,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -433,8 +384,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -447,8 +397,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -466,4 +415,4 @@ public class PortImpl extends NamedObjImpl implements Port {
     return result.toString();
   }
 
-} //PortImpl
+} // PortImpl

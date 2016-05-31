@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import java.util.Map;
+
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
 import org.eclipse.graphiti.features.impl.AbstractAddShapeFeature;
@@ -17,6 +19,7 @@ import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Polyline;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
@@ -26,6 +29,7 @@ import org.eclipse.graphiti.services.ICreateService;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
+import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
 
@@ -44,15 +48,15 @@ public class PortAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, String category) {
+  protected void link(PictogramElement pe, Object businessObject, BoCategory category) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
+    category.storeIn(pe);
     if (businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, "__BO_NAME", ((NamedObj) businessObject).getName());
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
     }
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CATEGORY", category);
-    Graphiti.getPeService().setPropertyValue(pe, "__BO_CLASS", businessObject.getClass().getName());
+    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
   public boolean canAdd(IAddContext context) {
@@ -97,7 +101,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
         final Polyline rectangle = gaService.createPlainPolyline(anchor, new int[]{0,0,0,20});
         rectangle.setLineStyle(LineStyle.DASH);
         gaService.setLocationAndSize(rectangle, 0, 0, 1, 20);
-        link(anchor, addedPort, "INPUT");
+        link(anchor, addedPort, BoCategory.Input);
         // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
         int xy[] = new int[] { 10,0, 20,10, 10,20, 10,15, 0,15, 0,5, 10,5 };
         Polygon portShape = gaService.createPolygon(invisibleRectangle, xy);
@@ -109,7 +113,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
         final Polyline rectangle = gaService.createPlainPolyline(anchor, new int[]{0,0,0,20});
         rectangle.setLineStyle(LineStyle.DASH);
         gaService.setLocationAndSize(rectangle, 0, 0, 1, 20);
-        link(anchor, addedPort, "OUTPUT");
+        link(anchor, addedPort, BoCategory.Output);
         anchor.setVisible(true);
         // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
         int xy[] = new int[] { 10,0, 20,10, 10,20, 10,15, 0,15, 0,5, 10,5 };
@@ -118,8 +122,13 @@ public class PortAddFeature extends AbstractAddShapeFeature {
         gaService.setLocationAndSize(portShape, 0, 0, 20, 20);
       }
 
-
-      link(containerShape, addedPort, "PORT");
+      // TODO find a way to get the full name from our Triq NamedObj,
+      // then we don't need to depend on the presence of the wrapped object.
+      Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
+      if(anchorMap != null && addedPort.getWrappedObject() != null) {
+        anchorMap.put(addedPort.getWrappedObject().getFullName(), anchor);
+      }
+      link(containerShape, addedPort, BoCategory.Port);
     }
 
     layoutPictogramElement(containerShape);
