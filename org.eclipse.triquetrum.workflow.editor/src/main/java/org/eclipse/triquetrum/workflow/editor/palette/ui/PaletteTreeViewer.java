@@ -123,7 +123,7 @@ public class PaletteTreeViewer extends PaletteViewer {
 
     if (tie != null) {
       result = (EditPart) tie.getData();
-    } else {
+    } else if(tree.getData() instanceof EditPart){
       result = (EditPart) tree.getData();
     }
     while (result != null) {
