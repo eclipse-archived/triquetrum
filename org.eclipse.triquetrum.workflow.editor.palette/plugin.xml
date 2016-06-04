@@ -141,6 +141,13 @@
              iconType="svg"
              type="Actor">
 	      </entry>
+	      <entry
+	            class="ptolemy.actor.lib.TrigFunction"
+	            displayName="TrigFunction"
+    	        icon="icons/actor.gif"
+	            type="Actor">
+	      </entry>
+
         <entry
               class="ptolemy.actor.lib.MovingAverage"
               displayName="MovingAverage"
@@ -148,12 +155,6 @@
               iconType="ptolemy"
               type="Actor">
         </entry>
-	      <entry
-	            class="ptolemy.actor.lib.TrigFunction"
-	            displayName="TrigFunction"
-    	        icon="icons/actor.gif"
-	            type="Actor">
-	      </entry>
       </group>
    </extension>
 
