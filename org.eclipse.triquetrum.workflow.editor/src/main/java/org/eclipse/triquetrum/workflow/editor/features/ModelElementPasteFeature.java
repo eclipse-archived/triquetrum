@@ -69,7 +69,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
           ptolemy.kernel.util.NamedObj ptObj = child.getWrappedObject();
           ptolemy.kernel.util.NamedObj clonedPtObj = null;
           try {
-            clonedPtObj = (ptolemy.kernel.util.NamedObj) ptObj.clone(ptObj.workspace());
+            clonedPtObj = (ptolemy.kernel.util.NamedObj) ptObj.clone(model.getWrappedObject().workspace());
             String newName = EditorUtils.buildUniqueName(model, ptObj.getName());
             clonedPtObj.setName(newName);
             clonedPtObj.setDisplayName(newName);
