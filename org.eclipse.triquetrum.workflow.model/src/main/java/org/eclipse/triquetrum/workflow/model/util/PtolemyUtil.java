@@ -41,7 +41,7 @@ import ptolemy.moml.MoMLParser;
 public class PtolemyUtil {
 
   public static Attribute _createAttribute(NamedObj container, String className, String attrName) throws Exception {
-    Attribute previous = container.getAttribute(attrName);
+    Attribute previous = container!=null ? container.getAttribute(attrName) : null;
     Class<?> newClass = null;
 
     if (className != null) {
@@ -90,7 +90,7 @@ public class PtolemyUtil {
   }
 
   public static Relation _createRelation(CompositeEntity container, String className, String relationName) throws Exception {
-    Relation previous = container.getRelation(relationName);
+    Relation previous = container!=null ? container.getRelation(relationName) : null;
     Class<?> newClass = null;
 
     if (className != null) {
@@ -159,7 +159,7 @@ public class PtolemyUtil {
    * @throws Exception
    */
   public static Port _createPort(Entity<?> container, String className, String portName) throws Exception {
-    Port previous = container.getPort(portName);
+    Port previous = container!=null ? container.getPort(portName) : null;
     Class<?> newClass = null;
 
     if (className != null) {

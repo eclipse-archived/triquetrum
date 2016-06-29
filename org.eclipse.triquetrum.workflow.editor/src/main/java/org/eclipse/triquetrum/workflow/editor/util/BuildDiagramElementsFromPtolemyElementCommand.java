@@ -8,18 +8,12 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.editor.wizard;
+package org.eclipse.triquetrum.workflow.editor.util;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.transaction.RecordingCommand;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -41,28 +35,26 @@ import org.eclipse.triquetrum.workflow.model.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ptolemy.actor.AtomicActor;
 import ptolemy.actor.Director;
 import ptolemy.actor.IOPort;
 import ptolemy.actor.IORelation;
 import ptolemy.data.expr.Parameter;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.Entity;
-import ptolemy.kernel.util.Location;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.vergil.kernel.attributes.TextAttribute;
 
 /**
- * This command can visit the model element tree of a Ptolemy II CompositeActor to add the corresponding diagram elements in a new Triquetrum workflow Diagram.
+ * This command can visit the model element tree of a Ptolemy II NamedObj to add the corresponding diagram elements in a new Triquetrum workflow Diagram. If the
+ * NamedObj is a composite, this command also copies contained elements and their potential relations.
  *
  */
-public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
-  private final static Logger LOGGER = LoggerFactory.getLogger(FillDiagramFromPtolemyModelCommand.class);
+public class BuildDiagramElementsFromPtolemyElementCommand {
+  private final static Logger LOGGER = LoggerFactory.getLogger(BuildDiagramElementsFromPtolemyElementCommand.class);
 
-  private TransactionalEditingDomain editingDomain;
   private Diagram diagram;
-  private ptolemy.actor.CompositeActor ptolemyModel;
-  private IFolder saveLocation;
-  private Resource createdResource;
+  private NamedObj ptolemyElement;
 
   // A cache maintained during importing, to easily retrieve anchors
   // for creating relations based on the names of the corresponding linked ports in the Ptolemy model.
@@ -71,79 +63,67 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
 
   /**
    *
-   * @param saveLocation
-   *          the folder where the new diagram file should be stored
-   * @param editingDomain
    * @param diagram
-   *          an (empty normally) Triq diagram that will be filled with new model elements
-   * @param ptolemyModel
+   *          a Triq diagram that will be extended with new model elements
+   * @param ptolemyElement
    *          the model that must be imported into the diagram
    */
-  public FillDiagramFromPtolemyModelCommand(IFolder saveLocation, TransactionalEditingDomain editingDomain, Diagram diagram,
-      ptolemy.actor.CompositeActor ptolemyModel) {
-    super(editingDomain);
-    this.saveLocation = saveLocation;
-    this.editingDomain = editingDomain;
+  public BuildDiagramElementsFromPtolemyElementCommand(Diagram diagram, NamedObj ptolemyElement) {
     this.diagram = diagram;
-    this.ptolemyModel = ptolemyModel;
+    this.ptolemyElement = ptolemyElement;
   }
 
-  @Override
-  protected void doExecute() {
-    IFile diagramFile = saveLocation.getFile(diagram.getName() + ".tdml"); //$NON-NLS-1$
-    URI uri = URI.createPlatformResourceURI(diagramFile.getFullPath().toString(), true);
-    createdResource = editingDomain.getResourceSet().createResource(uri);
-    createdResource.getContents().add(diagram);
+  public void execute() {
     IDiagramTypeProvider dtp = GraphitiUi.getExtensionManager().createDiagramTypeProvider(diagram, TriqDiagramTypeProvider.ID);
     IFeatureProvider featureProvider = dtp.getFeatureProvider();
 
-    // construct the root compositeactor, wrapping the imported ptolemy model
-    CompositeActor model = TriqFactory.eINSTANCE.createCompositeActor();
-    model.setWrappedObject(ptolemyModel);
-    diagram.eResource().getContents().add(model);
-    featureProvider.link(diagram, model);
+    // get the root compositeactor of the diagram, where we must add the extra ptolemy element
+    CompositeActor model = (CompositeActor) featureProvider.getBusinessObjectForPictogramElement(diagram);
 
-    // Get the director as a first trial to add a new diagram element from ptolemy model elements
-    Director director = ptolemyModel.getDirector();
-    createModelElement(model, featureProvider, director, model);
+    if (ptolemyElement instanceof ptolemy.actor.CompositeActor) {
+      ptolemy.actor.CompositeActor compPtElem = (ptolemy.actor.CompositeActor) ptolemyElement;
+      // Get the director as a first trial to add a new diagram element from ptolemy model elements
+      Director director = compPtElem.getDirector();
+      createModelElement(model, featureProvider, director, model);
 
-    for (IORelation rel : (List<IORelation>) ptolemyModel.relationList()) {
-      relationMap.put(rel.getFullName(), createRelation(model, featureProvider, rel));
+      for (IORelation rel : (List<IORelation>) compPtElem.relationList()) {
+        relationMap.put(rel.getFullName(), createRelation(model, featureProvider, rel));
+      }
+
+      for (IOPort p : (List<IOPort>) compPtElem.portList()) {
+        createModelElement(model, featureProvider, p, model);
+      }
+
+      for (Entity entity : (List<Entity>) compPtElem.entityList(Entity.class)) {
+        createModelElement(model, featureProvider, entity, model);
+      }
+
+      // we don't import all attributes as lots of them are ptolemy-internal
+      // TODO find something to resolve errors related to the order of adding parameters
+      // that contain expressions with references to other parameters that may be later in the list.
+
+      // First we take parameters ...
+      for (Parameter p : (List<Parameter>) ptolemyElement.attributeList(Parameter.class)) {
+        createModelElement(model, featureProvider, p, model);
+      }
+      // ... and annotations (i.e. TextAttributes)
+      for (TextAttribute a : (List<TextAttribute>) ptolemyElement.attributeList(TextAttribute.class)) {
+        createModelElement(model, featureProvider, a, model);
+      }
+
+      linkRelations(compPtElem, model, featureProvider);
+    } else if (ptolemyElement instanceof AtomicActor) {
+      createModelElement(model, featureProvider, ptolemyElement, model);
     }
-
-    // we don't import all attributes as lots of them are ptolemy-internal
-    // TODO find something to resolve errors related to the order of adding parameters
-    // that contain expressions with references to other parameters that may be later in the list.
-
-    // First we take parameters ...
-    for (Parameter p : (List<Parameter>) ptolemyModel.attributeList(Parameter.class)) {
-      createModelElement(model, featureProvider, p, model);
-    }
-    // ... and annotations (i.e. TextAttributes)
-    for (TextAttribute a : (List<TextAttribute>) ptolemyModel.attributeList(TextAttribute.class)) {
-      createModelElement(model, featureProvider, a, model);
-    }
-
-    for (IOPort p : (List<IOPort>) ptolemyModel.portList()) {
-      // TODO ensure the port anchors are added to the anchorMap
-      createModelElement(model, featureProvider, p, model);
-    }
-
-    for (Entity entity : (List<Entity>) ptolemyModel.entityList(Entity.class)) {
-      // TODO ensure the actors' port anchors are added to the anchorMap
-      createModelElement(model, featureProvider, entity, model);
-    }
-
-    linkRelations(ptolemyModel, model, featureProvider);
   }
 
   protected org.eclipse.triquetrum.workflow.model.NamedObj createModelElement(org.eclipse.triquetrum.workflow.model.CompositeActor model,
       IFeatureProvider featureProvider, NamedObj ptObject, org.eclipse.triquetrum.workflow.model.NamedObj triqContainer) {
 
     org.eclipse.triquetrum.workflow.model.NamedObj result = null;
-    Location location = _getLocation(ptObject);
-    int x = (int) (location != null ? location.getLocation()[0] : 10);
-    int y = (int) (location != null ? location.getLocation()[1] : 10);
+    double[] location = EditorUtils.getLocation(ptObject);
+    int x = (int) (location != null ? location[0] : 10);
+    int y = (int) (location != null ? location[1] : 10);
     CreateContext context = new CreateContext();
     context.setTargetContainer(diagram);
     context.setX(x);
@@ -275,24 +255,5 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
         linkRelationsForEntity(e, featureProvider);
       }
     }
-  }
-
-  /**
-   * @return the createdResource
-   */
-  public Resource getCreatedResource() {
-    return createdResource;
-  }
-
-  private static Location _getLocation(NamedObj object) {
-    if (object instanceof Location) {
-      return (Location) object;
-    } else {
-      List<Location> locations = object.attributeList(Location.class);
-      if (locations.size() > 0) {
-        return locations.get(0);
-      }
-    }
-    return null;
   }
 }

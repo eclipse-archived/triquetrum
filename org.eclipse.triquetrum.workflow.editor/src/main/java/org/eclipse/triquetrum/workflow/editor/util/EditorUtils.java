@@ -40,12 +40,20 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 
+import ptolemy.actor.Director;
+import ptolemy.actor.TypedIOPort;
+import ptolemy.actor.TypedIORelation;
+import ptolemy.data.expr.Variable;
+import ptolemy.kernel.ComponentEntity;
+import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.Entity;
 import ptolemy.kernel.util.Attribute;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.Locatable;
 import ptolemy.kernel.util.Location;
 import ptolemy.kernel.util.NameDuplicationException;
+import ptolemy.moml.Vertex;
+import ptolemy.vergil.kernel.attributes.TextAttribute;
 
 public class EditorUtils {
 
@@ -221,19 +229,107 @@ public class EditorUtils {
   }
 
   /**
+   * Adds the child in a container. Works on Ptolemy objects!
+   *
+   * @param child
+   * @param container
+   * @throws IllegalActionException
+   * @throws NameDuplicationException
+   */
+  public static void setPtolemyContainer(ptolemy.kernel.util.NamedObj child, ptolemy.kernel.util.NamedObj container)
+      throws IllegalActionException, NameDuplicationException {
+    if (child instanceof ComponentEntity) {
+      ((ComponentEntity) child).setContainer((CompositeEntity) container);
+    } else if (child instanceof Director) {
+      ((Director) child).setContainer((CompositeEntity) container);
+    } else if (child instanceof Vertex) {
+      ((TypedIORelation) ((Vertex) child).getContainer()).setContainer((CompositeEntity) container);
+    } else if (child instanceof TextAttribute) {
+      ((TextAttribute) child).setContainer((CompositeEntity) container);
+    } else if (child instanceof Variable) {
+      ((Variable) child).setContainer((CompositeEntity) container);
+    } else if (child instanceof TypedIOPort) {
+      ((TypedIOPort) child).setContainer((CompositeEntity) container);
+    }
+  }
+
+  // TODO FP this with Java 8 features!
+  public static double[] getTopLeftLocation(Object[] selectedObjects) {
+    boolean foundOneValidThing = false;
+    double minX = Double.MAX_VALUE;
+    double minY = Double.MAX_VALUE;
+
+    if (selectedObjects != null && selectedObjects.length > 0) {
+      for (Object object : selectedObjects) {
+        double[] xy = null;
+        if (object instanceof GraphicsAlgorithm) {
+          xy = getLocation((GraphicsAlgorithm) object);
+        } else if (object instanceof PictogramElement) {
+          xy = getLocation((PictogramElement) object);
+        } else if (object instanceof NamedObj) {
+          xy = getLocation((NamedObj) object);
+        } else if (object instanceof ptolemy.kernel.util.NamedObj) {
+          xy = getLocation((ptolemy.kernel.util.NamedObj) object);
+        }
+        if (xy != null) {
+          foundOneValidThing = true;
+          minX = Math.min(xy[0], minX);
+          minY = Math.min(xy[1], minY);
+        }
+      }
+    }
+
+    if (foundOneValidThing) {
+      return new double[] { minX, minY };
+    } else {
+      return new double[] { 0, 0 };
+    }
+  }
+
+  public static double[] getLocation(PictogramElement pe) {
+    GraphicsAlgorithm ga = pe.getGraphicsAlgorithm();
+    return new double[] { ga.getX(), ga.getY() };
+  }
+
+  public static double[] getLocation(GraphicsAlgorithm ga) {
+    return new double[] { ga.getX(), ga.getY() };
+  }
+
+  public static double[] getLocation(NamedObj triqObject) {
+    return getLocation(triqObject.getWrappedObject());
+  }
+
+  public static double[] getLocation(ptolemy.kernel.util.NamedObj ptObject) {
+    if (ptObject instanceof Location) {
+      return ((Location) ptObject).getLocation();
+    } else {
+      List<Location> locations = ptObject.attributeList(Location.class);
+      if (locations.size() > 0) {
+        return locations.get(0).getLocation();
+      }
+    }
+    return null;
+  }
+
+  /**
    * Set the location info on the model element, more precisely on the wrapped Ptolemy II model object.
    *
-   * Graphiti maintains location info in the graphical algorithm linked to the shape&business object.
-   * But to guarantee that an export to a Ptolemy MOML file also has the location info, we need to push locations to the Ptolemy layer as well.
+   * Graphiti maintains location info in the graphical algorithm linked to the shape&business object. But to guarantee that an export to a Ptolemy MOML file
+   * also has the location info, we need to push locations to the Ptolemy layer as well.
    *
-   * @param modelElement the Triquetrum model element wrapping a Ptolemy model element
+   * @param modelElement
+   *          the Triquetrum model element wrapping a Ptolemy model element
    * @param x
    * @param y
    * @throws IllegalActionException
-   * @throws NameDuplicationException when adding the location attribute failed because there was already another linked child object with a same name.
+   * @throws NameDuplicationException
+   *           when adding the location attribute failed because there was already another linked child object with a same name.
    */
   public static void setLocation(NamedObj modelElement, double x, double y) throws IllegalActionException, NameDuplicationException {
-    ptolemy.kernel.util.NamedObj ptObject = modelElement.getWrappedObject();
+    setPtolemyLocation(modelElement.getWrappedObject(), x, y);
+  }
+
+  public static void setPtolemyLocation(ptolemy.kernel.util.NamedObj ptObject, double x, double y) throws IllegalActionException, NameDuplicationException {
     double[] location = new double[] { x, y };
     if (ptObject instanceof Locatable) {
       ((Locatable) ptObject).setLocation(location);
@@ -277,25 +373,24 @@ public class EditorUtils {
   /**
    *
    * @param pe
-   * @return true if the containerShape contains an externally defined figure
-   * (based on svg or ptolemy)
+   * @return true if the containerShape contains an externally defined figure (based on svg or ptolemy)
    */
   public static boolean containsExternallyDefinedFigure(PictogramElement pe) {
     boolean extFigure = (pe.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm);
-    if(!extFigure && (pe instanceof ContainerShape)) {
+    if (!extFigure && (pe instanceof ContainerShape)) {
       // check if the platform shape is somewhere in there
-      for(Shape childShape : ((ContainerShape)pe).getChildren()) {
-        if(childShape.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm) {
-          extFigure=true;
+      for (Shape childShape : ((ContainerShape) pe).getChildren()) {
+        if (childShape.getGraphicsAlgorithm() instanceof PlatformGraphicsAlgorithm) {
+          extFigure = true;
           break;
         }
       }
     }
-    if(!extFigure) {
+    if (!extFigure) {
       // check if the platform shape is somewhere in there
-      for(GraphicsAlgorithm childShape : pe.getGraphicsAlgorithm().getGraphicsAlgorithmChildren()) {
-        if(childShape instanceof PlatformGraphicsAlgorithm) {
-          extFigure=true;
+      for (GraphicsAlgorithm childShape : pe.getGraphicsAlgorithm().getGraphicsAlgorithmChildren()) {
+        if (childShape instanceof PlatformGraphicsAlgorithm) {
+          extFigure = true;
           break;
         }
       }
@@ -304,20 +399,20 @@ public class EditorUtils {
   }
 
   /**
-   * Returns a freshly created list of INPUT or OUTPUT port anchors for the given actor shape (or composite actor shape).
-   * The list can be manipulated/changed without risk of impacting the original actorShape definition
-   * (at least when the contained anchors properties are not touched!).
+   * Returns a freshly created list of INPUT or OUTPUT port anchors for the given actor shape (or composite actor shape). The list can be manipulated/changed
+   * without risk of impacting the original actorShape definition (at least when the contained anchors properties are not touched!).
    *
    * @param actorShape
-   * @param portIoType BoCategories.Input or Output
+   * @param portIoType
+   *          BoCategories.Input or Output
    * @return
    */
   public static List<Anchor> getContainedPorts(ContainerShape actorShape, BoCategory portIoType) {
     List<Anchor> portShapes = new LinkedList<>();
-    for(Anchor anchor : actorShape.getAnchors()) {
+    for (Anchor anchor : actorShape.getAnchors()) {
       FixPointAnchor fpa = (FixPointAnchor) anchor;
       BoCategory boCategory = BoCategory.retrieveFrom(anchor);
-      if(portIoType.equals(boCategory)) {
+      if (portIoType.equals(boCategory)) {
         portShapes.add(fpa);
       }
     }
