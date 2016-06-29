@@ -117,6 +117,10 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
     }
   }
 
+  public Map<String, Anchor> getAnchorMap() {
+    return anchorMap;
+  }
+
   protected org.eclipse.triquetrum.workflow.model.NamedObj createModelElement(org.eclipse.triquetrum.workflow.model.CompositeActor model,
       IFeatureProvider featureProvider, NamedObj ptObject, org.eclipse.triquetrum.workflow.model.NamedObj triqContainer) {
 
@@ -231,11 +235,11 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
           if (triqRelation != null) {
             triqRelation.link(triqPort);
           } else {
-            System.err.println("Triq relation not found for " + ptRelation + "in port " + ptPort);
+            LOGGER.error("Triq relation not found for {} in port {}", ptRelation, ptPort);
           }
         }
       } else {
-        System.err.println("Triq port not found for " + ptPort);
+        LOGGER.error("Triq port not found for {}", ptPort);
       }
     }
     if (ptEntity instanceof CompositeEntity) {
