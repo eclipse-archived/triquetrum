@@ -48,6 +48,12 @@
               icon="icons/director.gif"
               type="Director">
         </entry>
+        <entry
+              class="ptolemy.domains.pn.kernel.PNDirector"
+              displayName="PN director"
+              icon="icons/director.gif"
+              type="Director">
+        </entry>
       </group>
       <group displayName="Sources">
 	      <entry
