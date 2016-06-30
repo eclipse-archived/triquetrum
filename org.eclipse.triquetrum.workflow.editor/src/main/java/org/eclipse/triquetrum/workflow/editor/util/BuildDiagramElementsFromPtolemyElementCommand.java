@@ -35,7 +35,6 @@ import org.eclipse.triquetrum.workflow.model.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ptolemy.actor.AtomicActor;
 import ptolemy.actor.Director;
 import ptolemy.actor.IOPort;
 import ptolemy.actor.IORelation;
@@ -112,7 +111,7 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
       }
 
       linkRelations(compPtElem, model, featureProvider);
-    } else if (ptolemyElement instanceof AtomicActor) {
+    } else {
       createModelElement(model, featureProvider, ptolemyElement, model);
     }
   }

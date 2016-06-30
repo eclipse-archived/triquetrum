@@ -18,10 +18,15 @@ import java.util.Map;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IPasteContext;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
+import org.eclipse.graphiti.features.context.impl.AddContext;
+import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.FreeFormConnection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.ui.features.AbstractPasteFeature;
 import org.eclipse.triquetrum.workflow.editor.util.BuildDiagramElementsFromPtolemyElementCommand;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
@@ -62,11 +67,12 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
     Object[] pes = getFromClipboard();
 
     double[] topLeftOriginal = EditorUtils.getTopLeftLocation(pes);
-    double xOffset = context.getX() - topLeftOriginal[0];
-    double yOffset = context.getY() - topLeftOriginal[1];
+    int xOffset = context.getX() - (int) topLeftOriginal[0];
+    int yOffset = context.getY() - (int) topLeftOriginal[1];
 
     List<Connection> originalConnections = new ArrayList<>();
     Map<String, String> oldNewElementNames = new HashMap<>();
+    Map<String, Vertex> clonedVertexMap = new HashMap<>();
     Map<String, Anchor> anchorMap = new HashMap<>();
 
     for (Object peObj : pes) {
@@ -77,7 +83,31 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
         double[] originalLocation = EditorUtils.getLocation(pe);
         double[] newLocation = new double[] { originalLocation[0] + xOffset, originalLocation[1] + yOffset };
         Object object = getBusinessObjectForPictogramElement(pe);
-        if (object instanceof NamedObj) {
+        if(object instanceof Vertex) {
+          // The child/container associations can not easily be cloned here, as a Vertex's container is a Relation!?
+          // And the original relations also have connections to ports etc.
+          // Cloning the combination of Relation/Vertex/linked-ports seems to always lead to problems with the order of doing cloning things...
+          // So we follow another approach here.
+          Vertex child = (Vertex) object;
+
+          Relation relation = TriqFactory.eINSTANCE.createRelation();
+          relation.setName(EditorUtils.buildUniqueName(model, "_R"));
+          model.getRelations().add(relation);
+
+          Vertex clonedChild = TriqFactory.eINSTANCE.createVertex();
+          clonedChild.setName(EditorUtils.buildUniqueName(relation, child.getName()));
+          clonedChild.setWrappedType(child.getWrappedType());
+          // store the cloned vertex linked to the name of the relation containing the original vertex
+          // as we need to be able to look it up when building the copied relations further below.
+          clonedVertexMap.put(child.getContainer().getName(), clonedChild);
+          relation.getAttributes().add(clonedChild);
+
+          AddContext addCtxt = new AddContext();
+          addCtxt.setLocation((int)newLocation[0], (int)newLocation[1]);
+          addCtxt.putProperty(FeatureConstants.ANCHORMAP_NAME, anchorMap);
+          addCtxt.setTargetContainer(diagram);
+          getFeatureProvider().addIfPossible(new AddContext(addCtxt, clonedChild));
+        } else if (object instanceof NamedObj) {
           NamedObj child = (NamedObj) object;
           // This fails due to the order in which contained things get initialized,
           // before the parent has received its copied container, or something like that.
@@ -95,8 +125,6 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
             clonedPtObj.setDisplayName(newName);
             EditorUtils.setPtolemyContainer(clonedPtObj, ptModel);
             EditorUtils.setPtolemyLocation(clonedPtObj, newLocation[0], newLocation[1]);
-            // TODO move the cloned objects to the new location,
-            // based on the currently selected location in the paste context.
             BuildDiagramElementsFromPtolemyElementCommand cmd = new BuildDiagramElementsFromPtolemyElementCommand(diagram, clonedPtObj);
             cmd.execute();
             anchorMap.putAll(cmd.getAnchorMap());
@@ -117,26 +145,39 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
     for (Connection connection : originalConnections) {
       NamedObj origStart = getAnchorBO(connection.getStart());
       NamedObj origEnd = getAnchorBO(connection.getEnd());
-      // for a port, take the port container; for a vertex take the vertex itself
-      NamedObj origStartContainer = (origStart instanceof Port) ? origStart.getContainer() : origStart;
-      NamedObj origEndContainer = (origEnd instanceof Port) ? origEnd.getContainer() : origEnd;
-
-      NamedObj copiedStartContainer = model.getChild(oldNewElementNames.get(origStartContainer.getName()));
-      NamedObj copiedEndContainer = model.getChild(oldNewElementNames.get(origEndContainer.getName()));
-      NamedObj copiedStart = (copiedStartContainer instanceof Vertex) ? copiedStartContainer : copiedStartContainer.getChild(origStart.getName());
-      NamedObj copiedEnd = (copiedStartContainer instanceof Vertex) ? copiedEndContainer : copiedEndContainer.getChild(origEnd.getName());
+      NamedObj copiedStart = getCopiedRelationSide(model, origStart, oldNewElementNames, clonedVertexMap);
+      NamedObj copiedEnd = getCopiedRelationSide(model, origEnd, oldNewElementNames, clonedVertexMap);
       try {
         Relation copiedRelation = createRelation(copiedStart, copiedEnd);
-        System.out.println("copied relation "+copiedRelation);
-        // add connection for business object
+        // add the graphical representation for the copied relation
         AddConnectionContext addContext = new AddConnectionContext(anchorMap.get(copiedStart.getFullName()), anchorMap.get(copiedEnd.getFullName()));
         addContext.setNewObject(copiedRelation);
-        getFeatureProvider().addIfPossible(addContext);
+        PictogramElement copiedConnection = getFeatureProvider().addIfPossible(addContext);
+        // TODO find a way to copy other connection properties to the copied connection, if this would be needed?
+        if(connection instanceof FreeFormConnection && copiedConnection instanceof FreeFormConnection) {
+          FreeFormConnection copiedFFC = (FreeFormConnection) copiedConnection;
+          IGaService gaService = Graphiti.getGaService();
+          for (Point point : ((FreeFormConnection)connection).getBendpoints()) {
+            copiedFFC.getBendpoints().add(gaService.createPoint(point.getX()+xOffset, point.getY()+yOffset));
+          }
+        }
       } catch (IllegalActionException e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
     }
+  }
+
+  private NamedObj getCopiedRelationSide(CompositeActor model, NamedObj originalRelationSide, Map<String, String> oldNewElementNames, Map<String, Vertex> clonedVertexMap) {
+    NamedObj copiedRelationSide = null;
+    String origContainerName = originalRelationSide.getContainer().getName();
+    if(originalRelationSide instanceof Port) {
+      NamedObj copiedPortContainer = model.getChild(oldNewElementNames.get(origContainerName));
+      copiedRelationSide = copiedPortContainer.getChild(originalRelationSide.getName());
+    } else if (originalRelationSide instanceof Vertex) {
+      copiedRelationSide = clonedVertexMap.get(origContainerName);
+    }
+    return copiedRelationSide;
   }
 
   /**
