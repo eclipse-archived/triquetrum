@@ -1,16 +1,24 @@
 target "Triq" with allEnvironments configurePhase
 
+// Include separate tpd that has just what Python-RPC needs
+// XXX: There is some duplicates, so some parts below are commented
+// out, not sure what the best resolution is
+include "org.eclipse.triquetrum.python.rpc.platform.tpd"
+
 location "http://download.eclipse.org/tools/orbit/downloads/drops/R20151118145958/repository/" {
-	org.slf4j.impl.log4j12
 	org.slf4j.api.source
-	org.slf4j.api
-	org.apache.commons.lang
 	org.slf4j.impl.log4j12.source
 	org.apache.commons.io.source
 	org.apache.log4j.source
 	org.apache.commons.io
 	org.apache.commons.lang.source
-	org.apache.log4j
+
+// XXX: These are already listed in python-rpc tpd file and there is an error
+// if they are duplicated.
+//	org.slf4j.impl.log4j12
+//	org.slf4j.api
+//	org.apache.commons.lang
+//	org.apache.log4j
 }
 
 location "http://users.telenet.be/triquetrum-ptolemy-p2/" {

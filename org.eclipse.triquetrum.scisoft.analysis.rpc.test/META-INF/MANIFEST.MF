@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xmlrpc
+Bundle-SymbolicName: org.eclipse.triquetrum.scisoft.analysis.rpc.test
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.eclipse.triquetrum.scisoft.analysis.rpc;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit;bundle-version="[4.10.0,5.0.0)",
+ org.eclipse.equinox.common
+Bundle-Vendor: Diamond Light Source
+Export-Package: org.eclipse.triquetrum.scisoft.analysis.rpc,
+ org.eclipse.triquetrum.scisoft.analysis.rpc.flattening,
+ org.eclipse.triquetrum.scisoft.analysis.rpc.instancedispatcher,
+ org.eclipse.triquetrum.scisoft.analysis.rpc.staticdispatchertypes,
+ org.eclipse.triquetrum.scisoft.analysis.rpc.test
+Eclipse-BundleShape: dir
