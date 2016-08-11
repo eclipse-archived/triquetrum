@@ -23,6 +23,7 @@
     <module>org.eclipse.triquetrum.workflow.actor.plot</module>
     <module>org.eclipse.triquetrum.workflow.actor.plot.palette</module>
     <module>org.eclipse.triquetrum.workflow.actor.plot.feature</module>
+    <module>org.eclipse.triquetrum.python.service.example</module>
   </modules>
 	
 </project>
