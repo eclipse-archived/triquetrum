@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: DLS Analysis RPC subset for passerelle
+Bundle-SymbolicName: org.eclipse.triquetrum.scisoft.analysis.rpc
+Bundle-Version: 1.0.0
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.eclipse.triquetrum.scisoft.analysis.rpc,
+ org.eclipse.triquetrum.scisoft.analysis.rpc.flattening,
+ org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.helpers,
+ org.eclipse.triquetrum.scisoft.analysis.rpc.internal
+Import-Package: org.apache.commons.lang,
+ org.apache.ws.commons.serialize;version="1.0.1",
+ org.apache.ws.commons.util;version="1.0.1",
+ org.apache.xmlrpc,
+ org.apache.xmlrpc.client,
+ org.apache.xmlrpc.common,
+ org.apache.xmlrpc.parser,
+ org.apache.xmlrpc.serializer,
+ org.apache.xmlrpc.server,
+ org.apache.xmlrpc.webserver,
+ org.slf4j;version="1.6.0"

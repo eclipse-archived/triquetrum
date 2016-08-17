@@ -23,21 +23,25 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.IAddFeature;
+import org.eclipse.graphiti.features.ICopyFeature;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
 import org.eclipse.graphiti.features.ICreateFeature;
 import org.eclipse.graphiti.features.IDeleteFeature;
 import org.eclipse.graphiti.features.IDirectEditingFeature;
 import org.eclipse.graphiti.features.IFeature;
 import org.eclipse.graphiti.features.ILayoutFeature;
+import org.eclipse.graphiti.features.IPasteFeature;
 import org.eclipse.graphiti.features.IReconnectionFeature;
 import org.eclipse.graphiti.features.IRemoveFeature;
 import org.eclipse.graphiti.features.IResizeShapeFeature;
 import org.eclipse.graphiti.features.IUpdateFeature;
 import org.eclipse.graphiti.features.context.IAddContext;
+import org.eclipse.graphiti.features.context.ICopyContext;
 import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.features.context.IDirectEditingContext;
 import org.eclipse.graphiti.features.context.ILayoutContext;
+import org.eclipse.graphiti.features.context.IPasteContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.context.IReconnectionContext;
 import org.eclipse.graphiti.features.context.IRemoveContext;
@@ -61,9 +65,11 @@ import org.eclipse.triquetrum.workflow.editor.features.ConnectionRemoveFeature;
 import org.eclipse.triquetrum.workflow.editor.features.DirectorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.DirectorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ModelElementCopyFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementLayoutFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementNameDirectEditFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ModelElementPasteFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
@@ -198,6 +204,16 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new ModelElementResizeFeature(this);
     }
     return super.getResizeShapeFeature(context);
+  }
+
+  @Override
+  public ICopyFeature getCopyFeature(ICopyContext context) {
+    return new ModelElementCopyFeature(this);
+  }
+
+  @Override
+  public IPasteFeature getPasteFeature(IPasteContext context) {
+    return new ModelElementPasteFeature(this);
   }
 
   @Override
