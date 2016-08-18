@@ -15,8 +15,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.eclipse.triquetrum.ErrorCode;
 import org.eclipse.triquetrum.processing.model.Attribute;
 import org.eclipse.triquetrum.processing.model.AttributeHolder;
+import org.eclipse.triquetrum.processing.model.ProcessingErrorEvent;
 import org.eclipse.triquetrum.processing.model.ProcessingEvent;
 import org.eclipse.triquetrum.processing.model.ResultBlock;
 import org.eclipse.triquetrum.processing.model.ResultItem;
@@ -29,6 +31,7 @@ public class TriqFactoryImpl implements TriqFactory {
 
   private AtomicLong taskKeyGenerator = new AtomicLong();
   private AtomicLong attrKeyGenerator = new AtomicLong();
+  private AtomicLong eventKeyGenerator = new AtomicLong();
   private AtomicLong resultBlockKeyGenerator = new AtomicLong();
   private AtomicLong resultItemKeyGenerator = new AtomicLong();
 
@@ -57,9 +60,13 @@ public class TriqFactoryImpl implements TriqFactory {
   }
 
   @Override
-  public <T> ProcessingEvent<T> createContextEvent(T context, String topic, String message) {
-    // TODO Auto-generated method stub
-    return null;
+  public <T> ProcessingEvent<T> createEvent(T context, String topic, String message, Map<String, String> properties) {
+    return new ProcessingEventImpl<T>(context, eventKeyGenerator.getAndIncrement(), new Date(), topic, message, properties);
+  }
+
+  @Override
+  public <T> ProcessingErrorEvent<T> createErrorEvent(T context, ErrorCode errorCode, String description, Throwable cause, Map<String, String> properties) {
+    return new ProcessingErrorEventImpl<T>(context, eventKeyGenerator.getAndIncrement(), new Date(), errorCode, description, cause);
   }
 
   @Override

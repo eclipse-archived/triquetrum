@@ -45,7 +45,7 @@ import ptolemy.kernel.util.NameDuplicationException;
  * </p>
  * TODO check about how to implement mandatory vs optional inputs For now, all ports are assumed to have a token available for each iteration.
  * <p>
- * In a later phase, we should be able to maintain a registry of known task types, and they should specifications of inputs & outputs
+ * In a later phase, we should be able to maintain a registry of known task types, and they should have specifications of inputs & outputs
  * from which we could auto-create the corresponding ports. For now the user needs to manage that manually.
  * </p>
  */
@@ -133,8 +133,11 @@ public class TaskBasedActor extends TypedAtomicActor {
         try {
           p.send(0, ConversionUtilities.convertJavaTypeToToken(ri.getValue()));
         } catch (Exception e) {
-          // TODO store this as an error event
-          LOGGER.error(ErrorCode.TASK_ERROR +" - Error sending output token for task " + t.getId() + " result item " + ri.getName(), e);
+          TriqFactory factory = TriqFactoryTracker.getDefaultFactory();
+          String description = "Error sending output token for task " + t.getId() + " result item " + ri.getName();
+          factory.createErrorEvent(t, ErrorCode.TASK_ERROR, description, e, null);
+          LOGGER.error(ErrorCode.TASK_ERROR +" - " + description, e);
+          // TODO find a ptolemy way to escalate the error from this asynch output sending failure
         }
       }
     }));

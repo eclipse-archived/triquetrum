@@ -28,8 +28,17 @@ import org.eclipse.triquetrum.processing.model.TriqFactoryTracker;
 import org.eclipse.triquetrum.processing.service.TaskProcessingService;
 
 /**
- * @author delerw
- *
+ * An example task processing service implementation for sum and average calculations.
+ * <p>
+ * This shows the typical responsibilities of a service implementation :
+ * <ul>
+ * <li>specify if a given task can be handled, in the canProcess method implementation</li>
+ * <li>perform whatever logic is needed to handle an accepted task</li>
+ * <li>optionally create a resultblock with items to represent the results of the task processing</li>
+ * <li>set the task status to finished when done or error when there was a failure, and set the result future accordingly</li>
+ * </ul>
+ * TODO add persistence handling to store the task, results, ... in some DB or other persistent storage.
+ * </p>
  */
 public class MathsProcessingService implements TaskProcessingService {
 

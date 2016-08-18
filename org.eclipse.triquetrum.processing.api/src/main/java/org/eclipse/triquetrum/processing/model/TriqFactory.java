@@ -11,6 +11,9 @@
 package org.eclipse.triquetrum.processing.model;
 
 import java.io.Serializable;
+import java.util.Map;
+
+import org.eclipse.triquetrum.ErrorCode;
 
 /**
  * Factory implementations determine which specific implementation classes are used when constructing instances of a processing model entity.
@@ -45,7 +48,18 @@ public interface TriqFactory {
    * @param message
    * @return
    */
-  <T> ProcessingEvent<T> createContextEvent(T context, String topic, String message);
+  <T> ProcessingEvent<T> createEvent(T context, String topic, String message, Map<String, String> properties);
+
+  /**
+   *
+   * @param context
+   * @param errorCode
+   * @param description
+   * @param cause
+   * @param properties
+   * @return
+   */
+  <T> ProcessingErrorEvent<T> createErrorEvent(T context, ErrorCode errorCode, String description, Throwable cause, Map<String, String> properties);
 
   /**
    *
