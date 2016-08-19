@@ -75,7 +75,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
 
     if (futResult == null) {
       futResult = new CompletableFuture<>();
-      futResult.completeExceptionally(new ProcessingException(ErrorCode.TASK_UNHANDLED, "No service found for " + task, null));
+      futResult.completeExceptionally(new ProcessingException(ErrorCode.TASK_UNHANDLED, task.getType(), null));
     }
 
     // Remark that timeout handling in the broker only works for non-blocking services!

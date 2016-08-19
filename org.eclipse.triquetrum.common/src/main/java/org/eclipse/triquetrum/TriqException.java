@@ -39,7 +39,7 @@ public class TriqException extends Exception {
   private String detailedMessage;
 
   public TriqException(ErrorCode errorCode) {
-    this(errorCode, errorCode != null ? errorCode.getDescription() : null, null, null, null);
+    this(errorCode, null, null, null, null);
   }
 
   public TriqException(ErrorCode errorCode, String message) {
@@ -51,11 +51,11 @@ public class TriqException extends Exception {
   }
 
   public TriqException(ErrorCode errorCode, Throwable rootException) {
-    this(errorCode, errorCode != null ? errorCode.getDescription() : null, null, null, rootException);
+    this(errorCode, null, null, null, rootException);
   }
 
   public TriqException(ErrorCode errorCode, Nameable modelElement, Throwable rootException) {
-    this(errorCode, errorCode != null ? errorCode.getDescription() : null, modelElement, null, rootException);
+    this(errorCode, null, modelElement, null, rootException);
   }
 
   public TriqException(ErrorCode errorCode, String message, Nameable modelElement, Throwable rootException) {

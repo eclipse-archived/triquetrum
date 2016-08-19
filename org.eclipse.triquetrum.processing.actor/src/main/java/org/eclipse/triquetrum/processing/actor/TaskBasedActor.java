@@ -10,10 +10,15 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.processing.actor;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.TimeUnit;
 
+import org.eclipse.triquetrum.TriqException;
 import org.eclipse.triquetrum.processing.ErrorCode;
 import org.eclipse.triquetrum.processing.actor.util.AttributeFromTokenBuilder;
+import org.eclipse.triquetrum.processing.model.ProcessingErrorEvent;
 import org.eclipse.triquetrum.processing.model.Task;
 import org.eclipse.triquetrum.processing.model.TriqFactory;
 import org.eclipse.triquetrum.processing.model.TriqFactoryTracker;
@@ -25,10 +30,14 @@ import org.slf4j.LoggerFactory;
 import ptolemy.actor.TypedAtomicActor;
 import ptolemy.actor.TypedIOPort;
 import ptolemy.data.LongToken;
+import ptolemy.data.RecordToken;
+import ptolemy.data.Token;
 import ptolemy.data.expr.ConversionUtilities;
 import ptolemy.data.expr.Parameter;
 import ptolemy.data.expr.StringParameter;
 import ptolemy.data.type.BaseType;
+import ptolemy.data.type.RecordType;
+import ptolemy.data.type.Type;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
@@ -43,17 +52,42 @@ import ptolemy.kernel.util.NameDuplicationException;
  * <p>
  * Remark that ports must have unique names for an actor, so this approach implies that attributes and result items must all have unique names!
  * </p>
- * TODO check about how to implement mandatory vs optional inputs For now, all ports are assumed to have a token available for each iteration.
+ * TODO check about how to implement mandatory vs optional inputs. For now, all ports are assumed to have a token available for each iteration.
  * <p>
  * In a later phase, we should be able to maintain a registry of known task types, and they should have specifications of inputs & outputs
  * from which we could auto-create the corresponding ports. For now the user needs to manage that manually.
  * </p>
  */
 public class TaskBasedActor extends TypedAtomicActor {
-  private final static Logger LOGGER = LoggerFactory.getLogger(TaskBasedActor.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(TaskBasedActor.class);
+
+  private static final String ERROR_RECORD_DESCRIPTION = "description";
+  private static final String ERROR_RECORD_ERROR_SEVERITY = "errorSeverity";
+  private static final String ERROR_RECORD_ERROR_CODE = "errorCode";
+  private static final String ERROR_RECORD_SHORT_DESCRIPTION = "shortDescription";
+  private static final String ERROR_RECORD_TASK_ID = "taskId";
 
   private static final long DEFAULT_TIMEOUT = 5L;
 
+  /**
+   * Defines the error record token structure.
+   */
+  private static final RecordType ERROR_RECORDTYPE = new RecordType(
+      new String[]{TaskBasedActor.ERROR_RECORD_TASK_ID,
+          TaskBasedActor.ERROR_RECORD_ERROR_CODE,
+          TaskBasedActor.ERROR_RECORD_ERROR_SEVERITY,
+          TaskBasedActor.ERROR_RECORD_SHORT_DESCRIPTION,
+          TaskBasedActor.ERROR_RECORD_DESCRIPTION},
+      new Type[]{BaseType.LONG,
+          BaseType.STRING,
+          BaseType.STRING,
+          BaseType.STRING,
+          BaseType.STRING});
+
+  /**
+   * Used to specify the task type for tasks submitted by the actor instance.
+   * This type is a plain text thing that is typically used as main matching criterium by {@link TaskProcessingService} implementations.
+   */
   public StringParameter taskType;
   /**
    * Used to specify the timeout value for the execution of a new {@link Task} by the underlying {@link TaskProcessingService}. Typically, values <= 0 are
@@ -64,9 +98,26 @@ public class TaskBasedActor extends TypedAtomicActor {
    * Used to specify the {@link TimeUnit} for the timeout handling.
    */
   public StringParameter timeUnitParameter;
+  /**
+   * The output port that is used to send out error information when a task submission results in an exception.
+   * The error information is sent using a {@link RecordToken} with structure as defined in ERROR_RECORDTYPE.
+   */
+  public TypedIOPort errorPort;
 
+  /**
+   * The standard constructor for an actor implementation.
+   *
+   * @param container the (sub)model in which this actor must be created.
+   * @param name
+   * @throws IllegalActionException
+   * @throws NameDuplicationException
+   */
   public TaskBasedActor(CompositeEntity container, String name) throws IllegalActionException, NameDuplicationException {
     super(container, name);
+
+    errorPort = new TypedIOPort(this, "error", false, true);
+    errorPort.setTypeEquals(ERROR_RECORDTYPE);
+
     taskType = new StringParameter(this, "Task type");
 
     timeOutParameter = new Parameter(this, "Timeout", new LongToken(TaskBasedActor.DEFAULT_TIMEOUT));
@@ -78,11 +129,6 @@ public class TaskBasedActor extends TypedAtomicActor {
     for (TimeUnit timeUnit : timeUnits) {
       timeUnitParameter.addChoice(timeUnit.name());
     }
-  }
-
-  @Override
-  public void initialize() throws IllegalActionException {
-    super.initialize();
   }
 
   /**
@@ -118,6 +164,7 @@ public class TaskBasedActor extends TypedAtomicActor {
     // TODO check what this means for Ptolemy II MoC formalisms!
     TaskProcessingBrokerTracker.getBroker()
       .process(task, getTimeOutValue(), TimeUnit.valueOf(timeUnitParameter.stringValue()))
+      .exceptionally(ex -> handleError(task, null, ex))
       .thenAccept(t -> sendOutput(t));
   }
 
@@ -133,14 +180,44 @@ public class TaskBasedActor extends TypedAtomicActor {
         try {
           p.send(0, ConversionUtilities.convertJavaTypeToToken(ri.getValue()));
         } catch (Exception e) {
-          TriqFactory factory = TriqFactoryTracker.getDefaultFactory();
-          String description = "Error sending output token for task " + t.getId() + " result item " + ri.getName();
-          factory.createErrorEvent(t, ErrorCode.TASK_ERROR, description, e, null);
-          LOGGER.error(ErrorCode.TASK_ERROR +" - " + description, e);
-          // TODO find a ptolemy way to escalate the error from this asynch output sending failure
+          handleError(t, "Error sending output for result item " + ri, e);
         }
       }
     }));
+  }
+
+  protected final Task handleError(Task t, Object detailedContext, Throwable ex) {
+    if(ex instanceof CompletionException) {
+      ex = ex.getCause();
+    }
+
+    String description = null;
+    TriqFactory factory = TriqFactoryTracker.getDefaultFactory();
+    ProcessingErrorEvent<Task> errorEvent = null;
+    if(ex instanceof TriqException) {
+      TriqException triqEx = (TriqException) ex;
+      description = (detailedContext!=null ? detailedContext.toString() : (triqEx.getSimpleMessage()!=null ? triqEx.getSimpleMessage() : ""));
+      errorEvent = factory.createErrorEvent(t, triqEx.getErrorCode(), description, ex, null);
+    } else {
+      description = (detailedContext!=null ? detailedContext.toString() : ex.getMessage());
+      errorEvent = factory.createErrorEvent(t, ErrorCode.TASK_ERROR, description, ex, null);
+    }
+
+    // TODO evaluate if we want to log all failed tasks?
+    LOGGER.error(ErrorCode.TASK_ERROR + " - " + description, ex);
+
+    try {
+      Map<String, Token> recordMap = new HashMap<>();
+      recordMap.put(TaskBasedActor.ERROR_RECORD_TASK_ID, ConversionUtilities.convertJavaTypeToToken(errorEvent.getContext().getId()));
+      recordMap.put(TaskBasedActor.ERROR_RECORD_ERROR_CODE, ConversionUtilities.convertJavaTypeToToken(errorEvent.getCode()));
+      recordMap.put(TaskBasedActor.ERROR_RECORD_ERROR_SEVERITY, ConversionUtilities.convertJavaTypeToToken(errorEvent.getSeverity().name()));
+      recordMap.put(TaskBasedActor.ERROR_RECORD_SHORT_DESCRIPTION, ConversionUtilities.convertJavaTypeToToken(errorEvent.getShortDescription()));
+      recordMap.put(TaskBasedActor.ERROR_RECORD_DESCRIPTION, ConversionUtilities.convertJavaTypeToToken(errorEvent.getDescription()));
+      errorPort.send(0, new RecordToken(recordMap));
+    } catch (Exception e) {
+      LOGGER.error(ErrorCode.ERROR + " - Error sending error output for task " + t.getId(), e);
+    }
+    return t;
   }
 
   /**
