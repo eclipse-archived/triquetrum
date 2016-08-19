@@ -13,3 +13,4 @@ Import-Package: org.eclipse.triquetrum;version="1.0.0",
  org.eclipse.triquetrum.workflow.model;version="1.0.0",
  org.osgi.service.component;version="1.2.2"
 Require-Bundle: org.junit
+Bundle-Vendor: Eclipse Triquetrum

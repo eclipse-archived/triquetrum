@@ -30,7 +30,7 @@ public class ProcessingEventImpl<T> extends AbstractIdentifiable implements Proc
 
   private Long duration;
 
-  public ProcessingEventImpl(Long id, Date creationTS, Long duration, T context, String topic, String message, Map<String, String> properties) {
+  public ProcessingEventImpl(T context, Long id, Date creationTS, Long duration, String topic, String message, Map<String, String> properties) {
     super(id, creationTS);
     this.duration = duration;
     this.context = context;
@@ -39,8 +39,8 @@ public class ProcessingEventImpl<T> extends AbstractIdentifiable implements Proc
     this.properties = Collections.unmodifiableMap(properties!=null ? properties : new HashMap<>());
   }
 
-  public ProcessingEventImpl(Long id, Date creationTS, T context, String topic, String message, Map<String, String> properties) {
-    this(id, creationTS, 0L, context, topic, message, properties);
+  public ProcessingEventImpl(T context, Long id, Date creationTS, String topic, String message, Map<String, String> properties) {
+    this(context, id, creationTS, 0L, topic, message, properties);
   }
 
   @Override
@@ -103,5 +103,21 @@ public class ProcessingEventImpl<T> extends AbstractIdentifiable implements Proc
   public String toString() {
     return "ProcessingEventImpl [getId()=" + getId() + ", getCreationTS()=" + getCreationTS()
               + ", topic=" + topic + ", message=" + message + ", duration=" + duration + "]";
+  }
+
+  // protected methods
+  protected ProcessingEventImpl(T context, Long id, Date creationTS, Long duration, String topic) {
+    this(context, id, creationTS, duration, topic, null, null);
+  }
+
+  // Subclasses can set the message and properties based on their own logic/conventions
+  // and this might need to be done after the super() constructor call.
+  // So we need setters for that...
+  protected void setMessage(String message) {
+    this.message = message;
+  }
+
+  protected void addProperty(String name, String value) {
+    this.properties.put(name, value);
   }
 }

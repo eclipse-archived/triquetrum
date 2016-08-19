@@ -21,6 +21,7 @@
     <module>org.eclipse.triquetrum.target.platform</module>
     <module>org.eclipse.triquetrum.common</module>
     <module>org.eclipse.triquetrum.logging.dvp</module>
+    <module>org.eclipse.triquetrum.processing.actor</module>
     <module>org.eclipse.triquetrum.processing.api</module>
     <module>org.eclipse.triquetrum.processing.model.impl</module>
     <module>org.eclipse.triquetrum.processing.service.impl</module>

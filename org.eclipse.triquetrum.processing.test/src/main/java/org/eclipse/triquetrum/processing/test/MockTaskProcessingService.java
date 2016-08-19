@@ -17,9 +17,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.triquetrum.ProcessingStatus;
-import org.eclipse.triquetrum.processing.ErrorCode;
-import org.eclipse.triquetrum.processing.ProcessingException;
 import org.eclipse.triquetrum.processing.model.Attribute;
 import org.eclipse.triquetrum.processing.model.ResultBlock;
 import org.eclipse.triquetrum.processing.model.ResultItem;
@@ -37,6 +34,7 @@ import org.eclipse.triquetrum.processing.service.TaskProcessingService;
 public class MockTaskProcessingService implements TaskProcessingService {
 
   public static final String EXCEPTION_CLASS_ATTRIBUTE = "exception-class";
+  public static final String DELAY_ATTRIBUTE = "delay-seconds";
 
   /**
    * The name of this service. If it's null, the service will match all Task types.
@@ -72,33 +70,41 @@ public class MockTaskProcessingService implements TaskProcessingService {
   /**
    * If this service can process the given task, it will create a ResultBlock with this service's configured ResultItems.
    */
+  @SuppressWarnings("unchecked")
   @Override
   public CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit) {
     if (!canProcess(task)) {
       return null;
     } else {
-      CompletableFuture<Task> fut = new CompletableFuture<>();
-      try {
-        @SuppressWarnings("unchecked")
-        Attribute<String> exceptionAttribute = (Attribute<String>) task.getAttribute(EXCEPTION_CLASS_ATTRIBUTE);
-        if (exceptionAttribute == null) {
+     return CompletableFuture.supplyAsync(() -> doProcess(task));
+    }
+  }
+
+  protected Task doProcess(Task task) {
+    try {
+      Attribute<String> exceptionAttribute = (Attribute<String>) task.getAttribute(EXCEPTION_CLASS_ATTRIBUTE);
+      Attribute<Integer> delayAttribute = (Attribute<Integer>) task.getAttribute(DELAY_ATTRIBUTE);
+      if (exceptionAttribute == null) {
+        if (delayAttribute != null) {
+          Thread.sleep(delayAttribute.getValue() * 1000);
+        }
+        try {
           TriqFactory entityFactory = TriqFactoryTracker.getDefaultFactory();
           ResultBlock rb = entityFactory.createResultBlock(task, name);
           for (Entry<String, Serializable> item : resultItems.entrySet()) {
             entityFactory.createResultItem(rb, item.getKey(), item.getValue());
           }
-          task.setStatus(ProcessingStatus.FINISHED);
-          fut.complete(task);
-        } else {
-          throw (Exception) Class.forName(exceptionAttribute.getValue()).newInstance();
+        } catch (IllegalStateException e) {
+          // ignore as it means that the task was already in a final state, probably due to time out.
         }
-      } catch (Exception e) {
-        // Should not happen in this mock implementation, unless there's an issue with the factory or so.
-        // Even so, this shows how errors can be handled in code that is using the processing APIs.
-        task.setErrorStatus(new ProcessingException(ErrorCode.TASK_ERROR, e));
-        fut.completeExceptionally(e);
+        return task;
+      } else {
+        throw (Exception) Class.forName(exceptionAttribute.getValue()).newInstance();
       }
-      return fut;
+    } catch (RuntimeException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     }
   }
 

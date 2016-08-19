@@ -12,10 +12,8 @@ package org.eclipse.triquetrum.processing.model;
 
 import java.util.List;
 
-import javax.print.attribute.standard.Severity;
-
 import org.eclipse.triquetrum.ErrorCategory;
-
+import org.eclipse.triquetrum.ErrorCode.Severity;
 
 /**
  * Maintains all info related to an error that occurred during

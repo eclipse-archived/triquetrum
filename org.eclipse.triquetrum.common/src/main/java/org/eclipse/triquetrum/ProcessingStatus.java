@@ -28,4 +28,8 @@ public enum ProcessingStatus {
   public boolean isFinalStatus() {
     return this.compareTo(FINISHED)>=0;
   }
+
+  public boolean isErrorStatus() {
+    return ERROR==this;
+  }
 }

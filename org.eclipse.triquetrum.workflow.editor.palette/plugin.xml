@@ -140,6 +140,11 @@
         </entry>
       </group>
       <group displayName="Transformation">
+        <entry
+             class="org.eclipse.triquetrum.processing.actor.TaskBasedActor"
+             displayName="TaskBasedActor"
+             type="Actor">
+        </entry>
 	      <entry
              class="ptolemy.actor.lib.AddSubtract"
              displayName="AddSubtract"
