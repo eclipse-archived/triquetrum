@@ -9,10 +9,12 @@
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
+
 <feature
-      id="org.eclipse.triquetrum.thirdparty.feature"
-      label="Triquetrum thirdpart deps feature"
-      version="1.0.0.qualifier">
+      id="org.eclipse.triquetrum.python.feature"
+      label="Python Feature"
+      version="1.0.0.qualifier"
+      provider-name="Eclipse Triquetrum">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -26,51 +28,29 @@
       [Enter License Description here.]
    </license>
 
+   <requires>
+      <import plugin="org.apache.ws.commons.util"/>
+      <import plugin="org.apache.xmlrpc"/>
+      <import feature="org.eclipse.triquetrum.core.feature" version="1.0.0.qualifier"/>
+      <import feature="org.eclipse.triquetrum.ptolemy.feature" version="1.0.0.qualifier"/>
+      <import plugin="org.slf4j.api"/>
+   </requires>
+
    <plugin
-         id="org.apache.commons.lang"
+         id="org.eclipse.triquetrum.python.actor"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.apache.log4j"
+         id="org.eclipse.triquetrum.python.service"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
-         id="org.slf4j.api"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.slf4j.impl.log4j12"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         fragment="true"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.io"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.xmlrpc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.ws.commons.util"
+         id="org.eclipse.triquetrum.scisoft.analysis.rpc"
          download-size="0"
          install-size="0"
          version="0.0.0"
