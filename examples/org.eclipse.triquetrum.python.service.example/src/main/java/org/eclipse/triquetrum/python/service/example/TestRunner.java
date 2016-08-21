@@ -57,13 +57,14 @@ public class TestRunner implements CommandProvider {
   }
 
   public void _runScript(CommandInterpreter ci) {
+    PythonService service = null;
     try {
       String script = ci.nextArgument();
       script = getExampleScriptsHome() + File.separator + script;
       if (!script.endsWith(".py")) {
         script += ".py";
       }
-      PythonService service = PythonService.openConnection("python");
+      service = PythonService.openConnection("python");
       Map<String, Serializable> data = new HashMap<String, Serializable>();
       String param = null;
       while ((param = ci.nextArgument()) != null) {
@@ -79,6 +80,9 @@ public class TestRunner implements CommandProvider {
       System.out.println(result);
     } catch (Exception e) {
       e.printStackTrace();
+    } finally {
+      if (service != null)
+        service.stop();
     }
   }
 
