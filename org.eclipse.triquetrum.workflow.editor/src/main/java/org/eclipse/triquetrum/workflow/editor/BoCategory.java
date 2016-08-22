@@ -28,6 +28,7 @@ import ptolemy.vergil.kernel.attributes.TextAttribute;
  */
 public enum BoCategory {
   Actor(ptolemy.actor.Actor.class),
+  CompositeActor(ptolemy.actor.CompositeActor.class),
   Director(ptolemy.actor.Director.class),
   Parameter(ptolemy.data.expr.Parameter.class),
   Attribute(ptolemy.kernel.util.Attribute.class),
