@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="deps/ptII/diva_11.0.0.201602101550.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/ptII/ptolemy.gui_11.0.0.201602101550.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/ptII/ptolemy.actor.lib_11.0.0.201601312216.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/ptII/ptolemy.actor.lib.gui_11.0.0.201601302217.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/ptII/ptolemy.core_11.0.0.201601302205.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/ptII/ptolemy.domains.process_11.0.0.201601302217.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/ptII/ptolemy.domains.sdf_11.0.0.201601302217.jar"/>
-	<classpathentry exported="true" kind="lib" path="deps/ptII/ptolemy.moml_11.0.0.201601302209.jar"/>
+	<classpathentry exported="true" kind="lib" path="deps/ptII/ptolemy.moml_11.0.0.201605041253.jar"/>
 	<classpathentry exported="true" kind="lib" path="deps/ptII/org.ptolemy.commons_11.0.0.201511291558.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="deps/ptII/diva_11.0.0.201603211938.jar"/>
+	<classpathentry kind="lib" path="deps/ptII/ptolemy.actor.lib_11.0.0.201605041253.jar"/>
+	<classpathentry kind="lib" path="deps/ptII/ptolemy.actor.lib.gui_11.0.0.201605041253.jar"/>
+	<classpathentry kind="lib" path="deps/ptII/ptolemy.core_11.0.0.201605041253.jar"/>
+	<classpathentry kind="lib" path="deps/ptII/ptolemy.domains.process_11.0.0.201605041253.jar"/>
+	<classpathentry kind="lib" path="deps/ptII/ptolemy.domains.sdf_11.0.0.201605041253.jar"/>
+	<classpathentry kind="lib" path="deps/ptII/ptolemy.gui_11.0.0.201605041253.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
