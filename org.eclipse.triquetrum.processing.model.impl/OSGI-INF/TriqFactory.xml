@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" activate="activate" enabled="true" name="org.eclipse.triquetrum.processing.model.impl.memory">
+   <implementation class="org.eclipse.triquetrum.processing.model.impl.TriqFactoryImpl"/>
+</scr:component>

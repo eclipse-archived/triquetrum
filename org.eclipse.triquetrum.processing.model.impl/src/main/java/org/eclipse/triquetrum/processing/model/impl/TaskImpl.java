@@ -135,8 +135,6 @@ public class TaskImpl extends AbstractIdentifiable implements Task {
     if (!this.status.isFinalStatus()) {
       this.status = status;
       // TODO send out event incl. the extraInfos
-    } else {
-      throw new IllegalStateException("Task " + getId() + " in final status " + status);
     }
   }
 
@@ -145,8 +143,6 @@ public class TaskImpl extends AbstractIdentifiable implements Task {
     if (!this.status.isFinalStatus()) {
       this.status = ProcessingStatus.ERROR;
       // TODO send out event incl. the exception info and the extraInfos
-    } else {
-      throw new IllegalStateException("Task " + getId() + " in final status " + status);
     }
   }
 

@@ -1,0 +1,75 @@
+target "Triq" with allEnvironments configurePhase
+
+// Include separate tpd that has just what Python-RPC needs
+// XXX: There is some duplicates, so some parts below are commented
+// out, not sure what the best resolution is
+include "org.eclipse.triquetrum.python.rpc.platform.tpd"
+
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20151118145958/repository/" {
+	org.slf4j.api.source
+	org.slf4j.impl.log4j12.source
+	org.apache.commons.io.source
+	org.apache.log4j.source
+	org.apache.commons.io
+	org.apache.commons.lang.source
+
+// XXX: These are already listed in python-rpc tpd file and there is an error
+// if they are duplicated.
+//	org.slf4j.impl.log4j12
+//	org.slf4j.api
+//	org.apache.commons.lang
+//	org.apache.log4j
+}
+
+location "http://users.telenet.be/triquetrum-ptolemy-p2/" {
+	org.eclipse.triquetrum.ptolemy.feature.source.feature.group lazy
+	org.eclipse.triquetrum.ptolemy.feature.feature.group lazy
+}
+
+location "http://archive.eclipse.org/nebula/Q42015/release/" {
+	org.eclipse.nebula.visualization.feature.feature.group
+}
+
+// Force only to use the Mars.1 repo, remove the date suffix to use latest Mars
+location "http://download.eclipse.org/releases/mars/201510021000" {
+	org.eclipse.ecf.core.feature.feature.group
+	org.eclipse.emf.validation.feature.group
+	org.eclipse.platform.source.feature.group
+	org.eclipse.equinox.sdk.feature.group
+	org.eclipse.ecf.filetransfer.ssl.feature.feature.group
+	org.eclipse.equinox.core.sdk.feature.group
+	org.eclipse.ecf.filetransfer.httpclient4.ssl.feature.feature.group
+	org.eclipse.platform.feature.group
+	org.eclipse.rcp.feature.group
+	org.eclipse.ocl.all.feature.group
+	org.eclipse.rcp.source.feature.group
+	org.eclipse.emf.cdo.epp.feature.group
+	org.eclipse.pde.source.feature.group
+	org.eclipse.gef.sdk.feature.group
+	org.eclipse.core.runtime.feature.feature.group
+	org.eclipse.emf.transaction.sdk.feature.group
+	org.eclipse.graphiti.feature.feature.group
+	org.eclipse.gmf.runtime.notation.source.feature.group
+	org.eclipse.ecf.filetransfer.feature.feature.group
+	org.eclipse.emf.sdk.feature.group
+	org.eclipse.gmf.source.feature.group
+	org.eclipse.gmf.tooling.runtime.source.feature.group
+	org.eclipse.graphiti.export.feature.feature.group
+	org.eclipse.graphiti.feature.tools.feature.group
+	org.eclipse.jdt.source.feature.group
+	org.eclipse.graphiti.sdk.feature.feature.group
+	org.eclipse.ecf.core.ssl.feature.feature.group
+	org.eclipse.gmf.feature.group
+	org.eclipse.net4j.util.ui.feature.group
+	org.eclipse.equinox.p2.sdk.feature.group
+	org.eclipse.net4j.ui.feature.group
+	org.eclipse.gmf.tooling.runtime.feature.group
+	org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group
+	org.eclipse.gmf.runtime.notation.feature.group
+	org.eclipse.graphiti.sdk.plus.feature.feature.group
+}
+
+location "http://download.eclipse.org/ecp/releases/releases_18/180/" {
+	org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group
+	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group
+}

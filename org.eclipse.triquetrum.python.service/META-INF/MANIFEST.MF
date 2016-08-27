@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Python RPC Service
+Bundle-SymbolicName: org.eclipse.triquetrum.python.service
+Bundle-Version: 1.0.4
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: org.eclipse.triquetrum.python.service;version="1.0.4",
+ org.eclipse.triquetrum.python.service.util;version="1.0.4"
+Import-Package: org.eclipse.triquetrum.scisoft.analysis.rpc,
+ org.osgi.framework;version="1.7.0",
+ org.slf4j;version="1.6.5"
+Eclipse-BundleShape: dir
+Require-Bundle: org.eclipse.equinox.common
+Bundle-Vendor: Eclipse Triquetrum

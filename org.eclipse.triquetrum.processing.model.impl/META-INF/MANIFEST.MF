@@ -9,5 +9,7 @@ Import-Package: org.apache.commons.lang.builder;version="2.6.0",
  org.eclipse.triquetrum;version="1.0.0",
  org.eclipse.triquetrum.processing;version="1.0.0",
  org.eclipse.triquetrum.processing.model;version="1.0.0",
+ org.osgi.service.component;version="1.2.2",
  org.slf4j;version="1.7.2"
 Export-Package: org.eclipse.triquetrum.processing.model.impl;version="1.0.0"
+Service-Component: OSGI-INF/TriqFactory.xml

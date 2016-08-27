@@ -31,15 +31,12 @@ public interface TaskProcessingService {
    * Process the given Task within the given timeout, if this service instance is capable of handling it. If the
    * service is unable to handle it, it should simply return <code>null</code> immediately.
    * <p>
-   * The service implementation is responsible for notifying the system when the task is finished, or when a timeout or
-   * error occurred, using the related methods in {@link ProcessManager}.
+   * Service implementations are by preference non-blocking, and should just return a {@link Future} to the finished
+   * Task. In case of errors they should also set the relevant exception on the returned Future.
    * </p>
    * <p>
-   * Service implementations are by preference non-blocking, and should just return a {@link Future} to the finished
-   * Task. In case of errors they should also set the relevant exception on the returned Future. <br/>
    * Blocking service implementations are of course possible, and must return a pre-filled Future.
    * </p>
-   *
    * @param task
    *          the Task that must be processed
    * @param timeout

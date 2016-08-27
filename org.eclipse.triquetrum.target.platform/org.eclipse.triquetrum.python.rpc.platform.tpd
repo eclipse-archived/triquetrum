@@ -1,0 +1,27 @@
+target "Python-RPC" with source allEnvironments configurePhase
+
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20151118145958/repository/" {
+	org.apache.commons.lang
+	org.apache.commons.codec
+	org.apache.commons.logging
+	org.apache.commons.httpclient
+	org.apache.log4j
+	org.apache.ws.commons.util
+	org.apache.xmlrpc
+	org.hamcrest.core
+	org.hamcrest.generator
+	org.hamcrest.integration
+	org.hamcrest.library
+	org.junit
+	org.slf4j.api
+	org.slf4j.impl.log4j12
+	javax.xml
+	javax.xml.bind
+	javax.xml.stream
+	javax.activation
+}
+
+// Force only to use the Mars.1 repo, remove the date suffix to use latest Mars
+location "http://download.eclipse.org/releases/mars/201510021000" {
+	org.eclipse.equinox.core.feature.feature.group
+}
