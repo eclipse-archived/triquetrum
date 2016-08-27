@@ -9,10 +9,10 @@ Bundle-ClassPath: deps/ptII/org.ptolemy.commons_11.0.0.201511291558.jar,
  deps/ptII/ptolemy.core_11.0.0.201601302205.jar,
  deps/ptII/ptolemy.domains.process_11.0.0.201601302217.jar,
  deps/ptII/ptolemy.domains.sdf_11.0.0.201601302217.jar,
+ deps/ptII/ptolemy.moml_11.0.0.201601302209.jar,
  deps/ptII/ptolemy.actor.lib_11.0.0.201601312216.jar,
  deps/ptII/diva_11.0.0.201602101550.jar,
- deps/ptII/ptolemy.gui_11.0.0.201602101550.jar,
- deps/ptII/ptolemy.moml_11.0.0.201605041253.jar
+ deps/ptII/ptolemy.gui_11.0.0.201602101550.jar
 Export-Package: com.microstar.xml;version="11.0.0",
  com.microstar.xml.driver;version="11.0.0",
  diva.canvas;version="11.0.0",
