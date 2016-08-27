@@ -18,7 +18,6 @@
   <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <modules>
-    <module>org.eclipse.triquetrum.dependencies</module>
     <module>org.eclipse.triquetrum.target.platform</module>
     <module>org.eclipse.triquetrum.common</module>
     <module>org.eclipse.triquetrum.logging.dvp</module>
