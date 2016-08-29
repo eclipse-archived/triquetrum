@@ -30,8 +30,7 @@ location "http://archive.eclipse.org/nebula/Q42015/release/" {
 	org.eclipse.nebula.visualization.feature.feature.group
 }
 
-// Force only to use the Mars.1 repo, remove the date suffix to use latest Mars
-location "http://download.eclipse.org/releases/mars/201510021000" {
+location "http://download.eclipse.org/releases/neon" {
 	org.eclipse.ecf.core.feature.feature.group
 	org.eclipse.emf.validation.feature.group
 	org.eclipse.platform.source.feature.group
@@ -72,4 +71,10 @@ location "http://download.eclipse.org/releases/mars/201510021000" {
 location "http://download.eclipse.org/ecp/releases/releases_18/180/" {
 	org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group
 	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group
+}
+
+// Add swt dummy fragments so that we can build installers for multiple platforms.
+// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=491951#c35
+location "http://eclipseguru.github.io/missing-swt-fragments/" {
+	org.eclipse.swt.dummyfragments.feature.group
 }
