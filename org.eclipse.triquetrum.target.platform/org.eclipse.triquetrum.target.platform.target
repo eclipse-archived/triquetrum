@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Triq" sequenceNumber="1472504501">
+<target name="Triq" sequenceNumber="1472507242">
   <locations>
-    <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.2.101.v20150826-1312"/>
-      <repository location="http://download.eclipse.org/releases/mars/201510021000"/>
-    </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.slf4j.api.source" version="1.7.2.v20121108-1250"/>
       <unit id="org.slf4j.impl.log4j12.source" version="1.7.2.v20131105-2200"/>
@@ -79,7 +75,8 @@
       <unit id="org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group" version="3.13.1.v20160405-1820"/>
       <unit id="org.eclipse.gmf.runtime.notation.feature.group" version="1.10.0.201606071631"/>
       <unit id="org.eclipse.graphiti.sdk.plus.feature.feature.group" version="0.13.0.v20160608-1043"/>
-      <repository location="http://download.eclipse.org/releases/neon"/>
+      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.3.0.v20160603-1336"/>
+      <repository location="http://download.eclipse.org/releases/neon/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group" version="1.8.0.20160216-1319"/>
