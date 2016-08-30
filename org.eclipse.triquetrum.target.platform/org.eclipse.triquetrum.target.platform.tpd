@@ -21,9 +21,14 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2015111814595
 //	org.apache.log4j
 }
 
-location "http://users.telenet.be/triquetrum-ptolemy-p2/" {
-	org.eclipse.triquetrum.ptolemy.feature.source.feature.group lazy
-	org.eclipse.triquetrum.ptolemy.feature.feature.group lazy
+// Leave the previous site commented out until the new site is definitely working
+//location "http://users.telenet.be/triquetrum-ptolemy-p2/" {
+//	org.eclipse.triquetrum.ptolemy.feature.source.feature.group lazy
+//	org.eclipse.triquetrum.ptolemy.feature.feature.group lazy
+//}
+
+location "https://chess.eecs.berkeley.edu/triq/p2/osgi-2-0/" {
+	org.ptolemy.tycho.feature.feature.group lazy
 }
 
 location "http://archive.eclipse.org/nebula/Q42015/release/" {
