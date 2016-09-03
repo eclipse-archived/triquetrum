@@ -21,7 +21,6 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2015111814595
 	javax.activation
 }
 
-// Force only to use the Mars.1 repo, remove the date suffix to use latest Mars
-location "http://download.eclipse.org/releases/mars/201510021000" {
+location "http://download.eclipse.org/releases/neon/" {
 	org.eclipse.equinox.core.feature.feature.group
 }
