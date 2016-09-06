@@ -206,14 +206,12 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
       setTextSize(Integer.parseInt(textAttr.textSize.getExpression()));
       setBold(Boolean.getBoolean(textAttr.bold.getExpression()));
       setItalic(Boolean.getBoolean(textAttr.italic.getExpression()));
-
-      setDeepComplete(true);
     }
   }
 
   @Override
   public TextAttribute getWrappedObject() {
-    return (TextAttribute) wrappedObject;
+    return (TextAttribute) super.getWrappedObject();
   }
 
   /**

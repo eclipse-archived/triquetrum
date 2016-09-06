@@ -98,13 +98,12 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
       }
       super.initializeFrom(ptObject);
       setExpression(((Settable)ptObject).getExpression());
-      setDeepComplete(true);
     }
   }
 
   @Override
   public ptolemy.data.expr.Parameter getWrappedObject() {
-    return (ptolemy.data.expr.Parameter) wrappedObject;
+    return (ptolemy.data.expr.Parameter) super.getWrappedObject();
   }
 
   /**

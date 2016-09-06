@@ -27,6 +27,7 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 import ptolemy.kernel.util.Settable;
 
@@ -184,8 +185,12 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
+   * <!-- begin-user-doc -->
    * FIXME : this must be optimized with a name-based map lookup or similar secondly, all children of all types of any subclasses should all end up in a child
    * collection in NamedObjImpl
+   * <!-- end-user-doc -->
+   *
+   * @generated NOT
    */
   @Override
   public NamedObj getChild(String name) {
@@ -197,6 +202,20 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       }
     }
     return child;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void welcome(Visitor visitor, boolean deep) {
+    visitor.visit(this);
+    if(deep) {
+      for (Attribute attr : getAttributes()) {
+        attr.welcome(visitor, true);
+      }
+    }
   }
 
   /**
@@ -370,21 +389,22 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   // I.e. the root model element (a CompositeActor) never gets its eBasicSetContainer(null) called (or too late?),
   // and doesn't get the chance to set its wrappedObject at the right moment.
   // So we need to hack something here to get that resolved
-  @Override
-  protected void eBasicSetContainer(InternalEObject newContainer) {
-    super.eBasicSetContainer(newContainer);
-    if (newContainer != null) {
-      ptolemy.kernel.util.NamedObj container = (ptolemy.kernel.util.NamedObj) getContainer().getWrappedObject();
-      if (container == null) {
-        // it seems our container doesn't know its wrapped object yet
-        ((NamedObjImpl) newContainer).buildWrappedObject();
-      }
-      if (wrappedObject == null) {
-        buildWrappedObject();
-      }
-      initializeFrom(getWrappedObject());
-    }
-  }
+//  @Override
+//  protected void eBasicSetContainer(InternalEObject newContainer) {
+//    super.eBasicSetContainer(newContainer);
+//    if (newContainer != null) {
+//      ptolemy.kernel.util.NamedObj container = (ptolemy.kernel.util.NamedObj) getContainer().getWrappedObject();
+//      if (container == null) {
+//        // it seems our container doesn't know its wrapped object yet
+//        ((NamedObjImpl) newContainer).buildWrappedObject();
+//      }
+//      if (wrappedObject == null) {
+//        buildWrappedObject();
+//      }
+//      initializeFrom(getWrappedObject());
+//      setDeepComplete(true);
+//    }
+//  }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -405,7 +425,6 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
           getAttributes().add(newParam);
         }
       }
-      setDeepComplete(true);
     }
   }
 
@@ -570,6 +589,11 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
         return null;
       case TriqPackage.NAMED_OBJ___GET_FULL_NAME:
         return getFullName();
+      case TriqPackage.NAMED_OBJ___GET_CHILD__STRING:
+        return getChild((String)arguments.get(0));
+      case TriqPackage.NAMED_OBJ___WELCOME__VISITOR_BOOLEAN:
+        welcome((Visitor)arguments.get(0), (Boolean)arguments.get(1));
+        return null;
     }
     return super.eInvoke(operationID, arguments);
   }

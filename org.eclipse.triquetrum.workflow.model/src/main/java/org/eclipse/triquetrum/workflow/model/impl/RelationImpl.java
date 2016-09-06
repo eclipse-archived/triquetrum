@@ -23,15 +23,14 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
-import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.Vertex;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 import ptolemy.kernel.ComponentRelation;
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Relation</b></em>'. <!-- end-user-doc -->
@@ -39,7 +38,6 @@ import ptolemy.kernel.util.NameDuplicationException;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedPorts <em>Linked Ports</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedRelations <em>Linked Relations</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkingRelations <em>Linking Relations</em>}</li>
  * </ul>
@@ -47,15 +45,6 @@ import ptolemy.kernel.util.NameDuplicationException;
  * @generated
  */
 public class RelationImpl extends NamedObjImpl implements Relation {
-  /**
-   * The cached value of the '{@link #getLinkedPorts() <em>Linked Ports</em>}' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see #getLinkedPorts()
-   * @generated
-   * @ordered
-   */
-  protected EList<Port> linkedPorts;
-
   /**
    * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -102,17 +91,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  public EList<Port> getLinkedPorts() {
-    if (linkedPorts == null) {
-      linkedPorts = new EObjectWithInverseResolvingEList.ManyInverse<Port>(Port.class, this, TriqPackage.RELATION__LINKED_PORTS, TriqPackage.PORT__LINKED_RELATIONS);
-    }
-    return linkedPorts;
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Relation> getLinkedRelations() {
     if (linkedRelations == null) {
       linkedRelations = new EObjectWithInverseResolvingEList.ManyInverse<Relation>(Relation.class, this, TriqPackage.RELATION__LINKED_RELATIONS, TriqPackage.RELATION__LINKING_RELATIONS);
@@ -136,22 +114,10 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    *
    * @generated NOT
    */
-  public void link(NamedObj linkedThing) {
-    if (linkedThing instanceof Port) {
-      if (!getLinkedPorts().contains(linkedThing)) {
-        getLinkedPorts().add((Port) linkedThing);
+  public void link(Relation relation) {
+      if (this != relation && !getLinkedRelations().contains(relation)) {
+        getLinkedRelations().add(relation);
       }
-    } else if (linkedThing instanceof Relation) {
-      Relation toBeLinked = (Relation) linkedThing;
-      if (this != toBeLinked && !getLinkedRelations().contains(toBeLinked)) {
-        getLinkedRelations().add(toBeLinked);
-      }
-    } else if (linkedThing instanceof Vertex) {
-      Relation toBeLinked = (Relation) linkedThing.getContainer();
-      if (this != toBeLinked && !getLinkedRelations().contains(toBeLinked)) {
-        getLinkedRelations().add(toBeLinked);
-      }
-    }
   }
 
   /**
@@ -159,24 +125,11 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    *
    * @generated NOT
    */
-  public void unlink(NamedObj linkedThing) {
-    if (linkedThing instanceof Port) {
-      getLinkedPorts().remove(linkedThing);
-    } else if (linkedThing instanceof Relation) {
-      // should be in one these 2
-      NamedObj toBeUnlinked = linkedThing;
-      if (toBeUnlinked != this) {
-        getLinkedRelations().remove(toBeUnlinked);
-        getLinkingRelations().remove(toBeUnlinked);
+  public void unlink(Relation relation) {
+      if (relation != this) {
+        getLinkedRelations().remove(relation);
+        getLinkingRelations().remove(relation);
       }
-    } else if (linkedThing instanceof Vertex) {
-      // should be in one these 2
-      NamedObj toBeUnlinked = linkedThing.getContainer();
-      if (toBeUnlinked != this) {
-        getLinkedRelations().remove(toBeUnlinked);
-        getLinkingRelations().remove(toBeUnlinked);
-      }
-    }
   }
 
   /**
@@ -200,6 +153,17 @@ public class RelationImpl extends NamedObjImpl implements Relation {
     return vertex;
   }
 
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Port> getLinkedPorts() {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
   @Override
   public CompositeEntity getContainer() {
     return (CompositeEntity) eContainer();
@@ -213,50 +177,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   public void eNotify(Notification notification) {
     super.eNotify(notification);
     switch (notification.getFeatureID(Relation.class)) {
-    case TriqPackage.RELATION__LINKED_PORTS:
-      switch (notification.getEventType()) {
-      case Notification.ADD:
-        Port addedPort = (Port) notification.getNewValue();
-        try {
-          ptolemy.kernel.Port ptPort = (ptolemy.kernel.Port) addedPort.getWrappedObject();
-          // TODO evaluate : this implies that in Triquetrum a port can only be linked once to a given relation.
-          // Although this seems logical, Ptolemy does not impose this constraint...
-          if (!ptPort.isLinked(getWrappedObject())) {
-            ptPort.link(getWrappedObject());
-          }
-        } catch (IllegalActionException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-        break;
-      case Notification.ADD_MANY:
-        List<Port> addedPorts = (List<Port>) notification.getNewValue();
-        for (Port p : addedPorts) {
-          try {
-            ptolemy.kernel.Port ptPort = (ptolemy.kernel.Port) p.getWrappedObject();
-            // TODO evaluate : this implies that in Triquetrum a port can only be linked once to a given relation.
-            // Although this seems logical, Ptolemy does not impose this constraint...
-            if (!ptPort.isLinked(getWrappedObject())) {
-              ptPort.link(getWrappedObject());
-            }
-          } catch (IllegalActionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-        }
-        break;
-      case Notification.REMOVE:
-        Port removedPort = (Port) notification.getOldValue();
-        ((ptolemy.kernel.Port) removedPort.getWrappedObject()).unlink(getWrappedObject());
-        break;
-      case Notification.REMOVE_MANY:
-        List<Port> removedPorts = (List<Port>) notification.getOldValue();
-        for (Port p : removedPorts) {
-          ((ptolemy.kernel.Port) p.getWrappedObject()).unlink(getWrappedObject());
-        }
-        break;
-      }
-      break;
     case TriqPackage.RELATION__LINKED_RELATIONS:
       switch (notification.getEventType()) {
       case Notification.ADD:
@@ -331,40 +251,13 @@ public class RelationImpl extends NamedObjImpl implements Relation {
     }
   }
 
-  // This is where we can hook in a ptolemy object construction, including its container
-  @Override
-  protected void eBasicSetContainer(InternalEObject newContainer) {
-    ptolemy.kernel.CompositeEntity oldPtContainer = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    super.eBasicSetContainer(newContainer);
-    ptolemy.kernel.CompositeEntity newPtContainer = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    if (oldPtContainer != newPtContainer) {
-      try {
-        getWrappedObject().setContainer(newPtContainer);
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (NameDuplicationException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-  }
-
   @Override
   public void buildWrappedObject() {
     try {
       ptolemy.kernel.CompositeEntity container = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
       wrappedObject = container.newRelation(getName());
-      for (Port p : getLinkedPorts()) {
-        ((ptolemy.kernel.Port) p.getWrappedObject()).link(getWrappedObject());
-      }
-      for (Relation p : getLinkedRelations()) {
-        getWrappedObject().link((ptolemy.kernel.Relation) p.getWrappedObject());
-      }
-      for(Attribute a : getAttributes()) {
-        if(a instanceof Vertex) {
-          ((ptolemy.moml.Vertex)a.getWrappedObject()).setContainer(getWrappedObject());
-        }
+      for (Relation r : getLinkedRelations()) {
+        getWrappedObject().link((ptolemy.kernel.Relation) r.getWrappedObject());
       }
     } catch (Exception e) {
       // TODO Auto-generated catch block
@@ -374,7 +267,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
 
   @Override
   public ComponentRelation getWrappedObject() {
-    return (ComponentRelation) wrappedObject;
+    return (ComponentRelation) super.getWrappedObject();
   }
 
   /**
@@ -385,8 +278,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_PORTS:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkedPorts()).basicAdd(otherEnd, msgs);
       case TriqPackage.RELATION__LINKED_RELATIONS:
         return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkedRelations()).basicAdd(otherEnd, msgs);
       case TriqPackage.RELATION__LINKING_RELATIONS:
@@ -402,8 +293,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_PORTS:
-        return ((InternalEList<?>)getLinkedPorts()).basicRemove(otherEnd, msgs);
       case TriqPackage.RELATION__LINKED_RELATIONS:
         return ((InternalEList<?>)getLinkedRelations()).basicRemove(otherEnd, msgs);
       case TriqPackage.RELATION__LINKING_RELATIONS:
@@ -419,8 +308,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_PORTS:
-        return getLinkedPorts();
       case TriqPackage.RELATION__LINKED_RELATIONS:
         return getLinkedRelations();
       case TriqPackage.RELATION__LINKING_RELATIONS:
@@ -437,10 +324,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_PORTS:
-        getLinkedPorts().clear();
-        getLinkedPorts().addAll((Collection<? extends Port>)newValue);
-        return;
       case TriqPackage.RELATION__LINKED_RELATIONS:
         getLinkedRelations().clear();
         getLinkedRelations().addAll((Collection<? extends Relation>)newValue);
@@ -460,9 +343,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_PORTS:
-        getLinkedPorts().clear();
-        return;
       case TriqPackage.RELATION__LINKED_RELATIONS:
         getLinkedRelations().clear();
         return;
@@ -480,8 +360,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_PORTS:
-        return linkedPorts != null && !linkedPorts.isEmpty();
       case TriqPackage.RELATION__LINKED_RELATIONS:
         return linkedRelations != null && !linkedRelations.isEmpty();
       case TriqPackage.RELATION__LINKING_RELATIONS:
@@ -497,16 +375,18 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.RELATION___LINK__NAMEDOBJ:
-        link((NamedObj)arguments.get(0));
+      case TriqPackage.RELATION___LINK__RELATION:
+        link((Relation)arguments.get(0));
         return null;
-      case TriqPackage.RELATION___UNLINK__NAMEDOBJ:
-        unlink((NamedObj)arguments.get(0));
+      case TriqPackage.RELATION___UNLINK__RELATION:
+        unlink((Relation)arguments.get(0));
         return null;
       case TriqPackage.RELATION___IS_CONNECTED:
         return isConnected();
       case TriqPackage.RELATION___GET_VERTEX:
         return getVertex();
+      case TriqPackage.RELATION___GET_LINKED_PORTS:
+        return getLinkedPorts();
     }
     return super.eInvoke(operationID, arguments);
   }

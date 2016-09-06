@@ -14,6 +14,13 @@
       <eParameters name="ptObject" eType="#//PtolemyNamedObj"/>
     </eOperations>
     <eOperations name="getFullName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eOperations name="getChild" eType="#//NamedObj">
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="welcome">
+      <eParameters name="visitor"/>
+      <eParameters name="deep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="new"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
@@ -64,26 +71,28 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="director" eType="#//Director"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//NamedObj">
-    <eOperations name="canAcceptNewConnection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//NamedObj #//Linkable">
+    <eOperations name="canAcceptNewRelation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="canAcceptNewInsideRelation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
-        eType="#//Relation" eOpposite="#//Relation/linkedPorts"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="multiPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
+        eType="#//Relation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="insideLinkedRelations"
+        upperBound="-1" eType="#//Relation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//NamedObj">
     <eOperations name="link">
-      <eParameters name="linkedThing" eType="#//NamedObj"/>
+      <eParameters name="relation" eType="#//Relation"/>
     </eOperations>
     <eOperations name="unlink">
-      <eParameters name="linkedThing" eType="#//NamedObj"/>
+      <eParameters name="relation" eType="#//Relation"/>
     </eOperations>
     <eOperations name="isConnected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eOperations name="getVertex" eType="#//Vertex"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="linkedPorts" upperBound="-1"
-        eType="#//Port" eOpposite="#//Port/linkedRelations"/>
+    <eOperations name="getLinkedPorts" upperBound="-1" eType="#//Port"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
         eType="#//Relation" eOpposite="#//Relation/linkingRelations"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkingRelations" upperBound="-1"
@@ -93,6 +102,15 @@
     <eOperations name="getLocation" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Vertex" eSuperTypes="#//Location"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Vertex" eSuperTypes="#//Location #//Linkable"/>
   <eClassifiers xsi:type="ecore:EDataType" name="PtolemyNamedObj" instanceClassName="ptolemy.kernel.util.NamedObj"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Linkable" abstract="true" interface="true">
+    <eOperations name="link">
+      <eParameters name="relation" eType="#//Relation"/>
+    </eOperations>
+    <eOperations name="unlink">
+      <eParameters name="relation" eType="#//Relation"/>
+    </eOperations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Visitor" instanceClassName="org.eclipse.triquetrum.workflow.model.util.Visitor"/>
 </ecore:EPackage>

@@ -25,26 +25,24 @@ import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Composite Entity</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Composite Entity</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.CompositeEntityImpl#getEntities <em>Entities</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.CompositeEntityImpl#getRelations <em>Relations</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.CompositeEntityImpl#getEntities <em>Entities</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.CompositeEntityImpl#getRelations <em>Relations</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   /**
-   * The cached value of the '{@link #getEntities() <em>Entities</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getEntities() <em>Entities</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #getEntities()
    * @generated
    * @ordered
@@ -52,9 +50,8 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   protected EList<Entity> entities;
 
   /**
-   * The cached value of the '{@link #getRelations() <em>Relations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getRelations() <em>Relations</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #getRelations()
    * @generated
    * @ordered
@@ -62,8 +59,8 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   protected EList<Relation> relations;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   protected CompositeEntityImpl() {
@@ -71,8 +68,8 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
@@ -81,19 +78,32 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   @Override
+  public void welcome(Visitor visitor, boolean deep) {
+    super.welcome(visitor, deep);
+    if (deep) {
+      for (Relation relation : getRelations()) {
+        relation.welcome(visitor, deep);
+      }
+      for (Entity entity : getEntities()) {
+        entity.welcome(visitor, deep);
+      }
+    }
+  }
+
+  @Override
   public NamedObj getChild(String name) {
     NamedObj child = super.getChild(name);
-    if(child==null) {
-      for(Entity entity : getEntities()) {
-        if(name.equals(entity.getName())) {
+    if (child == null) {
+      for (Entity entity : getEntities()) {
+        if (name.equals(entity.getName())) {
           child = entity;
           break;
         }
       }
     }
-    if(child==null) {
-      for(Relation relation : getRelations()) {
-        if(name.equals(relation.getName())) {
+    if (child == null) {
+      for (Relation relation : getRelations()) {
+        if (name.equals(relation.getName())) {
           child = relation;
           break;
         }
@@ -102,10 +112,9 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
     return child;
   }
 
-
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EList<Entity> getEntities() {
@@ -116,8 +125,8 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EList<Relation> getRelations() {
@@ -128,90 +137,90 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
     switch (featureID) {
-      case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
-        return ((InternalEList<?>)getEntities()).basicRemove(otherEnd, msgs);
-      case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
-        return ((InternalEList<?>)getRelations()).basicRemove(otherEnd, msgs);
+    case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
+      return ((InternalEList<?>) getEntities()).basicRemove(otherEnd, msgs);
+    case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
+      return ((InternalEList<?>) getRelations()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-      case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
-        return getEntities();
-      case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
-        return getRelations();
+    case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
+      return getEntities();
+    case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
+      return getRelations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-      case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
-        getEntities().clear();
-        getEntities().addAll((Collection<? extends Entity>)newValue);
-        return;
-      case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
-        getRelations().clear();
-        getRelations().addAll((Collection<? extends Relation>)newValue);
-        return;
+    case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
+      getEntities().clear();
+      getEntities().addAll((Collection<? extends Entity>) newValue);
+      return;
+    case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
+      getRelations().clear();
+      getRelations().addAll((Collection<? extends Relation>) newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-      case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
-        getEntities().clear();
-        return;
-      case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
-        getRelations().clear();
-        return;
+    case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
+      getEntities().clear();
+      return;
+    case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
+      getRelations().clear();
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-      case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
-        return entities != null && !entities.isEmpty();
-      case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
-        return relations != null && !relations.isEmpty();
+    case TriqPackage.COMPOSITE_ENTITY__ENTITIES:
+      return entities != null && !entities.isEmpty();
+    case TriqPackage.COMPOSITE_ENTITY__RELATIONS:
+      return relations != null && !relations.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //CompositeEntityImpl
+} // CompositeEntityImpl

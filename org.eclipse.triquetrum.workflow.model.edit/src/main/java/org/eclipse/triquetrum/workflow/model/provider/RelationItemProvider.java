@@ -51,33 +51,10 @@ public class RelationItemProvider extends NamedObjItemProvider {
     if (itemPropertyDescriptors == null) {
       super.getPropertyDescriptors(object);
 
-      addLinkedPortsPropertyDescriptor(object);
       addLinkedRelationsPropertyDescriptor(object);
       addLinkingRelationsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
-  }
-
-  /**
-   * This adds a property descriptor for the Linked Ports feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addLinkedPortsPropertyDescriptor(Object object) {
-    itemPropertyDescriptors.add
-      (createItemPropertyDescriptor
-        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-         getResourceLocator(),
-         getString("_UI_Relation_linkedPorts_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Relation_linkedPorts_feature", "_UI_Relation_type"),
-         TriqPackage.Literals.RELATION__LINKED_PORTS,
-         true,
-         false,
-         true,
-         null,
-         null,
-         null));
   }
 
   /**

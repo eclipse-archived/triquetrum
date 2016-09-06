@@ -13,6 +13,7 @@ package org.eclipse.triquetrum.workflow.model;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -158,6 +159,28 @@ public interface NamedObj extends EObject {
   String getFullName();
 
   /**
+   * <!-- begin-user-doc -->
+   * @return the contained element with the given simple name or null if not present
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  NamedObj getChild(String name);
+
+  /**
+   * <!-- begin-user-doc -->
+   * Welcome the visitor by calling its visit() method with this NamedObj instance itself as argument.
+   * If deep is true, the NamedObj should also forward the welcome call to its children.
+   *
+   * @param visitor the visitor that wants to visit this NamedObj
+   * @param deep if false, only visit this NamedObj; if true also visit the children of this NamedObj
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  void welcome(Visitor visitor, boolean deep);
+
+  /**
    * Returns the value of the '<em><b>Wrapped Object</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -231,12 +254,4 @@ public interface NamedObj extends EObject {
    * @generated
    */
   void setIconId(String value);
-
-  /**
-   *
-   * @param name
-   * @return the contained element with the given simple name or null if not present
-   */
-  NamedObj getChild(String name);
-
 } // NamedObj

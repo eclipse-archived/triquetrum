@@ -31,6 +31,7 @@ import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 import ptolemy.actor.IOPort;
 
@@ -159,6 +160,19 @@ public class EntityImpl extends NamedObjImpl implements Entity {
   }
 
   @Override
+  public void welcome(Visitor visitor, boolean deep) {
+    super.welcome(visitor, deep);
+    if(deep) {
+      for (Port port : getInputPorts()) {
+        port.welcome(visitor, deep);
+      }
+      for (Port port : getOutputPorts()) {
+        port.welcome(visitor, deep);
+      }
+    }
+  }
+
+  @Override
   public void initializeFrom(ptolemy.kernel.util.NamedObj ptObject) {
     if (!isDeepComplete()) {
       if (!(ptObject instanceof ptolemy.kernel.Entity<?>)) {
@@ -184,20 +198,19 @@ public class EntityImpl extends NamedObjImpl implements Entity {
           for(ptolemy.kernel.Relation ptRelation : (List<ptolemy.kernel.Relation>)port.linkedRelationList()) {
             for(Relation r : getContainer().getRelations()) {
               if(r.getName().equals(ptRelation.getName())) {
-                r.link(newPort);
+                newPort.link(r);
                 break;
               }
             }
           }
         }
       }
-      setDeepComplete(true);
     }
   }
 
   @Override
   public ptolemy.kernel.Entity<?> getWrappedObject() {
-    return (ptolemy.kernel.Entity<?>) wrappedObject;
+    return (ptolemy.kernel.Entity<?>) super.getWrappedObject();
   }
 
   /**

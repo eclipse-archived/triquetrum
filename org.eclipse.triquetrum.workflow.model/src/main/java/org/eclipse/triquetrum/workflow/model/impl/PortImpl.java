@@ -12,20 +12,21 @@ package org.eclipse.triquetrum.workflow.model.impl;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Entity;
+import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 import ptolemy.actor.IOPort;
 import ptolemy.kernel.util.IllegalActionException;
@@ -37,18 +38,19 @@ import ptolemy.kernel.util.NamedObj;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isInput <em>Input</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isOutput <em>Output</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#getLinkedRelations <em>Linked Relations</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isMultiPort <em>Multi Port</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isInput <em>Input</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isOutput <em>Output</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isMultiPort <em>Multi Port</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#getLinkedRelations <em>Linked Relations</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#getInsideLinkedRelations <em>Inside Linked Relations</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class PortImpl extends NamedObjImpl implements Port {
   /**
-   * The default value of the '{@link #isInput() <em>Input</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #isInput() <em>Input</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #isInput()
    * @generated
    * @ordered
@@ -56,8 +58,8 @@ public class PortImpl extends NamedObjImpl implements Port {
   protected static final boolean INPUT_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isInput() <em>Input</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #isInput() <em>Input</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #isInput()
    * @generated
    * @ordered
@@ -65,8 +67,8 @@ public class PortImpl extends NamedObjImpl implements Port {
   protected boolean input = INPUT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isOutput() <em>Output</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #isOutput() <em>Output</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #isOutput()
    * @generated
    * @ordered
@@ -74,8 +76,8 @@ public class PortImpl extends NamedObjImpl implements Port {
   protected static final boolean OUTPUT_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #isOutput()
    * @generated
    * @ordered
@@ -83,17 +85,8 @@ public class PortImpl extends NamedObjImpl implements Port {
   protected boolean output = OUTPUT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @see #getLinkedRelations()
-   * @generated
-   * @ordered
-   */
-  protected EList<Relation> linkedRelations;
-
-  /**
-   * The default value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #isMultiPort()
    * @generated
    * @ordered
@@ -101,13 +94,32 @@ public class PortImpl extends NamedObjImpl implements Port {
   protected static final boolean MULTI_PORT_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #isMultiPort()
    * @generated
    * @ordered
    */
   protected boolean multiPort = MULTI_PORT_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
+   * @see #getLinkedRelations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Relation> linkedRelations;
+
+  /**
+   * The cached value of the '{@link #getInsideLinkedRelations() <em>Inside Linked Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   *
+   * @see #getInsideLinkedRelations()
+   * @generated
+   * @ordered
+   */
+  protected EList<Relation> insideLinkedRelations;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -122,6 +134,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
@@ -131,6 +144,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public boolean isInput() {
@@ -160,6 +174,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public boolean isOutput() {
@@ -168,6 +183,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public void setOutput(boolean newOutput) {
@@ -193,17 +209,76 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EList<Relation> getLinkedRelations() {
     if (linkedRelations == null) {
-      linkedRelations = new EObjectWithInverseResolvingEList.ManyInverse<Relation>(Relation.class, this, TriqPackage.PORT__LINKED_RELATIONS, TriqPackage.RELATION__LINKED_PORTS);
+      linkedRelations = new EObjectResolvingEList<Relation>(Relation.class, this, TriqPackage.PORT__LINKED_RELATIONS);
     }
     return linkedRelations;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
+   * @generated
+   */
+  public EList<Relation> getInsideLinkedRelations() {
+    if (insideLinkedRelations == null) {
+      insideLinkedRelations = new EObjectResolvingEList<Relation>(Relation.class, this, TriqPackage.PORT__INSIDE_LINKED_RELATIONS);
+    }
+    return insideLinkedRelations;
+  }
+
+  /**
+   * <!-- begin-user-doc --> Checks whether the port can accept a new outside relation connection. For single ports, this means that if there is already a
+   * connection, the new request must be refused. <!-- end-user-doc -->
+   *
+   * @generated NOT
+   */
+  public boolean canAcceptNewRelation() {
+    return (isMultiPort() || getLinkedRelations().isEmpty());
+  }
+
+  /**
+   * <!-- begin-user-doc --> Checks whether the port can accept a new inside relation connection. For single ports, this means that if there is already an
+   * inside relation, the new request must be refused. The container must be a CompositeActor, to allow inside relations at all. <!-- end-user-doc -->
+   *
+   * @generated NOT
+   */
+  public boolean canAcceptNewInsideRelation() {
+    return (isMultiPort() || getInsideLinkedRelations().isEmpty()) && (getContainer() instanceof CompositeActor);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
+   * @generated NOT
+   */
+  public void link(Relation relation) {
+    Entity myContainer = getContainer();
+    if ((myContainer instanceof CompositeActor) && (myContainer.equals(relation.getContainer()))) {
+      getInsideLinkedRelations().add(relation);
+    } else {
+      getLinkedRelations().add(relation);
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
+   * @generated
+   */
+  public void unlink(Relation relation) {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public boolean isMultiPort() {
@@ -212,6 +287,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public void setMultiPort(boolean newMultiPort) {
@@ -221,19 +297,74 @@ public class PortImpl extends NamedObjImpl implements Port {
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__MULTI_PORT, oldMultiPort, multiPort));
   }
 
-  /**
-   * <!-- begin-user-doc --> Checks whether the port can accept a new connection. For single ports, this means that if there is already a connection, the new
-   * request must be refused. For multi ports there is currently no constraint. <!-- end-user-doc -->
-   *
-   * @generated NOT
-   */
-  public boolean canAcceptNewConnection() {
-    return isMultiPort() || getLinkedRelations().isEmpty();
-  }
-
   @Override
   public Entity getContainer() {
     return (Entity) eContainer();
+  }
+
+  // TODO evaluate if it's worth the trouble to go for a full-blown EMF adapter + adapterfactory setup
+  /**
+   * This is where we react to changes in linked ports and relations, to keep the wrapped Ptolemy model up-to-date.
+   */
+  @Override
+  public void eNotify(Notification notification) {
+    super.eNotify(notification);
+    switch (notification.getFeatureID(Relation.class)) {
+    case TriqPackage.PORT__LINKED_RELATIONS:
+      IOPort ptPort = getWrappedObject();
+      switch (notification.getEventType()) {
+      case Notification.ADD: {
+        Relation addedRelation = (Relation) notification.getNewValue();
+        try {
+          ptolemy.kernel.Relation ptRelation = (ptolemy.kernel.Relation) addedRelation.getWrappedObject();
+          // TODO evaluate : this implies that in Triquetrum a port can only be linked once to a given relation.
+          // Although this seems logical, Ptolemy does not impose this constraint...
+          if (!ptPort.isLinked(ptRelation)) {
+            ptPort.link(ptRelation);
+          }
+        } catch (IllegalActionException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
+        break;
+      case Notification.ADD_MANY: {
+        List<Relation> addedRelations = (List<Relation>) notification.getNewValue();
+        for (Relation addedRelation : addedRelations) {
+          try {
+            ptolemy.kernel.Relation ptRelation = (ptolemy.kernel.Relation) addedRelation.getWrappedObject();
+            // TODO evaluate : this implies that in Triquetrum a port can only be linked once to a given relation.
+            // Although this seems logical, Ptolemy does not impose this constraint...
+            if (!ptPort.isLinked(ptRelation)) {
+              ptPort.link(ptRelation);
+            }
+          } catch (IllegalActionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+        }
+      }
+        break;
+      case Notification.REMOVE: {
+        Relation removedRelation = (Relation) notification.getOldValue();
+        ptolemy.kernel.Relation ptRelation = (ptolemy.kernel.Relation) removedRelation.getWrappedObject();
+        ptPort.unlink(ptRelation);
+      }
+        break;
+      case Notification.REMOVE_MANY: {
+        List<Relation> removedRelations = (List<Relation>) notification.getOldValue();
+        for (Relation removedRelation : removedRelations) {
+          ptolemy.kernel.Relation ptRelation = (ptolemy.kernel.Relation) removedRelation.getWrappedObject();
+          ptPort.unlink(ptRelation);
+        }
+      }
+        break;
+      }
+      break;
+    case TriqPackage.PORT__INSIDE_LINKED_RELATIONS:
+      break;
+    default:
+    }
   }
 
   @Override
@@ -244,6 +375,12 @@ public class PortImpl extends NamedObjImpl implements Port {
       getWrappedObject().setInput(isInput());
       getWrappedObject().setOutput(isOutput());
       getWrappedObject().setMultiport(isMultiPort());
+      for (Relation r : getLinkedRelations()) {
+        getWrappedObject().link((ptolemy.kernel.Relation) r.getWrappedObject());
+      }
+      for (Relation r : getInsideLinkedRelations()) {
+        getWrappedObject().link((ptolemy.kernel.Relation) r.getWrappedObject());
+      }
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
@@ -261,148 +398,166 @@ public class PortImpl extends NamedObjImpl implements Port {
       setInput(port.isInput());
       setOutput(port.isOutput());
       setMultiPort(port.isMultiport());
-      setDeepComplete(true);
     }
   }
 
   @Override
   public IOPort getWrappedObject() {
-    return (IOPort) wrappedObject;
+    return (IOPort) super.getWrappedObject();
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-    switch (featureID) {
-      case TriqPackage.PORT__LINKED_RELATIONS:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkedRelations()).basicAdd(otherEnd, msgs);
-    }
-    return super.eInverseAdd(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-    switch (featureID) {
-      case TriqPackage.PORT__LINKED_RELATIONS:
-        return ((InternalEList<?>)getLinkedRelations()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-      case TriqPackage.PORT__INPUT:
-        return isInput();
-      case TriqPackage.PORT__OUTPUT:
-        return isOutput();
-      case TriqPackage.PORT__LINKED_RELATIONS:
-        return getLinkedRelations();
-      case TriqPackage.PORT__MULTI_PORT:
-        return isMultiPort();
+    case TriqPackage.PORT__INPUT:
+      return isInput();
+    case TriqPackage.PORT__OUTPUT:
+      return isOutput();
+    case TriqPackage.PORT__MULTI_PORT:
+      return isMultiPort();
+    case TriqPackage.PORT__LINKED_RELATIONS:
+      return getLinkedRelations();
+    case TriqPackage.PORT__INSIDE_LINKED_RELATIONS:
+      return getInsideLinkedRelations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-      case TriqPackage.PORT__INPUT:
-        setInput((Boolean)newValue);
-        return;
-      case TriqPackage.PORT__OUTPUT:
-        setOutput((Boolean)newValue);
-        return;
-      case TriqPackage.PORT__LINKED_RELATIONS:
-        getLinkedRelations().clear();
-        getLinkedRelations().addAll((Collection<? extends Relation>)newValue);
-        return;
-      case TriqPackage.PORT__MULTI_PORT:
-        setMultiPort((Boolean)newValue);
-        return;
+    case TriqPackage.PORT__INPUT:
+      setInput((Boolean) newValue);
+      return;
+    case TriqPackage.PORT__OUTPUT:
+      setOutput((Boolean) newValue);
+      return;
+    case TriqPackage.PORT__MULTI_PORT:
+      setMultiPort((Boolean) newValue);
+      return;
+    case TriqPackage.PORT__LINKED_RELATIONS:
+      getLinkedRelations().clear();
+      getLinkedRelations().addAll((Collection<? extends Relation>) newValue);
+      return;
+    case TriqPackage.PORT__INSIDE_LINKED_RELATIONS:
+      getInsideLinkedRelations().clear();
+      getInsideLinkedRelations().addAll((Collection<? extends Relation>) newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-      case TriqPackage.PORT__INPUT:
-        setInput(INPUT_EDEFAULT);
-        return;
-      case TriqPackage.PORT__OUTPUT:
-        setOutput(OUTPUT_EDEFAULT);
-        return;
-      case TriqPackage.PORT__LINKED_RELATIONS:
-        getLinkedRelations().clear();
-        return;
-      case TriqPackage.PORT__MULTI_PORT:
-        setMultiPort(MULTI_PORT_EDEFAULT);
-        return;
+    case TriqPackage.PORT__INPUT:
+      setInput(INPUT_EDEFAULT);
+      return;
+    case TriqPackage.PORT__OUTPUT:
+      setOutput(OUTPUT_EDEFAULT);
+      return;
+    case TriqPackage.PORT__MULTI_PORT:
+      setMultiPort(MULTI_PORT_EDEFAULT);
+      return;
+    case TriqPackage.PORT__LINKED_RELATIONS:
+      getLinkedRelations().clear();
+      return;
+    case TriqPackage.PORT__INSIDE_LINKED_RELATIONS:
+      getInsideLinkedRelations().clear();
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-      case TriqPackage.PORT__INPUT:
-        return input != INPUT_EDEFAULT;
-      case TriqPackage.PORT__OUTPUT:
-        return output != OUTPUT_EDEFAULT;
-      case TriqPackage.PORT__LINKED_RELATIONS:
-        return linkedRelations != null && !linkedRelations.isEmpty();
-      case TriqPackage.PORT__MULTI_PORT:
-        return multiPort != MULTI_PORT_EDEFAULT;
+    case TriqPackage.PORT__INPUT:
+      return input != INPUT_EDEFAULT;
+    case TriqPackage.PORT__OUTPUT:
+      return output != OUTPUT_EDEFAULT;
+    case TriqPackage.PORT__MULTI_PORT:
+      return multiPort != MULTI_PORT_EDEFAULT;
+    case TriqPackage.PORT__LINKED_RELATIONS:
+      return linkedRelations != null && !linkedRelations.isEmpty();
+    case TriqPackage.PORT__INSIDE_LINKED_RELATIONS:
+      return insideLinkedRelations != null && !insideLinkedRelations.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
+   * @generated
+   */
+  @Override
+  public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+    if (baseClass == Linkable.class) {
+      switch (baseOperationID) {
+      case TriqPackage.LINKABLE___LINK__RELATION:
+        return TriqPackage.PORT___LINK__RELATION;
+      case TriqPackage.LINKABLE___UNLINK__RELATION:
+        return TriqPackage.PORT___UNLINK__RELATION;
+      default:
+        return -1;
+      }
+    }
+    return super.eDerivedOperationID(baseOperationID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.PORT___CAN_ACCEPT_NEW_CONNECTION:
-        return canAcceptNewConnection();
+    case TriqPackage.PORT___CAN_ACCEPT_NEW_RELATION:
+      return canAcceptNewRelation();
+    case TriqPackage.PORT___CAN_ACCEPT_NEW_INSIDE_RELATION:
+      return canAcceptNewInsideRelation();
+    case TriqPackage.PORT___LINK__RELATION:
+      link((Relation) arguments.get(0));
+      return null;
+    case TriqPackage.PORT___UNLINK__RELATION:
+      unlink((Relation) arguments.get(0));
+      return null;
     }
     return super.eInvoke(operationID, arguments);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
   public String toString() {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (input: ");
