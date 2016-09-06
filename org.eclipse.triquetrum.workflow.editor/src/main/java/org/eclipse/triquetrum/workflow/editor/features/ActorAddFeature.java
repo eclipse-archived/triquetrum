@@ -29,7 +29,6 @@ import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
@@ -87,23 +86,20 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
 
   public boolean canAdd(IAddContext context) {
     // check if user wants to add an actor
-    if ((context.getNewObject() instanceof Actor) || (context.getNewObject() instanceof CompositeActor)) {
-      // check if user wants to add to a diagram
-      if (context.getTargetContainer() instanceof Diagram) {
-        return true;
-      }
-    }
-    return false;
+    return ((context.getNewObject() instanceof Actor) || (context.getNewObject() instanceof CompositeActor));
   }
 
   public PictogramElement add(IAddContext context) {
     Entity addedActor = (Entity) context.getNewObject();
     ContainerShape targetContainer = context.getTargetContainer();
 
-    Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
-    if (topLevelForDiagram == null) {
-      link(getDiagram(), addedActor.getContainer());
-    }
+    // This should be a duplicate from what's in ModelElementCreateFeature,
+    // to link the toplevel CompositeActor to the Diagram.
+    // So let's try to do without this.
+//    Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
+//    if (topLevelForDiagram == null) {
+//      link(getDiagram(), addedActor.getContainer());
+//    }
 
     int xLocation = context.getX();
     int yLocation = context.getY();

@@ -123,7 +123,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public ILayoutFeature getLayoutFeature(ILayoutContext context) {
     PictogramElement pictogramElement = context.getPictogramElement();
     Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-    if (bo instanceof Actor || bo instanceof Director) {
+    if (bo instanceof CompositeActor || bo instanceof Actor || bo instanceof Director) {
       return new ModelElementLayoutFeature(this);
     }
     return super.getLayoutFeature(context);

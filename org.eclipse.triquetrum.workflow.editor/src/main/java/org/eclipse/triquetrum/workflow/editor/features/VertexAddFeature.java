@@ -54,14 +54,7 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
   }
 
   public boolean canAdd(IAddContext context) {
-    // check if user wants to add a port
-    if (context.getNewObject() instanceof Vertex) {
-      // check if user wants to add to a diagram
-      if (context.getTargetContainer() instanceof Diagram) {
-        return true;
-      }
-    }
-    return false;
+    return (context.getNewObject() instanceof Vertex);
   }
 
   public PictogramElement add(IAddContext context) {

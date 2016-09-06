@@ -19,6 +19,7 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ICreateContext;
 import org.eclipse.graphiti.features.impl.AbstractCreateFeature;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.triquetrum.ErrorCode;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
@@ -63,7 +64,8 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
     this.elementName = elementName;
   }
 
-  public ModelElementCreateFeature(IFeatureProvider fp, String group, BoCategory category, String elementName, String wrappedClass, String iconResource, String iconType, Map<String, String> properties) {
+  public ModelElementCreateFeature(IFeatureProvider fp, String group, BoCategory category, String elementName, String wrappedClass, String iconResource,
+      String iconType, Map<String, String> properties) {
     super(fp, elementName, "Create a " + elementName);
     this.group = group;
     this.category = category;
@@ -111,9 +113,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
   }
 
   public boolean canCreate(ICreateContext context) {
-    if (!(context.getTargetContainer() instanceof Diagram)) {
-      return false;
-    } else {
+    if (context.getTargetContainer() instanceof Diagram) {
       // make sure we can only set 1 Director per model level
       EClassifier eClassifier = TriqPackage.eINSTANCE.getEClassifier(category.name());
       if (TriqPackage.DIRECTOR == eClassifier.getClassifierID()) {
@@ -121,23 +121,29 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
         return model == null || model.getDirector() == null;
       }
       return true;
+    } else {
+      Object parentObject = getBusinessObjectForPictogramElement(context.getTargetContainer());
+      return (parentObject instanceof CompositeActor);
     }
   }
 
   public Object[] create(ICreateContext context) {
     try {
-      // CompositeActor model = EditorUtils.getSelectedModel();
-
-      CompositeActor model = (CompositeActor) getBusinessObjectForPictogramElement(getDiagram());
+      CompositeActor model = (CompositeActor) getBusinessObjectForPictogramElement(context.getTargetContainer());
       if (model == null) {
-        model = TriqFactory.eINSTANCE.createCompositeActor();
-        model.setName(getDiagram().getName());
-        // we need to force the construction of the root Ptolemy II toplevel here,
-        // otherwise the addition of the new model element can not use ptolemy features
-        // like determining unique names etc.
-        model.buildWrappedObject();
-        getDiagram().eResource().getContents().add(model);
-        link(getDiagram(), model);
+        // this should only happen for newly created Diagrams
+        if (context.getTargetContainer() == getDiagram()) {
+          model = TriqFactory.eINSTANCE.createCompositeActor();
+          model.setName(getDiagram().getName());
+          // we need to force the construction of the root Ptolemy II toplevel here,
+          // otherwise the addition of the new model element can not use ptolemy features
+          // like determining unique names etc.
+          model.buildWrappedObject();
+          getDiagram().eResource().getContents().add(model);
+          link(getDiagram(), model);
+        } else {
+          throw new RuntimeException(ErrorCode.ERROR + " - Inconsistent model : submodel null for shape "+context.getTargetContainer());
+        }
       }
 
       // create new model element
@@ -152,9 +158,11 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
           String value = attrEntry.getValue();
           result.setProperty(name, value, null);
         }
+        result.buildWrappedObject();
       } else {
         result.setWrappedObject(wrappedObject);
       }
+      result.initializeFrom(result.getWrappedObject());
 
       if (result instanceof Director) {
         model.setDirector((Director) result);
@@ -162,12 +170,12 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
         model.getEntities().add((Entity) result);
       } else if (result instanceof Vertex) {
         Relation relation = (Relation) context.getProperty(FeatureConstants.CONTAINER);
-        if(relation==null) {
+        if (relation == null) {
           relation = TriqFactory.eINSTANCE.createRelation();
           relation.setName(EditorUtils.buildUniqueName(model, "_R"));
           model.getRelations().add(relation);
         }
-        relation.getAttributes().add((Vertex)result);
+        relation.getAttributes().add((Vertex) result);
       } else if (result instanceof Attribute) {
         model.getAttributes().add((Attribute) result);
       } else if (result instanceof Port) {
@@ -189,6 +197,8 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
       getFeatureProvider().getDirectEditingInfo().setActive(true);
       // return newly created business object(s)
       return new Object[] { result };
+    } catch (RuntimeException e) {
+      throw e;
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

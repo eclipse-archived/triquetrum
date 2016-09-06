@@ -18,6 +18,7 @@ import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
@@ -70,11 +71,11 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
           ((CompositeActor) relationContainer).getRelations().add(newRelation);
         }
       }
-      relation.unlink(oldBO);
-      relation.unlink(startBO);
-      relation.unlink(endBO);
-      newRelation.link(startBO);
-      newRelation.link(endBO);
+      ((Linkable)oldBO).unlink(relation);
+      ((Linkable)startBO).unlink(relation);
+      ((Linkable)endBO).unlink(relation);
+      ((Linkable)startBO).link(newRelation);
+      ((Linkable)endBO).link(newRelation);
       // Only check this after all the unlink/link actions, as relation and newRelation might be the same instance,
       // so we don't want to delete relation yet before doing the new links!
       if(!relation.isConnected()) {
