@@ -40,6 +40,7 @@ import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
+import org.eclipse.triquetrum.workflow.model.util.PtObjectBuilderAndApplierVisitor;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -454,6 +455,7 @@ public class EditorUtils {
         relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
       }
       ((CompositeActor) relationContainer).getRelations().add(relation);
+      relation.welcome(new PtObjectBuilderAndApplierVisitor(), true);
       ((Linkable)source).link(relation);
       ((Linkable)target).link(relation);
     }

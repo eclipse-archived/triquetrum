@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation()
@@ -99,9 +100,15 @@ public interface Relation extends NamedObj {
   Vertex getVertex();
 
   /**
+   * Returns the value of the '<em><b>Linked Ports</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Port}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations <em>Linked Relations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @model kind="operation"
+   * @return the value of the '<em>Linked Ports</em>' reference list.
+   * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation_LinkedPorts()
+   * @see org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations
+   * @model opposite="linkedRelations" transient="true"
    * @generated
    */
   EList<Port> getLinkedPorts();

@@ -11,13 +11,9 @@
 package org.eclipse.triquetrum.workflow.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
-
-import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.kernel.util.NamedObj;
 
 /**

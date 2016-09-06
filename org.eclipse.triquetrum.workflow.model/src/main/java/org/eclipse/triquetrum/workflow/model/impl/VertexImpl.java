@@ -13,7 +13,6 @@ package org.eclipse.triquetrum.workflow.model.impl;
 import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
@@ -36,6 +35,11 @@ public class VertexImpl extends LocationImpl implements Vertex {
     super();
   }
 
+  @Override
+  public Relation getContainer() {
+    return (Relation) super.getContainer();
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -49,23 +53,19 @@ public class VertexImpl extends LocationImpl implements Vertex {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void link(Relation relation) {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    getContainer().link(relation);
   }
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public void unlink(Relation relation) {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    getContainer().unlink(relation);
   }
 
   /**

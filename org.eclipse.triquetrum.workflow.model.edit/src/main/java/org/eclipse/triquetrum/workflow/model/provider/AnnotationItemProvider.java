@@ -78,7 +78,7 @@ public class AnnotationItemProvider extends AttributeItemProvider {
          getString("_UI_PropertyDescriptor_description", "_UI_Annotation_text_feature", "_UI_Annotation_type"),
          TriqPackage.Literals.ANNOTATION__TEXT,
          true,
-         true,
+         false,
          false,
          ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
          null,

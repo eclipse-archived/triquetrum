@@ -17,7 +17,6 @@ import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NamedObj;
 import ptolemy.vergil.kernel.attributes.TextAttribute;
 
 /**
@@ -194,13 +193,10 @@ public class AnnotationImpl extends AttributeImpl implements Annotation {
   }
 
   @Override
-  public void initializeFrom(NamedObj ptObject) {
+  public void applyWrappedObject() {
     if (!isDeepComplete()) {
-      if (!(ptObject instanceof TextAttribute)) {
-        throw new IllegalArgumentException(ptObject + " should be a TextAttribute");
-      }
-      super.initializeFrom(ptObject);
-      TextAttribute textAttr = (TextAttribute) ptObject;
+      super.applyWrappedObject();
+      TextAttribute textAttr = (TextAttribute) wrappedObject;
       setText(textAttr.text.getExpression());
       setFontFamily(textAttr.fontFamily.getExpression());
       setTextSize(Integer.parseInt(textAttr.textSize.getExpression()));

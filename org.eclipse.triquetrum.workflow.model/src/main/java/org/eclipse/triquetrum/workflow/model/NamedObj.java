@@ -140,15 +140,15 @@ public interface NamedObj extends EObject {
    * @model
    * @generated
    */
-  void buildWrappedObject();
+  void applyWrappedObject();
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @model ptObjectDataType="org.eclipse.triquetrum.workflow.model.PtolemyNamedObj"
+   * @model
    * @generated
    */
-  void initializeFrom(ptolemy.kernel.util.NamedObj ptObject);
+  void buildWrappedObject();
 
   /**
    * <!-- begin-user-doc -->
@@ -175,7 +175,7 @@ public interface NamedObj extends EObject {
    * @param visitor the visitor that wants to visit this NamedObj
    * @param deep if false, only visit this NamedObj; if true also visit the children of this NamedObj
    * <!-- end-user-doc -->
-   * @model
+   * @model visitorDataType="org.eclipse.triquetrum.workflow.model.Visitor"
    * @generated
    */
   void welcome(Visitor visitor, boolean deep);

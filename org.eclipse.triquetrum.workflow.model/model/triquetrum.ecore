@@ -9,16 +9,14 @@
       <eParameters name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       <eParameters name="className" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
+    <eOperations name="applyWrappedObject"/>
     <eOperations name="buildWrappedObject"/>
-    <eOperations name="initializeFrom">
-      <eParameters name="ptObject" eType="#//PtolemyNamedObj"/>
-    </eOperations>
     <eOperations name="getFullName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eOperations name="getChild" eType="#//NamedObj">
       <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eOperations name="welcome">
-      <eParameters name="visitor"/>
+      <eParameters name="visitor" eType="#//Visitor"/>
       <eParameters name="deep" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     </eOperations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -72,16 +70,18 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//NamedObj #//Linkable">
-    <eOperations name="canAcceptNewRelation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="canAcceptNewOutsideRelation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eOperations name="canAcceptNewInsideRelation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="multiPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
-        eType="#//Relation"/>
+        eType="#//Relation" eOpposite="#//Relation/linkedPorts"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="insideLinkedRelations"
-        upperBound="-1" eType="#//Relation"/>
+        upperBound="-1" eType="#//Relation" changeable="false" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outsideLinkedRelations"
+        upperBound="-1" eType="#//Relation" changeable="false" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//NamedObj">
     <eOperations name="link">
@@ -92,11 +92,12 @@
     </eOperations>
     <eOperations name="isConnected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eOperations name="getVertex" eType="#//Vertex"/>
-    <eOperations name="getLinkedPorts" upperBound="-1" eType="#//Port"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
         eType="#//Relation" eOpposite="#//Relation/linkingRelations"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkingRelations" upperBound="-1"
         eType="#//Relation" eOpposite="#//Relation/linkedRelations"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="linkedPorts" upperBound="-1"
+        eType="#//Port" transient="true" eOpposite="#//Port/linkedRelations"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Location" eSuperTypes="#//Attribute">
     <eOperations name="getLocation" upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>

@@ -145,7 +145,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
 
   @Override
   public CompositeEntity getContainer() {
-    return (CompositeEntity) eContainer();
+    return (CompositeEntity) super.getContainer();
   }
 
   @Override
@@ -173,13 +173,10 @@ public class EntityImpl extends NamedObjImpl implements Entity {
   }
 
   @Override
-  public void initializeFrom(ptolemy.kernel.util.NamedObj ptObject) {
+  public void applyWrappedObject() {
     if (!isDeepComplete()) {
-      if (!(ptObject instanceof ptolemy.kernel.Entity<?>)) {
-        throw new IllegalArgumentException(ptObject + " should be an Entity");
-      }
-      super.initializeFrom(ptObject);
-      ptolemy.kernel.Entity<?> e = (ptolemy.kernel.Entity<?>) ptObject;
+      super.applyWrappedObject();
+      ptolemy.kernel.Entity<?> e = (ptolemy.kernel.Entity<?>) getWrappedObject();
       for (ptolemy.kernel.Port port : e.portList()) {
         if (port instanceof IOPort) {
           Port newPort = TriqFactory.eINSTANCE.createPort();

@@ -145,14 +145,14 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass visitorEClass = null;
+  private EDataType ptolemyNamedObjEDataType = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EDataType ptolemyNamedObjEDataType = null;
+  private EDataType visitorEDataType = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -310,7 +310,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getNamedObj__BuildWrappedObject() {
+  public EOperation getNamedObj__ApplyWrappedObject() {
     return namedObjEClass.getEOperations().get(3);
   }
 
@@ -319,7 +319,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getNamedObj__InitializeFrom__NamedObj() {
+  public EOperation getNamedObj__BuildWrappedObject() {
     return namedObjEClass.getEOperations().get(4);
   }
 
@@ -580,6 +580,24 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
+  public EOperation getPort__CanAcceptNewInsideRelation() {
+    return portEClass.getEOperations().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPort_MultiPort() {
+    return (EAttribute)portEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getPort_LinkedRelations() {
     return (EReference)portEClass.getEStructuralFeatures().get(3);
   }
@@ -598,26 +616,17 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getPort__CanAcceptNewRelation() {
+  public EReference getPort_OutsideLinkedRelations() {
+    return (EReference)portEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getPort__CanAcceptNewOutsideRelation() {
     return portEClass.getEOperations().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getPort__CanAcceptNewInsideRelation() {
-    return portEClass.getEOperations().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getPort_MultiPort() {
-    return (EAttribute)portEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -645,6 +654,15 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    */
   public EReference getRelation_LinkingRelations() {
     return (EReference)relationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRelation_LinkedPorts() {
+    return (EReference)relationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -681,15 +699,6 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    */
   public EOperation getRelation__GetVertex() {
     return relationEClass.getEOperations().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getRelation__GetLinkedPorts() {
-    return relationEClass.getEOperations().get(4);
   }
 
   /**
@@ -760,17 +769,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getVisitor() {
-    return visitorEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getVisitor__Visit__NamedObj() {
-    return visitorEClass.getEOperations().get(0);
+  public EDataType getVisitor() {
+    return visitorEDataType;
   }
 
   /**
@@ -820,8 +820,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEOperation(namedObjEClass, NAMED_OBJ___GET_CONTAINER);
     createEOperation(namedObjEClass, NAMED_OBJ___TOP_LEVEL);
     createEOperation(namedObjEClass, NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING);
+    createEOperation(namedObjEClass, NAMED_OBJ___APPLY_WRAPPED_OBJECT);
     createEOperation(namedObjEClass, NAMED_OBJ___BUILD_WRAPPED_OBJECT);
-    createEOperation(namedObjEClass, NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ);
     createEOperation(namedObjEClass, NAMED_OBJ___GET_FULL_NAME);
     createEOperation(namedObjEClass, NAMED_OBJ___GET_CHILD__STRING);
     createEOperation(namedObjEClass, NAMED_OBJ___WELCOME__VISITOR_BOOLEAN);
@@ -862,17 +862,18 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEAttribute(portEClass, PORT__MULTI_PORT);
     createEReference(portEClass, PORT__LINKED_RELATIONS);
     createEReference(portEClass, PORT__INSIDE_LINKED_RELATIONS);
-    createEOperation(portEClass, PORT___CAN_ACCEPT_NEW_RELATION);
+    createEReference(portEClass, PORT__OUTSIDE_LINKED_RELATIONS);
+    createEOperation(portEClass, PORT___CAN_ACCEPT_NEW_OUTSIDE_RELATION);
     createEOperation(portEClass, PORT___CAN_ACCEPT_NEW_INSIDE_RELATION);
 
     relationEClass = createEClass(RELATION);
     createEReference(relationEClass, RELATION__LINKED_RELATIONS);
     createEReference(relationEClass, RELATION__LINKING_RELATIONS);
+    createEReference(relationEClass, RELATION__LINKED_PORTS);
     createEOperation(relationEClass, RELATION___LINK__RELATION);
     createEOperation(relationEClass, RELATION___UNLINK__RELATION);
     createEOperation(relationEClass, RELATION___IS_CONNECTED);
     createEOperation(relationEClass, RELATION___GET_VERTEX);
-    createEOperation(relationEClass, RELATION___GET_LINKED_PORTS);
 
     locationEClass = createEClass(LOCATION);
     createEAttribute(locationEClass, LOCATION__EXPRESSION);
@@ -884,11 +885,9 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEOperation(linkableEClass, LINKABLE___LINK__RELATION);
     createEOperation(linkableEClass, LINKABLE___UNLINK__RELATION);
 
-    visitorEClass = createEClass(VISITOR);
-    createEOperation(visitorEClass, VISITOR___VISIT__NAMEDOBJ);
-
     // Create data types
     ptolemyNamedObjEDataType = createEDataType(PTOLEMY_NAMED_OBJ);
+    visitorEDataType = createEDataType(VISITOR);
   }
 
   /**
@@ -952,10 +951,9 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     addEParameter(op, ecorePackage.getEString(), "value", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, ecorePackage.getEString(), "className", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    initEOperation(getNamedObj__BuildWrappedObject(), null, "buildWrappedObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+    initEOperation(getNamedObj__ApplyWrappedObject(), null, "applyWrappedObject", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    op = initEOperation(getNamedObj__InitializeFrom__NamedObj(), null, "initializeFrom", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getPtolemyNamedObj(), "ptObject", 0, 1, IS_UNIQUE, IS_ORDERED);
+    initEOperation(getNamedObj__BuildWrappedObject(), null, "buildWrappedObject", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getNamedObj__GetFullName(), ecorePackage.getEString(), "getFullName", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1002,16 +1000,18 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEAttribute(getPort_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPort_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPort_MultiPort(), ecorePackage.getEBoolean(), "multiPort", "false", 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPort_LinkedRelations(), this.getRelation(), null, "linkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPort_InsideLinkedRelations(), this.getRelation(), null, "insideLinkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPort_LinkedRelations(), this.getRelation(), this.getRelation_LinkedPorts(), "linkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPort_InsideLinkedRelations(), this.getRelation(), null, "insideLinkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getPort_OutsideLinkedRelations(), this.getRelation(), null, "outsideLinkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-    initEOperation(getPort__CanAcceptNewRelation(), ecorePackage.getEBoolean(), "canAcceptNewRelation", 0, 1, IS_UNIQUE, IS_ORDERED);
+    initEOperation(getPort__CanAcceptNewOutsideRelation(), ecorePackage.getEBoolean(), "canAcceptNewOutsideRelation", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getPort__CanAcceptNewInsideRelation(), ecorePackage.getEBoolean(), "canAcceptNewInsideRelation", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(relationEClass, Relation.class, "Relation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getRelation_LinkedRelations(), this.getRelation(), this.getRelation_LinkingRelations(), "linkedRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRelation_LinkingRelations(), this.getRelation(), this.getRelation_LinkedRelations(), "linkingRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     op = initEOperation(getRelation__Link__Relation(), null, "link", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, this.getRelation(), "relation", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1022,8 +1022,6 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEOperation(getRelation__IsConnected(), ecorePackage.getEBoolean(), "isConnected", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getRelation__GetVertex(), this.getVertex(), "getVertex", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    initEOperation(getRelation__GetLinkedPorts(), this.getPort(), "getLinkedPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(locationEClass, Location.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLocation_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1040,13 +1038,9 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     op = initEOperation(getLinkable__Unlink__Relation(), null, "unlink", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, this.getRelation(), "relation", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    initEClass(visitorEClass, Visitor.class, "Visitor", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-    op = initEOperation(getVisitor__Visit__NamedObj(), null, "visit", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getNamedObj(), "modelElement", 0, 1, IS_UNIQUE, IS_ORDERED);
-
     // Initialize data types
     initEDataType(ptolemyNamedObjEDataType, ptolemy.kernel.util.NamedObj.class, "PtolemyNamedObj", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
+    initEDataType(visitorEDataType, Visitor.class, "Visitor", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

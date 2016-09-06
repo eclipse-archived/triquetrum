@@ -167,22 +167,22 @@ public interface TriqPackage extends EPackage {
   int NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING = 2;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NAMED_OBJ___APPLY_WRAPPED_OBJECT = 3;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NAMED_OBJ___BUILD_WRAPPED_OBJECT = 3;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ = 4;
+  int NAMED_OBJ___BUILD_WRAPPED_OBJECT = 4;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -321,6 +321,15 @@ public interface TriqPackage extends EPackage {
   int ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ATTRIBUTE___APPLY_WRAPPED_OBJECT = NAMED_OBJ___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -328,15 +337,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ATTRIBUTE___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ = NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -529,6 +529,15 @@ public interface TriqPackage extends EPackage {
   int ANNOTATION___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION___APPLY_WRAPPED_OBJECT = ATTRIBUTE___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -536,15 +545,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ANNOTATION___BUILD_WRAPPED_OBJECT = ATTRIBUTE___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANNOTATION___INITIALIZE_FROM__NAMEDOBJ = ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -692,6 +692,15 @@ public interface TriqPackage extends EPackage {
   int PARAMETER___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER___APPLY_WRAPPED_OBJECT = ATTRIBUTE___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -699,15 +708,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int PARAMETER___BUILD_WRAPPED_OBJECT = ATTRIBUTE___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARAMETER___INITIALIZE_FROM__NAMEDOBJ = ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -846,6 +846,15 @@ public interface TriqPackage extends EPackage {
   int DIRECTOR___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIRECTOR___APPLY_WRAPPED_OBJECT = ATTRIBUTE___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -853,15 +862,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int DIRECTOR___BUILD_WRAPPED_OBJECT = ATTRIBUTE___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DIRECTOR___INITIALIZE_FROM__NAMEDOBJ = ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -1027,6 +1027,15 @@ public interface TriqPackage extends EPackage {
   int ENTITY___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ENTITY___APPLY_WRAPPED_OBJECT = NAMED_OBJ___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1034,15 +1043,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ENTITY___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ENTITY___INITIALIZE_FROM__NAMEDOBJ = NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -1226,6 +1226,15 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ENTITY___SET_PROPERTY__STRING_STRING_STRING = ENTITY___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ENTITY___APPLY_WRAPPED_OBJECT = ENTITY___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1233,15 +1242,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int COMPOSITE_ENTITY___BUILD_WRAPPED_OBJECT = ENTITY___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPOSITE_ENTITY___INITIALIZE_FROM__NAMEDOBJ = ENTITY___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -1407,6 +1407,15 @@ public interface TriqPackage extends EPackage {
   int ACTOR___SET_PROPERTY__STRING_STRING_STRING = ENTITY___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTOR___APPLY_WRAPPED_OBJECT = ENTITY___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1414,15 +1423,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int ACTOR___BUILD_WRAPPED_OBJECT = ENTITY___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTOR___INITIALIZE_FROM__NAMEDOBJ = ENTITY___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -1615,6 +1615,15 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ACTOR___SET_PROPERTY__STRING_STRING_STRING = COMPOSITE_ENTITY___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ACTOR___APPLY_WRAPPED_OBJECT = COMPOSITE_ENTITY___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1622,15 +1631,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int COMPOSITE_ACTOR___BUILD_WRAPPED_OBJECT = COMPOSITE_ENTITY___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPOSITE_ACTOR___INITIALIZE_FROM__NAMEDOBJ = COMPOSITE_ENTITY___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -1787,13 +1787,22 @@ public interface TriqPackage extends EPackage {
   int PORT__INSIDE_LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 4;
 
   /**
+   * The feature id for the '<em><b>Outside Linked Relations</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__OUTSIDE_LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 5;
+
+  /**
    * The number of structural features of the '<em>Port</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PORT_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 5;
+  int PORT_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 6;
 
   /**
    * The operation id for the '<em>Get Container</em>' operation.
@@ -1823,6 +1832,15 @@ public interface TriqPackage extends EPackage {
   int PORT___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___APPLY_WRAPPED_OBJECT = NAMED_OBJ___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1830,15 +1848,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int PORT___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___INITIALIZE_FROM__NAMEDOBJ = NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -1886,13 +1895,13 @@ public interface TriqPackage extends EPackage {
   int PORT___UNLINK__RELATION = NAMED_OBJ_OPERATION_COUNT + 1;
 
   /**
-   * The operation id for the '<em>Can Accept New Relation</em>' operation.
+   * The operation id for the '<em>Can Accept New Outside Relation</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PORT___CAN_ACCEPT_NEW_RELATION = NAMED_OBJ_OPERATION_COUNT + 2;
+  int PORT___CAN_ACCEPT_NEW_OUTSIDE_RELATION = NAMED_OBJ_OPERATION_COUNT + 2;
 
   /**
    * The operation id for the '<em>Can Accept New Inside Relation</em>' operation.
@@ -1995,13 +2004,22 @@ public interface TriqPackage extends EPackage {
   int RELATION__LINKING_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 1;
 
   /**
+   * The feature id for the '<em><b>Linked Ports</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__LINKED_PORTS = NAMED_OBJ_FEATURE_COUNT + 2;
+
+  /**
    * The number of structural features of the '<em>Relation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RELATION_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 2;
+  int RELATION_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 3;
 
   /**
    * The operation id for the '<em>Get Container</em>' operation.
@@ -2031,6 +2049,15 @@ public interface TriqPackage extends EPackage {
   int RELATION___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___APPLY_WRAPPED_OBJECT = NAMED_OBJ___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2038,15 +2065,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int RELATION___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___INITIALIZE_FROM__NAMEDOBJ = NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -2112,22 +2130,13 @@ public interface TriqPackage extends EPackage {
   int RELATION___GET_VERTEX = NAMED_OBJ_OPERATION_COUNT + 3;
 
   /**
-   * The operation id for the '<em>Get Linked Ports</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___GET_LINKED_PORTS = NAMED_OBJ_OPERATION_COUNT + 4;
-
-  /**
    * The number of operations of the '<em>Relation</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int RELATION_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 5;
+  int RELATION_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.LocationImpl <em>Location</em>}' class.
@@ -2239,6 +2248,15 @@ public interface TriqPackage extends EPackage {
   int LOCATION___SET_PROPERTY__STRING_STRING_STRING = ATTRIBUTE___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCATION___APPLY_WRAPPED_OBJECT = ATTRIBUTE___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2246,15 +2264,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int LOCATION___BUILD_WRAPPED_OBJECT = ATTRIBUTE___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCATION___INITIALIZE_FROM__NAMEDOBJ = ATTRIBUTE___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -2411,6 +2420,15 @@ public interface TriqPackage extends EPackage {
   int VERTEX___SET_PROPERTY__STRING_STRING_STRING = LOCATION___SET_PROPERTY__STRING_STRING_STRING;
 
   /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX___APPLY_WRAPPED_OBJECT = LOCATION___APPLY_WRAPPED_OBJECT;
+
+  /**
    * The operation id for the '<em>Build Wrapped Object</em>' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2418,15 +2436,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int VERTEX___BUILD_WRAPPED_OBJECT = LOCATION___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Initialize From</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VERTEX___INITIALIZE_FROM__NAMEDOBJ = LOCATION___INITIALIZE_FROM__NAMEDOBJ;
 
   /**
    * The operation id for the '<em>Get Full Name</em>' operation.
@@ -2538,41 +2547,14 @@ public interface TriqPackage extends EPackage {
   int LINKABLE_OPERATION_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.util.Visitor <em>Visitor</em>}' class.
+   * The meta object id for the '<em>Visitor</em>' data type.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see org.eclipse.triquetrum.workflow.model.util.Visitor
    * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getVisitor()
    * @generated
    */
-  int VISITOR = 14;
-
-  /**
-   * The number of structural features of the '<em>Visitor</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VISITOR_FEATURE_COUNT = 0;
-
-  /**
-   * The operation id for the '<em>Visit</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VISITOR___VISIT__NAMEDOBJ = 0;
-
-  /**
-   * The number of operations of the '<em>Visitor</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VISITOR_OPERATION_COUNT = 1;
+  int VISITOR = 15;
 
   /**
    * The meta object id for the '<em>Ptolemy Named Obj</em>' data type.
@@ -2582,7 +2564,7 @@ public interface TriqPackage extends EPackage {
    * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getPtolemyNamedObj()
    * @generated
    */
-  int PTOLEMY_NAMED_OBJ = 15;
+  int PTOLEMY_NAMED_OBJ = 14;
 
 
   /**
@@ -2692,6 +2674,16 @@ public interface TriqPackage extends EPackage {
   EOperation getNamedObj__SetProperty__String_String_String();
 
   /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#applyWrappedObject() <em>Apply Wrapped Object</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Apply Wrapped Object</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.NamedObj#applyWrappedObject()
+   * @generated
+   */
+  EOperation getNamedObj__ApplyWrappedObject();
+
+  /**
    * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#buildWrappedObject() <em>Build Wrapped Object</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2700,16 +2692,6 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   EOperation getNamedObj__BuildWrappedObject();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#initializeFrom(ptolemy.kernel.util.NamedObj) <em>Initialize From</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Initialize From</em>' operation.
-   * @see org.eclipse.triquetrum.workflow.model.NamedObj#initializeFrom(ptolemy.kernel.util.NamedObj)
-   * @generated
-   */
-  EOperation getNamedObj__InitializeFrom__NamedObj();
 
   /**
    * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getFullName() <em>Get Full Name</em>}' operation.
@@ -3006,6 +2988,27 @@ public interface TriqPackage extends EPackage {
   EAttribute getPort_Output();
 
   /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Port#canAcceptNewInsideRelation() <em>Can Accept New Inside Relation</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Can Accept New Inside Relation</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Port#canAcceptNewInsideRelation()
+   * @generated
+   */
+  EOperation getPort__CanAcceptNewInsideRelation();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.triquetrum.workflow.model.Port#isMultiPort <em>Multi Port</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Multi Port</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Port#isMultiPort()
+   * @see #getPort()
+   * @generated
+   */
+  EAttribute getPort_MultiPort();
+
+  /**
    * Returns the meta object for the reference list '{@link org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations <em>Linked Relations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3028,35 +3031,25 @@ public interface TriqPackage extends EPackage {
   EReference getPort_InsideLinkedRelations();
 
   /**
-   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Port#canAcceptNewRelation() <em>Can Accept New Relation</em>}' operation.
+   * Returns the meta object for the reference list '{@link org.eclipse.triquetrum.workflow.model.Port#getOutsideLinkedRelations <em>Outside Linked Relations</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Can Accept New Relation</em>' operation.
-   * @see org.eclipse.triquetrum.workflow.model.Port#canAcceptNewRelation()
-   * @generated
-   */
-  EOperation getPort__CanAcceptNewRelation();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Port#canAcceptNewInsideRelation() <em>Can Accept New Inside Relation</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Can Accept New Inside Relation</em>' operation.
-   * @see org.eclipse.triquetrum.workflow.model.Port#canAcceptNewInsideRelation()
-   * @generated
-   */
-  EOperation getPort__CanAcceptNewInsideRelation();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.triquetrum.workflow.model.Port#isMultiPort <em>Multi Port</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Multi Port</em>'.
-   * @see org.eclipse.triquetrum.workflow.model.Port#isMultiPort()
+   * @return the meta object for the reference list '<em>Outside Linked Relations</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Port#getOutsideLinkedRelations()
    * @see #getPort()
    * @generated
    */
-  EAttribute getPort_MultiPort();
+  EReference getPort_OutsideLinkedRelations();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Port#canAcceptNewOutsideRelation() <em>Can Accept New Outside Relation</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Can Accept New Outside Relation</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Port#canAcceptNewOutsideRelation()
+   * @generated
+   */
+  EOperation getPort__CanAcceptNewOutsideRelation();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.Relation <em>Relation</em>}'.
@@ -3089,6 +3082,17 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   EReference getRelation_LinkingRelations();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Linked Ports</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts()
+   * @see #getRelation()
+   * @generated
+   */
+  EReference getRelation_LinkedPorts();
 
   /**
    * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Relation#link(org.eclipse.triquetrum.workflow.model.Relation) <em>Link</em>}' operation.
@@ -3129,16 +3133,6 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   EOperation getRelation__GetVertex();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts() <em>Get Linked Ports</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Get Linked Ports</em>' operation.
-   * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts()
-   * @generated
-   */
-  EOperation getRelation__GetLinkedPorts();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.Location <em>Location</em>}'.
@@ -3212,24 +3206,15 @@ public interface TriqPackage extends EPackage {
   EOperation getLinkable__Unlink__Relation();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.util.Visitor <em>Visitor</em>}'.
+   * Returns the meta object for data type '{@link org.eclipse.triquetrum.workflow.model.util.Visitor <em>Visitor</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Visitor</em>'.
+   * @return the meta object for data type '<em>Visitor</em>'.
    * @see org.eclipse.triquetrum.workflow.model.util.Visitor
+   * @model instanceClass="org.eclipse.triquetrum.workflow.model.util.Visitor"
    * @generated
    */
-  EClass getVisitor();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.util.Visitor#visit(org.eclipse.triquetrum.workflow.model.NamedObj) <em>Visit</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Visit</em>' operation.
-   * @see org.eclipse.triquetrum.workflow.model.util.Visitor#visit(org.eclipse.triquetrum.workflow.model.NamedObj)
-   * @generated
-   */
-  EOperation getVisitor__Visit__NamedObj();
+  EDataType getVisitor();
 
   /**
    * Returns the meta object for data type '{@link ptolemy.kernel.util.NamedObj <em>Ptolemy Named Obj</em>}'.
@@ -3348,20 +3333,20 @@ public interface TriqPackage extends EPackage {
     EOperation NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING = eINSTANCE.getNamedObj__SetProperty__String_String_String();
 
     /**
+     * The meta object literal for the '<em><b>Apply Wrapped Object</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation NAMED_OBJ___APPLY_WRAPPED_OBJECT = eINSTANCE.getNamedObj__ApplyWrappedObject();
+
+    /**
      * The meta object literal for the '<em><b>Build Wrapped Object</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EOperation NAMED_OBJ___BUILD_WRAPPED_OBJECT = eINSTANCE.getNamedObj__BuildWrappedObject();
-
-    /**
-     * The meta object literal for the '<em><b>Initialize From</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ = eINSTANCE.getNamedObj__InitializeFrom__NamedObj();
 
     /**
      * The meta object literal for the '<em><b>Get Full Name</b></em>' operation.
@@ -3606,6 +3591,22 @@ public interface TriqPackage extends EPackage {
     EAttribute PORT__OUTPUT = eINSTANCE.getPort_Output();
 
     /**
+     * The meta object literal for the '<em><b>Can Accept New Inside Relation</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation PORT___CAN_ACCEPT_NEW_INSIDE_RELATION = eINSTANCE.getPort__CanAcceptNewInsideRelation();
+
+    /**
+     * The meta object literal for the '<em><b>Multi Port</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PORT__MULTI_PORT = eINSTANCE.getPort_MultiPort();
+
+    /**
      * The meta object literal for the '<em><b>Linked Relations</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3622,28 +3623,20 @@ public interface TriqPackage extends EPackage {
     EReference PORT__INSIDE_LINKED_RELATIONS = eINSTANCE.getPort_InsideLinkedRelations();
 
     /**
-     * The meta object literal for the '<em><b>Can Accept New Relation</b></em>' operation.
+     * The meta object literal for the '<em><b>Outside Linked Relations</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation PORT___CAN_ACCEPT_NEW_RELATION = eINSTANCE.getPort__CanAcceptNewRelation();
+    EReference PORT__OUTSIDE_LINKED_RELATIONS = eINSTANCE.getPort_OutsideLinkedRelations();
 
     /**
-     * The meta object literal for the '<em><b>Can Accept New Inside Relation</b></em>' operation.
+     * The meta object literal for the '<em><b>Can Accept New Outside Relation</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EOperation PORT___CAN_ACCEPT_NEW_INSIDE_RELATION = eINSTANCE.getPort__CanAcceptNewInsideRelation();
-
-    /**
-     * The meta object literal for the '<em><b>Multi Port</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PORT__MULTI_PORT = eINSTANCE.getPort_MultiPort();
+    EOperation PORT___CAN_ACCEPT_NEW_OUTSIDE_RELATION = eINSTANCE.getPort__CanAcceptNewOutsideRelation();
 
     /**
      * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl <em>Relation</em>}' class.
@@ -3670,6 +3663,14 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EReference RELATION__LINKING_RELATIONS = eINSTANCE.getRelation_LinkingRelations();
+
+    /**
+     * The meta object literal for the '<em><b>Linked Ports</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference RELATION__LINKED_PORTS = eINSTANCE.getRelation_LinkedPorts();
 
     /**
      * The meta object literal for the '<em><b>Link</b></em>' operation.
@@ -3702,14 +3703,6 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EOperation RELATION___GET_VERTEX = eINSTANCE.getRelation__GetVertex();
-
-    /**
-     * The meta object literal for the '<em><b>Get Linked Ports</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation RELATION___GET_LINKED_PORTS = eINSTANCE.getRelation__GetLinkedPorts();
 
     /**
      * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.LocationImpl <em>Location</em>}' class.
@@ -3774,22 +3767,14 @@ public interface TriqPackage extends EPackage {
     EOperation LINKABLE___UNLINK__RELATION = eINSTANCE.getLinkable__Unlink__Relation();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.util.Visitor <em>Visitor</em>}' class.
+     * The meta object literal for the '<em>Visitor</em>' data type.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.triquetrum.workflow.model.util.Visitor
      * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getVisitor()
      * @generated
      */
-    EClass VISITOR = eINSTANCE.getVisitor();
-
-    /**
-     * The meta object literal for the '<em><b>Visit</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation VISITOR___VISIT__NAMEDOBJ = eINSTANCE.getVisitor__Visit__NamedObj();
+    EDataType VISITOR = eINSTANCE.getVisitor();
 
     /**
      * The meta object literal for the '<em>Ptolemy Named Obj</em>' data type.

@@ -59,32 +59,32 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
       Anchor startAnchor = connection.getStart();
       NamedObj startBO = (NamedObj) getBusinessObjectForPictogramElement(startAnchor);
 
-      if (endBO instanceof Vertex) {
-        newRelation = (Relation) endBO.getContainer();
-      } else {
-        if (startBO instanceof Vertex) {
-          newRelation = (Relation) startBO.getContainer();
-        } else {
-          NamedObj relationContainer = relation.getContainer();
-          newRelation = TriqFactory.eINSTANCE.createRelation();
-          newRelation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
-          ((CompositeActor) relationContainer).getRelations().add(newRelation);
+      try {
+        ((Linkable)oldBO).unlink(relation);
+        ((Linkable)startBO).unlink(relation);
+        ((Linkable)endBO).unlink(relation);
+        // Only check this after all the unlink/link actions, as relation and newRelation might be the same instance,
+        // so we don't want to delete relation yet before doing the new links!
+        if(!relation.isConnected()) {
+          // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
+          // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
+          EcoreUtil.delete(relation, true);
         }
+
+        if (endBO instanceof Vertex) {
+          newRelation = (Relation) endBO.getContainer();
+        } else {
+          if (startBO instanceof Vertex) {
+            newRelation = (Relation) startBO.getContainer();
+          } else {
+            newRelation = EditorUtils.createRelation(startBO, endBO, null);
+          }
+        }
+        link(connection, newRelation);
+        hasDoneChanges = true;
+      } catch (Exception e) {
+        e.printStackTrace();
       }
-      ((Linkable)oldBO).unlink(relation);
-      ((Linkable)startBO).unlink(relation);
-      ((Linkable)endBO).unlink(relation);
-      ((Linkable)startBO).link(newRelation);
-      ((Linkable)endBO).link(newRelation);
-      // Only check this after all the unlink/link actions, as relation and newRelation might be the same instance,
-      // so we don't want to delete relation yet before doing the new links!
-      if(!relation.isConnected()) {
-        // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
-        // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
-        EcoreUtil.delete(relation, true);
-      }
-      link(connection, newRelation);
-      hasDoneChanges = true;
     }
     super.postReconnect(context);
   }

@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
 import org.eclipse.triquetrum.workflow.model.*;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -93,6 +94,8 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
     switch (eDataType.getClassifierID()) {
       case TriqPackage.PTOLEMY_NAMED_OBJ:
         return createPtolemyNamedObjFromString(eDataType, initialValue);
+      case TriqPackage.VISITOR:
+        return createVisitorFromString(eDataType, initialValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -108,6 +111,8 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
     switch (eDataType.getClassifierID()) {
       case TriqPackage.PTOLEMY_NAMED_OBJ:
         return convertPtolemyNamedObjToString(eDataType, instanceValue);
+      case TriqPackage.VISITOR:
+        return convertVisitorToString(eDataType, instanceValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -258,6 +263,24 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
    * @generated
    */
   public String convertPtolemyNamedObjToString(EDataType eDataType, Object instanceValue) {
+    return super.convertToString(eDataType, instanceValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Visitor createVisitorFromString(EDataType eDataType, String initialValue) {
+    return (Visitor)super.createFromString(eDataType, initialValue);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertVisitorToString(EDataType eDataType, Object instanceValue) {
     return super.convertToString(eDataType, instanceValue);
   }
 

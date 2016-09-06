@@ -27,8 +27,6 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.Vertex;
-import org.eclipse.triquetrum.workflow.model.util.Visitor;
-
 import ptolemy.kernel.ComponentRelation;
 import ptolemy.kernel.util.IllegalActionException;
 
@@ -40,6 +38,7 @@ import ptolemy.kernel.util.IllegalActionException;
  * <ul>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedRelations <em>Linked Relations</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkingRelations <em>Linking Relations</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedPorts <em>Linked Ports</em>}</li>
  * </ul>
  *
  * @generated
@@ -62,6 +61,16 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    * @ordered
    */
   protected EList<Relation> linkingRelations;
+
+  /**
+   * The cached value of the '{@link #getLinkedPorts() <em>Linked Ports</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLinkedPorts()
+   * @generated
+   * @ordered
+   */
+  protected EList<Port> linkedPorts;
 
   /**
    * reference to the optional vertex in the collection of attributes
@@ -159,14 +168,15 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    * @generated
    */
   public EList<Port> getLinkedPorts() {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    if (linkedPorts == null) {
+      linkedPorts = new EObjectWithInverseResolvingEList.ManyInverse<Port>(Port.class, this, TriqPackage.RELATION__LINKED_PORTS, TriqPackage.PORT__LINKED_RELATIONS);
+    }
+    return linkedPorts;
   }
 
   @Override
   public CompositeEntity getContainer() {
-    return (CompositeEntity) eContainer();
+    return (CompositeEntity) super.getContainer();
   }
 
   // TODO evaluate if it's worth the trouble to go for a full-blown EMF adapter + adapterfactory setup
@@ -257,6 +267,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
       ptolemy.kernel.CompositeEntity container = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
       wrappedObject = container.newRelation(getName());
       for (Relation r : getLinkedRelations()) {
+        // TODO fix the problem/risk that r's wrapped object is not yet created
         getWrappedObject().link((ptolemy.kernel.Relation) r.getWrappedObject());
       }
     } catch (Exception e) {
@@ -282,6 +293,8 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkedRelations()).basicAdd(otherEnd, msgs);
       case TriqPackage.RELATION__LINKING_RELATIONS:
         return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkingRelations()).basicAdd(otherEnd, msgs);
+      case TriqPackage.RELATION__LINKED_PORTS:
+        return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkedPorts()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -297,6 +310,8 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         return ((InternalEList<?>)getLinkedRelations()).basicRemove(otherEnd, msgs);
       case TriqPackage.RELATION__LINKING_RELATIONS:
         return ((InternalEList<?>)getLinkingRelations()).basicRemove(otherEnd, msgs);
+      case TriqPackage.RELATION__LINKED_PORTS:
+        return ((InternalEList<?>)getLinkedPorts()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -312,6 +327,8 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         return getLinkedRelations();
       case TriqPackage.RELATION__LINKING_RELATIONS:
         return getLinkingRelations();
+      case TriqPackage.RELATION__LINKED_PORTS:
+        return getLinkedPorts();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -332,6 +349,10 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         getLinkingRelations().clear();
         getLinkingRelations().addAll((Collection<? extends Relation>)newValue);
         return;
+      case TriqPackage.RELATION__LINKED_PORTS:
+        getLinkedPorts().clear();
+        getLinkedPorts().addAll((Collection<? extends Port>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -349,6 +370,9 @@ public class RelationImpl extends NamedObjImpl implements Relation {
       case TriqPackage.RELATION__LINKING_RELATIONS:
         getLinkingRelations().clear();
         return;
+      case TriqPackage.RELATION__LINKED_PORTS:
+        getLinkedPorts().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -364,6 +388,8 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         return linkedRelations != null && !linkedRelations.isEmpty();
       case TriqPackage.RELATION__LINKING_RELATIONS:
         return linkingRelations != null && !linkingRelations.isEmpty();
+      case TriqPackage.RELATION__LINKED_PORTS:
+        return linkedPorts != null && !linkedPorts.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -385,8 +411,6 @@ public class RelationImpl extends NamedObjImpl implements Relation {
         return isConnected();
       case TriqPackage.RELATION___GET_VERTEX:
         return getVertex();
-      case TriqPackage.RELATION___GET_LINKED_PORTS:
-        return getLinkedPorts();
     }
     return super.eInvoke(operationID, arguments);
   }

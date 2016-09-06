@@ -68,7 +68,7 @@ public class DirectorImpl extends AttributeImpl implements Director {
 
   @Override
   public CompositeActor getContainer() {
-    return (CompositeActor) eContainer();
+    return (CompositeActor) super.getContainer();
   }
 
   /**

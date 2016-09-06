@@ -18,15 +18,12 @@ import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
-import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
-import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
 import ptolemy.actor.IORelation;
-import ptolemy.kernel.util.IllegalActionException;
 
 /**
  *
@@ -106,7 +103,7 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
     }
     if (src instanceof Port) {
       Port p = (Port) src;
-      return p.canAcceptNewRelation() || p.canAcceptNewInsideRelation();
+      return p.canAcceptNewOutsideRelation() || p.canAcceptNewInsideRelation();
     }
     return (src instanceof Vertex);
   }
@@ -128,7 +125,7 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
     boolean targetIsInputPort = false;
     if (target instanceof Port) {
       Port p = (Port) target;
-      if(p.canAcceptNewRelation()) {
+      if(p.canAcceptNewOutsideRelation()) {
         // Output ports can only be a valid target when their container is a CompositeActor,
         // and the source is an input port or vertex within the same composite or an output port of an actor within that composite.
         if(p.isOutput()) {

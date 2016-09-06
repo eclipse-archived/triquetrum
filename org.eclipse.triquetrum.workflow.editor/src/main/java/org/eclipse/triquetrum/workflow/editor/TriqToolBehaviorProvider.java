@@ -10,8 +10,10 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.ICreateConnectionFeature;
+import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDoubleClickContext;
 import org.eclipse.graphiti.features.context.IPictogramElementContext;
 import org.eclipse.graphiti.features.context.impl.CreateConnectionContext;
@@ -20,6 +22,7 @@ import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.tb.ContextButtonEntry;
@@ -30,6 +33,7 @@ import org.eclipse.triquetrum.workflow.editor.features.PauseFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ResumeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.RunFeature;
 import org.eclipse.triquetrum.workflow.editor.features.StopFeature;
+import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
@@ -135,6 +139,34 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
       }
     }
     return super.getToolTip(ga);
+  }
+
+  @Override
+  public GraphicsAlgorithm[] getClickArea(PictogramElement pe) {
+      IFeatureProvider featureProvider = getFeatureProvider();
+      Object bo = featureProvider.getBusinessObjectForPictogramElement(pe);
+      if (bo instanceof Entity) {
+          GraphicsAlgorithm invisible = pe.getGraphicsAlgorithm();
+          GraphicsAlgorithm rectangle =
+              invisible.getGraphicsAlgorithmChildren().get(0);
+          return new GraphicsAlgorithm[] { rectangle };
+      }
+      return super.getClickArea(pe);
+  }
+
+  @Override
+  public GraphicsAlgorithm getSelectionBorder(PictogramElement pe) {
+      if (pe instanceof ContainerShape) {
+          GraphicsAlgorithm invisible = pe.getGraphicsAlgorithm();
+          if (!invisible.getLineVisible()) {
+              EList<GraphicsAlgorithm> graphicsAlgorithmChildren =
+                  invisible.getGraphicsAlgorithmChildren();
+              if (!graphicsAlgorithmChildren.isEmpty()) {
+                  return graphicsAlgorithmChildren.get(0);
+              }
+           }
+      }
+      return super.getSelectionBorder(pe);
   }
 
   @Override

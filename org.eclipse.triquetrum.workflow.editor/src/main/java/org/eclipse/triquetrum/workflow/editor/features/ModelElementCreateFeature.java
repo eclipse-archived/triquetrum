@@ -34,6 +34,7 @@ import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.Vertex;
+import org.eclipse.triquetrum.workflow.model.util.PtObjectBuilderAndApplierVisitor;
 
 /**
  * Creates a new model element based on a drag-n-drop from the palette, after prompting the user for the name, or via an import of an existing Ptolemy II model.
@@ -142,7 +143,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
           getDiagram().eResource().getContents().add(model);
           link(getDiagram(), model);
         } else {
-          throw new RuntimeException(ErrorCode.ERROR + " - Inconsistent model : submodel null for shape "+context.getTargetContainer());
+          throw new RuntimeException(ErrorCode.ERROR + " - Inconsistent model : submodel null for shape " + context.getTargetContainer());
         }
       }
 
@@ -158,11 +159,9 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
           String value = attrEntry.getValue();
           result.setProperty(name, value, null);
         }
-        result.buildWrappedObject();
       } else {
         result.setWrappedObject(wrappedObject);
       }
-      result.initializeFrom(result.getWrappedObject());
 
       if (result instanceof Director) {
         model.setDirector((Director) result);
@@ -187,6 +186,8 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
           model.getOutputPorts().add(p);
         }
       }
+
+      result.welcome(new PtObjectBuilderAndApplierVisitor(), true);
 
       // set the icon in the create context, so the add feature can add it in the element's shape
       context.putProperty("icon", iconResource);
