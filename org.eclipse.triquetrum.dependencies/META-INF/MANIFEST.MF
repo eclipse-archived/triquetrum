@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Triquetrum Dependencies
+Bundle-Name: Triquetrum Dependencies (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.dependencies
 Bundle-Version: 0.0.1.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
