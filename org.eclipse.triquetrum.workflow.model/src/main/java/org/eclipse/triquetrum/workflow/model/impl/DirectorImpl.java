@@ -37,7 +37,7 @@ public class DirectorImpl extends AttributeImpl implements Director {
 
   @Override
   public ptolemy.actor.Director getWrappedObject() {
-    return (ptolemy.actor.Director) wrappedObject;
+    return (ptolemy.actor.Director) super.getWrappedObject();
   }
 
   /**
@@ -68,7 +68,7 @@ public class DirectorImpl extends AttributeImpl implements Director {
 
   @Override
   public CompositeActor getContainer() {
-    return (CompositeActor) eContainer();
+    return (CompositeActor) super.getContainer();
   }
 
   /**

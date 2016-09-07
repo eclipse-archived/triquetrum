@@ -55,8 +55,10 @@ public class PortItemProvider extends NamedObjItemProvider {
 
       addInputPropertyDescriptor(object);
       addOutputPropertyDescriptor(object);
-      addLinkedRelationsPropertyDescriptor(object);
       addMultiPortPropertyDescriptor(object);
+      addLinkedRelationsPropertyDescriptor(object);
+      addInsideLinkedRelationsPropertyDescriptor(object);
+      addOutsideLinkedRelationsPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -106,6 +108,28 @@ public class PortItemProvider extends NamedObjItemProvider {
   }
 
   /**
+   * This adds a property descriptor for the Multi Port feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addMultiPortPropertyDescriptor(Object object) {
+    itemPropertyDescriptors.add
+      (createItemPropertyDescriptor
+        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+         getResourceLocator(),
+         getString("_UI_Port_multiPort_feature"),
+         getString("_UI_PropertyDescriptor_description", "_UI_Port_multiPort_feature", "_UI_Port_type"),
+         TriqPackage.Literals.PORT__MULTI_PORT,
+         true,
+         false,
+         false,
+         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+         null,
+         null));
+  }
+
+  /**
    * This adds a property descriptor for the Linked Relations feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -128,23 +152,45 @@ public class PortItemProvider extends NamedObjItemProvider {
   }
 
   /**
-   * This adds a property descriptor for the Multi Port feature.
+   * This adds a property descriptor for the Inside Linked Relations feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addMultiPortPropertyDescriptor(Object object) {
+  protected void addInsideLinkedRelationsPropertyDescriptor(Object object) {
     itemPropertyDescriptors.add
       (createItemPropertyDescriptor
         (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
          getResourceLocator(),
-         getString("_UI_Port_multiPort_feature"),
-         getString("_UI_PropertyDescriptor_description", "_UI_Port_multiPort_feature", "_UI_Port_type"),
-         TriqPackage.Literals.PORT__MULTI_PORT,
+         getString("_UI_Port_insideLinkedRelations_feature"),
+         getString("_UI_PropertyDescriptor_description", "_UI_Port_insideLinkedRelations_feature", "_UI_Port_type"),
+         TriqPackage.Literals.PORT__INSIDE_LINKED_RELATIONS,
          true,
          false,
+         true,
+         null,
+         null,
+         null));
+  }
+
+  /**
+   * This adds a property descriptor for the Outside Linked Relations feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addOutsideLinkedRelationsPropertyDescriptor(Object object) {
+    itemPropertyDescriptors.add
+      (createItemPropertyDescriptor
+        (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+         getResourceLocator(),
+         getString("_UI_Port_outsideLinkedRelations_feature"),
+         getString("_UI_PropertyDescriptor_description", "_UI_Port_outsideLinkedRelations_feature", "_UI_Port_type"),
+         TriqPackage.Literals.PORT__OUTSIDE_LINKED_RELATIONS,
          false,
-         ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+         false,
+         false,
+         null,
          null,
          null));
   }

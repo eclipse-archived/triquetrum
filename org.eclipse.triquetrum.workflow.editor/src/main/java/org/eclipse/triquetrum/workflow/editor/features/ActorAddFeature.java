@@ -29,7 +29,6 @@ import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
@@ -43,8 +42,9 @@ import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.model.Actor;
+import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
-import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,23 +86,20 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
 
   public boolean canAdd(IAddContext context) {
     // check if user wants to add an actor
-    if (context.getNewObject() instanceof Actor) {
-      // check if user wants to add to a diagram
-      if (context.getTargetContainer() instanceof Diagram) {
-        return true;
-      }
-    }
-    return false;
+    return ((context.getNewObject() instanceof Actor) || (context.getNewObject() instanceof CompositeActor));
   }
 
   public PictogramElement add(IAddContext context) {
-    Actor addedActor = (Actor) context.getNewObject();
+    Entity addedActor = (Entity) context.getNewObject();
     ContainerShape targetContainer = context.getTargetContainer();
 
-    Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
-    if (topLevelForDiagram == null) {
-      link(getDiagram(), addedActor.getContainer());
-    }
+    // This should be a duplicate from what's in ModelElementCreateFeature,
+    // to link the toplevel CompositeActor to the Diagram.
+    // So let's try to do without this.
+//    Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
+//    if (topLevelForDiagram == null) {
+//      link(getDiagram(), addedActor.getContainer());
+//    }
 
     int xLocation = context.getX();
     int yLocation = context.getY();
@@ -196,7 +193,8 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     return containerShape;
   }
 
-  protected GraphicsAlgorithm buildDefaultShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape, Actor addedActor,
+  protected GraphicsAlgorithm buildDefaultShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape,
+      Entity addedActor,
       String iconResource) {
 
     IPeCreateService peCreateService = Graphiti.getPeCreateService();

@@ -70,7 +70,7 @@ public class ParameterItemProvider extends AttributeItemProvider {
         (((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
          getResourceLocator(),
          getString("_UI_Parameter_expression_feature"),
-         getString("_UI_Parameter_expression_description"),
+         getString("_UI_PropertyDescriptor_description", "_UI_Parameter_expression_feature", "_UI_Parameter_type"),
          TriqPackage.Literals.PARAMETER__EXPRESSION,
          true,
          false,

@@ -249,7 +249,7 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
         for (IORelation ptRelation : (List<IORelation>) ptPort.linkedRelationList()) {
           Relation triqRelation = relationMap.get(ptRelation.getFullName());
           if (triqRelation != null) {
-            triqRelation.link(triqPort);
+            triqPort.link(triqRelation);
           } else {
             System.err.println("Triq relation not found for " + ptRelation + "in port " + ptPort);
           }

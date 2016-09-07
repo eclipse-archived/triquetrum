@@ -23,15 +23,17 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#isInput <em>Input</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#isOutput <em>Output</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations <em>Linked Relations</em>}</li>
  *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#isMultiPort <em>Multi Port</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations <em>Linked Relations</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#getInsideLinkedRelations <em>Inside Linked Relations</em>}</li>
+ *   <li>{@link org.eclipse.triquetrum.workflow.model.Port#getOutsideLinkedRelations <em>Outside Linked Relations</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getPort()
  * @model
  * @generated
  */
-public interface Port extends NamedObj {
+public interface Port extends NamedObj, Linkable {
   /**
    * Returns the value of the '<em><b>Input</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -85,22 +87,44 @@ public interface Port extends NamedObj {
   void setOutput(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Linked Relations</b></em>' reference list.
+   * Returns the value of the '<em><b>Inside Linked Relations</b></em>' reference list.
    * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Relation}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}'.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Linked Relations</em>' reference list isn't clear,
+   * If the meaning of the '<em>Inside Linked Relations</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Linked Relations</em>' reference list.
-   * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getPort_LinkedRelations()
-   * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts
-   * @model opposite="linkedPorts"
+   * @return the value of the '<em>Inside Linked Relations</em>' reference list.
+   * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getPort_InsideLinkedRelations()
+   * @model changeable="false" derived="true"
    * @generated
    */
-  EList<Relation> getLinkedRelations();
+  EList<Relation> getInsideLinkedRelations();
+
+  /**
+   * Returns the value of the '<em><b>Outside Linked Relations</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Relation}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Outside Linked Relations</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Outside Linked Relations</em>' reference list.
+   * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getPort_OutsideLinkedRelations()
+   * @model changeable="false" derived="true"
+   * @generated
+   */
+  EList<Relation> getOutsideLinkedRelations();
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  boolean canAcceptNewInsideRelation();
 
   /**
    * Returns the value of the '<em><b>Multi Port</b></em>' attribute.
@@ -130,11 +154,29 @@ public interface Port extends NamedObj {
   void setMultiPort(boolean value);
 
   /**
+   * Returns the value of the '<em><b>Linked Relations</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Relation}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}'.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Linked Relations</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Linked Relations</em>' reference list.
+   * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getPort_LinkedRelations()
+   * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts
+   * @model opposite="linkedPorts"
+   * @generated
+   */
+  EList<Relation> getLinkedRelations();
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @model
    * @generated
    */
-  boolean canAcceptNewConnection();
+  boolean canAcceptNewOutsideRelation();
 
 } // Port

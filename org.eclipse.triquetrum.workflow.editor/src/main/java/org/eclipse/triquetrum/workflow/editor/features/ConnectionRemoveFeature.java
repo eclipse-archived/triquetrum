@@ -16,7 +16,7 @@ import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.Relation;
 
 public class ConnectionRemoveFeature extends DefaultRemoveFeature {
@@ -41,10 +41,10 @@ public class ConnectionRemoveFeature extends DefaultRemoveFeature {
     Connection connectionPE = (Connection) context.getPictogramElement();
     Relation relation = (Relation) getBusinessObjectForPictogramElement(connectionPE);
     if (relation != null) {
-      NamedObj startBO = (NamedObj) getBusinessObjectForPictogramElement(connectionPE.getStart());
-      NamedObj endBO = (NamedObj) getBusinessObjectForPictogramElement(connectionPE.getEnd());
-      relation.unlink(startBO);
-      relation.unlink(endBO);
+      Linkable startBO = (Linkable) getBusinessObjectForPictogramElement(connectionPE.getStart());
+      Linkable endBO = (Linkable) getBusinessObjectForPictogramElement(connectionPE.getEnd());
+      startBO.unlink(relation);
+      endBO.unlink(relation);
       if(!relation.isConnected()) {
         // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
         // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.

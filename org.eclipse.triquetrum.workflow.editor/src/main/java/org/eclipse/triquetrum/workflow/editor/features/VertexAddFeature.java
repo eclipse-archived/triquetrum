@@ -19,7 +19,6 @@ import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ChopboxAnchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
@@ -54,14 +53,7 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
   }
 
   public boolean canAdd(IAddContext context) {
-    // check if user wants to add a port
-    if (context.getNewObject() instanceof Vertex) {
-      // check if user wants to add to a diagram
-      if (context.getTargetContainer() instanceof Diagram) {
-        return true;
-      }
-    }
-    return false;
+    return (context.getNewObject() instanceof Vertex);
   }
 
   public PictogramElement add(IAddContext context) {

@@ -101,6 +101,8 @@ It can be a Java implementation or an actor-oriented implementation.
                   </enumeration>
                   <enumeration value="Vertex">
                   </enumeration>
+                  <enumeration value="CompositeActor">
+                  </enumeration>
                </restriction>
             </simpleType>
          </attribute>

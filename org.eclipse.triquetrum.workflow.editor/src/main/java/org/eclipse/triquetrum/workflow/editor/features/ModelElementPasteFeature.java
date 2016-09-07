@@ -148,7 +148,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
       NamedObj copiedStart = getCopiedRelationSide(model, origStart, oldNewElementNames, clonedVertexMap);
       NamedObj copiedEnd = getCopiedRelationSide(model, origEnd, oldNewElementNames, clonedVertexMap);
       try {
-        Relation copiedRelation = createRelation(copiedStart, copiedEnd);
+        Relation copiedRelation = EditorUtils.createRelation(copiedStart, copiedEnd, null);
         // add the graphical representation for the copied relation
         AddConnectionContext addContext = new AddConnectionContext(anchorMap.get(copiedStart.getFullName()), anchorMap.get(copiedEnd.getFullName()));
         addContext.setNewObject(copiedRelation);
@@ -196,30 +196,5 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
       }
     }
     return null;
-  }
-
-  private Relation createRelation(NamedObj source, NamedObj target) throws IllegalActionException {
-    Relation relation = null;
-    if (target instanceof Vertex) {
-      // use the vertex's relation
-      relation = (Relation) target.getContainer();
-      relation.link(source);
-    } else if (source instanceof Vertex) {
-      // use the vertex's relation
-      relation = (Relation) source.getContainer();
-      relation.link(target);
-    } else {
-      // create a new relation directly linking 2 ports
-      relation = TriqFactory.eINSTANCE.createRelation();
-      NamedObj relationContainer = source.getContainer();
-      while (!(relationContainer instanceof CompositeActor)) {
-        relationContainer = relationContainer.getContainer();
-      }
-      relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
-      ((CompositeActor) relationContainer).getRelations().add(relation);
-      relation.link(source);
-      relation.link(target);
-    }
-    return relation;
   }
 }

@@ -27,6 +27,7 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 import ptolemy.kernel.util.Settable;
 
@@ -184,8 +185,12 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
+   * <!-- begin-user-doc -->
    * FIXME : this must be optimized with a name-based map lookup or similar secondly, all children of all types of any subclasses should all end up in a child
    * collection in NamedObjImpl
+   * <!-- end-user-doc -->
+   *
+   * @generated NOT
    */
   @Override
   public NamedObj getChild(String name) {
@@ -197,6 +202,20 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       }
     }
     return child;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public void welcome(Visitor visitor, boolean deep) {
+    visitor.visit(this);
+    if(deep) {
+      for (Attribute attr : getAttributes()) {
+        attr.welcome(visitor, true);
+      }
+    }
   }
 
   /**
@@ -287,6 +306,28 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public void applyWrappedObject() {
+    if (!isDeepComplete()) {
+      setName(wrappedObject.getName());
+      setWrappedType(wrappedObject.getClass().getName());
+      for (ptolemy.data.expr.Parameter parameter : wrappedObject.attributeList(ptolemy.data.expr.Parameter.class)) {
+        // for the moment, only add FULLy user-visible parameters in the editor model
+        if (Settable.FULL.equals(parameter.getVisibility())) {
+          Parameter newParam = TriqFactory.eINSTANCE.createParameter();
+          newParam.setName(parameter.getName());
+          newParam.setWrappedType(parameter.getClass().getName());
+          newParam.setExpression(parameter.getExpression());
+          getAttributes().add(newParam);
+        }
+      }
+    }
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -363,50 +404,6 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
     iconId = newIconId;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__ICON_ID, oldIconId, iconId));
-  }
-
-  // This is where we can hook in a ptolemy object construction, including its container
-  // It seems EMF does not build its model (e.g. while parsing the xmi file) as would be easiest for us.
-  // I.e. the root model element (a CompositeActor) never gets its eBasicSetContainer(null) called (or too late?),
-  // and doesn't get the chance to set its wrappedObject at the right moment.
-  // So we need to hack something here to get that resolved
-  @Override
-  protected void eBasicSetContainer(InternalEObject newContainer) {
-    super.eBasicSetContainer(newContainer);
-    if (newContainer != null) {
-      ptolemy.kernel.util.NamedObj container = (ptolemy.kernel.util.NamedObj) getContainer().getWrappedObject();
-      if (container == null) {
-        // it seems our container doesn't know its wrapped object yet
-        ((NamedObjImpl) newContainer).buildWrappedObject();
-      }
-      if (wrappedObject == null) {
-        buildWrappedObject();
-      }
-      initializeFrom(getWrappedObject());
-    }
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @generated NOT
-   */
-  public void initializeFrom(ptolemy.kernel.util.NamedObj ptObject) {
-    if (!isDeepComplete()) {
-      setName(ptObject.getName());
-      setWrappedType(ptObject.getClass().getName());
-      for (ptolemy.data.expr.Parameter parameter : ptObject.attributeList(ptolemy.data.expr.Parameter.class)) {
-        // for the moment, only add FULLy user-visible parameters in the editor model
-        if (Settable.FULL.equals(parameter.getVisibility())) {
-          Parameter newParam = TriqFactory.eINSTANCE.createParameter();
-          newParam.setName(parameter.getName());
-          newParam.setWrappedType(parameter.getClass().getName());
-          newParam.setExpression(parameter.getExpression());
-          getAttributes().add(newParam);
-        }
-      }
-      setDeepComplete(true);
-    }
   }
 
   /**
@@ -562,14 +559,19 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
       case TriqPackage.NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING:
         setProperty((String)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2));
         return null;
+      case TriqPackage.NAMED_OBJ___APPLY_WRAPPED_OBJECT:
+        applyWrappedObject();
+        return null;
       case TriqPackage.NAMED_OBJ___BUILD_WRAPPED_OBJECT:
         buildWrappedObject();
         return null;
-      case TriqPackage.NAMED_OBJ___INITIALIZE_FROM__NAMEDOBJ:
-        initializeFrom((ptolemy.kernel.util.NamedObj)arguments.get(0));
-        return null;
       case TriqPackage.NAMED_OBJ___GET_FULL_NAME:
         return getFullName();
+      case TriqPackage.NAMED_OBJ___GET_CHILD__STRING:
+        return getChild((String)arguments.get(0));
+      case TriqPackage.NAMED_OBJ___WELCOME__VISITOR_BOOLEAN:
+        welcome((Visitor)arguments.get(0), (Boolean)arguments.get(1));
+        return null;
     }
     return super.eInvoke(operationID, arguments);
   }

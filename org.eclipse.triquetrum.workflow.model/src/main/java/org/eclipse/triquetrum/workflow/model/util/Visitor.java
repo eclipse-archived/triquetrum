@@ -4,22 +4,24 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  */
-package org.eclipse.triquetrum.workflow.model;
+package org.eclipse.triquetrum.workflow.model.util;
 
+import org.eclipse.triquetrum.workflow.model.NamedObj;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Vertex</b></em>'.
- * <!-- end-user-doc -->
+ * Visitor interface to traverse & visit a model's elements.
  *
- *
- * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getVertex()
- * @model
- * @generated
  */
-public interface Vertex extends Location, Linkable {
-} // Vertex
+public interface Visitor {
+
+ /**
+  *
+  * @param modelElement
+  */
+  void visit(NamedObj modelElement);
+
+}

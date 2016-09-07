@@ -25,11 +25,10 @@ import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Composite Entity</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Composite Entity</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
@@ -43,8 +42,7 @@ import org.eclipse.triquetrum.workflow.model.TriqPackage;
 public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   /**
    * The cached value of the '{@link #getEntities() <em>Entities</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getEntities()
    * @generated
    * @ordered
@@ -53,8 +51,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
 
   /**
    * The cached value of the '{@link #getRelations() <em>Relations</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getRelations()
    * @generated
    * @ordered
@@ -62,8 +59,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   protected EList<Relation> relations;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   protected CompositeEntityImpl() {
@@ -71,8 +67,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -81,19 +76,32 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   @Override
+  public void welcome(Visitor visitor, boolean deep) {
+    super.welcome(visitor, deep);
+    if (deep) {
+      for (Relation relation : getRelations()) {
+        relation.welcome(visitor, deep);
+      }
+      for (Entity entity : getEntities()) {
+        entity.welcome(visitor, deep);
+      }
+    }
+  }
+
+  @Override
   public NamedObj getChild(String name) {
     NamedObj child = super.getChild(name);
-    if(child==null) {
-      for(Entity entity : getEntities()) {
-        if(name.equals(entity.getName())) {
+    if (child == null) {
+      for (Entity entity : getEntities()) {
+        if (name.equals(entity.getName())) {
           child = entity;
           break;
         }
       }
     }
-    if(child==null) {
-      for(Relation relation : getRelations()) {
-        if(name.equals(relation.getName())) {
+    if (child == null) {
+      for (Relation relation : getRelations()) {
+        if (name.equals(relation.getName())) {
           child = relation;
           break;
         }
@@ -102,10 +110,8 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
     return child;
   }
 
-
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EList<Entity> getEntities() {
@@ -116,8 +122,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   public EList<Relation> getRelations() {
@@ -128,8 +133,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -144,8 +148,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -160,8 +163,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -181,8 +183,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -199,8 +200,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -214,4 +214,4 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
     return super.eIsSet(featureID);
   }
 
-} //CompositeEntityImpl
+} // CompositeEntityImpl

@@ -164,6 +164,7 @@ public class TriqSwitch<T> {
         Port port = (Port)theEObject;
         T result = casePort(port);
         if (result == null) result = caseNamedObj(port);
+        if (result == null) result = caseLinkable(port);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -186,8 +187,15 @@ public class TriqSwitch<T> {
         Vertex vertex = (Vertex)theEObject;
         T result = caseVertex(vertex);
         if (result == null) result = caseLocation(vertex);
+        if (result == null) result = caseLinkable(vertex);
         if (result == null) result = caseAttribute(vertex);
         if (result == null) result = caseNamedObj(vertex);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case TriqPackage.LINKABLE: {
+        Linkable linkable = (Linkable)theEObject;
+        T result = caseLinkable(linkable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -387,6 +395,21 @@ public class TriqSwitch<T> {
    * @generated
    */
   public T caseVertex(Vertex object) {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Linkable</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Linkable</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLinkable(Linkable object) {
     return null;
   }
 

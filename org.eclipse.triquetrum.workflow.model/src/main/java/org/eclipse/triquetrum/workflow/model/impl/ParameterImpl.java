@@ -17,7 +17,6 @@ import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.Settable;
 
 /**
@@ -91,20 +90,16 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
   }
 
   @Override
-  public void initializeFrom(NamedObj ptObject) {
+  public void applyWrappedObject() {
     if (!isDeepComplete()) {
-      if (!(ptObject instanceof Settable)) {
-        throw new IllegalArgumentException(ptObject + " should be a Settable");
-      }
-      super.initializeFrom(ptObject);
-      setExpression(((Settable)ptObject).getExpression());
-      setDeepComplete(true);
+      super.applyWrappedObject();
+      setExpression(getWrappedObject().getExpression());
     }
   }
 
   @Override
   public ptolemy.data.expr.Parameter getWrappedObject() {
-    return (ptolemy.data.expr.Parameter) wrappedObject;
+    return (ptolemy.data.expr.Parameter) super.getWrappedObject();
   }
 
   /**

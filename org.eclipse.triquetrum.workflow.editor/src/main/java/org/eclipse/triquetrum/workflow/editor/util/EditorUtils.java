@@ -36,11 +36,16 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.model.Relation;
+import org.eclipse.triquetrum.workflow.model.TriqFactory;
+import org.eclipse.triquetrum.workflow.model.util.PtObjectBuilderAndApplierVisitor;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 
 import ptolemy.actor.Director;
+import ptolemy.actor.IORelation;
 import ptolemy.actor.TypedIOPort;
 import ptolemy.actor.TypedIORelation;
 import ptolemy.data.expr.Variable;
@@ -155,7 +160,7 @@ public class EditorUtils {
     while ((container != null) && !(container instanceof org.eclipse.triquetrum.workflow.model.Entity)) {
       container = container.getContainer();
     }
-    if (container == null) {
+    if (container == null || container.getWrappedObject() == null) {
       return prefix;
     } else {
       return ((Entity<?>) container.getWrappedObject()).uniqueName(prefix);
@@ -417,5 +422,43 @@ public class EditorUtils {
       }
     }
     return portShapes;
+  }
+
+  /**
+   *
+   * @param source
+   * @param target
+   * @param ptRelation
+   * @return
+   * @throws IllegalActionException
+   */
+  public static Relation createRelation(NamedObj source, NamedObj target, IORelation ptRelation) throws IllegalActionException {
+    Relation relation = null;
+    if (target instanceof Vertex) {
+      // use the vertex's relation
+      relation = (Relation) target.getContainer();
+      ((Linkable)source).link(relation);
+    } else if (source instanceof Vertex) {
+      // use the vertex's relation
+      relation = (Relation) source.getContainer();
+      ((Linkable)target).link(relation);
+    } else {
+      // create a new relation directly linking 2 ports
+      relation = TriqFactory.eINSTANCE.createRelation();
+      NamedObj relationContainer = source.getContainer();
+      while (!(relationContainer instanceof CompositeActor)) {
+        relationContainer = relationContainer.getContainer();
+      }
+      if(ptRelation!=null) {
+        relation.setWrappedObject(ptRelation);
+      } else {
+        relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
+      }
+      ((CompositeActor) relationContainer).getRelations().add(relation);
+      relation.welcome(new PtObjectBuilderAndApplierVisitor(), true);
+      ((Linkable)source).link(relation);
+      ((Linkable)target).link(relation);
+    }
+    return relation;
   }
 }

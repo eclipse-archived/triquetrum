@@ -77,6 +77,7 @@ import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.VertexAddFeature;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Annotation;
+import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
@@ -122,7 +123,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public ILayoutFeature getLayoutFeature(ILayoutContext context) {
     PictogramElement pictogramElement = context.getPictogramElement();
     Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-    if (bo instanceof Actor || bo instanceof Director) {
+    if (bo instanceof CompositeActor || bo instanceof Actor || bo instanceof Director) {
       return new ModelElementLayoutFeature(this);
     }
     return super.getLayoutFeature(context);
@@ -162,7 +163,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public IAddFeature getAddFeature(IAddContext context) {
     if (context.getNewObject() instanceof Director) {
       return new DirectorAddFeature(this);
-    } else if (context.getNewObject() instanceof Actor) {
+    } else if ((context.getNewObject() instanceof Actor)||(context.getNewObject() instanceof CompositeActor)) {
       return new ActorAddFeature(this);
     } else if (context.getNewObject() instanceof Relation) {
       return new ConnectionAddFeature(this);

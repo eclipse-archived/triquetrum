@@ -11,13 +11,9 @@
 package org.eclipse.triquetrum.workflow.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
-
-import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.kernel.util.NamedObj;
 
 /**
@@ -39,25 +35,6 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
     setWrappedType("ptolemy.kernel.util.Attribute");
   }
 
-  // This is where we can hook in a ptolemy object construction, including its container
-  @Override
-  protected void eBasicSetContainer(InternalEObject newContainer) {
-    NamedObj oldPtContainer = (NamedObj) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    super.eBasicSetContainer(newContainer);
-    NamedObj newPtContainer = (NamedObj) (getContainer() != null ? getContainer().getWrappedObject() : null);
-    if(oldPtContainer!=newPtContainer) {
-      try {
-        getWrappedObject().setContainer(newPtContainer);
-      } catch (IllegalActionException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (NameDuplicationException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }
-  }
-
   @Override
   public void buildWrappedObject() {
     try {
@@ -71,7 +48,7 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
 
   @Override
   public ptolemy.kernel.util.Attribute getWrappedObject() {
-    return (ptolemy.kernel.util.Attribute) wrappedObject;
+    return (ptolemy.kernel.util.Attribute) super.getWrappedObject();
   }
 
   /**

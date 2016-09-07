@@ -40,16 +40,15 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
 
   public boolean canLayout(ILayoutContext context) {
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
-    return BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory);
+    return BoCategory.CompositeActor.equals(boCategory) || BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory);
   }
 
   public boolean layout(ILayoutContext context) {
     boolean anythingChanged = false;
     ContainerShape containerShape = (ContainerShape) context.getPictogramElement();
-    GraphicsAlgorithm containerGa = containerShape.getGraphicsAlgorithm();
-    // the containerGa is the invisible rectangle
-    // containing the visible rectangle as its (first and only) child
-    GraphicsAlgorithm rectangle = containerGa.getGraphicsAlgorithmChildren().get(0);
+    // the invisible rectangle contains the visible rectangle as its (first and only) child
+    GraphicsAlgorithm invisibleRectangle = containerShape.getGraphicsAlgorithm();
+    GraphicsAlgorithm rectangle = invisibleRectangle.getGraphicsAlgorithmChildren().get(0);
 
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
     boolean isActor = BoCategory.Actor.equals(boCategory);
@@ -61,27 +60,27 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     // and for those we don't set minimum sizes...
 
     // height of invisible rectangle
-    if (!containsExtFigure && containerGa.getHeight() < MIN_HEIGHT) {
-      containerGa.setHeight(MIN_HEIGHT);
+    if (!containsExtFigure && invisibleRectangle.getHeight() < MIN_HEIGHT) {
+      invisibleRectangle.setHeight(MIN_HEIGHT);
       anythingChanged = true;
     }
 
     // height of visible rectangle (same as invisible rectangle)
     double heightChangeRatio = 1;
-    if (rectangle.getHeight() != containerGa.getHeight()) {
-      heightChangeRatio = containerGa.getHeight() / rectangle.getHeight();
-      rectangle.setHeight(containerGa.getHeight());
+    if (rectangle.getHeight() != invisibleRectangle.getHeight()) {
+      heightChangeRatio = invisibleRectangle.getHeight() / rectangle.getHeight();
+      rectangle.setHeight(invisibleRectangle.getHeight());
       anythingChanged = true;
     }
 
     // width of invisible rectangle
-    if (!containsExtFigure && containerGa.getWidth() < MIN_WIDTH) {
-      containerGa.setWidth(MIN_WIDTH);
+    if (!containsExtFigure && invisibleRectangle.getWidth() < MIN_WIDTH) {
+      invisibleRectangle.setWidth(MIN_WIDTH);
       anythingChanged = true;
     }
 
     // width of visible rectangle (smaller than invisible rectangle)
-    int rectangleWidth = isActor ? containerGa.getWidth() - 15 : containerGa.getWidth();
+    int rectangleWidth = isActor ? invisibleRectangle.getWidth() - 15 : invisibleRectangle.getWidth();
     if (rectangle.getWidth() != rectangleWidth) {
       rectangle.setWidth(rectangleWidth);
       anythingChanged = true;

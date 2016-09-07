@@ -28,8 +28,11 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.triquetrum.workflow.editor.outline.DiagramEditorOutlinePage;
+import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.model.util.PtObjectBuilderVisitor;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.EditorActionBarContributor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
@@ -38,6 +41,17 @@ public class TriqDiagramEditor extends DiagramEditor {
   public final static String EDITOR_ID = "org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor";
   public final static String DIAGRAM_FILE_EXTENSION = "tdml";
 
+
+  @Override
+  public void init(IEditorSite site, IEditorInput input) throws PartInitException {
+    super.init(site, input);
+
+    Diagram d = getDiagramTypeProvider().getDiagram();
+    Object toplevel = getDiagramTypeProvider().getFeatureProvider().getBusinessObjectForPictogramElement(d);
+    if(toplevel != null && toplevel instanceof NamedObj) {
+      ((NamedObj)toplevel).welcome(new PtObjectBuilderVisitor(), true);
+    }
+  }
 
   @Override
   protected DiagramBehavior createDiagramBehavior() {

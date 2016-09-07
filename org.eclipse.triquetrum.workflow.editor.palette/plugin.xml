@@ -99,7 +99,7 @@
 	            class="ptolemy.actor.TypedCompositeActor"
 	            displayName="CompositeActor"
 	            icon="icons/composite.gif"
-	            type="Actor">
+	            type="CompositeActor">
 	      </entry>
 	      <entry
 	            class="ptolemy.actor.TypedIOPort"

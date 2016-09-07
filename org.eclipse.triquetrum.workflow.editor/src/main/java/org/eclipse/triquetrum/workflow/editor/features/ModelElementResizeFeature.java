@@ -12,8 +12,6 @@ package org.eclipse.triquetrum.workflow.editor.features;
 
 import org.eclipse.graphiti.features.DefaultResizeConfiguration;
 import org.eclipse.graphiti.features.IFeatureProvider;
-import org.eclipse.graphiti.features.IResizeConfiguration;
-import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.impl.DefaultResizeShapeFeature;
 
 public class ModelElementResizeFeature extends DefaultResizeShapeFeature {
@@ -22,10 +20,10 @@ public class ModelElementResizeFeature extends DefaultResizeShapeFeature {
     super(fp);
   }
 
-  @Override
-  public IResizeConfiguration getResizeConfiguration(IResizeShapeContext context) {
-    return new NoResizeConfiguration();
-  }
+//  @Override
+//  public IResizeConfiguration getResizeConfiguration(IResizeShapeContext context) {
+//    return new NoResizeConfiguration();
+//  }
 
   private static class NoResizeConfiguration extends DefaultResizeConfiguration {
     @Override

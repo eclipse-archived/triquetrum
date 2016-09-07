@@ -232,7 +232,7 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
         for (IORelation ptRelation : (List<IORelation>) ptPort.linkedRelationList()) {
           Relation triqRelation = relationMap.get(ptRelation.getFullName());
           if (triqRelation != null) {
-            triqRelation.link(triqPort);
+            triqPort.link(triqRelation);
           } else {
             LOGGER.error("Triq relation not found for {} in port {}", ptRelation, ptPort);
           }

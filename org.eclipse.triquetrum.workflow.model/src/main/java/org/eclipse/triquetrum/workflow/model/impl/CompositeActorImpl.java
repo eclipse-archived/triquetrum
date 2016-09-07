@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 /**
  * <!-- begin-user-doc -->
@@ -64,6 +65,16 @@ public class CompositeActorImpl extends CompositeEntityImpl implements Composite
   @Override
   protected EClass eStaticClass() {
     return TriqPackage.Literals.COMPOSITE_ACTOR;
+  }
+
+  @Override
+  public void welcome(Visitor visitor, boolean deep) {
+    super.welcome(visitor, deep);
+    if(deep) {
+      if(getDirector()!=null) {
+        getDirector().welcome(visitor, deep);
+      }
+    }
   }
 
   /**
