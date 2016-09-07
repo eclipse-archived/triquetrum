@@ -27,18 +27,18 @@ public class TriqGraphicsAlgorithmRendererFactory implements IGraphicsAlgorithmR
   @Override
   public IGraphicsAlgorithmRenderer createGraphicsAlgorithmRenderer(IRendererContext rendererContext) {
     String iconType = null;
-    for (Property property: rendererContext.getPlatformGraphicsAlgorithm().getProperties()) {
-      if("iconType".equalsIgnoreCase(property.getKey())) {
+    for (Property property : rendererContext.getPlatformGraphicsAlgorithm().getProperties()) {
+      if ("iconType".equalsIgnoreCase(property.getKey())) {
         iconType = property.getValue();
         break;
       }
     }
-    switch(iconType) {
-    case TriqFeatureProvider.ICONTYPE_PTOLEMY :
+    switch (iconType) {
+    case TriqFeatureProvider.ICONTYPE_PTOLEMY:
       return new PtolemyModelElementShape(rendererContext);
-    case TriqFeatureProvider.ICONTYPE_SVG :
+    case TriqFeatureProvider.ICONTYPE_SVG:
       return new SvgModelElementShape(rendererContext);
-    default :
+    default:
       return null;
     }
   }

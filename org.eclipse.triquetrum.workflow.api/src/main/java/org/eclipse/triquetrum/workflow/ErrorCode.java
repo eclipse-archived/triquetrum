@@ -23,13 +23,20 @@ import org.eclipse.triquetrum.ErrorCategory;
 public class ErrorCode extends org.eclipse.triquetrum.ErrorCode {
   private static final long serialVersionUID = 1L;
 
-  public static final ErrorCode MODEL_LOADING_ERROR = new ErrorCode("MODEL_LOADING_ERROR", "0300", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR, "Error loading Model");
-  public static final ErrorCode MODEL_SAVING_ERROR_TECH = new ErrorCode("MODEL_SAVING_ERROR_TECH", "0301", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR, "Error saving Model");
-  public static final ErrorCode MODEL_SAVING_ERROR_FUNC = new ErrorCode("MODEL_SAVING_ERROR_FUNC", "0302", ErrorCategory.FUNCTIONAL, ErrorCode.Severity.ERROR, "Error saving Model");
-  public static final ErrorCode MODEL_CONFIGURATION_ERROR = new ErrorCode("MODEL_CONFIGURATION_ERROR", "0320", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR, "Error configuring Model");
-  public static final ErrorCode MODEL_EXECUTION_ERROR = new ErrorCode("MODEL_EXECUTION_ERROR", "0330", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR, "Error executing Model");
-  public static final ErrorCode MODEL_EXECUTION_FATAL = new ErrorCode("MODEL_EXECUTION_FATAL", "0339", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR, "Fatal error executing Model");
-  public static final ErrorCode MODEL_STATE_ERROR = new ErrorCode("MODEL_STATE_ERROR", "0390", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR, "Internal state error in Model");
+  public static final ErrorCode MODEL_LOADING_ERROR = new ErrorCode("MODEL_LOADING_ERROR", "0300", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR,
+      "Error loading Model");
+  public static final ErrorCode MODEL_SAVING_ERROR_TECH = new ErrorCode("MODEL_SAVING_ERROR_TECH", "0301", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR,
+      "Error saving Model");
+  public static final ErrorCode MODEL_SAVING_ERROR_FUNC = new ErrorCode("MODEL_SAVING_ERROR_FUNC", "0302", ErrorCategory.FUNCTIONAL, ErrorCode.Severity.ERROR,
+      "Error saving Model");
+  public static final ErrorCode MODEL_CONFIGURATION_ERROR = new ErrorCode("MODEL_CONFIGURATION_ERROR", "0320", ErrorCategory.TECHNICAL,
+      ErrorCode.Severity.ERROR, "Error configuring Model");
+  public static final ErrorCode MODEL_EXECUTION_ERROR = new ErrorCode("MODEL_EXECUTION_ERROR", "0330", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR,
+      "Error executing Model");
+  public static final ErrorCode MODEL_EXECUTION_FATAL = new ErrorCode("MODEL_EXECUTION_FATAL", "0339", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR,
+      "Fatal error executing Model");
+  public static final ErrorCode MODEL_STATE_ERROR = new ErrorCode("MODEL_STATE_ERROR", "0390", ErrorCategory.TECHNICAL, ErrorCode.Severity.ERROR,
+      "Internal state error in Model");
 
   public ErrorCode(String name, String code, ErrorCategory category, Severity severity, String description) {
     super(name, code, category, severity, description);

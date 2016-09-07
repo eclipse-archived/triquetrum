@@ -20,9 +20,9 @@ import java.io.Serializable;
 public interface NamedValue<V extends Serializable> extends Serializable, Comparable<NamedValue<V>> {
 
   /**
-  *
-  * @return the name
-  */
+   *
+   * @return the name
+   */
   String getName();
 
   /**
@@ -33,8 +33,7 @@ public interface NamedValue<V extends Serializable> extends Serializable, Compar
 
   /**
    *
-   * @return a textual name of the contained data type, that should be
-   *         consistent with the actual type of the specified generic V.
+   * @return a textual name of the contained data type, that should be consistent with the actual type of the specified generic V.
    */
   DataType getDataType();
 

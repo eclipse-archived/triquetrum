@@ -39,14 +39,13 @@ public class ProcessEvent extends EventObject implements Event {
   private String processId;
   private Date timeStamp;
   private String topic;
-  private Map<String, String> eventProperties = new HashMap<String, String>();
+  private Map<String, String> eventProperties = new HashMap<>();
 
   private ProcessingStatus status;
   private Throwable throwable;
 
   /**
-   * Event to signal an arbitrary interesting fact occurring during a process execution.
-   * That fact should be summarised as a subtopic.
+   * Event to signal an arbitrary interesting fact occurring during a process execution. That fact should be summarised as a subtopic.
    *
    * @param processId
    * @param subtopic
@@ -75,20 +74,19 @@ public class ProcessEvent extends EventObject implements Event {
   }
 
   /**
-  * Event to signal that a process went in ERROR, due to the given errorCause.
-  *
-  * @param processId
-  * @param errorCause
-  */
- public ProcessEvent(String processId, Throwable errorCause) {
-   super(processId);
-   this.processId = processId;
-   this.status = ProcessingStatus.ERROR;
-   this.topic = TOPIC_PREFIX + processId + "/" + status;
-   this.timeStamp = new Date();
-   this.throwable = errorCause;
- }
-
+   * Event to signal that a process went in ERROR, due to the given errorCause.
+   *
+   * @param processId
+   * @param errorCause
+   */
+  public ProcessEvent(String processId, Throwable errorCause) {
+    super(processId);
+    this.processId = processId;
+    this.status = ProcessingStatus.ERROR;
+    this.topic = TOPIC_PREFIX + processId + "/" + status;
+    this.timeStamp = new Date();
+    this.throwable = errorCause;
+  }
 
   /**
    * @return the id of the process to which this event is related
@@ -99,8 +97,7 @@ public class ProcessEvent extends EventObject implements Event {
 
   /**
    *
-   * @return the throwable that caused the process to go into ERROR status;
-   *  null if the event is not related to a processing error.
+   * @return the throwable that caused the process to go into ERROR status; null if the event is not related to a processing error.
    */
   public Throwable getThrowable() {
     return throwable;
@@ -114,10 +111,12 @@ public class ProcessEvent extends EventObject implements Event {
     return status;
   }
 
+  @Override
   public String getTopic() {
     return topic;
   }
 
+  @Override
   public Date getCreationTS() {
     return timeStamp;
   }
@@ -125,14 +124,17 @@ public class ProcessEvent extends EventObject implements Event {
   /**
    * @return 0L as default duration
    */
+  @Override
   public Long getDuration() {
     return 0L;
   }
 
+  @Override
   public String getProperty(String propName) {
     return eventProperties.get(propName);
   }
 
+  @Override
   public Iterator<String> getPropertyNames() {
     return eventProperties.keySet().iterator();
   }

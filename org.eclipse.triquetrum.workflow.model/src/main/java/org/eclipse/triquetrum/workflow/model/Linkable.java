@@ -4,7 +4,7 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  */
@@ -13,9 +13,7 @@ package org.eclipse.triquetrum.workflow.model;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Linkable</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Linkable</b></em>'. <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getLinkable()
@@ -24,16 +22,16 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Linkable extends EObject {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */
   void link(Relation relation);
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */

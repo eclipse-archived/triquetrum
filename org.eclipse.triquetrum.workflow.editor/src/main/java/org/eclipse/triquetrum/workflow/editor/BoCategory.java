@@ -27,17 +27,9 @@ import ptolemy.vergil.kernel.attributes.TextAttribute;
  *
  */
 public enum BoCategory {
-  Actor(ptolemy.actor.Actor.class),
-  CompositeActor(ptolemy.actor.CompositeActor.class),
-  Director(ptolemy.actor.Director.class),
-  Parameter(ptolemy.data.expr.Parameter.class),
-  Attribute(ptolemy.kernel.util.Attribute.class),
-  Annotation(TextAttribute.class),
-  Relation(IORelation.class),
-  Vertex(ptolemy.moml.Vertex.class),
-  Port(IOPort.class),
-  Input(IOPort.class),
-  Output(IOPort.class);
+  Actor(ptolemy.actor.Actor.class), CompositeActor(ptolemy.actor.CompositeActor.class), Director(ptolemy.actor.Director.class), Parameter(
+      ptolemy.data.expr.Parameter.class), Attribute(ptolemy.kernel.util.Attribute.class), Annotation(
+          TextAttribute.class), Relation(IORelation.class), Vertex(ptolemy.moml.Vertex.class), Port(IOPort.class), Input(IOPort.class), Output(IOPort.class);
 
   private final static Logger LOGGER = LoggerFactory.getLogger(BoCategory.class);
   private final static String BO_CATEGORY_PROPNAME = "__BO_CATEGORY";
@@ -58,8 +50,8 @@ public enum BoCategory {
    */
   public static BoCategory valueOf(Class<?> ptClass) {
     BoCategory result = null;
-    for(BoCategory cat : values()) {
-      if(cat.matches(ptClass)) {
+    for (BoCategory cat : values()) {
+      if (cat.matches(ptClass)) {
         result = cat;
         break;
       }
@@ -70,8 +62,7 @@ public enum BoCategory {
   /**
    *
    * @param ptClass
-   * @return true if this category enum instance has a ptolemy base class that is assignable
-   * from the given ptClass.
+   * @return true if this category enum instance has a ptolemy base class that is assignable from the given ptClass.
    */
   public boolean matches(Class<?> ptClass) {
     return ptBaseClass.isAssignableFrom(ptClass);
@@ -80,8 +71,7 @@ public enum BoCategory {
   /**
    *
    * @param pe
-   * @return the category stored as a property in the given {@link PictogramElement},
-   * or null if no valid category was found.
+   * @return the category stored as a property in the given {@link PictogramElement}, or null if no valid category was found.
    */
   public static BoCategory retrieveFrom(PictogramElement pe) {
     String boCategoryStr = Graphiti.getPeService().getPropertyValue(pe, BoCategory.BO_CATEGORY_PROPNAME);
@@ -97,6 +87,7 @@ public enum BoCategory {
 
   /**
    * Store this category as a property in the given {@link PictogramElement}.
+   * 
    * @param pe
    */
   public void storeIn(PictogramElement pe) {

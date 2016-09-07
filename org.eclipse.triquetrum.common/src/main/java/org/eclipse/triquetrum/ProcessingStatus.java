@@ -26,10 +26,10 @@ public enum ProcessingStatus {
          // Functional errors for specific tasks do not impact the ProcessStatus.
 
   public boolean isFinalStatus() {
-    return this.compareTo(FINISHED)>=0;
+    return this.compareTo(FINISHED) >= 0;
   }
 
   public boolean isErrorStatus() {
-    return ERROR==this;
+    return ERROR == this;
   }
 }

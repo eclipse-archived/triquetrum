@@ -60,12 +60,12 @@ public class MathsProcessingService implements TaskProcessingService {
       String taskType = task.getType();
       try {
         Double result = null;
-        DoubleStream dStr = task.getAttributes().filter(a -> a.getValue() instanceof Double).mapToDouble(a -> (Double)a.getValue());
+        DoubleStream dStr = task.getAttributes().filter(a -> a.getValue() instanceof Double).mapToDouble(a -> (Double) a.getValue());
         switch (taskType) {
-        case SUM :
+        case SUM:
           result = dStr.sum();
           break;
-        case AVG :
+        case AVG:
           result = dStr.average().getAsDouble();
         }
         TriqFactory entityFactory = TriqFactoryTracker.getDefaultFactory();

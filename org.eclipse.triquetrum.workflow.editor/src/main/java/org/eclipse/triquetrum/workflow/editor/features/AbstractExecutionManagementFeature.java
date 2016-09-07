@@ -36,7 +36,7 @@ public abstract class AbstractExecutionManagementFeature extends AbstractCustomF
   @Override
   public boolean isAvailable(IContext context) {
     boolean available = super.isAvailable(context) && (TriqEditorPlugin.getDefault().getWorkflowExecutionService() != null);
-    if(available) {
+    if (available) {
       CompositeActor selection = EditorUtils.getSelectedModel();
       available = (selection != null) && isAvailableForSelection(selection);
     }
@@ -44,11 +44,11 @@ public abstract class AbstractExecutionManagementFeature extends AbstractCustomF
   }
 
   /**
-   * Implement this method to define whether the execution-management-related feature should be available
-   * for the given selection.
+   * Implement this method to define whether the execution-management-related feature should be available for the given selection.
    * <p>
    * Typically this method checks whether there is already an execution ongoing for the selection or not.
    * </p>
+   * 
    * @param selection
    * @return
    */
@@ -59,6 +59,7 @@ public abstract class AbstractExecutionManagementFeature extends AbstractCustomF
     return isAvailable(context);
   }
 
+  @Override
   public void execute(ICustomContext context) {
     try {
       WorkflowExecutionService executionService = TriqEditorPlugin.getDefault().getWorkflowExecutionService();
@@ -88,8 +89,10 @@ public abstract class AbstractExecutionManagementFeature extends AbstractCustomF
   /**
    * This method must implement the actual feature's behaviour for the given selection.
    *
-   * @param executionService guaranteed to be non-null
-   * @param selection guaranteed to be non-null
+   * @param executionService
+   *          guaranteed to be non-null
+   * @param selection
+   *          guaranteed to be non-null
    * @throws TriqException
    */
   protected abstract void doExecute(WorkflowExecutionService executionService, CompositeActor selection) throws TriqException;

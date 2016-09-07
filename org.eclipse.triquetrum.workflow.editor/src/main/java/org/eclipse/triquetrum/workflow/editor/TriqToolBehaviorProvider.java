@@ -128,7 +128,7 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
   public Object getToolTip(GraphicsAlgorithm ga) {
     PictogramElement pe = ga.getPictogramElement();
     Object bo = getFeatureProvider().getBusinessObjectForPictogramElement(pe);
-    if(bo instanceof Vertex) {
+    if (bo instanceof Vertex) {
       // For a vertex, we want to show the name of the containing relation
       bo = ((Vertex) bo).getContainer();
     }
@@ -143,30 +143,28 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
 
   @Override
   public GraphicsAlgorithm[] getClickArea(PictogramElement pe) {
-      IFeatureProvider featureProvider = getFeatureProvider();
-      Object bo = featureProvider.getBusinessObjectForPictogramElement(pe);
-      if (bo instanceof Entity) {
-          GraphicsAlgorithm invisible = pe.getGraphicsAlgorithm();
-          GraphicsAlgorithm rectangle =
-              invisible.getGraphicsAlgorithmChildren().get(0);
-          return new GraphicsAlgorithm[] { rectangle };
-      }
-      return super.getClickArea(pe);
+    IFeatureProvider featureProvider = getFeatureProvider();
+    Object bo = featureProvider.getBusinessObjectForPictogramElement(pe);
+    if (bo instanceof Entity) {
+      GraphicsAlgorithm invisible = pe.getGraphicsAlgorithm();
+      GraphicsAlgorithm rectangle = invisible.getGraphicsAlgorithmChildren().get(0);
+      return new GraphicsAlgorithm[] { rectangle };
+    }
+    return super.getClickArea(pe);
   }
 
   @Override
   public GraphicsAlgorithm getSelectionBorder(PictogramElement pe) {
-      if (pe instanceof ContainerShape) {
-          GraphicsAlgorithm invisible = pe.getGraphicsAlgorithm();
-          if (!invisible.getLineVisible()) {
-              EList<GraphicsAlgorithm> graphicsAlgorithmChildren =
-                  invisible.getGraphicsAlgorithmChildren();
-              if (!graphicsAlgorithmChildren.isEmpty()) {
-                  return graphicsAlgorithmChildren.get(0);
-              }
-           }
+    if (pe instanceof ContainerShape) {
+      GraphicsAlgorithm invisible = pe.getGraphicsAlgorithm();
+      if (!invisible.getLineVisible()) {
+        EList<GraphicsAlgorithm> graphicsAlgorithmChildren = invisible.getGraphicsAlgorithmChildren();
+        if (!graphicsAlgorithmChildren.isEmpty()) {
+          return graphicsAlgorithmChildren.get(0);
+        }
       }
-      return super.getSelectionBorder(pe);
+    }
+    return super.getSelectionBorder(pe);
   }
 
   @Override

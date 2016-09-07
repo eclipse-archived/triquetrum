@@ -54,8 +54,9 @@ public class FlatteningViaXmlRpcTest extends ExplicitFlatteningTestAbstract {
 
   @AfterClass
   public static void stop() {
-    if (webServer != null)
+    if (webServer != null) {
       webServer.shutdown();
+    }
     webServer = null;
     client = null;
   }

@@ -24,8 +24,9 @@ public class FlatteningViaAnalysisRpcToPythonAndRunLocalLoopbackTest extends Fla
     try {
       return client.request("loopback_after_local", new Object[] { inObj });
     } catch (AnalysisRpcException e) {
-      if (e.getCause().getClass() == Exception.class)
+      if (e.getCause().getClass() == Exception.class) {
         return e.getCause();
+      }
       throw new RuntimeException(e);
     }
   }

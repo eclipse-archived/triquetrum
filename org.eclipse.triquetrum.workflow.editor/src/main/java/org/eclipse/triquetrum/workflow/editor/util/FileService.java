@@ -66,10 +66,12 @@ public class FileService {
   }
 
   private static void saveInWorkspaceRunnable(final TransactionalEditingDomain editingDomain, final Map<Resource, Map<?, ?>> options) {
-    final Map<URI, Throwable> failedSaves = new HashMap<URI, Throwable>();
+    final Map<URI, Throwable> failedSaves = new HashMap<>();
     final IWorkspaceRunnable wsRunnable = new IWorkspaceRunnable() {
+      @Override
       public void run(final IProgressMonitor monitor) throws CoreException {
         final Runnable runnable = new Runnable() {
+          @Override
           public void run() {
             Transaction parentTx;
             if (editingDomain != null) {

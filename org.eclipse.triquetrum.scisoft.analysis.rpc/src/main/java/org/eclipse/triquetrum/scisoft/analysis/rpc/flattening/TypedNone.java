@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,6 +13,7 @@
 
 package org.eclipse.triquetrum.scisoft.analysis.rpc.flattening;
 
+import org.eclipse.triquetrum.scisoft.analysis.rpc.AbstractAnalysisRpcGenericDispatcher;
 import org.eclipse.triquetrum.scisoft.analysis.rpc.internal.TypeHelper;
 
 /**
@@ -21,23 +22,23 @@ import org.eclipse.triquetrum.scisoft.analysis.rpc.internal.TypeHelper;
  * While null/None is supported directly there is one case where knowing the intended type of the null is important, when dealing with overloaded methods.
  * <p>
  * In Java if a class has these two overloaded methods:
- * 
+ *
  * <pre>
  * void func(String s);
- * 
+ *
  * void func(Integer i);
  * </pre>
- * 
+ *
  * and you called them the compiler would determine the correct version based on the compile time types. As RPC has to rely on only run time types when
  * determining which method to call, a TypedNone can be used to distinguish to achieve the equivalent to having written in Java:
- * 
+ *
  * <pre>
  * o.func((String) null);
  * o.func((Integer) null);
  * </pre>
  * <p>
  * TypedNone's are immutable.
- * 
+ *
  * @see AbstractAnalysisRpcGenericDispatcher
  */
 public class TypedNone {
@@ -45,7 +46,7 @@ public class TypedNone {
 
   /**
    * Construct a new TypedNone with the intended data type the None represents.
-   * 
+   *
    * @param clazz
    *          class type of type null may not be <code>null</code> or a primitive class type (e.g. cannot be {@link Integer#TYPE})
    */
@@ -59,7 +60,7 @@ public class TypedNone {
 
   /**
    * Construct a new TypedNone with the intended data type the None represents.
-   * 
+   *
    * @param className
    *          the name of the class suitable for passing to {@link Class#forName(String)}
    * @throws ClassNotFoundException
@@ -74,7 +75,7 @@ public class TypedNone {
 
   /**
    * Return the data type represented by the TypedNone
-   * 
+   *
    * @return data type
    */
   public Class<? extends Object> getType() {

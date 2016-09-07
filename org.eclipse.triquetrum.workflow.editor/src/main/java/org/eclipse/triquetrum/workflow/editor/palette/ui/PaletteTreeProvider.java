@@ -21,6 +21,7 @@ public class PaletteTreeProvider implements ITreeContentProvider {
   /**
    * @see org.eclipse.jface.viewers.IContentProvider#dispose()
    */
+  @Override
   public void dispose() {
   }
 
@@ -30,9 +31,10 @@ public class PaletteTreeProvider implements ITreeContentProvider {
    *
    * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(Object)
    */
+  @Override
   public Object[] getChildren(Object parentElement) {
-    if(parentElement instanceof List) {
-      return ((List)parentElement).toArray();
+    if (parentElement instanceof List) {
+      return ((List) parentElement).toArray();
     }
     if (parentElement instanceof EditPart) {
       List children = ((EditPart) parentElement).getChildren();
@@ -46,6 +48,7 @@ public class PaletteTreeProvider implements ITreeContentProvider {
   /**
    * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(Object)
    */
+  @Override
   public boolean hasChildren(Object element) {
     return getChildren(element) != null;
   }
@@ -55,6 +58,7 @@ public class PaletteTreeProvider implements ITreeContentProvider {
    *
    * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(Object)
    */
+  @Override
   public Object[] getElements(Object inputElement) {
     Object[] elements = getChildren(inputElement);
     if (elements == null) {
@@ -66,6 +70,7 @@ public class PaletteTreeProvider implements ITreeContentProvider {
   /**
    * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(Object)
    */
+  @Override
   public Object getParent(Object element) {
     return ((EditPart) element).getParent();
   }
@@ -73,6 +78,7 @@ public class PaletteTreeProvider implements ITreeContentProvider {
   /**
    * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(Viewer, Object, Object)
    */
+  @Override
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
   }
 }

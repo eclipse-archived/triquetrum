@@ -19,12 +19,15 @@ import org.eclipse.triquetrum.ErrorCategory;
 public class ErrorCode extends org.eclipse.triquetrum.ErrorCode {
   private static final long serialVersionUID = 2721384108182472678L;
 
-  public static final ErrorCode TASK_INIT_ERROR = new ErrorCode("TASK_INIT_ERROR", "5000", "task/ERROR", ErrorCategory.FUNCTIONAL, Severity.ERROR, "Task initialisation error");
-  public static final ErrorCode TASK_ERROR = new ErrorCode("TASK_ERROR", "5010", "task/ERROR", ErrorCategory.FUNCTIONAL, Severity.ERROR, "Task processing error");
+  public static final ErrorCode TASK_INIT_ERROR = new ErrorCode("TASK_INIT_ERROR", "5000", "task/ERROR", ErrorCategory.FUNCTIONAL, Severity.ERROR,
+      "Task initialisation error");
+  public static final ErrorCode TASK_ERROR = new ErrorCode("TASK_ERROR", "5010", "task/ERROR", ErrorCategory.FUNCTIONAL, Severity.ERROR,
+      "Task processing error");
   public static final ErrorCode TASK_SLOW = new ErrorCode("TASK_SLOW", "5011", "task/SLOW", ErrorCategory.FUNCTIONAL, Severity.WARNING, "Task processing slow");
-  public static final ErrorCode TASK_TIMEOUT = new ErrorCode("TASK_TIMEOUT", "5012", "task/TIME_OUT", ErrorCategory.FUNCTIONAL, Severity.WARNING, "Task processing timed out");
-  public static final ErrorCode TASK_UNHANDLED = new ErrorCode("TASK_UNHANDLED", "5020", "task/ERROR", ErrorCategory.FUNCTIONAL, Severity.ERROR, "No service found to handle the task");
-
+  public static final ErrorCode TASK_TIMEOUT = new ErrorCode("TASK_TIMEOUT", "5012", "task/TIME_OUT", ErrorCategory.FUNCTIONAL, Severity.WARNING,
+      "Task processing timed out");
+  public static final ErrorCode TASK_UNHANDLED = new ErrorCode("TASK_UNHANDLED", "5020", "task/ERROR", ErrorCategory.FUNCTIONAL, Severity.ERROR,
+      "No service found to handle the task");
 
   /**
    * @param name

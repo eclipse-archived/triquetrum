@@ -27,6 +27,7 @@ public class ModelElementNameDirectEditFeature extends AbstractDirectEditingFeat
     super(fp);
   }
 
+  @Override
   public int getEditingType() {
     return TYPE_TEXT;
   }
@@ -37,11 +38,10 @@ public class ModelElementNameDirectEditFeature extends AbstractDirectEditingFeat
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
     // The name of an actor (or other model element) is the only
     // Text element that is linked to it as its business object
-    return ((BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory)
-        || (BoCategory.Port.equals(boCategory)))
-        && (ga instanceof Text));
+    return ((BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory) || (BoCategory.Port.equals(boCategory))) && (ga instanceof Text));
   }
 
+  @Override
   public String getInitialValue(IDirectEditingContext context) {
     // return the current name of the EClass
     PictogramElement pe = context.getPictogramElement();
@@ -69,6 +69,7 @@ public class ModelElementNameDirectEditFeature extends AbstractDirectEditingFeat
     return null;
   }
 
+  @Override
   public void setValue(String value, IDirectEditingContext context) {
     // set the new name for the EClass
     PictogramElement pe = context.getPictogramElement();

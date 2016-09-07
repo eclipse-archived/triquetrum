@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * Utility class to help map primitive and boxed types.
- * 
+ *
  * @see <a href="http://en.wikipedia.org/wiki/Primitive_wrapper_class">Primitive_wrapper_class</a>
  */
 public class TypeHelper {
@@ -26,7 +26,7 @@ public class TypeHelper {
 
   static {
     // Add all 8 primitive types to the map
-    mapPrimitiveToBoxed = new HashMap<Class<?>, Class<?>>();
+    mapPrimitiveToBoxed = new HashMap<>();
     mapPrimitiveToBoxed.put(Boolean.TYPE, Boolean.class);
     mapPrimitiveToBoxed.put(Byte.TYPE, Byte.class);
     mapPrimitiveToBoxed.put(Character.TYPE, Character.class);

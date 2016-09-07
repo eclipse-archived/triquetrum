@@ -18,10 +18,10 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
  */
 public interface Visitor {
 
- /**
-  *
-  * @param modelElement
-  */
+  /**
+   *
+   * @param modelElement
+   */
   void visit(NamedObj modelElement);
 
 }

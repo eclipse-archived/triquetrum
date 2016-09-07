@@ -57,17 +57,17 @@ public class SvgModelElementShape extends AbstractCustomModelElementShape {
       // we need to reconstruct the figure after all, when its shape is being moved.
       // TODO figure out a way in graphiti to differentiate plain redrawing due to selection/changes
       // somewhere else in the diagram, vs when this figure's shape effectively needs redrawing...
-//      if (figure == null) {
-        figure = new SVGFigure();
-        // move SVG figure from its defined top-left to origin (0,0) top-left
-        figure.setTranslateX(-minX);
-        figure.setTranslateY(-minY);
-        figure.setURI(getIconURI());
-        figure.setBounds(this.getBounds());
-//      }
+      // if (figure == null) {
+      figure = new SVGFigure();
+      // move SVG figure from its defined top-left to origin (0,0) top-left
+      figure.setTranslateX(-minX);
+      figure.setTranslateY(-minY);
+      figure.setURI(getIconURI());
+      figure.setBounds(this.getBounds());
+      // }
       figure.paint(graphics);
     } catch (IOException e) {
-      LOGGER.error("Error drawing SVG shape "+getIconURI(), e);
+      LOGGER.error("Error drawing SVG shape " + getIconURI(), e);
     }
     LOGGER.trace("SVG fillShape - exit - for {}", getIconURI());
   }

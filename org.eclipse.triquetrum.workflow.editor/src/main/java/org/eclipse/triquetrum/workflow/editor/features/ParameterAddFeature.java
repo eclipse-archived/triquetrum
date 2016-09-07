@@ -65,6 +65,7 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
     Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
+  @Override
   public boolean canAdd(IAddContext context) {
     // check if user wants to add a parameter
     if (context.getNewObject() instanceof Parameter) {
@@ -76,6 +77,7 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
     return false;
   }
 
+  @Override
   public PictogramElement add(IAddContext context) {
     Parameter addedParameter = (Parameter) context.getNewObject();
     Diagram targetDiagram = (Diagram) context.getTargetContainer();
@@ -88,7 +90,7 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
     ContainerShape containerShape = peCreateService.createContainerShape(targetDiagram, true);
 
     Rectangle invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
-    gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, WIDTH+10, HEIGHT);
+    gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, WIDTH + 10, HEIGHT);
 
     Shape dotShape = peCreateService.createShape(containerShape, false);
     Ellipse dot = gaService.createEllipse(dotShape);
@@ -104,7 +106,7 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
     Text text = gaService.createText(shape, pName + " : " + pVal);
     text.setForeground(manageColor(PARAMETER_NAME_FOREGROUND));
     text.setFont(gaService.manageFont(getDiagram(), IGaService.DEFAULT_FONT, 9, false, true));
-//    gaService.setLocation(text, 0, 0);
+    // gaService.setLocation(text, 0, 0);
     gaService.setLocationAndSize(text, 10, 0, WIDTH, HEIGHT);
 
     link(shape, addedParameter, BoCategory.Parameter);

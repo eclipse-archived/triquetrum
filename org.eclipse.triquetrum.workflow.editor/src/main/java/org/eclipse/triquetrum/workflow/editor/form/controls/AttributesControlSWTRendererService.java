@@ -31,7 +31,8 @@ public class AttributesControlSWTRendererService implements EMFFormsDIRendererSe
   /**
    * Called by the initializer to set the EMFFormsDatabinding.
    *
-   * @param databindingService The EMFFormsDatabinding
+   * @param databindingService
+   *          The EMFFormsDatabinding
    */
   protected void setEMFFormsDatabinding(EMFFormsDatabinding databindingService) {
     this.databindingService = databindingService;
@@ -40,7 +41,8 @@ public class AttributesControlSWTRendererService implements EMFFormsDIRendererSe
   /**
    * Called by the initializer to set the ReportService.
    *
-   * @param reportService The ReportService
+   * @param reportService
+   *          The ReportService
    */
   protected void setReportService(ReportService reportService) {
     this.reportService = reportService;
@@ -62,8 +64,7 @@ public class AttributesControlSWTRendererService implements EMFFormsDIRendererSe
     }
     IValueProperty valueProperty;
     try {
-      valueProperty = databindingService
-        .getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
+      valueProperty = databindingService.getValueProperty(control.getDomainModelReference(), viewModelContext.getDomainModel());
     } catch (final DatabindingFailedException ex) {
       reportService.report(new DatabindingFailedReport(ex));
       return NOT_APPLICABLE;

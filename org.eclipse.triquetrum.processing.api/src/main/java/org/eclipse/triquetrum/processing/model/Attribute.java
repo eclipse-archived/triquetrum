@@ -14,9 +14,8 @@ package org.eclipse.triquetrum.processing.model;
 import java.io.Serializable;
 
 /**
- * Attributes are identifiable name/value pairs.
- * They are typically associated with parent entities like requests or tasks etc.
- * 
+ * Attributes are identifiable name/value pairs. They are typically associated with parent entities like requests or tasks etc.
+ *
  * @author erwin
  *
  */

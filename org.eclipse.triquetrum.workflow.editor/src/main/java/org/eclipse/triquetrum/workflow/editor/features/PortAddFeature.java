@@ -38,10 +38,10 @@ import org.eclipse.triquetrum.workflow.model.Port;
  */
 public class PortAddFeature extends AbstractAddShapeFeature {
 
-//  private static final int SHAPE_X_OFFSET = 2;
-//
+  // private static final int SHAPE_X_OFFSET = 2;
+  //
   private static final IColorConstant PORT_BACKGROUND = IColorConstant.BLACK;
-//  private static final IColorConstant ANCHOR_BACKGROUND = IColorConstant.RED;
+  // private static final IColorConstant ANCHOR_BACKGROUND = IColorConstant.RED;
 
   public PortAddFeature(IFeatureProvider fp) {
     super(fp);
@@ -56,6 +56,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
     Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
+  @Override
   public boolean canAdd(IAddContext context) {
     // check if user wants to add a port
     if (context.getNewObject() instanceof Port) {
@@ -65,6 +66,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
     return false;
   }
 
+  @Override
   public PictogramElement add(IAddContext context) {
     Port addedPort = (Port) context.getNewObject();
     ContainerShape targetContainer = context.getTargetContainer();
@@ -93,25 +95,25 @@ public class PortAddFeature extends AbstractAddShapeFeature {
       if (addedPort.isInput()) {
         anchor.setLocation(createService.createPoint(18, 0));
         anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-        final Polyline rectangle = gaService.createPlainPolyline(anchor, new int[]{0,0,0,20});
+        final Polyline rectangle = gaService.createPlainPolyline(anchor, new int[] { 0, 0, 0, 20 });
         rectangle.setLineStyle(LineStyle.DASH);
         gaService.setLocationAndSize(rectangle, 0, 0, 1, 20);
         link(anchor, addedPort, BoCategory.Input);
         // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
-        int xy[] = new int[] { 10,0, 20,10, 10,20, 10,15, 0,15, 0,5, 10,5 };
+        int xy[] = new int[] { 10, 0, 20, 10, 10, 20, 10, 15, 0, 15, 0, 5, 10, 5 };
         Polygon portShape = gaService.createPolygon(invisibleRectangle, xy);
         portShape.setForeground(manageColor(PORT_BACKGROUND));
         gaService.setLocationAndSize(portShape, 0, 0, 20, 20);
       } else {
         anchor.setLocation(createService.createPoint(2, 0));
         anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-        final Polyline rectangle = gaService.createPlainPolyline(anchor, new int[]{0,0,0,20});
+        final Polyline rectangle = gaService.createPlainPolyline(anchor, new int[] { 0, 0, 0, 20 });
         rectangle.setLineStyle(LineStyle.DASH);
         gaService.setLocationAndSize(rectangle, 0, 0, 1, 20);
         link(anchor, addedPort, BoCategory.Output);
         anchor.setVisible(true);
         // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
-        int xy[] = new int[] { 10,0, 20,10, 10,20, 10,15, 0,15, 0,5, 10,5 };
+        int xy[] = new int[] { 10, 0, 20, 10, 10, 20, 10, 15, 0, 15, 0, 5, 10, 5 };
         Polygon portShape = gaService.createPolygon(invisibleRectangle, xy);
         portShape.setForeground(manageColor(PORT_BACKGROUND));
         gaService.setLocationAndSize(portShape, 0, 0, 20, 20);
@@ -120,7 +122,7 @@ public class PortAddFeature extends AbstractAddShapeFeature {
       // TODO find a way to get the full name from our Triq NamedObj,
       // then we don't need to depend on the presence of the wrapped object.
       Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-      if(anchorMap != null && addedPort.getWrappedObject() != null) {
+      if (anchorMap != null && addedPort.getWrappedObject() != null) {
         anchorMap.put(addedPort.getWrappedObject().getFullName(), anchor);
       }
       link(containerShape, addedPort, BoCategory.Port);

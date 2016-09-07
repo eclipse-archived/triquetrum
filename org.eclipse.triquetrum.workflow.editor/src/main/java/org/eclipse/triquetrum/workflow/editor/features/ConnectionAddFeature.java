@@ -24,7 +24,6 @@ import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.model.Relation;
 
-
 public class ConnectionAddFeature extends AbstractAddFeature {
 
   private static final IColorConstant CONNECTION_FOREGROUND = new ColorConstant(98, 131, 167);
@@ -33,6 +32,7 @@ public class ConnectionAddFeature extends AbstractAddFeature {
     super(fp);
   }
 
+  @Override
   public PictogramElement add(IAddContext context) {
     IAddConnectionContext addConContext = (IAddConnectionContext) context;
     Relation addedRelation = (Relation) context.getNewObject();
@@ -54,6 +54,7 @@ public class ConnectionAddFeature extends AbstractAddFeature {
     return connection;
   }
 
+  @Override
   public boolean canAdd(IAddContext context) {
     if (context instanceof IAddConnectionContext && context.getNewObject() instanceof Relation) {
       return true;

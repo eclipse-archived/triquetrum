@@ -33,7 +33,7 @@ public class PaletteTreeNode extends PaletteDrawer {
    * Constructor
    *
    * @param label
-   *            The name/label for this entry
+   *          The name/label for this entry
    */
   public PaletteTreeNode(String label) {
     this(label, (ImageDescriptor) null);
@@ -43,24 +43,25 @@ public class PaletteTreeNode extends PaletteDrawer {
    * Constructor
    *
    * @param label
-   *            The name/label for this entry
+   *          The name/label for this entry
    * @param icon
-   *            An icon for this node
+   *          An icon for this node
    */
   public PaletteTreeNode(String label, ImageDescriptor icon) {
     super(label, icon);
-//    setType(PALETTE_TYPE_NODE);
+    // setType(PALETTE_TYPE_NODE);
   }
 
   /**
    * Returns true if this type can be a child of this container
    *
    * @param type
-   *            the type being requested
+   *          the type being requested
    * @return true if this can be a child of this container
    */
+  @Override
   public boolean acceptsType(Object type) {
-     return true;
+    return true;
   }
 
 }

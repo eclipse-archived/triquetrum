@@ -10,7 +10,8 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.processing.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,12 +47,12 @@ public class DataTypeTest {
 
   @Test
   public void testShort() {
-    assertEquals(DataType.SHORT, DataType.fromJavaType((short)1));
+    assertEquals(DataType.SHORT, DataType.fromJavaType((short) 1));
   }
 
   @Test
   public void testShortIsNotInteger() {
-    assertFalse(DataType.INTEGER.matchesJavaTypeOf((short)1));
+    assertFalse(DataType.INTEGER.matchesJavaTypeOf((short) 1));
   }
 
   @Test

@@ -44,6 +44,7 @@ public class AttributeFromTokenBuilder {
    * ShortToken
    * --------------------
    * </pre>
+   * 
    * @param t
    * @param name
    * @param token
@@ -67,10 +68,10 @@ public class AttributeFromTokenBuilder {
     } else if (token instanceof BooleanToken) {
       returnValue = factory.createAttribute(t, name, Boolean.valueOf(((BooleanToken) token).booleanValue()));
       // unfortunately these value types are not Serializable...
-//    } else if (token instanceof ComplexToken) {
-//      returnValue = factory.createAttribute(t, name, ((ComplexToken) token).complexValue());
-//    } else if (token instanceof FixToken) {
-//      returnValue = factory.createAttribute(t, name, ((FixToken) token).fixValue());
+      // } else if (token instanceof ComplexToken) {
+      // returnValue = factory.createAttribute(t, name, ((ComplexToken) token).complexValue());
+      // } else if (token instanceof FixToken) {
+      // returnValue = factory.createAttribute(t, name, ((FixToken) token).fixValue());
     } else if (token instanceof FloatToken) {
       returnValue = factory.createAttribute(t, name, ((FloatToken) token).floatValue());
     } else if (token instanceof ShortToken) {

@@ -22,7 +22,7 @@ public class TriqNamedObjFilter extends AbstractPropertySectionFilter {
   protected boolean accept(PictogramElement pe) {
     EObject eObject = Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
     if (eObject instanceof NamedObj) {
-        return true;
+      return true;
     }
     return false;
   }
