@@ -13,7 +13,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.triquetrum.workflow.model.presentation
 Bundle-Name: %pluginName (Incubation)
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.triquetrum.workflow.model.presentation.T
