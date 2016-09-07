@@ -15,6 +15,7 @@ import org.eclipse.graphiti.features.context.ICustomContext;
 import org.eclipse.graphiti.features.custom.AbstractCustomFeature;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
@@ -54,7 +55,7 @@ public class ModelElementConfigureFeature extends AbstractCustomFeature {
   public boolean canExecute(ICustomContext context) {
     boolean ret = false;
     PictogramElement pe = context.getInnerPictogramElement();
-    if(pe==null) {
+    if (pe == null) {
       PictogramElement[] pes = context.getPictogramElements();
       if (pes != null && pes.length == 1) {
         pe = pes[0];
@@ -63,9 +64,8 @@ public class ModelElementConfigureFeature extends AbstractCustomFeature {
     // prevent double click action on actor's name's Text field
     if (pe != null) {
       BoCategory boCategory = BoCategory.retrieveFrom(pe);
-      ret = ((BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory)
-          || (BoCategory.Annotation.equals(boCategory)) || (BoCategory.Port.equals(boCategory)))
-          && !(pe.getGraphicsAlgorithm() instanceof Text)) || BoCategory.Parameter.equals(boCategory);
+      ret = ((BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory) || (BoCategory.Annotation.equals(boCategory))
+          || (BoCategory.Port.equals(boCategory))) && !(pe.getGraphicsAlgorithm() instanceof Text)) || BoCategory.Parameter.equals(boCategory);
     }
     return ret;
   }
@@ -80,7 +80,7 @@ public class ModelElementConfigureFeature extends AbstractCustomFeature {
         Shell shell = EclipseUtils.getActivePage().getActivePart().getSite().getShell();
         NamedObjDialog dialog = new NamedObjDialog(shell, modelElement);
         dialog.open();
-        if(dialog.getReturnCode()!=NamedObjDialog.OK) {
+        if (dialog.getReturnCode() != Window.OK) {
           throw new OperationCanceledException();
         }
       }

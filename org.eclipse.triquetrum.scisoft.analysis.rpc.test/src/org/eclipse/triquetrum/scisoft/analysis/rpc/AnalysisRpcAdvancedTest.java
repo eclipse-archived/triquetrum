@@ -18,7 +18,6 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
-import org.junit.runners.model.TestTimedOutException;
 
 public class AnalysisRpcAdvancedTest {
 
@@ -86,8 +85,9 @@ public class AnalysisRpcAdvancedTest {
         Assert.assertTrue(e.getCause() instanceof AnalysisRpcRemoteException);
       }
     } finally {
-      if (analysisRpcServer != null)
+      if (analysisRpcServer != null) {
         analysisRpcServer.shutdown();
+      }
     }
   }
 
@@ -159,8 +159,9 @@ public class AnalysisRpcAdvancedTest {
       String catResult = catObject.cat("Hello, ", "World!");
       Assert.assertEquals("Hello, World!", catResult);
     } finally {
-      if (analysisRpcServer != null)
+      if (analysisRpcServer != null) {
         analysisRpcServer.shutdown();
+      }
     }
   }
 

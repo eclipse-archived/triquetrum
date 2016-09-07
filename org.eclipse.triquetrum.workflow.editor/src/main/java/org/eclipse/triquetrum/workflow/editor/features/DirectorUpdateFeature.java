@@ -63,7 +63,7 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
     // build diff result and store some useful info in the update context
     if (elemNameChanged) {
       StringBuilder diffResultBldr = new StringBuilder();
-      if(elemNameChanged) {
+      if (elemNameChanged) {
         diffResultBldr.append("Director name changed; ");
         context.putProperty("DIRECTORNAME_CHANGED", "true");
       }
@@ -78,17 +78,17 @@ public class DirectorUpdateFeature extends AbstractUpdateFeature {
     boolean result = false;
     PictogramElement pe = context.getPictogramElement();
     Object bo = getBusinessObjectForPictogramElement(pe);
-    if((pe instanceof ContainerShape) && (bo instanceof Director)) {
+    if ((pe instanceof ContainerShape) && (bo instanceof Director)) {
       ContainerShape cs = (ContainerShape) pe;
       Director director = (Director) bo;
 
       for (Shape shape : cs.getChildren()) {
         BoCategory boCategory = BoCategory.retrieveFrom(shape);
-        if(BoCategory.Director.equals(boCategory)) {
+        if (BoCategory.Director.equals(boCategory)) {
           Text text = (Text) shape.getGraphicsAlgorithm();
           text.setValue(director.getName());
           result = true;
-          Graphiti.getPeService().setPropertyValue(shape, FeatureConstants.BO_NAME,director.getName());
+          Graphiti.getPeService().setPropertyValue(shape, FeatureConstants.BO_NAME, director.getName());
         }
       }
     }

@@ -29,8 +29,7 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
 /**
- * This feature allows to add a Vertex on a CompositeActor,
- * that can then be used to draw multi-link relations/connections.
+ * This feature allows to add a Vertex on a CompositeActor, that can then be used to draw multi-link relations/connections.
  *
  */
 public class VertexAddFeature extends AbstractAddShapeFeature {
@@ -52,10 +51,12 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
+  @Override
   public boolean canAdd(IAddContext context) {
     return (context.getNewObject() instanceof Vertex);
   }
 
+  @Override
   public PictogramElement add(IAddContext context) {
     Vertex addedVertex = (Vertex) context.getNewObject();
     ContainerShape targetContainer = context.getTargetContainer();
@@ -67,8 +68,7 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     IGaService gaService = Graphiti.getGaService();
     ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
 
-
-    int xy[] = new int[] { 6,0, 12,10, 6,20, 0,10 };
+    int xy[] = new int[] { 6, 0, 12, 10, 6, 20, 0, 10 };
     Polygon diamond = gaService.createPolygon(containerShape, xy);
     diamond.setForeground(manageColor(VERTEX_BACKGROUND));
     diamond.setBackground(manageColor(VERTEX_BACKGROUND));
@@ -84,7 +84,7 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     // TODO find a way to get the full name from our Triq NamedObj,
     // then we don't need to depend on the presence of the wrapped object.
     Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-    if(anchorMap != null && addedVertex.getWrappedObject() != null) {
+    if (anchorMap != null && addedVertex.getWrappedObject() != null) {
       anchorMap.put(addedVertex.getFullName(), anchor);
     }
 

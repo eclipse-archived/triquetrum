@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.python.actor.activator;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import ptolemy.actor.TypedAtomicActor;
 import ptolemy.actor.TypedIOPort;
-import ptolemy.data.ObjectToken;
 import ptolemy.data.RecordToken;
 import ptolemy.data.Token;
 import ptolemy.data.expr.ConversionUtilities;
@@ -88,7 +86,7 @@ public class PythonActor extends TypedAtomicActor {
   @Override
   public void fire() throws IllegalActionException {
     super.fire();
-    Map<String, Token> inputs = new HashMap<String, Token>();
+    Map<String, Token> inputs = new HashMap<>();
     for (TypedIOPort p : inputPortList()) {
       inputs.put(p.getName(), p.get(0));
     }

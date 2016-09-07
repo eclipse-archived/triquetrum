@@ -29,7 +29,7 @@ public class PaletteTreeViewerProvider extends PaletteViewerProvider {
 
   public PaletteTreeViewerProvider(DiagramBehavior diagramBehavior) {
     super(diagramBehavior.getEditDomain());
-    this.diagramBehavior= diagramBehavior;
+    this.diagramBehavior = diagramBehavior;
   }
 
   @Override
@@ -41,6 +41,7 @@ public class PaletteTreeViewerProvider extends PaletteViewerProvider {
     return pViewer;
   }
 
+  @Override
   protected void configurePaletteViewer(PaletteViewer viewer) {
     super.configurePaletteViewer(viewer);
     viewer.getKeyHandler().setParent(getPaletteKeyHandler());
@@ -54,17 +55,14 @@ public class PaletteTreeViewerProvider extends PaletteViewerProvider {
     if (paletteKeyHandler == null) {
       paletteKeyHandler = new KeyHandler() {
         /**
-         * Processes a <i>key released </i> event. This method
-         * is called by the Tool whenever a key is released, and
-         * the Tool is in the proper state. Overridden to
-         * support pressing the enter key to create a shape or
-         * connection (between two selected shapes)
+         * Processes a <i>key released </i> event. This method is called by the Tool whenever a key is released, and the Tool is in the proper state. Overridden
+         * to support pressing the enter key to create a shape or connection (between two selected shapes)
          *
          * @param event
-         *            the KeyEvent
-         * @return <code>true</code> if KeyEvent was handled in
-         *         some way
+         *          the KeyEvent
+         * @return <code>true</code> if KeyEvent was handled in some way
          */
+        @Override
         public boolean keyReleased(KeyEvent event) {
           if (event.keyCode == SWT.Selection) {
             Tool tool = getEditDomain().getPaletteViewer().getActiveTool().createTool();

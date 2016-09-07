@@ -32,7 +32,6 @@ public class ResultBlockImpl extends AbstractIdentifiable implements ResultBlock
   private Map<String, ResultItem<? extends Serializable>> items = new ConcurrentHashMap<>();
   private AttributeHolder attributeHolder = new AttributeHolderImpl();
 
-
   /**
    * @param task
    * @param id
@@ -43,7 +42,7 @@ public class ResultBlockImpl extends AbstractIdentifiable implements ResultBlock
     super(id, creationTS);
     this.task = task;
     this.type = type;
-    if(task!=null) {
+    if (task != null) {
       task.addResult(this);
     }
   }
@@ -107,9 +106,7 @@ public class ResultBlockImpl extends AbstractIdentifiable implements ResultBlock
     if (getClass() != obj.getClass())
       return false;
     ResultBlockImpl other = (ResultBlockImpl) obj;
-    return new EqualsBuilder().appendSuper(super.equals(obj)).
-        append(task, other.task).
-        append(type, other.type).isEquals();
+    return new EqualsBuilder().appendSuper(super.equals(obj)).append(task, other.task).append(type, other.type).isEquals();
   }
 
   @Override

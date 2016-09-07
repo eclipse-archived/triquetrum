@@ -163,7 +163,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public IAddFeature getAddFeature(IAddContext context) {
     if (context.getNewObject() instanceof Director) {
       return new DirectorAddFeature(this);
-    } else if ((context.getNewObject() instanceof Actor)||(context.getNewObject() instanceof CompositeActor)) {
+    } else if ((context.getNewObject() instanceof Actor) || (context.getNewObject() instanceof CompositeActor)) {
       return new ActorAddFeature(this);
     } else if (context.getNewObject() instanceof Relation) {
       return new ConnectionAddFeature(this);
@@ -258,7 +258,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     switch (cfgElem.getName()) {
     case "entry": {
       ModelElementCreateFeature mecf = buildCreateFeature(parentGroupElem, cfgElem);
-      if(mecf!=null) {
+      if (mecf != null) {
         results.add(mecf);
       }
       break;

@@ -10,17 +10,16 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.shapes;
 
-
 /**
- * A simple solution to easily allow access to the single {@link TriqGraphicsAlgorithmRendererFactory}
- * implementation instance that should be available in a Triquetrum runtime.
+ * A simple solution to easily allow access to the single {@link TriqGraphicsAlgorithmRendererFactory} implementation instance that should be available in a
+ * Triquetrum runtime.
  * <p>
- * This avoids the complexity where everything that needs to access the factory instance
- * should implement one of the OSGi service retrieval methods (Activators with ServiceTrackers, DS, ...).
+ * This avoids the complexity where everything that needs to access the factory instance should implement one of the OSGi service retrieval methods (Activators
+ * with ServiceTrackers, DS, ...).
  * </p>
  * <p>
- * It also allows an easy access from places where the DS component model can not be applied
- * (e.g. from inside Actors whose creation life cycle can not be under the control of DS).
+ * It also allows an easy access from places where the DS component model can not be applied (e.g. from inside Actors whose creation life cycle can not be under
+ * the control of DS).
  * </p>
  */
 public class TriqGarFactorytracker {
@@ -40,8 +39,7 @@ public class TriqGarFactorytracker {
   /**
    * Set the factory instance for this Triquetrum runtime.
    * <p>
-   * This method can be invoked e.g. from an activation method of the factory instance,
-   * invoked by DS when the instance is created as a DS component.
+   * This method can be invoked e.g. from an activation method of the factory instance, invoked by DS when the instance is created as a DS component.
    * </p>
    *
    * @param factory

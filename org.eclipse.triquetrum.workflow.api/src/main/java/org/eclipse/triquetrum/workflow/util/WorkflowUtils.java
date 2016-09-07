@@ -76,12 +76,14 @@ public class WorkflowUtils {
    * @param modelsRootLocator
    * @param modelResourceLocator
    * @param version
-   * @param filters optional filters to manipulate the moml parsing
+   * @param filters
+   *          optional filters to manipulate the moml parsing
    * @return
    * @throws MalformedURLException
    * @throws Exception
    */
-  public static NamedObj readFrom(URI modelsRootLocator, URI modelResourceLocator, VersionSpecification version, MoMLFilter... filters) throws MalformedURLException, Exception {
+  public static NamedObj readFrom(URI modelsRootLocator, URI modelResourceLocator, VersionSpecification version, MoMLFilter... filters)
+      throws MalformedURLException, Exception {
     Workspace workspace = new Workspace("TriqImport");
     MoMLParser parser = new MoMLParser(workspace, version, null);
     MoMLParser.addMoMLFilters(PtolemyUtil.getImportFilters(), workspace);

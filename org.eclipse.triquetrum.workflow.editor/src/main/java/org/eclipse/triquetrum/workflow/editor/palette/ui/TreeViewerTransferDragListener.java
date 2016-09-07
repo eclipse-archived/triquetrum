@@ -30,10 +30,12 @@ public class TreeViewerTransferDragListener extends AbstractTransferDragSourceLi
     super(viewer, TreeViewerTransfer.getInstance());
   }
 
+  @Override
   public void dragSetData(DragSourceEvent event) {
     event.data = getViewer().getSelectedEditParts();
   }
 
+  @Override
   public void dragStart(DragSourceEvent event) {
     TreeViewerTransfer.getInstance().setViewer(getViewer());
     List selection = getViewer().getSelectedEditParts();
@@ -41,6 +43,7 @@ public class TreeViewerTransferDragListener extends AbstractTransferDragSourceLi
     saveModelSelection(selection);
   }
 
+  @Override
   public void dragFinished(DragSourceEvent event) {
     TreeViewerTransfer.getInstance().setObject(null);
     TreeViewerTransfer.getInstance().setViewer(null);
@@ -54,8 +57,7 @@ public class TreeViewerTransferDragListener extends AbstractTransferDragSourceLi
     List list = new ArrayList();
     Object editpart;
     for (int i = 0; i < modelSelection.size(); i++) {
-      editpart = getViewer().getEditPartRegistry().get(
-          modelSelection.get(i));
+      editpart = getViewer().getEditPartRegistry().get(modelSelection.get(i));
       if (editpart != null)
         list.add(editpart);
     }

@@ -22,18 +22,20 @@ public class ModelElementCopyFeature extends AbstractCopyFeature {
     super(fp);
   }
 
+  @Override
   public boolean canCopy(ICopyContext context) {
     final PictogramElement[] pes = context.getPictogramElements();
     if (pes == null || pes.length == 0) { // nothing selected
       return false;
     }
     // apparently the Diagram can end up in the copy context, when no concrete model element is selected
-    if(pes.length == 1 && pes[0] instanceof Diagram) {
+    if (pes.length == 1 && pes[0] instanceof Diagram) {
       return false;
     }
     return true;
   }
 
+  @Override
   public void copy(ICopyContext context) {
     // We need to pass the PEs as we need to be able to determine original location info during the paste.
     putToClipboard(context.getPictogramElements());

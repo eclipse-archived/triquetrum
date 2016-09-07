@@ -49,7 +49,7 @@ import org.eclipse.ui.part.PageBook;
 /**
  * An outline page for the graphical modeling editor. It displays the contents of the editor either as a hierarchical Outline or as a graphical Thumbnail. There
  * are buttons to switch between those displays.
- * 
+ *
  * @see org.eclipse.graphiti.examples.common.outline.GraphicsEditorOutlinePage
  */
 @SuppressWarnings("restriction")
@@ -92,7 +92,7 @@ public class DiagramEditorOutlinePage extends ContentOutlinePage implements IPro
   /**
    * Creates a new GraphicsEditorOutlinePage. It is important, that this outline page uses the same handlers (ActionRegistry, KeyHandler, ZoomManagerAdapter,
    * ...) as the main editor, so that the behaviour is synchronized between them.
-   * 
+   *
    * @param diagramEditor
    *          the attached diagram editor
    * @since 0.9
@@ -100,10 +100,10 @@ public class DiagramEditorOutlinePage extends ContentOutlinePage implements IPro
   public DiagramEditorOutlinePage(IDiagramContainerUI diagramEditor) {
     super(new TreeViewer());
     _graphicalViewer = diagramEditor.getGraphicalViewer();
-    _actionRegistry = (ActionRegistry) diagramEditor.getAdapter(ActionRegistry.class);
+    _actionRegistry = diagramEditor.getAdapter(ActionRegistry.class);
     _editDomain = diagramEditor.getEditDomain();
-    _keyHandler = (KeyHandler) diagramEditor.getAdapter(KeyHandler.class);
-    _selectionSynchronizer = (SelectionSynchronizer) diagramEditor.getAdapter(SelectionSynchronizer.class);
+    _keyHandler = diagramEditor.getAdapter(KeyHandler.class);
+    _selectionSynchronizer = diagramEditor.getAdapter(SelectionSynchronizer.class);
     _diagramEditor = diagramEditor;
   }
 
@@ -124,7 +124,7 @@ public class DiagramEditorOutlinePage extends ContentOutlinePage implements IPro
   /**
    * Is used to register several global action handlers (UNDO, REDO, COPY, PASTE, ...) on initialization of this outline page. This activates for example the
    * undo-action in the central Eclipse-Menu.
-   * 
+   *
    * @param pageSite
    *          the page site
    * @see org.eclipse.ui.part.Page#init(IPageSite)
@@ -144,7 +144,7 @@ public class DiagramEditorOutlinePage extends ContentOutlinePage implements IPro
 
   /**
    * Creates the Control of this outline page. By default this is a PageBook, which can toggle between a hierarchical Outline and a graphical Thumbnail.
-   * 
+   *
    * @param parent
    *          the parent
    * @see org.eclipse.gef.ui.parts.ContentOutlinePage#createControl(Composite)
@@ -185,7 +185,7 @@ public class DiagramEditorOutlinePage extends ContentOutlinePage implements IPro
 
   /**
    * Returns the Control of this outline page, which was created in createControl().
-   * 
+   *
    * @return the control
    * @see org.eclipse.gef.ui.parts.ContentOutlinePage#getControl()
    */
@@ -197,13 +197,14 @@ public class DiagramEditorOutlinePage extends ContentOutlinePage implements IPro
   /**
    * Refreshes the outline on any change of the diagram editor. Most importantly, there is a property change event editor-dirty.
    */
+  @Override
   public void propertyChanged(Object source, int propId) {
     refresh();
   }
 
   /**
    * Toggles the page to display between hierarchical Outline and graphical Thumbnail.
-   * 
+   *
    * @param id
    *          The ID of the page to display. It must be either ID_OUTLINE or ID_THUMBNAIL.
    */
@@ -262,7 +263,7 @@ public class DiagramEditorOutlinePage extends ContentOutlinePage implements IPro
 
   /**
    * Returns a new ContextMenuProvider. Can be null, if no context-menu shall be displayed.
-   * 
+   *
    * @return A new ContextMenuProvider.
    */
   protected ContextMenuProvider createContextMenuProvider() {

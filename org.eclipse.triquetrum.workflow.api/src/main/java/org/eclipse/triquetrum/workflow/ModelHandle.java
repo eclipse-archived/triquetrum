@@ -18,12 +18,10 @@ import org.ptolemy.commons.VersionSpecification;
 
 import ptolemy.actor.CompositeActor;
 
-
 /**
  * A light-weight handle on a workflow model.
  * <p>
- * It offers direct access to some important metadata-properties for workflow models,
- * and can be used as a means to identify models and to work with them
+ * It offers direct access to some important metadata-properties for workflow models, and can be used as a means to identify models and to work with them
  * without needing to load/parse/build the actual model instance.
  * </p>
  *
@@ -48,18 +46,18 @@ public interface ModelHandle extends Serializable {
 
   /**
    *
-   * @return the model behind this handle.
-   * This may be a slow/heavy operation as it may involve reading the definition from a remote repository,
-   * parsing it and constructing all its model elements.
-   * @throws TriqException when the model can not be loaded/parsed for this handle
+   * @return the model behind this handle. This may be a slow/heavy operation as it may involve reading the definition from a remote repository, parsing it and
+   *         constructing all its model elements.
+   * @throws TriqException
+   *           when the model can not be loaded/parsed for this handle
    */
   CompositeActor getModel() throws TriqException;
 
   /**
-   * @return the model definition in its raw format, typically a MOML/XML.
-   * This may be empty for "compacted" handles, in which case the full contents can
-   * be explicitly loaded via RepositoryService.loadModelHandleWithContent.
-   * @throws TriqException when the raw model definition (moml/xml) can not be loaded for this handle
+   * @return the model definition in its raw format, typically a MOML/XML. This may be empty for "compacted" handles, in which case the full contents can be
+   *         explicitly loaded via RepositoryService.loadModelHandleWithContent.
+   * @throws TriqException
+   *           when the raw model definition (moml/xml) can not be loaded for this handle
    */
   String getRawModelDefinition() throws TriqException;
 }

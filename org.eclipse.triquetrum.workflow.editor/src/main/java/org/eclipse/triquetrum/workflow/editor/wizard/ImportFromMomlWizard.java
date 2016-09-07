@@ -51,7 +51,7 @@ public class ImportFromMomlWizard extends Wizard implements IImportWizard {
 
     List<?> selectedResources = IDE.computeSelectedResources(currentSelection);
     if (!selectedResources.isEmpty()) {
-        this.selection = new StructuredSelection(selectedResources);
+      this.selection = new StructuredSelection(selectedResources);
     }
   }
 
@@ -70,10 +70,10 @@ public class ImportFromMomlWizard extends Wizard implements IImportWizard {
     IResource destResource = ResourcesPlugin.getWorkspace().getRoot().findMember(destPath);
     IFolder destFolder = null;
     IProject destProject = null;
-    if(destResource instanceof IFolder) {
+    if (destResource instanceof IFolder) {
       destFolder = (IFolder) destResource;
-    } else if(destResource instanceof IProject) {
-      destProject = (IProject )destResource;
+    } else if (destResource instanceof IProject) {
+      destProject = (IProject) destResource;
       destFolder = destProject.getFolder("workflows"); //$NON-NLS-1$
     }
     try {

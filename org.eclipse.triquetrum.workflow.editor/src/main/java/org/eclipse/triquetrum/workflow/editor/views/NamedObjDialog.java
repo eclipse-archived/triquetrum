@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.views;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecp.ui.view.ECPRendererException;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTView;
 import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
@@ -57,7 +56,7 @@ public class NamedObjDialog extends Dialog {
     emfFormsParent.setLayout(new GridLayout());
 
     try {
-      view = ECPSWTViewRenderer.INSTANCE.render(emfFormsParent, (EObject) namedObj);
+      view = ECPSWTViewRenderer.INSTANCE.render(emfFormsParent, namedObj);
     } catch (final ECPRendererException e) {
     }
 
@@ -66,6 +65,7 @@ public class NamedObjDialog extends Dialog {
     return parent;
   }
 
+  @Override
   public void create() {
     super.create();
     getShell().setText("Edit Attributes of '" + namedObj.getName() + "'");

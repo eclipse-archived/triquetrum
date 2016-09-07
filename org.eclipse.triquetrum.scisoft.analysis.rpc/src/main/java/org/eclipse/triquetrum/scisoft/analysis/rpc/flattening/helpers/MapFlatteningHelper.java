@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -29,7 +29,7 @@ abstract public class MapFlatteningHelper<T> extends FlatteningHelper<T> {
   public abstract T unflatten(Map<?, ?> thisMap, IRootFlattener rootFlattener);
 
   public Map<String, Object> createMap(String typeName) {
-    Map<String, Object> outMap = new HashMap<String, Object>();
+    Map<String, Object> outMap = new HashMap<>();
     outMap.put(IFlattener.TYPE_KEY, typeName);
     return outMap;
   }

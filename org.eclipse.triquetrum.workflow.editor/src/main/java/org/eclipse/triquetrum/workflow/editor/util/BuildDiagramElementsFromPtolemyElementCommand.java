@@ -93,7 +93,7 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
         createModelElement(model, featureProvider, p, model);
       }
 
-      for (Entity entity : (List<Entity>) compPtElem.entityList(Entity.class)) {
+      for (Entity entity : compPtElem.entityList(Entity.class)) {
         createModelElement(model, featureProvider, entity, model);
       }
 
@@ -102,11 +102,11 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
       // that contain expressions with references to other parameters that may be later in the list.
 
       // First we take parameters ...
-      for (Parameter p : (List<Parameter>) ptolemyElement.attributeList(Parameter.class)) {
+      for (Parameter p : ptolemyElement.attributeList(Parameter.class)) {
         createModelElement(model, featureProvider, p, model);
       }
       // ... and annotations (i.e. TextAttributes)
-      for (TextAttribute a : (List<TextAttribute>) ptolemyElement.attributeList(TextAttribute.class)) {
+      for (TextAttribute a : ptolemyElement.attributeList(TextAttribute.class)) {
         createModelElement(model, featureProvider, a, model);
       }
 

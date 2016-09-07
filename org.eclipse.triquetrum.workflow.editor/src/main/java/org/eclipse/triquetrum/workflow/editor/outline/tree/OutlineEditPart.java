@@ -48,6 +48,7 @@ public class OutlineEditPart extends org.eclipse.gef.editparts.AbstractTreeEditP
    *
    * @return <code>null</code>
    */
+  @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected List getModelChildren() {
     List children = new ArrayList();

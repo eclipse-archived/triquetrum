@@ -36,7 +36,7 @@ public class ProcessingEventImpl<T> extends AbstractIdentifiable implements Proc
     this.context = context;
     this.topic = topic;
     this.message = message;
-    this.properties = Collections.unmodifiableMap(properties!=null ? properties : new HashMap<>());
+    this.properties = Collections.unmodifiableMap(properties != null ? properties : new HashMap<>());
   }
 
   public ProcessingEventImpl(T context, Long id, Date creationTS, String topic, String message, Map<String, String> properties) {
@@ -93,16 +93,14 @@ public class ProcessingEventImpl<T> extends AbstractIdentifiable implements Proc
     if (getClass() != obj.getClass())
       return false;
     ProcessingEventImpl<?> other = (ProcessingEventImpl<?>) obj;
-    return new EqualsBuilder().appendSuper(super.equals(obj)).
-        append(context, other.context).
-        append(topic, other.topic).
-        append(message, other.message).isEquals();
+    return new EqualsBuilder().appendSuper(super.equals(obj)).append(context, other.context).append(topic, other.topic).append(message, other.message)
+        .isEquals();
   }
 
   @Override
   public String toString() {
-    return "ProcessingEventImpl [getId()=" + getId() + ", getCreationTS()=" + getCreationTS()
-              + ", topic=" + topic + ", message=" + message + ", duration=" + duration + "]";
+    return "ProcessingEventImpl [getId()=" + getId() + ", getCreationTS()=" + getCreationTS() + ", topic=" + topic + ", message=" + message + ", duration="
+        + duration + "]";
   }
 
   // protected methods

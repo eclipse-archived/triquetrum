@@ -84,7 +84,7 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
     int inputPortCount = 0;
     int outputPortCount = 0;
     boolean actorNameChanged = false;
-    List<String> changedParameters = new ArrayList<String>();
+    List<String> changedParameters = new ArrayList<>();
 
     PictogramElement pictogramElement = context.getPictogramElement();
     Object bo = getBusinessObjectForPictogramElement(pictogramElement);
@@ -99,7 +99,7 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
         actorName = actor.getName();
 
         for (Shape shape : cs.getChildren()) {
-          String boName = Graphiti.getPeService().getPropertyValue(shape, FeatureConstants.BO_NAME);
+          Graphiti.getPeService().getPropertyValue(shape, FeatureConstants.BO_NAME);
           BoCategory boCategory = BoCategory.retrieveFrom(shape);
           if (shape.getGraphicsAlgorithm() instanceof Text) {
             Text text = (Text) shape.getGraphicsAlgorithm();
@@ -200,7 +200,7 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
     Set<Anchor> anchorsToBeDeleted = new HashSet<>();
     anchors.forEach(pa -> {
       Object bo = getBusinessObjectForPictogramElement(pa);
-      if (bo==null || !(ports.contains(bo))) {
+      if (bo == null || !(ports.contains(bo))) {
         anchorsToBeDeleted.add(pa);
         // This is explicitly needed it seems, cfr https://www.eclipse.org/forums/index.php/t/297903/ ,
         // otherwise we end up with the dreaded save-time error
@@ -238,7 +238,7 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
           a = null;
         }
       }
-      if(a==null) {
+      if (a == null) {
         a = createAnchor(containerShape, containerGA, anchors, i, p, width, height);
       }
     }
@@ -260,7 +260,8 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
     anchor.setReferencedGraphicsAlgorithm(containerGA);
     link(anchor, p, p.isOutput() ? BoCategory.Output : BoCategory.Input);
 
-    final Polygon portShape = Graphiti.getGaService().createPlainPolygon(anchor, new int[] { 0, 0, ActorAddFeature.PORT_SIZE, halfPortSize, 0, ActorAddFeature.PORT_SIZE });
+    final Polygon portShape = Graphiti.getGaService().createPlainPolygon(anchor,
+        new int[] { 0, 0, ActorAddFeature.PORT_SIZE, halfPortSize, 0, ActorAddFeature.PORT_SIZE });
     portShape.setForeground(manageColor(ActorAddFeature.PORT_FOREGROUND));
     IColorConstant portColour = p.isMultiPort() ? ActorAddFeature.PORT_BACKGROUND_MULTIPORT : ActorAddFeature.PORT_BACKGROUND_SINGLEPORT;
     portShape.setBackground(manageColor(portColour));

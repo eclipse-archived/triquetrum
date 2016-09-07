@@ -33,13 +33,13 @@ import ptolemy.actor.CompositeActor;
  *
  */
 public class ModelHandleImpl implements ModelHandle {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private URI resourceLocator;
-	private String code;
-	private VersionSpecification version;
-	private transient String rawMOML;
-	private transient CompositeActor model;
+  private URI resourceLocator;
+  private String code;
+  private VersionSpecification version;
+  private transient String rawMOML;
+  private transient CompositeActor model;
 
   /**
    * Use this constructor as the most light-weight representation of a well-defined workflow model.
@@ -55,8 +55,7 @@ public class ModelHandleImpl implements ModelHandle {
   }
 
   /**
-   * Use this constructor when the parsed model is already available,
-   * and when you expect that it must be accessed later on in its parsed shape.
+   * Use this constructor when the parsed model is already available, and when you expect that it must be accessed later on in its parsed shape.
    *
    * @param code
    * @param version
@@ -71,13 +70,13 @@ public class ModelHandleImpl implements ModelHandle {
   }
 
   @Override
-	public String getCode() {
-		return code;
-	}
+  public String getCode() {
+    return code;
+  }
 
-	@Override
-	public CompositeActor getModel() throws TriqException {
-    if (model == null && getResourceLocation()!=null) {
+  @Override
+  public CompositeActor getModel() throws TriqException {
+    if (model == null && getResourceLocation() != null) {
       try {
         model = (CompositeActor) WorkflowUtils.readFrom(getResourceLocation());
       } catch (Exception e) {
@@ -85,10 +84,10 @@ public class ModelHandleImpl implements ModelHandle {
       }
     }
     return model;
-	}
+  }
 
-	@Override
-	public String getRawModelDefinition() throws TriqException {
+  @Override
+  public String getRawModelDefinition() throws TriqException {
     if (rawMOML == null) {
       try {
         rawMOML = IOUtils.toString(getResourceLocation(), StandardCharsets.UTF_8.name());
@@ -97,17 +96,17 @@ public class ModelHandleImpl implements ModelHandle {
       }
     }
     return rawMOML;
-	}
+  }
 
-	@Override
-	public URI getResourceLocation() {
-		return resourceLocator;
-	}
+  @Override
+  public URI getResourceLocation() {
+    return resourceLocator;
+  }
 
-	@Override
-	public VersionSpecification getVersion() {
-		return version;
-	}
+  @Override
+  public VersionSpecification getVersion() {
+    return version;
+  }
 
   @Override
   public int hashCode() {

@@ -47,7 +47,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
   private final static Logger LOGGER = LoggerFactory.getLogger(DefaultTaskProcessingBroker.class);
 
   // a collection of all registered services, ordered by version in a set per name
-  private Map<String, SortedSet<ServiceEntry>> services = new ConcurrentHashMap<String, SortedSet<ServiceEntry>>();
+  private Map<String, SortedSet<ServiceEntry>> services = new ConcurrentHashMap<>();
 
   // using a scheduled executor service for timeout handling is more robust and offers better concurrency than a plain java.util.Timer.
   private ScheduledExecutorService delayTimer;
@@ -83,8 +83,10 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
     // when the processing is done or ended in error.
     // Timeout-handling for blocking services must be implemented in the service itself.
     // (and as remarked above, it might be best to do that for all service implementations anyway)
-    futResult = futResult.applyToEither(timeOutHandler, t -> {t.setStatus(ProcessingStatus.FINISHED); return t;})
-      .whenComplete((t, ex) -> {
+    futResult = futResult.applyToEither(timeOutHandler, t -> {
+      t.setStatus(ProcessingStatus.FINISHED);
+      return t;
+    }).whenComplete((t, ex) -> {
       if (ex != null) {
         ProcessingException pex = null;
         if (ex.getCause() instanceof ProcessingException) {
@@ -184,7 +186,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
     boolean result = false;
     SortedSet<ServiceEntry> svcSet = services.get(service.getName());
     if (svcSet == null) {
-      svcSet = new ConcurrentSkipListSet<DefaultTaskProcessingBroker.ServiceEntry>();
+      svcSet = new ConcurrentSkipListSet<>();
       services.put(service.getName(), svcSet);
     }
     if (svcSet.add(new ServiceEntry(service, svcVersion))) {
@@ -235,7 +237,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
     final CompletableFuture<Task> timeoutHandler = new CompletableFuture<>();
     if (timeout != null && unit != null && (timeout > 0)) {
       delayTimer.schedule(() -> {
-        return timeoutHandler.completeExceptionally(new TimeoutException("Task " + task.getId() + " timeout after " + timeout + " "+ unit));
+        return timeoutHandler.completeExceptionally(new TimeoutException("Task " + task.getId() + " timeout after " + timeout + " " + unit));
       }, timeout, unit);
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug("Task {} timeout set to {} {}", new Object[] { task.getId(), timeout, unit });
@@ -254,6 +256,7 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
       this.contextClassLoader = getClass().getClassLoader();
     }
 
+    @Override
     public Thread newThread(Runnable r) {
       Thread t = new Thread(r, namePrefix + threadNumber.getAndIncrement());
       t.setDaemon(true);
@@ -262,7 +265,6 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
       return t;
     }
   }
-
 
   /**
    * A pair of a service and its version

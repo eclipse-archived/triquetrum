@@ -39,9 +39,9 @@ public class WorkFlowRepositoryTest1 extends TestCase {
   private static final String HELLO_CODE2 = "HELLO2";
   private static final String HELLO_CODE3 = "HELLO3";
 
-  private static final File userHome              = new File(System.getProperty("user.home"));
+  private static final File userHome = new File(System.getProperty("user.home"));
   private static final File defaultRootFolderPath = new File(userHome, ".triquetrum/workflow-repository");
-  private static final String REPOS_ROOTFOLDER      = System.getProperty("org.eclipse.triquetrum.workflow.repository.root", defaultRootFolderPath.getAbsolutePath());
+  private static final String REPOS_ROOTFOLDER = System.getProperty("org.eclipse.triquetrum.workflow.repository.root", defaultRootFolderPath.getAbsolutePath());
 
   public static WorkflowRepositoryService repositoryService;
 
@@ -109,7 +109,7 @@ public class WorkFlowRepositoryTest1 extends TestCase {
   public void testMostRecentAfterUpdateWithActivate() throws Exception {
     ModelHandle commitHandle = repositoryService.commit(HELLO_CODE, buildTrivialFlow(HELLO_WORLD_FLOWNAME));
 
-    Map<String, String> paramOverrides = new HashMap<String, String>();
+    Map<String, String> paramOverrides = new HashMap<>();
     paramOverrides.put("const.value", "12345");
     CompositeActor f = WorkflowUtils.applyParameterSettings(commitHandle, null, paramOverrides);
 
@@ -123,7 +123,7 @@ public class WorkFlowRepositoryTest1 extends TestCase {
   public void testMostRecentAfterUpdateWithoutActivate() throws Exception {
     ModelHandle commitHandle = repositoryService.commit(HELLO_CODE, buildTrivialFlow(HELLO_WORLD_FLOWNAME));
 
-    Map<String, String> paramOverrides = new HashMap<String, String>();
+    Map<String, String> paramOverrides = new HashMap<>();
     paramOverrides.put("const.value", "12345");
     CompositeActor f = WorkflowUtils.applyParameterSettings(commitHandle, null, paramOverrides);
 
@@ -153,7 +153,7 @@ public class WorkFlowRepositoryTest1 extends TestCase {
     repositoryService.commit(HELLO_CODE, buildTrivialFlow(HELLO_WORLD_FLOWNAME));
     ModelHandle activeHandle = repositoryService.getActiveModel(HELLO_CODE);
 
-    Map<String, String> paramOverrides = new HashMap<String, String>();
+    Map<String, String> paramOverrides = new HashMap<>();
     paramOverrides.put("const.value", "12345");
     CompositeActor f = WorkflowUtils.applyParameterSettings(activeHandle, null, paramOverrides);
 
@@ -161,7 +161,7 @@ public class WorkFlowRepositoryTest1 extends TestCase {
     ModelHandle activeHandle2 = repositoryService.getActiveModel(HELLO_CODE);
 
     assertFalse("Updated handle should not be the previously active one", activeHandle.equals(updatedHandle));
-    assertEquals("Updated handle should be the new active one", activeHandle2,updatedHandle);
+    assertEquals("Updated handle should be the new active one", activeHandle2, updatedHandle);
     assertEquals("Code should remain the same for an update", activeHandle.getCode(), updatedHandle.getCode());
     assertTrue("Version must have increased after update", updatedHandle.getVersion().compareTo(activeHandle.getVersion()) > 0);
   }
@@ -170,7 +170,7 @@ public class WorkFlowRepositoryTest1 extends TestCase {
     repositoryService.commit(HELLO_CODE, buildTrivialFlow(HELLO_WORLD_FLOWNAME));
     ModelHandle activeHandle = repositoryService.getActiveModel(HELLO_CODE);
 
-    Map<String, String> paramOverrides = new HashMap<String, String>();
+    Map<String, String> paramOverrides = new HashMap<>();
     paramOverrides.put("const.value", "12345");
     CompositeActor f = WorkflowUtils.applyParameterSettings(activeHandle, null, paramOverrides);
 
@@ -180,8 +180,8 @@ public class WorkFlowRepositoryTest1 extends TestCase {
     ModelHandle activeHandle2 = repositoryService.getActiveModel(HELLO_CODE);
 
     assertFalse("Updated handle should not be the previously active one", activeHandle.equals(updatedHandle));
-    assertEquals("Previously active handle should be the originally committed one", activeHandle,previouslyActiveHandle);
-    assertEquals("Updated handle should be the new active one", activeHandle2,updatedHandle);
+    assertEquals("Previously active handle should be the originally committed one", activeHandle, previouslyActiveHandle);
+    assertEquals("Updated handle should be the new active one", activeHandle2, updatedHandle);
     assertEquals("Code should remain the same for an update followed by an activation", activeHandle.getCode(), updatedHandle.getCode());
     assertTrue("Version must have increased after update", updatedHandle.getVersion().compareTo(activeHandle.getVersion()) > 0);
   }
@@ -190,7 +190,7 @@ public class WorkFlowRepositoryTest1 extends TestCase {
     repositoryService.commit(HELLO_CODE, buildTrivialFlow(HELLO_WORLD_FLOWNAME));
     ModelHandle activeHandle = repositoryService.getActiveModel(HELLO_CODE);
 
-    Map<String, String> paramOverrides = new HashMap<String, String>();
+    Map<String, String> paramOverrides = new HashMap<>();
     paramOverrides.put("const.value", "12345");
     CompositeActor f = WorkflowUtils.applyParameterSettings(activeHandle, null, paramOverrides);
 

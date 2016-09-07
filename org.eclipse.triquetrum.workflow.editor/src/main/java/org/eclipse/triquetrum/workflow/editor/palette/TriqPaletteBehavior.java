@@ -25,9 +25,9 @@ import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.internal.editor.GFCreationTool;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider;
-import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.palette.ui.PaletteTreeViewerProvider;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 /**
  * Interprets Triquetrum PaletteContribution extensions and constructs a palette group/entry hierarchy.
@@ -44,7 +44,7 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
 
   @Override
   protected PaletteViewerProvider createPaletteViewerProvider() {
-//    return super.createPaletteViewerProvider();
+    // return super.createPaletteViewerProvider();
     return new PaletteTreeViewerProvider(diagramBehavior);
   }
 
@@ -70,9 +70,9 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
     iconResource = !StringUtils.isBlank(iconResource) ? iconResource : null;
     iconResource = TriqFeatureProvider.ICONTYPE_IMG.equalsIgnoreCase(iconType) ? iconResource : null;
     ImageDescriptor imgDescriptor = null;
-    if(iconResource!=null) {
+    if (iconResource != null) {
       getDiagramTypeProvider().getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource, iconResource);
-      imgDescriptor = TriqEditorPlugin.imageDescriptorFromPlugin(cfgElem.getDeclaringExtension().getContributor().getName(), iconResource);
+      imgDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(cfgElem.getDeclaringExtension().getContributor().getName(), iconResource);
     }
     switch (cfgElem.getName()) {
     case "entry": {
@@ -98,6 +98,7 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
   private TriqFeatureProvider getFeatureProvider() {
     return (TriqFeatureProvider) getDiagramTypeProvider().getFeatureProvider();
   }
+
   private TriqDiagramTypeProvider getDiagramTypeProvider() {
     return (TriqDiagramTypeProvider) this.diagramBehavior.getDiagramTypeProvider();
   }
