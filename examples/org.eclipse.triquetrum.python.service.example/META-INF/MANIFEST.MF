@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Python RPC Example
+Bundle-Name: Python RPC Example (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.python.service.example
 Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: iSencia

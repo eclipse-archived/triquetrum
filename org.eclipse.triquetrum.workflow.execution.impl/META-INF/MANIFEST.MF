@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Triquetrum Workflow Execution Impl
+Bundle-Name: Triquetrum Workflow Execution Impl (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.execution.impl
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
