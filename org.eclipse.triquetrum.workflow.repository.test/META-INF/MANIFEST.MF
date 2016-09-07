@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Triquetrum workflow execution tests
+Bundle-Name: Triquetrum workflow execution tests (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.execution.test
 Bundle-Version: 1.0.0.qualifier
 Fragment-Host: org.eclipse.triquetrum.workflow.repository.impl.filesystem;bundle-version="1.0.0.qualifier"

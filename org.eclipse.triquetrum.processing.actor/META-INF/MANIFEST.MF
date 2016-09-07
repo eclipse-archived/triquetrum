@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Processing Actor implementations
+Bundle-Name: Processing Actor implementations (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.processing.actor
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.triquetrum.processing.actor.activator.Activator
