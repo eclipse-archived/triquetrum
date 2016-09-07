@@ -1,0 +1,14 @@
+# Set up line endings. 
+# See https://help.github.com/articles/dealing-with-line-endings/
+
+# The default behavior, for people who have not set core.autocrlf.
+* text=auto
+
+.classpath text
+*.java text
+.project text
+*.properties text
+*.xml text
+
+
+
