@@ -14,9 +14,8 @@ package org.eclipse.triquetrum.processing.model;
 import java.util.Date;
 
 /**
- * Base interface for all things that are identifiable with a unique primary key,
- * with a non-business-key, i.e. a simple generated number or so.
- * 
+ * Base interface for all things that are identifiable with a unique primary key, with a non-business-key, i.e. a simple generated number or so.
+ *
  */
 public interface Identifiable {
 
@@ -24,6 +23,6 @@ public interface Identifiable {
    * @return the PK
    */
   Long getId();
-  
+
   Date getCreationTS();
 }

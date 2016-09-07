@@ -26,14 +26,14 @@ public class DuplicateEntryException extends TriqException {
    * @param modelCode
    */
   public DuplicateEntryException(String modelCode) {
-    super(ErrorCode.MODEL_LOADING_ERROR, "Model "+modelCode+" already exists in the repository", null);
+    super(ErrorCode.MODEL_LOADING_ERROR, "Model " + modelCode + " already exists in the repository", null);
   }
-  
+
   /**
    * @param modelCode
    * @param model
    */
   public DuplicateEntryException(String modelCode, TypedCompositeActor model) {
-    super(ErrorCode.MODEL_LOADING_ERROR, "Model "+modelCode+" already exists in the repository", model, null);
+    super(ErrorCode.MODEL_LOADING_ERROR, "Model " + modelCode + " already exists in the repository", model, null);
   }
 }

@@ -46,6 +46,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
     super(fp);
   }
 
+  @Override
   public boolean canPaste(IPasteContext context) {
     // can paste, if at least one valid element in the clipboard
     Object[] fromClipboard = getFromClipboard();
@@ -60,6 +61,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
     return false;
   }
 
+  @Override
   public void paste(IPasteContext context) {
     Diagram diagram = getDiagram();
     CompositeActor model = (CompositeActor) getBusinessObjectForPictogramElement(getDiagram());
@@ -83,7 +85,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
         double[] originalLocation = EditorUtils.getLocation(pe);
         double[] newLocation = new double[] { originalLocation[0] + xOffset, originalLocation[1] + yOffset };
         Object object = getBusinessObjectForPictogramElement(pe);
-        if(object instanceof Vertex) {
+        if (object instanceof Vertex) {
           // The child/container associations can not easily be cloned here, as a Vertex's container is a Relation!?
           // And the original relations also have connections to ports etc.
           // Cloning the combination of Relation/Vertex/linked-ports seems to always lead to problems with the order of doing cloning things...
@@ -103,7 +105,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
           relation.getAttributes().add(clonedChild);
 
           AddContext addCtxt = new AddContext();
-          addCtxt.setLocation((int)newLocation[0], (int)newLocation[1]);
+          addCtxt.setLocation((int) newLocation[0], (int) newLocation[1]);
           addCtxt.putProperty(FeatureConstants.ANCHORMAP_NAME, anchorMap);
           addCtxt.setTargetContainer(diagram);
           getFeatureProvider().addIfPossible(new AddContext(addCtxt, clonedChild));
@@ -154,11 +156,11 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
         addContext.setNewObject(copiedRelation);
         PictogramElement copiedConnection = getFeatureProvider().addIfPossible(addContext);
         // TODO find a way to copy other connection properties to the copied connection, if this would be needed?
-        if(connection instanceof FreeFormConnection && copiedConnection instanceof FreeFormConnection) {
+        if (connection instanceof FreeFormConnection && copiedConnection instanceof FreeFormConnection) {
           FreeFormConnection copiedFFC = (FreeFormConnection) copiedConnection;
           IGaService gaService = Graphiti.getGaService();
-          for (Point point : ((FreeFormConnection)connection).getBendpoints()) {
-            copiedFFC.getBendpoints().add(gaService.createPoint(point.getX()+xOffset, point.getY()+yOffset));
+          for (Point point : ((FreeFormConnection) connection).getBendpoints()) {
+            copiedFFC.getBendpoints().add(gaService.createPoint(point.getX() + xOffset, point.getY() + yOffset));
           }
         }
       } catch (IllegalActionException e) {
@@ -168,10 +170,11 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
     }
   }
 
-  private NamedObj getCopiedRelationSide(CompositeActor model, NamedObj originalRelationSide, Map<String, String> oldNewElementNames, Map<String, Vertex> clonedVertexMap) {
+  private NamedObj getCopiedRelationSide(CompositeActor model, NamedObj originalRelationSide, Map<String, String> oldNewElementNames,
+      Map<String, Vertex> clonedVertexMap) {
     NamedObj copiedRelationSide = null;
     String origContainerName = originalRelationSide.getContainer().getName();
-    if(originalRelationSide instanceof Port) {
+    if (originalRelationSide instanceof Port) {
       NamedObj copiedPortContainer = model.getChild(oldNewElementNames.get(origContainerName));
       copiedRelationSide = copiedPortContainer.getChild(originalRelationSide.getName());
     } else if (originalRelationSide instanceof Vertex) {

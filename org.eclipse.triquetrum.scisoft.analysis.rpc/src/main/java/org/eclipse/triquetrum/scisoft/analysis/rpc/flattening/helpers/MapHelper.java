@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -16,10 +16,9 @@ package org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.helpers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.IRootFlattener;
-
-import java.util.Set;
 
 @SuppressWarnings("rawtypes")
 public class MapHelper extends MapFlatteningHelper<Map> {
@@ -54,7 +53,7 @@ public class MapHelper extends MapFlatteningHelper<Map> {
 
   @Override
   public Map<?, ?> unflatten(Map<?, ?> inMap, IRootFlattener rootFlattener) {
-    Map<Object, Object> returnMap = new HashMap<Object, Object>();
+    Map<Object, Object> returnMap = new HashMap<>();
     Object[] keys = (Object[]) inMap.get(KEYS);
     Object[] values = (Object[]) inMap.get(VALUES);
     if (keys.length != values.length) {

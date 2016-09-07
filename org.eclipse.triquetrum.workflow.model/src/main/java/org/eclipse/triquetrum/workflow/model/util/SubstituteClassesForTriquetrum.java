@@ -33,11 +33,12 @@ import ptolemy.moml.filter.MoMLFilterSimple;
 public class SubstituteClassesForTriquetrum extends MoMLFilterSimple {
 
   private final static Logger LOGGER = LoggerFactory.getLogger(SubstituteClassesForTriquetrum.class);
+
   /**
    * Clear the map of class renames and the set of class removals.
    */
   public static void clear() {
-    _classChanges = new HashMap<String, String>();
+    _classChanges = new HashMap<>();
   }
 
   /**
@@ -78,7 +79,7 @@ public class SubstituteClassesForTriquetrum extends MoMLFilterSimple {
         // We found a class with a class change.
         MoMLParser.setModified(true);
 
-        return (String) changedClassName;
+        return changedClassName;
       }
     }
     return attributeValue;
@@ -103,8 +104,8 @@ public class SubstituteClassesForTriquetrum extends MoMLFilterSimple {
   }
 
   /**
-   * Add a class to be filtered. Note that if you add a class with this method, then you must remove it with {@link #remove(String)}, calling
-   * "new ClassChanges()" will not remove a class that was added with this method.
+   * Add a class to be filtered. Note that if you add a class with this method, then you must remove it with {@link #remove(String)}, calling "new
+   * ClassChanges()" will not remove a class that was added with this method.
    *
    * @param oldName
    *          The old name of the class to be filtered.
@@ -134,8 +135,7 @@ public class SubstituteClassesForTriquetrum extends MoMLFilterSimple {
    */
   @Override
   public String toString() {
-    StringBuffer results = new StringBuffer(getClass().getName() + ": change any class names that have been "
-        + "renamed and remove obsolete classes.\n"
+    StringBuffer results = new StringBuffer(getClass().getName() + ": change any class names that have been " + "renamed and remove obsolete classes.\n"
         + "Below are original class names followed by the new class names:\n");
 
     for (Map.Entry<String, String> classChange : _classChanges.entrySet()) {
@@ -154,7 +154,7 @@ public class SubstituteClassesForTriquetrum extends MoMLFilterSimple {
   static {
     ///////////////////////////////////////////////////////////
     // Actors and attributes that have changed names.
-    _classChanges = new HashMap<String, String>();
+    _classChanges = new HashMap<>();
     _classChanges.put("ptolemy.actor.gui.WindowPropertiesAttribute", "org.eclipse.triquetrum.workflow.ui.WindowPropertiesAttribute");
     _classChanges.put("ptolemy.actor.lib.gui.XYPlotter", "org.eclipse.triquetrum.workflow.actor.plot.XYPlotActor");
   }

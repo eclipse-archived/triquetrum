@@ -53,11 +53,13 @@ public class TriqDiagramBehavior extends DiagramBehavior {
   /**
    * Override this to enforce that connections can also be selected with a mouse drag marquee selection.
    */
+  @Override
   protected void configureGraphicalViewer() {
 
     ScrollingGraphicalViewer viewer = (ScrollingGraphicalViewer) getDiagramContainer().getGraphicalViewer();
 
     ScalableRootEditPartAnimated rootEditPart = new ScalableRootEditPartAnimated(viewer, getConfigurationProvider()) {
+      @Override
       protected GridLayer createGridLayer() {
         return new org.eclipse.graphiti.ui.internal.util.draw2d.GridLayer((IConfigurationProviderInternal) getConfigurationProvider());
       }
@@ -75,7 +77,7 @@ public class TriqDiagramBehavior extends DiagramBehavior {
 
     // animation of the zoom
     ZoomManager zoomManager = rootEditPart.getZoomManager();
-    List<String> zoomLevels = new ArrayList<String>(3);
+    List<String> zoomLevels = new ArrayList<>(3);
     zoomLevels.add(ZoomManager.FIT_ALL);
     zoomLevels.add(ZoomManager.FIT_WIDTH);
     zoomLevels.add(ZoomManager.FIT_HEIGHT);

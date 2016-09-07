@@ -88,7 +88,7 @@ public class WindowPropertiesAttribute extends Parameter implements ControlListe
   @Override
   public Object clone(Workspace workspace) throws CloneNotSupportedException {
     WindowPropertiesAttribute newObject = (WindowPropertiesAttribute) super.clone(workspace);
-    newObject._listeningTo = new WeakReference<Shell>(null);
+    newObject._listeningTo = new WeakReference<>(null);
     return newObject;
   }
 
@@ -196,13 +196,12 @@ public class WindowPropertiesAttribute extends Parameter implements ControlListe
   }
 
   /**
-   * Set the properties of the specified frame to match the current value of the attribute.
-   * If the value of the attribute has not been set, then do nothing and return true.
-   * If the value of this attribute is malformed in any way, then just return false.
+   * Set the properties of the specified frame to match the current value of the attribute. If the value of the attribute has not been set, then do nothing and
+   * return true. If the value of this attribute is malformed in any way, then just return false.
    *
    * <p>
-   * If the x or y position is less than 0 pixels or greater than (width - 10 pixels) or (height - 10) pixels of the screen,
-   * then offset the position by 30 pixels so the user can drag the window.
+   * If the x or y position is less than 0 pixels or greater than (width - 10 pixels) or (height - 10) pixels of the screen, then offset the position by 30
+   * pixels so the user can drag the window.
    *
    * @param shell
    *          The shell whose properties are to be set.

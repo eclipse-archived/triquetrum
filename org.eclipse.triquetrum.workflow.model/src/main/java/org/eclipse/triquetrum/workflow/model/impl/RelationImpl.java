@@ -27,6 +27,7 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.Vertex;
+
 import ptolemy.kernel.ComponentRelation;
 import ptolemy.kernel.util.IllegalActionException;
 
@@ -36,17 +37,17 @@ import ptolemy.kernel.util.IllegalActionException;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedRelations <em>Linked Relations</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkingRelations <em>Linking Relations</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedPorts <em>Linked Ports</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedRelations <em>Linked Relations</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkingRelations <em>Linking Relations</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl#getLinkedPorts <em>Linked Ports</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class RelationImpl extends NamedObjImpl implements Relation {
   /**
-   * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getLinkedRelations()
    * @generated
    * @ordered
@@ -54,8 +55,8 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   protected EList<Relation> linkedRelations;
 
   /**
-   * The cached value of the '{@link #getLinkingRelations() <em>Linking Relations</em>}' reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getLinkingRelations() <em>Linking Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getLinkingRelations()
    * @generated
    * @ordered
@@ -63,9 +64,8 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   protected EList<Relation> linkingRelations;
 
   /**
-   * The cached value of the '{@link #getLinkedPorts() <em>Linked Ports</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * The cached value of the '{@link #getLinkedPorts() <em>Linked Ports</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getLinkedPorts()
    * @generated
    * @ordered
@@ -73,14 +73,14 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   protected EList<Port> linkedPorts;
 
   /**
-   * reference to the optional vertex in the collection of attributes
-   * TODO investigate if EMF does not provide a way to model this as well,
-   * i.o. now using manual coding.
+   * reference to the optional vertex in the collection of attributes TODO investigate if EMF does not provide a way to model this as well, i.o. now using
+   * manual coding.
    */
   protected Vertex vertex;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected RelationImpl() {
@@ -89,6 +89,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -98,22 +99,28 @@ public class RelationImpl extends NamedObjImpl implements Relation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public EList<Relation> getLinkedRelations() {
     if (linkedRelations == null) {
-      linkedRelations = new EObjectWithInverseResolvingEList.ManyInverse<Relation>(Relation.class, this, TriqPackage.RELATION__LINKED_RELATIONS, TriqPackage.RELATION__LINKING_RELATIONS);
+      linkedRelations = new EObjectWithInverseResolvingEList.ManyInverse<>(Relation.class, this, TriqPackage.RELATION__LINKED_RELATIONS,
+          TriqPackage.RELATION__LINKING_RELATIONS);
     }
     return linkedRelations;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public EList<Relation> getLinkingRelations() {
     if (linkingRelations == null) {
-      linkingRelations = new EObjectWithInverseResolvingEList.ManyInverse<Relation>(Relation.class, this, TriqPackage.RELATION__LINKING_RELATIONS, TriqPackage.RELATION__LINKED_RELATIONS);
+      linkingRelations = new EObjectWithInverseResolvingEList.ManyInverse<>(Relation.class, this, TriqPackage.RELATION__LINKING_RELATIONS,
+          TriqPackage.RELATION__LINKED_RELATIONS);
     }
     return linkingRelations;
   }
@@ -123,10 +130,11 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    *
    * @generated NOT
    */
+  @Override
   public void link(Relation relation) {
-      if (this != relation && !getLinkedRelations().contains(relation)) {
-        getLinkedRelations().add(relation);
-      }
+    if (this != relation && !getLinkedRelations().contains(relation)) {
+      getLinkedRelations().add(relation);
+    }
   }
 
   /**
@@ -134,11 +142,12 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    *
    * @generated NOT
    */
+  @Override
   public void unlink(Relation relation) {
-      if (relation != this) {
-        getLinkedRelations().remove(relation);
-        getLinkingRelations().remove(relation);
-      }
+    if (relation != this) {
+      getLinkedRelations().remove(relation);
+      getLinkingRelations().remove(relation);
+    }
   }
 
   /**
@@ -146,6 +155,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    *
    * @generated NOT
    */
+  @Override
   public boolean isConnected() {
 
     return !getLinkedPorts().isEmpty() || !getLinkedRelations().isEmpty() || !getLinkingRelations().isEmpty()
@@ -158,18 +168,21 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    *
    * @generated NOT
    */
+  @Override
   public Vertex getVertex() {
     return vertex;
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public EList<Port> getLinkedPorts() {
     if (linkedPorts == null) {
-      linkedPorts = new EObjectWithInverseResolvingEList.ManyInverse<Port>(Port.class, this, TriqPackage.RELATION__LINKED_PORTS, TriqPackage.PORT__LINKED_RELATIONS);
+      linkedPorts = new EObjectWithInverseResolvingEList.ManyInverse<>(Port.class, this, TriqPackage.RELATION__LINKED_PORTS,
+          TriqPackage.PORT__LINKED_RELATIONS);
     }
     return linkedPorts;
   }
@@ -229,28 +242,28 @@ public class RelationImpl extends NamedObjImpl implements Relation {
       switch (notification.getEventType()) {
       case Notification.ADD:
         Attribute addedAttribute = (Attribute) notification.getNewValue();
-        if(addedAttribute instanceof Vertex) {
+        if (addedAttribute instanceof Vertex) {
           vertex = (Vertex) addedAttribute;
         }
         break;
       case Notification.ADD_MANY:
         List<Attribute> addedAttributes = (List<Attribute>) notification.getNewValue();
-        for(Attribute a : addedAttributes) {
-          if(a instanceof Vertex) {
+        for (Attribute a : addedAttributes) {
+          if (a instanceof Vertex) {
             vertex = (Vertex) a;
           }
         }
         break;
       case Notification.REMOVE:
         Attribute removedAttribute = (Attribute) notification.getOldValue();
-        if(removedAttribute==vertex) {
+        if (removedAttribute == vertex) {
           vertex = null;
         }
         break;
       case Notification.REMOVE_MANY:
         List<Attribute> removedAttributes = (List<Attribute>) notification.getOldValue();
-        for(Attribute a : removedAttributes) {
-          if(a==vertex) {
+        for (Attribute a : removedAttributes) {
+          if (a == vertex) {
             vertex = null;
           }
         }
@@ -283,134 +296,141 @@ public class RelationImpl extends NamedObjImpl implements Relation {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_RELATIONS:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkedRelations()).basicAdd(otherEnd, msgs);
-      case TriqPackage.RELATION__LINKING_RELATIONS:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkingRelations()).basicAdd(otherEnd, msgs);
-      case TriqPackage.RELATION__LINKED_PORTS:
-        return ((InternalEList<InternalEObject>)(InternalEList<?>)getLinkedPorts()).basicAdd(otherEnd, msgs);
+    case TriqPackage.RELATION__LINKED_RELATIONS:
+      return ((InternalEList<InternalEObject>) (InternalEList<?>) getLinkedRelations()).basicAdd(otherEnd, msgs);
+    case TriqPackage.RELATION__LINKING_RELATIONS:
+      return ((InternalEList<InternalEObject>) (InternalEList<?>) getLinkingRelations()).basicAdd(otherEnd, msgs);
+    case TriqPackage.RELATION__LINKED_PORTS:
+      return ((InternalEList<InternalEObject>) (InternalEList<?>) getLinkedPorts()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_RELATIONS:
-        return ((InternalEList<?>)getLinkedRelations()).basicRemove(otherEnd, msgs);
-      case TriqPackage.RELATION__LINKING_RELATIONS:
-        return ((InternalEList<?>)getLinkingRelations()).basicRemove(otherEnd, msgs);
-      case TriqPackage.RELATION__LINKED_PORTS:
-        return ((InternalEList<?>)getLinkedPorts()).basicRemove(otherEnd, msgs);
+    case TriqPackage.RELATION__LINKED_RELATIONS:
+      return ((InternalEList<?>) getLinkedRelations()).basicRemove(otherEnd, msgs);
+    case TriqPackage.RELATION__LINKING_RELATIONS:
+      return ((InternalEList<?>) getLinkingRelations()).basicRemove(otherEnd, msgs);
+    case TriqPackage.RELATION__LINKED_PORTS:
+      return ((InternalEList<?>) getLinkedPorts()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_RELATIONS:
-        return getLinkedRelations();
-      case TriqPackage.RELATION__LINKING_RELATIONS:
-        return getLinkingRelations();
-      case TriqPackage.RELATION__LINKED_PORTS:
-        return getLinkedPorts();
+    case TriqPackage.RELATION__LINKED_RELATIONS:
+      return getLinkedRelations();
+    case TriqPackage.RELATION__LINKING_RELATIONS:
+      return getLinkingRelations();
+    case TriqPackage.RELATION__LINKED_PORTS:
+      return getLinkedPorts();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_RELATIONS:
-        getLinkedRelations().clear();
-        getLinkedRelations().addAll((Collection<? extends Relation>)newValue);
-        return;
-      case TriqPackage.RELATION__LINKING_RELATIONS:
-        getLinkingRelations().clear();
-        getLinkingRelations().addAll((Collection<? extends Relation>)newValue);
-        return;
-      case TriqPackage.RELATION__LINKED_PORTS:
-        getLinkedPorts().clear();
-        getLinkedPorts().addAll((Collection<? extends Port>)newValue);
-        return;
+    case TriqPackage.RELATION__LINKED_RELATIONS:
+      getLinkedRelations().clear();
+      getLinkedRelations().addAll((Collection<? extends Relation>) newValue);
+      return;
+    case TriqPackage.RELATION__LINKING_RELATIONS:
+      getLinkingRelations().clear();
+      getLinkingRelations().addAll((Collection<? extends Relation>) newValue);
+      return;
+    case TriqPackage.RELATION__LINKED_PORTS:
+      getLinkedPorts().clear();
+      getLinkedPorts().addAll((Collection<? extends Port>) newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_RELATIONS:
-        getLinkedRelations().clear();
-        return;
-      case TriqPackage.RELATION__LINKING_RELATIONS:
-        getLinkingRelations().clear();
-        return;
-      case TriqPackage.RELATION__LINKED_PORTS:
-        getLinkedPorts().clear();
-        return;
+    case TriqPackage.RELATION__LINKED_RELATIONS:
+      getLinkedRelations().clear();
+      return;
+    case TriqPackage.RELATION__LINKING_RELATIONS:
+      getLinkingRelations().clear();
+      return;
+    case TriqPackage.RELATION__LINKED_PORTS:
+      getLinkedPorts().clear();
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-      case TriqPackage.RELATION__LINKED_RELATIONS:
-        return linkedRelations != null && !linkedRelations.isEmpty();
-      case TriqPackage.RELATION__LINKING_RELATIONS:
-        return linkingRelations != null && !linkingRelations.isEmpty();
-      case TriqPackage.RELATION__LINKED_PORTS:
-        return linkedPorts != null && !linkedPorts.isEmpty();
+    case TriqPackage.RELATION__LINKED_RELATIONS:
+      return linkedRelations != null && !linkedRelations.isEmpty();
+    case TriqPackage.RELATION__LINKING_RELATIONS:
+      return linkingRelations != null && !linkingRelations.isEmpty();
+    case TriqPackage.RELATION__LINKED_PORTS:
+      return linkedPorts != null && !linkedPorts.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.RELATION___LINK__RELATION:
-        link((Relation)arguments.get(0));
-        return null;
-      case TriqPackage.RELATION___UNLINK__RELATION:
-        unlink((Relation)arguments.get(0));
-        return null;
-      case TriqPackage.RELATION___IS_CONNECTED:
-        return isConnected();
-      case TriqPackage.RELATION___GET_VERTEX:
-        return getVertex();
+    case TriqPackage.RELATION___LINK__RELATION:
+      link((Relation) arguments.get(0));
+      return null;
+    case TriqPackage.RELATION___UNLINK__RELATION:
+      unlink((Relation) arguments.get(0));
+      return null;
+    case TriqPackage.RELATION___IS_CONNECTED:
+      return isConnected();
+    case TriqPackage.RELATION___GET_VERTEX:
+      return getVertex();
     }
     return super.eInvoke(operationID, arguments);
   }

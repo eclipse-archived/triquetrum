@@ -15,10 +15,11 @@ import java.util.concurrent.RunnableFuture;
 
 /**
  * @see JCIP 7.1.7, Listing 7.12
- * 
+ *
  * @author erwin
  */
 public interface CancellableTask<T> extends Callable<T> {
   void cancel();
+
   RunnableFuture<T> newFutureTask();
 }

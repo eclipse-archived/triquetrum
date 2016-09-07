@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -47,7 +47,7 @@ public class RootFlattener implements IRootFlattener {
    * {@link FlatteningService#getFlattener()}.
    */
   public RootFlattener() {
-    flatteningHelpers = new LinkedList<IFlattener<?>>();
+    flatteningHelpers = new LinkedList<>();
 
     // These are used in order by flatten() so how they are added implies
     // precedence
@@ -79,7 +79,7 @@ public class RootFlattener implements IRootFlattener {
   /**
    * Take an object that has been flattened for transmission over XML RPC and try to reconstruct the original object. Containers are always returned as arrays
    * of unflattened objects. Known types e.g. RectangularROI are reconstructed to their respective types.
-   * 
+   *
    * @param obj
    *          a flattened object. This object is not modified.
    * @return the unflattened version of obj

@@ -58,7 +58,7 @@ public class WizardUtils {
     }
 
     String editorID = TriqDiagramEditor.EDITOR_ID;
-    String editorExtension = TriqDiagramEditor.DIAGRAM_FILE_EXTENSION; //$NON-NLS-1$
+    String editorExtension = TriqDiagramEditor.DIAGRAM_FILE_EXTENSION;
     String diagramTypeProviderId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagramTypeId);
     String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$
     IEditorDescriptor specificEditor = PlatformUI.getWorkbench().getEditorRegistry().findEditor(namingConventionID);
@@ -109,8 +109,8 @@ public class WizardUtils {
   }
 
   /**
-   * Iterate over all model elements in a Ptolemy II model, create corresponding elements in a Triq workflow diagram,
-   * and store the diagram file in the given destination folder.
+   * Iterate over all model elements in a Ptolemy II model, create corresponding elements in a Triq workflow diagram, and store the diagram file in the given
+   * destination folder.
    *
    * @param destFolder
    * @param diagram

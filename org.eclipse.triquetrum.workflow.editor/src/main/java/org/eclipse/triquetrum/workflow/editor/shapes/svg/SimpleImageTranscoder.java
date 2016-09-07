@@ -26,7 +26,6 @@ import org.apache.batik.transcoder.SVGAbstractTranscoder;
 import org.apache.batik.transcoder.TranscoderException;
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
-import org.apache.batik.transcoder.image.ImageTranscoder;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.w3c.dom.Document;
 
@@ -101,8 +100,8 @@ public class SimpleImageTranscoder extends SVGAbstractTranscoder {
   }
 
   /**
-   * Call before querying for CSS properties. If document has CSS engine installed returns null. Client is responsible to
-   * dispose bridge context if it was returned by this method.
+   * Call before querying for CSS properties. If document has CSS engine installed returns null. Client is responsible to dispose bridge context if it was
+   * returned by this method.
    */
   public BridgeContext initCSSEngine() {
     if (this.document == null) {
@@ -133,19 +132,19 @@ public class SimpleImageTranscoder extends SVGAbstractTranscoder {
     }
     try {
       if (canvasWidth >= 0) {
-        addTranscodingHint(ImageTranscoder.KEY_WIDTH, new Float(canvasWidth));
+        addTranscodingHint(SVGAbstractTranscoder.KEY_WIDTH, new Float(canvasWidth));
       } else {
-        removeTranscodingHint(ImageTranscoder.KEY_WIDTH);
+        removeTranscodingHint(SVGAbstractTranscoder.KEY_WIDTH);
       }
       if (canvasHeight >= 0) {
-        addTranscodingHint(ImageTranscoder.KEY_HEIGHT, new Float(canvasHeight));
+        addTranscodingHint(SVGAbstractTranscoder.KEY_HEIGHT, new Float(canvasHeight));
       } else {
-        removeTranscodingHint(ImageTranscoder.KEY_HEIGHT);
+        removeTranscodingHint(SVGAbstractTranscoder.KEY_HEIGHT);
       }
       if (canvasAOI != null) {
-        addTranscodingHint(ImageTranscoder.KEY_AOI, canvasAOI);
+        addTranscodingHint(SVGAbstractTranscoder.KEY_AOI, canvasAOI);
       } else {
-        removeTranscodingHint(ImageTranscoder.KEY_AOI);
+        removeTranscodingHint(SVGAbstractTranscoder.KEY_AOI);
       }
       transcode(new TranscoderInput(document), new TranscoderOutput());
     } catch (TranscoderException e) {
@@ -153,6 +152,7 @@ public class SimpleImageTranscoder extends SVGAbstractTranscoder {
     }
   }
 
+  @Override
   protected void transcode(Document document, String uri, TranscoderOutput output) throws TranscoderException {
     super.transcode(document, uri, output);
     int w = (int) (width + 0.5);

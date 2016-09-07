@@ -20,35 +20,34 @@ import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 
 /**
- * This is not in use for the moment.
- * Color changes for annotations are handled via the EMF Form, with a custom ColorControlRenderer.
+ * This is not in use for the moment. Color changes for annotations are handled via the EMF Form, with a custom ColorControlRenderer.
  */
 public class AnnotationChangeColorFeature extends AbstractCustomFeature {
 
-	public AnnotationChangeColorFeature(IFeatureProvider fp) {
-		super(fp);
-	}
+  public AnnotationChangeColorFeature(IFeatureProvider fp) {
+    super(fp);
+  }
 
-	@Override
-	public String getName() {
-		return "Change text color";
-	}
+  @Override
+  public String getName() {
+    return "Change text color";
+  }
 
-	@Override
-	public String getDescription() {
-		return "Change the annotation's text color";
-	}
+  @Override
+  public String getDescription() {
+    return "Change the annotation's text color";
+  }
 
   @Override
   public String getImageId() {
     return ImageConstants.IMG_COLOR_CHANGE;
   }
 
-	@Override
-	public boolean canExecute(ICustomContext context) {
+  @Override
+  public boolean canExecute(ICustomContext context) {
     boolean ret = false;
     PictogramElement pe = context.getInnerPictogramElement();
-    if(pe==null) {
+    if (pe == null) {
       PictogramElement[] pes = context.getPictogramElements();
       if (pes != null && pes.length == 1) {
         pe = pes[0];
@@ -59,9 +58,10 @@ public class AnnotationChangeColorFeature extends AbstractCustomFeature {
       ret = (BoCategory.Annotation.equals(boCategory));
     }
     return ret;
-	}
+  }
 
-	public void execute(ICustomContext context) {
+  @Override
+  public void execute(ICustomContext context) {
     PictogramElement[] pes = context.getPictogramElements();
     if (pes != null && pes.length == 1) {
       Object bo = getBusinessObjectForPictogramElement(pes[0]);
@@ -72,5 +72,5 @@ public class AnnotationChangeColorFeature extends AbstractCustomFeature {
         modelElement.setColor(newColor);
       }
     }
-	}
+  }
 }

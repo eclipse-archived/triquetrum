@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.event;
 
-
 public class BreakpointSuspendEvent extends SuspendEvent {
   private static final long serialVersionUID = -1482109949639212381L;
 

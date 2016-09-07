@@ -16,5 +16,5 @@ public interface FeatureConstants {
   String CONTAINER = "container";
 
   String BO_CLASS = "__BO_CLASS";
-  String BO_NAME =  "__BO_NAME";
+  String BO_NAME = "__BO_NAME";
 }

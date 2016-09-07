@@ -23,25 +23,20 @@ import org.ptolemy.commons.VersionSpecification;
 
 public class Activator implements BundleActivator {
 
+  @Override
   public void start(BundleContext context) throws Exception {
 
     // FIXME figure out a more compact way to create a version-aware provider,
     // that uses the bundle version but is not too dependent on OSGi APIs itself.
     Version bundleVersion = context.getBundle().getVersion();
-    VersionSpecification providerVersion = new ThreeDigitVersionSpecification(
-        bundleVersion.getMajor(),
-        bundleVersion.getMinor(),
-        bundleVersion.getMicro(),
+    VersionSpecification providerVersion = new ThreeDigitVersionSpecification(bundleVersion.getMajor(), bundleVersion.getMinor(), bundleVersion.getMicro(),
         bundleVersion.getQualifier());
 
     _apSvcReg = context.registerService(ModelElementClassProvider.class.getName(),
-        new DefaultModelElementClassProvider(providerVersion,
-            SizeAttribute.class,
-            WindowPropertiesAttribute.class
-            ),
-        null);
+        new DefaultModelElementClassProvider(providerVersion, SizeAttribute.class, WindowPropertiesAttribute.class), null);
   }
 
+  @Override
   public void stop(BundleContext context) throws Exception {
     _apSvcReg.unregister();
   }

@@ -73,7 +73,7 @@ public abstract class AbstractCustomModelElementShape extends RectangleFigure im
   }
 
   protected void setInitialSize(GraphicsAlgorithm ga, int width, int height) {
-    if(!getGaProperty("renderDone").isPresent()) {
+    if (!getGaProperty("renderDone").isPresent()) {
       final TransactionalEditingDomain editingDomain = dtp.getDiagramBehavior().getEditingDomain();
       final IFeatureProvider fp = dtp.getFeatureProvider();
 
@@ -85,12 +85,12 @@ public abstract class AbstractCustomModelElementShape extends RectangleFigure im
           try {
             GraphicsAlgorithm parentGA = ga.getParentGraphicsAlgorithm();
             ResizeShapeContext context = new ResizeShapeContext((Shape) parentGA.getPictogramElement());
-            context.setSize(width+15, height);
+            context.setSize(width + 15, height);
             context.setX(parentGA.getX());
             context.setY(parentGA.getY());
             context.putProperty("forced", "true");
             IResizeShapeFeature resizeShapeFeature = fp.getResizeShapeFeature(context);
-            if(resizeShapeFeature!=null) {
+            if (resizeShapeFeature != null) {
               resizeShapeFeature.resizeShape(context);
             }
             addGaProperty("renderDone", "true");

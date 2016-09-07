@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -22,7 +22,7 @@ import org.xml.sax.SAXException;
  * <p>
  * There is an imbalance in how NaN, -Inf and +Inf are handled between XML-RPC by apache and the one built-in to Python. This class and the referenced handlers
  * intercept the not normally conforming version and convert them to a type that is supported by XML-RPC.
- * 
+ *
  * @see AnalysisRpcServerHandlerImpl
  * @see <a href="https://issues.apache.org/jira/browse/XMLRPC-146">Bug Report in XML-RPC Jira</a>
  */

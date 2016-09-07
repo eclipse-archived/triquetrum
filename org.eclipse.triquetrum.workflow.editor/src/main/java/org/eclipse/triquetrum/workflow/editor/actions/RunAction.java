@@ -73,7 +73,7 @@ public class RunAction extends Action {
       final IStructuredSelection str = (IStructuredSelection) sel;
       Object res = str.getFirstElement();
       result = getModelObjectForSelection(res);
-      if(result == null && res instanceof DiagramEditPart) {
+      if (result == null && res instanceof DiagramEditPart) {
         // FIXME a temp hack here to get the ptolemy model from the Diagram
         // don't know how to get the linked emf business model root from a Diagram, as the linkmodel doesn't seem to contain that one?
         // so we pass via a contained entity (i.e. via it's editpart)
@@ -83,7 +83,7 @@ public class RunAction extends Action {
         }
       }
     }
-    result = (result!=null) ? result.topLevel() : null;
+    result = (result != null) ? result.topLevel() : null;
     return (CompositeActor) result;
   }
 

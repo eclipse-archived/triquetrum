@@ -12,11 +12,8 @@ package org.eclipse.triquetrum.workflow.model;
 
 import org.eclipse.emf.common.util.EList;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Director</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Director</b></em>'. <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getDirector()
@@ -26,8 +23,8 @@ import org.eclipse.emf.common.util.EList;
 public interface Director extends Attribute {
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model kind="operation"
    * @generated
    */

@@ -15,8 +15,8 @@ import org.eclipse.gef.requests.CreationFactory;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 
 /**
- * A variation on GFPaletteRoot, replacing the palette construction based on creation features
- * by a palette based on Triquetrum PaletteContribution extension implementations (implemented in TriqFeatureProvider).
+ * A variation on GFPaletteRoot, replacing the palette construction based on creation features by a palette based on Triquetrum PaletteContribution extension
+ * implementations (implemented in TriqFeatureProvider).
  */
 public class TriqPaletteRoot extends PaletteRoot {
 
@@ -48,10 +48,12 @@ public class TriqPaletteRoot extends PaletteRoot {
       this.objType = objType;
     }
 
+    @Override
     public Object getNewObject() {
       return obj;
     }
 
+    @Override
     public Object getObjectType() {
       return objType;
     }

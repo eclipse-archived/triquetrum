@@ -49,10 +49,10 @@ public class InstanceDispatcherTest {
     Assert.assertEquals(boolean[].class, dispatcher.run(new Object[] { "call", new boolean[] { false } }));
     Assert.assertEquals(byte[].class, dispatcher.run(new Object[] { "call", new byte[] { (byte) 0 } }));
     Assert.assertEquals(char[].class, dispatcher.run(new Object[] { "call", new char[] { (char) 0 } }));
-    Assert.assertEquals(double[].class, dispatcher.run(new Object[] { "call", new double[] { (double) 0 } }));
-    Assert.assertEquals(float[].class, dispatcher.run(new Object[] { "call", new float[] { (float) 0 } }));
-    Assert.assertEquals(int[].class, dispatcher.run(new Object[] { "call", new int[] { (int) 0 } }));
-    Assert.assertEquals(long[].class, dispatcher.run(new Object[] { "call", new long[] { (long) 0 } }));
+    Assert.assertEquals(double[].class, dispatcher.run(new Object[] { "call", new double[] { 0 } }));
+    Assert.assertEquals(float[].class, dispatcher.run(new Object[] { "call", new float[] { 0 } }));
+    Assert.assertEquals(int[].class, dispatcher.run(new Object[] { "call", new int[] { 0 } }));
+    Assert.assertEquals(long[].class, dispatcher.run(new Object[] { "call", new long[] { 0 } }));
     Assert.assertEquals(short[].class, dispatcher.run(new Object[] { "call", new short[] { (short) 0 } }));
   }
 
