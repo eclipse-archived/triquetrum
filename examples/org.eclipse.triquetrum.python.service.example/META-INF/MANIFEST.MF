@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Python RPC Example (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.python.service.example
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: iSencia
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Import-Package: org.eclipse.osgi.framework.console,
- org.eclipse.triquetrum.python.service;version="1.0.2"
+ org.eclipse.triquetrum.python.service;version="0.1.0"
 Service-Component: OSGI-INF/component.xml
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir

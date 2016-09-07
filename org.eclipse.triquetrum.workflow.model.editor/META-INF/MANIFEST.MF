@@ -3,7 +3,7 @@ Bundle-SymbolicName: org.eclipse.triquetrum.workflow.model.editor;sing
  leton:=true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;visibility:=reexport,
- org.eclipse.triquetrum.workflow.model.edit;visibility:=reexport,
+ org.eclipse.triquetrum.workflow.model.edit;bundle-version="0.1.0";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.emf.edit.ui;visibility:=reexport,
  org.eclipse.ui.ide;visibility:=reexport
@@ -13,7 +13,7 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.triquetrum.workflow.model.presentation
 Bundle-Name: %pluginName (Incubation)
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.triquetrum.workflow.model.presentation.T
