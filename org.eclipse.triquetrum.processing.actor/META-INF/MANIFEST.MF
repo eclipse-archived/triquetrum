@@ -2,14 +2,14 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Processing Actor implementations (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.processing.actor
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.triquetrum.processing.actor.activator.Activator
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.eclipse.triquetrum;version="1.0.0",
- org.eclipse.triquetrum.processing;version="1.0.0",
- org.eclipse.triquetrum.processing.model;version="1.0.0",
- org.eclipse.triquetrum.processing.service;version="1.0.0",
+Import-Package: org.eclipse.triquetrum;version="0.1.0",
+ org.eclipse.triquetrum.processing;version="0.1.0",
+ org.eclipse.triquetrum.processing.model;version="0.1.0",
+ org.eclipse.triquetrum.processing.service;version="0.1.0",
  org.osgi.framework;version="1.8.0",
  org.ptolemy.classloading;version="11.0.0",
  org.ptolemy.classloading.osgi;version="11.0.0",

@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.triquetrum.workflow.core.feature"
       label="Triquetrum workflow core feature"
-      version="1.0.0.qualifier">
+      version="0.1.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -33,7 +33,7 @@
       <import plugin="org.slf4j.api"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.emf.ecore"/>
-      <import feature="org.eclipse.triquetrum.ptolemy.feature" version="1.0.0.qualifier"/>
+      <import feature="org.eclipse.triquetrum.ptolemy.feature" version="0.1.0.qualifier"/>
       <import plugin="org.apache.log4j"/>
    </requires>
 
