@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum Dependencies (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.dependencies
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ClassPath: deps/ptII/org.ptolemy.commons_11.0.0.201511291558.jar,
  deps/ptII/ptolemy.actor.lib.gui_11.0.0.201601302217.jar,
