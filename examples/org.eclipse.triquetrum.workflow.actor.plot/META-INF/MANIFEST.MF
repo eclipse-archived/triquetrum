@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Plot actors for Triquetrum (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.actor.plot
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.triquetrum.workflow.actor.plot.activator.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
