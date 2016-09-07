@@ -135,6 +135,7 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
 
   private ServiceTrackerCustomizer<WorkflowExecutionService, WorkflowExecutionService> createSvcTrackerCustomizer() {
     return new ServiceTrackerCustomizer<WorkflowExecutionService, WorkflowExecutionService>() {
+      @Override
       public void removedService(ServiceReference<WorkflowExecutionService> ref, WorkflowExecutionService svc) {
         synchronized (TriqEditorPlugin.this) {
           if (svc == TriqEditorPlugin.this.executionService) {
@@ -146,14 +147,16 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
         }
       }
 
+      @Override
       public void modifiedService(ServiceReference<WorkflowExecutionService> ref, WorkflowExecutionService svc) {
       }
 
+      @Override
       public WorkflowExecutionService addingService(ServiceReference<WorkflowExecutionService> ref) {
         WorkflowExecutionService svc = TriqEditorPlugin.this.context.getService(ref);
         synchronized (TriqEditorPlugin.this) {
           if (TriqEditorPlugin.this.executionService == null) {
-            TriqEditorPlugin.this.executionService = (WorkflowExecutionService) svc;
+            TriqEditorPlugin.this.executionService = svc;
           }
         }
         return svc;

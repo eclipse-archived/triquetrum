@@ -21,7 +21,6 @@ import org.eclipse.graphiti.mm.algorithms.RoundedRectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Orientation;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
@@ -58,12 +57,13 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
     // add property on the graphical model element, identifying the associated Triq model element
     // so we can easily distinguish and identify them later on for updates etc
     category.storeIn(pe);
-    if(businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj)businessObject).getName());
+    if (businessObject instanceof NamedObj) {
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
     }
     Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
+  @Override
   public boolean canAdd(IAddContext context) {
     // check if user wants to add an director
     Object newObject = context.getNewObject();
@@ -76,12 +76,13 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
     return false;
   }
 
+  @Override
   public PictogramElement add(IAddContext context) {
     Director addedDirector = (Director) context.getNewObject();
-    ContainerShape targetContainer = (Diagram) context.getTargetContainer();
+    ContainerShape targetContainer = context.getTargetContainer();
 
     Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
-    if(topLevelForDiagram == null) {
+    if (topLevelForDiagram == null) {
       link(getDiagram(), addedDirector.getContainer());
     }
 
@@ -132,7 +133,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
       Shape shape = peCreateService.createShape(containerShape, false);
 
       // create and set graphics algorithm
-      Polyline polyline = gaService.createPolyline(shape, new int[] { SHAPE_X_OFFSET, 20, SHAPE_X_OFFSET+width, 20 });
+      Polyline polyline = gaService.createPolyline(shape, new int[] { SHAPE_X_OFFSET, 20, SHAPE_X_OFFSET + width, 20 });
       polyline.setForeground(manageColor(DIRECTOR_FOREGROUND));
       polyline.setLineWidth(2);
     }
@@ -148,7 +149,7 @@ public class DirectorAddFeature extends AbstractAddShapeFeature {
       text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
       // vertical alignment has as default value "center"
       text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
-      gaService.setLocationAndSize(text, SHAPE_X_OFFSET+20, 0, width-25, 20);
+      gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 20, 0, width - 25, 20);
 
       // create link and wire it
       link(shape, addedDirector, BoCategory.Director);

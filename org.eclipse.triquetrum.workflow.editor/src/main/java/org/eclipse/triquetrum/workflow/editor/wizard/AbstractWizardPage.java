@@ -22,30 +22,31 @@ import org.eclipse.swt.widgets.Composite;
  */
 public abstract class AbstractWizardPage extends WizardPage implements ITextProvider {
 
-	public AbstractWizardPage(String pageName, String title, ImageDescriptor titleImage) {
-		super(pageName, title, titleImage);
-	}
+  public AbstractWizardPage(String pageName, String title, ImageDescriptor titleImage) {
+    super(pageName, title, titleImage);
+  }
 
-	protected AbstractWizardPage(String pageName) {
-		super(pageName);
-	}
+  protected AbstractWizardPage(String pageName) {
+    super(pageName);
+  }
 
-	public void createControl(Composite parent) {
-		Composite composite = new Composite(parent, SWT.NULL);
-		composite.setFont(parent.getFont());
-		composite.setLayout(new GridLayout());
-		composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+  @Override
+  public void createControl(Composite parent) {
+    Composite composite = new Composite(parent, SWT.NULL);
+    composite.setFont(parent.getFont());
+    composite.setLayout(new GridLayout());
+    composite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
-		createWizardContents(composite);
+    createWizardContents(composite);
 
-		setPageComplete(true);
+    setPageComplete(true);
 
-		// Show description on opening
-		setErrorMessage(null);
-		setMessage(null);
-		setControl(composite);
-	}
+    // Show description on opening
+    setErrorMessage(null);
+    setMessage(null);
+    setControl(composite);
+  }
 
-	abstract protected void createWizardContents(Composite parent);
+  abstract protected void createWizardContents(Composite parent);
 
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2014, 2016  Diamond Light Source Ltd., 
+ * Copyright (c) 2014, 2016  Diamond Light Source Ltd.,
  *                          Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -20,7 +20,7 @@ public class NetUtils {
 
   /**
    * Attempts to get a free port starting at the passed in port and working up.
-   * 
+   *
    * @param startPort
    * @return
    */
@@ -33,7 +33,7 @@ public class NetUtils {
 
   /**
    * Checks if a port is free.
-   * 
+   *
    * @param port
    * @return
    */

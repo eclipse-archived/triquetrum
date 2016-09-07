@@ -22,10 +22,9 @@ public class TriqReferenceService extends DefaultReferenceService {
   public TriqReferenceService() {
   }
 
-
   @Override
   public void openInNewContext(EObject eObject) {
-    final Dialog dialog = new NamedObjDialog(Display.getDefault().getActiveShell(), (NamedObj)eObject);
+    final Dialog dialog = new NamedObjDialog(Display.getDefault().getActiveShell(), (NamedObj) eObject);
 
     new ECPDialogExecutor(dialog) {
       @Override

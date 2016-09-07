@@ -48,20 +48,20 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
 
   public PtolemyModelElementShape(IRendererContext rendererContext) {
     super(rendererContext);
-    this.resourceManager = ((TriqDiagramBehavior)rendererContext.getDiagramTypeProvider().getDiagramBehavior()).getResourceManager();
+    this.resourceManager = ((TriqDiagramBehavior) rendererContext.getDiagramTypeProvider().getDiagramBehavior()).getResourceManager();
   }
 
   @Override
   protected void fillShape(Graphics graphics) {
     LOGGER.trace("Ptolemy fillShape - entry - for {}", getIconURI());
     try {
-      iconDef = iconDef!=null ? iconDef : (EditorIcon) WorkflowUtils.readFrom(URI.create(getIconURI()));
+      iconDef = iconDef != null ? iconDef : (EditorIcon) WorkflowUtils.readFrom(URI.create(getIconURI()));
       // As Ptolemy II icon definitions often use negative coordinates,
       // while draw2d graphics assumes a top-left corner at (0,0),
       // the overall icon shape drawing must first determine the most extreme
       // boundaries as defined in the icon MOML and translate the draw2d coordinates space
       // accordingly before starting the effective drawing.
-      ptShapeBounds = ptShapeBounds!=null ? ptShapeBounds : determineExtremeBounds(iconDef, graphics);
+      ptShapeBounds = ptShapeBounds != null ? ptShapeBounds : determineExtremeBounds(iconDef, graphics);
       LOGGER.debug("Extreme bounds for {} : {}", getIconURI(), ptShapeBounds);
 
       int width = ptShapeBounds.width;
@@ -79,7 +79,7 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
       }
       setInitialSize(ga, width + 2, height + 2);
     } catch (Exception e) {
-      LOGGER.error("Error drawing ptolemy shape "+getIconURI(), e);
+      LOGGER.error("Error drawing ptolemy shape " + getIconURI(), e);
     }
     LOGGER.trace("Ptolemy fillShape - exit - for {}", getIconURI());
   }

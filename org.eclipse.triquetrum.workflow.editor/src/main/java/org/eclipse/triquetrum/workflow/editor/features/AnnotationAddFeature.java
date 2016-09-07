@@ -57,6 +57,7 @@ public class AnnotationAddFeature extends AbstractAddShapeFeature {
     Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
+  @Override
   public boolean canAdd(IAddContext context) {
     // check if user wants to add an Annotation
     if (context.getNewObject() instanceof Annotation) {
@@ -68,6 +69,7 @@ public class AnnotationAddFeature extends AbstractAddShapeFeature {
     return false;
   }
 
+  @Override
   public PictogramElement add(IAddContext context) {
     Annotation addedAnnotation = (Annotation) context.getNewObject();
     int textSize = addedAnnotation.getTextSize();
@@ -82,7 +84,7 @@ public class AnnotationAddFeature extends AbstractAddShapeFeature {
     ContainerShape containerShape = peCreateService.createContainerShape(targetDiagram, true);
 
     Rectangle rectangle = gaService.createRectangle(containerShape);
-    gaService.setLocationAndSize(rectangle, xLocation, yLocation, WIDTH, (textSize+SPACING_INTERLINE) * HEIGHT_LINES);
+    gaService.setLocationAndSize(rectangle, xLocation, yLocation, WIDTH, (textSize + SPACING_INTERLINE) * HEIGHT_LINES);
     rectangle.setBackground(manageColor(ANNOTATION_BACKGROUND));
 
     // create shape for text
@@ -94,7 +96,7 @@ public class AnnotationAddFeature extends AbstractAddShapeFeature {
     text.setHorizontalAlignment(Orientation.ALIGNMENT_LEFT);
     text.setVerticalAlignment(Orientation.ALIGNMENT_TOP);
     text.setFont(gaService.manageFont(getDiagram(), addedAnnotation.getFontFamily(), textSize, addedAnnotation.isItalic(), addedAnnotation.isBold()));
-    gaService.setLocationAndSize(text, X_OFFSET_TEXT, 0, WIDTH - X_OFFSET_TEXT, (textSize+SPACING_INTERLINE)*HEIGHT_LINES);
+    gaService.setLocationAndSize(text, X_OFFSET_TEXT, 0, WIDTH - X_OFFSET_TEXT, (textSize + SPACING_INTERLINE) * HEIGHT_LINES);
 
     link(containerShape, addedAnnotation, BoCategory.Annotation);
 

@@ -25,9 +25,6 @@ import java.util.UUID;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.triquetrum.scisoft.analysis.rpc.AnalysisRpcRemoteException;
-import org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.IRootFlattener;
-import org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.RootFlattener;
-import org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.TypedNone;
 import org.eclipse.triquetrum.scisoft.analysis.rpc.internal.AnalysisRpcDoubleParser;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -68,8 +65,9 @@ abstract public class FlatteningTestAbstract {
       Exception actException = (Exception) actual;
       // The message gets supplemented with extra type information, make sure the original expected
       // message is present in the supplemented info
-      if (!actException.getMessage().contains(expException.getMessage()))
+      if (!actException.getMessage().contains(expException.getMessage())) {
         Assert.fail("Expected message: " + expException.getMessage() + " actual message: " + actException.getMessage());
+      }
       StackTraceElement[] expStackTrace = expException.getStackTrace();
       StackTraceElement[] actStackTrace = actException.getStackTrace();
       Assert.assertArrayEquals(expStackTrace, actStackTrace);

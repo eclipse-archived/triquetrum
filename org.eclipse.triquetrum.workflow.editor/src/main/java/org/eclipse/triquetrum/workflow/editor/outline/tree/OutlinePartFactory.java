@@ -23,12 +23,13 @@ import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 
 public class OutlinePartFactory implements EditPartFactory {
-  private Set<OutlineEditPart> parts = new HashSet<OutlineEditPart>();
+  private Set<OutlineEditPart> parts = new HashSet<>();
 
   public Set<OutlineEditPart> getParts() {
     return parts;
   }
 
+  @Override
   public EditPart createEditPart(EditPart context, Object model) {
     OutlineEditPart editPart = null;
     if (model instanceof Diagram) {

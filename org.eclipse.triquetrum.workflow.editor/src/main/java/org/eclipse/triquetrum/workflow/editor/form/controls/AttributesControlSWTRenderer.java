@@ -79,16 +79,22 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   /**
    * Default constructor.
    *
-   * @param vElement the view model element to be rendered
-   * @param viewContext the view context
-   * @param emfFormsDatabinding The {@link EMFFormsDatabinding}
-   * @param emfFormsLabelProvider The {@link EMFFormsLabelProvider}
-   * @param reportService The {@link ReportService}
-   * @param vtViewTemplateProvider The {@link VTViewTemplateProvider}
+   * @param vElement
+   *          the view model element to be rendered
+   * @param viewContext
+   *          the view context
+   * @param emfFormsDatabinding
+   *          The {@link EMFFormsDatabinding}
+   * @param emfFormsLabelProvider
+   *          The {@link EMFFormsLabelProvider}
+   * @param reportService
+   *          The {@link ReportService}
+   * @param vtViewTemplateProvider
+   *          The {@link VTViewTemplateProvider}
    */
   @Inject
-  public AttributesControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService,
-    EMFFormsDatabinding emfFormsDatabinding, EMFFormsLabelProvider emfFormsLabelProvider, VTViewTemplateProvider vtViewTemplateProvider) {
+  public AttributesControlSWTRenderer(VControl vElement, ViewModelContext viewContext, ReportService reportService, EMFFormsDatabinding emfFormsDatabinding,
+      EMFFormsLabelProvider emfFormsLabelProvider, VTViewTemplateProvider vtViewTemplateProvider) {
     super(vElement, viewContext, reportService, emfFormsDatabinding, emfFormsLabelProvider, vtViewTemplateProvider);
     viewModelDBC = new EMFDataBindingContext();
   }
@@ -116,8 +122,7 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
    *      org.eclipse.emf.ecp.view.spi.swt.Composite)
    */
   @Override
-  protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException,
-    NoPropertyDescriptorFoundExeption {
+  protected Control renderControl(SWTGridCell cell, Composite parent) throws NoRendererFoundException, NoPropertyDescriptorFoundExeption {
     if (cell.getRow() != 0 || cell.getColumn() != 0 || cell.getRenderer() != this) {
       throw new IllegalArgumentException("Wrong parameter passed!"); //$NON-NLS-1$
     }
@@ -150,14 +155,12 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
    * Creates the composite which will be the parent for the table.
    *
    * @param composite
-   *            the parent composite
+   *          the parent composite
    * @return the table composite
    */
   protected Composite createControlComposite(final Composite composite) {
     final Composite controlComposite = new Composite(composite, SWT.NONE);
-    GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL)
-      .hint(1, getTableHeightHint())
-      .applyTo(controlComposite);
+    GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).hint(1, getTableHeightHint()).applyTo(controlComposite);
     GridLayoutFactory.fillDefaults().numColumns(1).applyTo(controlComposite);
     return controlComposite;
   }
@@ -183,8 +186,10 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   /**
    * Creates an error label for the given {@link Exception}.
    *
-   * @param parent The parent of the {@link Label}
-   * @param ex The {@link Exception} causing the error
+   * @param parent
+   *          The parent of the {@link Label}
+   * @param ex
+   *          The {@link Exception} causing the error
    * @return The error {@link Label}
    */
   protected Control createErrorLabel(Composite parent, final Exception ex) {
@@ -194,9 +199,8 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   }
 
   private void createLabelProvider() {
-    composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] {
-      new CustomReflectiveItemProviderAdapterFactory(),
-      new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
+    composedAdapterFactory = new ComposedAdapterFactory(new AdapterFactory[] { new CustomReflectiveItemProviderAdapterFactory(),
+        new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE) });
     labelProvider = new AdapterFactoryLabelProvider(composedAdapterFactory);
     labelProvider.setFireLabelUpdateNotifications(true);
   }
@@ -214,12 +218,10 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
     super.dispose();
   }
 
-  private void createTitleComposite(Composite composite)
-    throws NoPropertyDescriptorFoundExeption, DatabindingFailedException {
+  private void createTitleComposite(Composite composite) throws NoPropertyDescriptorFoundExeption, DatabindingFailedException {
     final Composite titleComposite = new Composite(composite, SWT.NONE);
     titleComposite.setBackgroundMode(SWT.INHERIT_FORCE);
-    GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING)
-      .applyTo(titleComposite);
+    GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.BEGINNING).applyTo(titleComposite);
     GridLayoutFactory.fillDefaults().numColumns(3).equalWidth(false).applyTo(titleComposite);
 
     final Label filler = new Label(titleComposite, SWT.NONE);
@@ -232,8 +234,7 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   }
 
   private void createContent(Composite composite) throws DatabindingFailedException {
-    tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION
-      | SWT.BORDER);
+    tableViewer = new TableViewer(composite, SWT.MULTI | SWT.V_SCROLL | SWT.FULL_SELECTION | SWT.BORDER);
     tableViewer.getTable().setData(CUSTOM_VARIANT, "org_eclipse_emf_ecp_control_multireference"); //$NON-NLS-1$
     tableViewer.getTable().setHeaderVisible(true);
     tableViewer.getTable().setLinesVisible(true);
@@ -241,16 +242,14 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
     final ColumnViewerEditorActivationStrategy actSupport = new ColumnViewerEditorActivationStrategy(tableViewer) {
       @Override
       protected boolean isEditorActivationEvent(ColumnViewerEditorActivationEvent event) {
-        return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL
-          || event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
-          || event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
-          || event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
+        return event.eventType == ColumnViewerEditorActivationEvent.TRAVERSAL || event.eventType == ColumnViewerEditorActivationEvent.MOUSE_CLICK_SELECTION
+            || event.eventType == ColumnViewerEditorActivationEvent.KEY_PRESSED && event.keyCode == SWT.CR
+            || event.eventType == ColumnViewerEditorActivationEvent.PROGRAMMATIC;
       }
     };
 
-    TableViewerEditor.create(tableViewer, null, actSupport, ColumnViewerEditor.TABBING_HORIZONTAL
-      | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR | ColumnViewerEditor.TABBING_VERTICAL
-      | ColumnViewerEditor.KEYBOARD_ACTIVATION);
+    TableViewerEditor.create(tableViewer, null, actSupport, ColumnViewerEditor.TABBING_HORIZONTAL | ColumnViewerEditor.TABBING_MOVE_TO_ROW_NEIGHBOR
+        | ColumnViewerEditor.TABBING_VERTICAL | ColumnViewerEditor.KEYBOARD_ACTIVATION);
     ColumnViewerToolTipSupport.enableFor(tableViewer);
 
     final ECPTableViewerComparator comparator = new ECPTableViewerComparator();
@@ -260,35 +259,25 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
 
     final EMFFormsLabelProvider labelService = getEMFFormsLabelProvider();
 
-    final TableViewerColumn column = TableViewerColumnBuilder
-      .create()
-      .setResizable(false)
-      .setMoveable(false)
-      .setStyle(SWT.NONE)
-      .build(tableViewer);
+    final TableViewerColumn column = TableViewerColumnBuilder.create().setResizable(false).setMoveable(false).setStyle(SWT.NONE).build(tableViewer);
 
     final IObservableValue textObservableValue = WidgetProperties.text().observe(column.getColumn());
     final IObservableValue tooltipObservableValue = WidgetProperties.tooltipText().observe(column.getColumn());
     try {
-      viewModelDBC.bindValue(textObservableValue,
-        labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext()
-          .getDomainModel()));
+      viewModelDBC.bindValue(textObservableValue, labelService.getDisplayName(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel()));
 
       viewModelDBC.bindValue(tooltipObservableValue,
-        labelService.getDescription(getVElement().getDomainModelReference(), getViewModelContext()
-          .getDomainModel()));
+          labelService.getDescription(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel()));
     } catch (final NoLabelFoundException e) {
       // FIXME Expectations?
       getReportService().report(new RenderingFailedReport(e));
     }
 
-    column.getColumn().addSelectionListener(
-      getSelectionAdapter(tableViewer, comparator, column.getColumn(), 0));
+    column.getColumn().addSelectionListener(getSelectionAdapter(tableViewer, comparator, column.getColumn(), 0));
 
     tableViewer.setLabelProvider(labelProvider);
     tableViewer.setContentProvider(cp);
-    final IObservableList list = getEMFFormsDatabinding()
-      .getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
+    final IObservableList list = getEMFFormsDatabinding().getObservableList(getVElement().getDomainModelReference(), getViewModelContext().getDomainModel());
     tableViewer.setInput(list);
 
     final TableColumnLayout layout = new TableColumnLayout();
@@ -299,17 +288,15 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
 
       @Override
       public void doubleClick(DoubleClickEvent event) {
-        final EObject selectedObject = (EObject) IStructuredSelection.class.cast(event.getSelection())
-          .getFirstElement();
+        final EObject selectedObject = (EObject) IStructuredSelection.class.cast(event.getSelection()).getFirstElement();
         handleDoubleClick(selectedObject);
       }
 
     });
   }
 
-  private SelectionAdapter getSelectionAdapter(final TableViewer tableViewer,
-    final ECPTableViewerComparator comparator, final TableColumn column,
-    final int index) {
+  private SelectionAdapter getSelectionAdapter(final TableViewer tableViewer, final ECPTableViewerComparator comparator, final TableColumn column,
+      final int index) {
     final SelectionAdapter selectionAdapter = new SelectionAdapter() {
       @Override
       public void widgetSelected(SelectionEvent e) {
@@ -326,7 +313,8 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   /**
    * Method for handling a double click.
    *
-   * @param selectedObject the selected {@link EObject}
+   * @param selectedObject
+   *          the selected {@link EObject}
    */
   protected void handleDoubleClick(EObject selectedObject) {
     final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
@@ -336,9 +324,12 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   /**
    * Method for adding an existing element.
    *
-   * @param tableViewer the {@link TableViewer}
-   * @param eObject The {@link EObject} to add to
-   * @param structuralFeature The corresponding {@link EStructuralFeature}
+   * @param tableViewer
+   *          the {@link TableViewer}
+   * @param eObject
+   *          The {@link EObject} to add to
+   * @param structuralFeature
+   *          The corresponding {@link EStructuralFeature}
    */
   protected void handleAddExisting(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
     final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
@@ -348,9 +339,12 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   /**
    * Method for adding a new element.
    *
-   * @param tableViewer the {@link TableViewer}
-   * @param eObject The {@link EObject} to add to
-   * @param structuralFeature The corresponding {@link EStructuralFeature}
+   * @param tableViewer
+   *          the {@link TableViewer}
+   * @param eObject
+   *          The {@link EObject} to add to
+   * @param structuralFeature
+   *          The corresponding {@link EStructuralFeature}
    */
   protected void handleAddNew(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
     final ReferenceService referenceService = getViewModelContext().getService(ReferenceService.class);
@@ -361,9 +355,12 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   /**
    * Method for deleting elements.
    *
-   * @param tableViewer the {@link TableViewer}
-   * @param eObject The {@link EObject} to delete from
-   * @param structuralFeature The corresponding {@link EStructuralFeature}
+   * @param tableViewer
+   *          the {@link TableViewer}
+   * @param eObject
+   *          The {@link EObject} to delete from
+   * @param structuralFeature
+   *          The corresponding {@link EStructuralFeature}
    */
   protected void handleDelete(TableViewer tableViewer, EObject eObject, EStructuralFeature structuralFeature) {
 
@@ -378,8 +375,7 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
       DeleteService deleteService = getViewModelContext().getService(DeleteService.class);
       if (deleteService == null) {
         /*
-         * #getService(Class<?>) will report to the reportservice if it could not be found
-         * Use Default
+         * #getService(Class<?>) will report to the reportservice if it could not be found Use Default
          */
         deleteService = new EMFDeleteServiceImpl();
       }
@@ -389,8 +385,7 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
     }
   }
 
-  private void removeElements(EditingDomain editingDomain, Object source, EStructuralFeature feature,
-    Collection<Object> toRemove) {
+  private void removeElements(EditingDomain editingDomain, Object source, EStructuralFeature feature, Collection<Object> toRemove) {
     final Command removeCommand = RemoveCommand.create(editingDomain, source, feature, toRemove);
     if (removeCommand.canExecute()) {
       if (editingDomain.getCommandStack() == null) {
@@ -402,8 +397,7 @@ public class AttributesControlSWTRenderer extends AbstractControlSWTRenderer<VCo
   }
 
   /**
-   * The {@link ViewerComparator} for this table which allows 3 states for sort order:
-   * none, up and down.
+   * The {@link ViewerComparator} for this table which allows 3 states for sort order: none, up and down.
    *
    * @author Eugen Neufeld
    *

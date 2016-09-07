@@ -28,7 +28,6 @@ public class ProcessingErrorEventImpl<T> extends ProcessingEventImpl<T> implemen
   private String description;
   private List<String> details;
 
-
   /**
    * @param context
    * @param id
@@ -44,8 +43,8 @@ public class ProcessingErrorEventImpl<T> extends ProcessingEventImpl<T> implemen
    * @param description
    * @param details
    */
-  public ProcessingErrorEventImpl(T context, Long id, Date creationTS,
-      Severity severity, ErrorCategory category, String code, String shortDescription, String description, List<String> details) {
+  public ProcessingErrorEventImpl(T context, Long id, Date creationTS, Severity severity, ErrorCategory category, String code, String shortDescription,
+      String description, List<String> details) {
     super(context, id, creationTS, 0L, "ERROR");
     this.severity = severity;
     this.category = category;
@@ -56,12 +55,12 @@ public class ProcessingErrorEventImpl<T> extends ProcessingEventImpl<T> implemen
   }
 
   public ProcessingErrorEventImpl(T context, Long id, Date creationTS, ErrorCode errorCode, String description, List<String> details) {
-    this(context, id, creationTS, errorCode.getSeverity(), errorCode.getCategory(), errorCode.getFormattedCode(), errorCode.getDescription(),
-        description, details);
+    this(context, id, creationTS, errorCode.getSeverity(), errorCode.getCategory(), errorCode.getFormattedCode(), errorCode.getDescription(), description,
+        details);
   }
 
   public ProcessingErrorEventImpl(T context, Long id, Date creationTS, ErrorCode errorCode, String description, Throwable cause) {
-    this(context, id, creationTS, errorCode, description, (List<String>)null);
+    this(context, id, creationTS, errorCode, description, (List<String>) null);
     // TODO add cause contents as details
   }
 

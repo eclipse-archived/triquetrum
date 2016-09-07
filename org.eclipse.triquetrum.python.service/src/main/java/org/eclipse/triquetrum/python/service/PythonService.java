@@ -84,6 +84,7 @@ public class PythonService {
     service.process = processBuilder.start();
 
     service.stopThread = new Thread("Stop Python Service") {
+      @Override
       public void run() {
         service.stop();
       }
@@ -240,7 +241,7 @@ public class PythonService {
   public Map<String, ? extends Object> runScript(String scriptFullPath, Map<String, ?> data) throws Exception {
 
     final File dir = getWorkingDir(scriptFullPath);
-    final List<String> additionalPaths = new ArrayList<String>(1);
+    final List<String> additionalPaths = new ArrayList<>(1);
     additionalPaths.add(new File(scriptFullPath).getParent().toString());
     if (System.getenv("PYTHONPATH") != null) {
       additionalPaths.addAll(Arrays.asList(System.getenv("PYTHONPATH").split(File.pathSeparator)));

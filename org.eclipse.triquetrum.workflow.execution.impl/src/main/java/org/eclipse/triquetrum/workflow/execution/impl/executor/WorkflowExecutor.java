@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @see JCIP 7.1.7, Listing 7.12
- * 
+ *
  * @author erwin
  *
  */
@@ -26,9 +26,10 @@ public class WorkflowExecutor extends ThreadPoolExecutor {
     super(corePoolSize, maximumPoolSize, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
   }
 
+  @Override
   protected <T> java.util.concurrent.RunnableFuture<T> newTaskFor(java.util.concurrent.Callable<T> callable) {
-    if(callable instanceof CancellableTask) {
-      return ((CancellableTask<T>)callable).newFutureTask();
+    if (callable instanceof CancellableTask) {
+      return ((CancellableTask<T>) callable).newFutureTask();
     } else {
       return super.newTaskFor(callable);
     }

@@ -59,6 +59,7 @@ public class ImportFromMomlWizardPage extends WizardResourceImportPage {
     return null;
   }
 
+  @Override
   protected void createSourceGroup(Composite parent) {
     Composite container = new Composite(parent, SWT.NULL);
     final GridLayout gridLayout = new GridLayout();
@@ -83,6 +84,7 @@ public class ImportFromMomlWizardPage extends WizardResourceImportPage {
 
     final Button browseButton = new Button(container, SWT.NONE);
     browseButton.addSelectionListener(new SelectionAdapter() {
+      @Override
       public void widgetSelected(SelectionEvent e) {
         IPath path = browse(getAbsoluteMomlPath());
         if (path == null)
@@ -145,8 +147,8 @@ public class ImportFromMomlWizardPage extends WizardResourceImportPage {
   }
 
   /**
-   * Tries to resolve the contents of the moml path field to an IPath, and returns it.
-   * If the field contains a relative path it will be resolved relative to the Eclipse workspace folder.
+   * Tries to resolve the contents of the moml path field to an IPath, and returns it. If the field contains a relative path it will be resolved relative to the
+   * Eclipse workspace folder.
    *
    * @return the absolute IPath to the MOML file, or null
    */

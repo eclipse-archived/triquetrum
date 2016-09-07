@@ -30,16 +30,16 @@ import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetWidgetFactory;
 public class TriqNamedObjSection extends GFPropertySection {
   private Text nameField;
   private Text classField;
-  
+
   @Override
   public void createControls(Composite parent, TabbedPropertySheetPage tabbedPropertySheetPage) {
-      super.createControls(parent, tabbedPropertySheetPage);
+    super.createControls(parent, tabbedPropertySheetPage);
 
-      TabbedPropertySheetWidgetFactory factory = getWidgetFactory();
-      Composite composite = factory.createFlatFormComposite(parent);
+    TabbedPropertySheetWidgetFactory factory = getWidgetFactory();
+    Composite composite = factory.createFlatFormComposite(parent);
 
-      nameField = createTextField("Name", composite, null);
-      classField = createTextField("Ptolemy Class", composite, nameField);
+    nameField = createTextField("Name", composite, null);
+    classField = createTextField("Ptolemy Class", composite, nameField);
   }
 
   public Text createTextField(String label, Composite composite, Control previous) {
@@ -48,7 +48,7 @@ public class TriqNamedObjSection extends GFPropertySection {
     FormData data = new FormData();
     data.left = new FormAttachment(0, 125);
     data.right = new FormAttachment(100, 0);
-    if(previous!=null) {
+    if (previous != null) {
       data.top = new FormAttachment(previous, 0, VSPACE);
     } else {
       data.top = new FormAttachment(0, VSPACE);
@@ -57,29 +57,29 @@ public class TriqNamedObjSection extends GFPropertySection {
     newField.setEditable(false);
     newField.setEnabled(false);
 
-    CLabel valueLabel = factory.createCLabel(composite,  label+":");
+    CLabel valueLabel = factory.createCLabel(composite, label + ":");
     data = new FormData();
     data.left = new FormAttachment(0, 0);
     data.right = new FormAttachment(newField, -HSPACE);
     data.top = new FormAttachment(newField, 0, SWT.CENTER);
     valueLabel.setLayoutData(data);
-    
+
     return newField;
   }
-  
+
   @Override
   public void refresh() {
-      PictogramElement pe = getSelectedPictogramElement();
-      if (pe != null) {
-          Object bo = Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
-          // the filter assured, that it is a EClass
-          if (bo == null)
-              return;
-          NamedObj no = (NamedObj) bo;
-          String name = no.getName();
-          nameField.setText(name == null ? "" : name);
-          String clazz = no.getWrappedType();
-          classField.setText(clazz == null ? "" : clazz);
-      }
+    PictogramElement pe = getSelectedPictogramElement();
+    if (pe != null) {
+      Object bo = Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
+      // the filter assured, that it is a EClass
+      if (bo == null)
+        return;
+      NamedObj no = (NamedObj) bo;
+      String name = no.getName();
+      nameField.setText(name == null ? "" : name);
+      String clazz = no.getWrappedType();
+      classField.setText(clazz == null ? "" : clazz);
+    }
   }
 }

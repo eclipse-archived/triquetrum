@@ -22,7 +22,8 @@ public class Activator implements BundleActivator {
 
   @Override
   public void start(BundleContext context) throws Exception {
-    PtolemyInjector.createInjector(new PtolemyModule(getClass().getClassLoader(), ResourceBundle.getBundle("org.eclipse.triquetrum.workflow.actor.ui.ActorModule")));
+    PtolemyInjector
+        .createInjector(new PtolemyModule(getClass().getClassLoader(), ResourceBundle.getBundle("org.eclipse.triquetrum.workflow.actor.ui.ActorModule")));
   }
 
   @Override

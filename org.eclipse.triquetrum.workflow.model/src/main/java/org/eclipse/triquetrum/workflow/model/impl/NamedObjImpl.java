@@ -37,20 +37,20 @@ import ptolemy.kernel.util.Settable;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getWrappedType <em>Wrapped Type</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getWrappedObject <em>Wrapped Object</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#isDeepComplete <em>Deep Complete</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getIconId <em>Icon Id</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getAttributes <em>Attributes</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getWrappedType <em>Wrapped Type</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getWrappedObject <em>Wrapped Object</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#isDeepComplete <em>Deep Complete</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.NamedObjImpl#getIconId <em>Icon Id</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedObj {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -58,8 +58,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected static final String NAME_EDEFAULT = "new";
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -67,8 +67,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getAttributes()
    * @generated
    * @ordered
@@ -76,8 +76,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected EList<Attribute> attributes;
 
   /**
-   * The default value of the '{@link #getWrappedType() <em>Wrapped Type</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #getWrappedType() <em>Wrapped Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getWrappedType()
    * @generated
    * @ordered
@@ -85,8 +85,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected static final String WRAPPED_TYPE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getWrappedType() <em>Wrapped Type</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getWrappedType() <em>Wrapped Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getWrappedType()
    * @generated
    * @ordered
@@ -94,8 +94,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected String wrappedType = WRAPPED_TYPE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getWrappedObject() <em>Wrapped Object</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #getWrappedObject() <em>Wrapped Object</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getWrappedObject()
    * @generated
    * @ordered
@@ -103,8 +103,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected static final ptolemy.kernel.util.NamedObj WRAPPED_OBJECT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getWrappedObject() <em>Wrapped Object</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getWrappedObject() <em>Wrapped Object</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getWrappedObject()
    * @generated
    * @ordered
@@ -112,8 +112,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected ptolemy.kernel.util.NamedObj wrappedObject = WRAPPED_OBJECT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isDeepComplete() <em>Deep Complete</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #isDeepComplete() <em>Deep Complete</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #isDeepComplete()
    * @generated
    * @ordered
@@ -121,8 +121,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected static final boolean DEEP_COMPLETE_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #isDeepComplete() <em>Deep Complete</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #isDeepComplete() <em>Deep Complete</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #isDeepComplete()
    * @generated
    * @ordered
@@ -130,8 +130,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected boolean deepComplete = DEEP_COMPLETE_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getIconId() <em>Icon Id</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The default value of the '{@link #getIconId() <em>Icon Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getIconId()
    * @generated
    * @ordered
@@ -139,8 +139,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   protected static final String ICON_ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getIconId() <em>Icon Id</em>}' attribute.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getIconId() <em>Icon Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @see #getIconId()
    * @generated
    * @ordered
@@ -149,6 +149,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected NamedObjImpl() {
@@ -157,6 +158,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -166,8 +168,10 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public String getName() {
     return name;
   }
@@ -177,6 +181,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    *
    * @generated NOT
    */
+  @Override
   public void setName(String newName) {
     String oldName = name;
     name = newName;
@@ -185,10 +190,8 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * FIXME : this must be optimized with a name-based map lookup or similar secondly, all children of all types of any subclasses should all end up in a child
-   * collection in NamedObjImpl
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> FIXME : this must be optimized with a name-based map lookup or similar secondly, all children of all types of any subclasses should
+   * all end up in a child collection in NamedObjImpl <!-- end-user-doc -->
    *
    * @generated NOT
    */
@@ -205,13 +208,14 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
+  @Override
   public void welcome(Visitor visitor, boolean deep) {
     visitor.visit(this);
-    if(deep) {
+    if (deep) {
       for (Attribute attr : getAttributes()) {
         attr.welcome(visitor, true);
       }
@@ -220,11 +224,13 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public EList<Attribute> getAttributes() {
     if (attributes == null) {
-      attributes = new EObjectContainmentEList<Attribute>(Attribute.class, this, TriqPackage.NAMED_OBJ__ATTRIBUTES);
+      attributes = new EObjectContainmentEList<>(Attribute.class, this, TriqPackage.NAMED_OBJ__ATTRIBUTES);
     }
     return attributes;
   }
@@ -235,6 +241,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    * @return the fully qualified class name of the wrapped Ptolemy II type. <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getWrappedType() {
     return wrappedType;
   }
@@ -291,6 +298,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    *
    * @generated NOT
    */
+  @Override
   public void setProperty(String name, String value, String className) {
     if (value == null) {
       Attribute attribute = TriqFactory.eINSTANCE.createAttribute();
@@ -306,10 +314,11 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
+  @Override
   public void applyWrappedObject() {
     if (!isDeepComplete()) {
       setName(wrappedObject.getName());
@@ -329,8 +338,10 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public void buildWrappedObject() {
     // TODO: implement this method
     // Ensure that you remove @generated or mark it @generated NOT
@@ -356,13 +367,14 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    *
    * @generated NOT
    */
+  @Override
   public void setWrappedObject(ptolemy.kernel.util.NamedObj newWrappedObject) {
     ptolemy.kernel.util.NamedObj oldWrappedObject = wrappedObject;
     wrappedObject = newWrappedObject;
     if (wrappedObject != null) {
       setWrappedType(wrappedObject.getClass().getName());
       // need to postpone this until the container is set...
-//      initializeFrom(wrappedObject);
+      // initializeFrom(wrappedObject);
     }
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__WRAPPED_OBJECT, oldWrappedObject, wrappedObject));
@@ -370,16 +382,20 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public boolean isDeepComplete() {
     return deepComplete;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public void setDeepComplete(boolean newDeepComplete) {
     boolean oldDeepComplete = deepComplete;
     deepComplete = newDeepComplete;
@@ -389,16 +405,20 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public String getIconId() {
     return iconId;
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public void setIconId(String newIconId) {
     String oldIconId = iconId;
     iconId = newIconId;
@@ -407,18 +427,19 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
+  @Override
   public String getFullName() {
-    if(getWrappedObject()!=null) {
+    if (getWrappedObject() != null) {
       return getWrappedObject().getFullName();
     } else {
       StringBuilder strB = new StringBuilder(getName());
       NamedObj ctr = getContainer();
-      while(ctr!=null) {
-        strB.insert(0, ctr.getName()+".");
+      while (ctr != null) {
+        strB.insert(0, ctr.getName() + ".");
         ctr = ctr.getContainer();
       }
       return strB.toString();
@@ -428,161 +449,169 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
     switch (featureID) {
-      case TriqPackage.NAMED_OBJ__ATTRIBUTES:
-        return ((InternalEList<?>)getAttributes()).basicRemove(otherEnd, msgs);
+    case TriqPackage.NAMED_OBJ__ATTRIBUTES:
+      return ((InternalEList<?>) getAttributes()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType) {
     switch (featureID) {
-      case TriqPackage.NAMED_OBJ__NAME:
-        return getName();
-      case TriqPackage.NAMED_OBJ__ATTRIBUTES:
-        return getAttributes();
-      case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
-        return getWrappedType();
-      case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
-        return getWrappedObject();
-      case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
-        return isDeepComplete();
-      case TriqPackage.NAMED_OBJ__ICON_ID:
-        return getIconId();
+    case TriqPackage.NAMED_OBJ__NAME:
+      return getName();
+    case TriqPackage.NAMED_OBJ__ATTRIBUTES:
+      return getAttributes();
+    case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
+      return getWrappedType();
+    case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
+      return getWrappedObject();
+    case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
+      return isDeepComplete();
+    case TriqPackage.NAMED_OBJ__ICON_ID:
+      return getIconId();
     }
     return super.eGet(featureID, resolve, coreType);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue) {
     switch (featureID) {
-      case TriqPackage.NAMED_OBJ__NAME:
-        setName((String)newValue);
-        return;
-      case TriqPackage.NAMED_OBJ__ATTRIBUTES:
-        getAttributes().clear();
-        getAttributes().addAll((Collection<? extends Attribute>)newValue);
-        return;
-      case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
-        setWrappedType((String)newValue);
-        return;
-      case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
-        setWrappedObject((ptolemy.kernel.util.NamedObj)newValue);
-        return;
-      case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
-        setDeepComplete((Boolean)newValue);
-        return;
-      case TriqPackage.NAMED_OBJ__ICON_ID:
-        setIconId((String)newValue);
-        return;
+    case TriqPackage.NAMED_OBJ__NAME:
+      setName((String) newValue);
+      return;
+    case TriqPackage.NAMED_OBJ__ATTRIBUTES:
+      getAttributes().clear();
+      getAttributes().addAll((Collection<? extends Attribute>) newValue);
+      return;
+    case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
+      setWrappedType((String) newValue);
+      return;
+    case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
+      setWrappedObject((ptolemy.kernel.util.NamedObj) newValue);
+      return;
+    case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
+      setDeepComplete((Boolean) newValue);
+      return;
+    case TriqPackage.NAMED_OBJ__ICON_ID:
+      setIconId((String) newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public void eUnset(int featureID) {
     switch (featureID) {
-      case TriqPackage.NAMED_OBJ__NAME:
-        setName(NAME_EDEFAULT);
-        return;
-      case TriqPackage.NAMED_OBJ__ATTRIBUTES:
-        getAttributes().clear();
-        return;
-      case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
-        setWrappedType(WRAPPED_TYPE_EDEFAULT);
-        return;
-      case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
-        setWrappedObject(WRAPPED_OBJECT_EDEFAULT);
-        return;
-      case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
-        setDeepComplete(DEEP_COMPLETE_EDEFAULT);
-        return;
-      case TriqPackage.NAMED_OBJ__ICON_ID:
-        setIconId(ICON_ID_EDEFAULT);
-        return;
+    case TriqPackage.NAMED_OBJ__NAME:
+      setName(NAME_EDEFAULT);
+      return;
+    case TriqPackage.NAMED_OBJ__ATTRIBUTES:
+      getAttributes().clear();
+      return;
+    case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
+      setWrappedType(WRAPPED_TYPE_EDEFAULT);
+      return;
+    case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
+      setWrappedObject(WRAPPED_OBJECT_EDEFAULT);
+      return;
+    case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
+      setDeepComplete(DEEP_COMPLETE_EDEFAULT);
+      return;
+    case TriqPackage.NAMED_OBJ__ICON_ID:
+      setIconId(ICON_ID_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public boolean eIsSet(int featureID) {
     switch (featureID) {
-      case TriqPackage.NAMED_OBJ__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case TriqPackage.NAMED_OBJ__ATTRIBUTES:
-        return attributes != null && !attributes.isEmpty();
-      case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
-        return WRAPPED_TYPE_EDEFAULT == null ? wrappedType != null : !WRAPPED_TYPE_EDEFAULT.equals(wrappedType);
-      case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
-        return WRAPPED_OBJECT_EDEFAULT == null ? wrappedObject != null : !WRAPPED_OBJECT_EDEFAULT.equals(wrappedObject);
-      case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
-        return deepComplete != DEEP_COMPLETE_EDEFAULT;
-      case TriqPackage.NAMED_OBJ__ICON_ID:
-        return ICON_ID_EDEFAULT == null ? iconId != null : !ICON_ID_EDEFAULT.equals(iconId);
+    case TriqPackage.NAMED_OBJ__NAME:
+      return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+    case TriqPackage.NAMED_OBJ__ATTRIBUTES:
+      return attributes != null && !attributes.isEmpty();
+    case TriqPackage.NAMED_OBJ__WRAPPED_TYPE:
+      return WRAPPED_TYPE_EDEFAULT == null ? wrappedType != null : !WRAPPED_TYPE_EDEFAULT.equals(wrappedType);
+    case TriqPackage.NAMED_OBJ__WRAPPED_OBJECT:
+      return WRAPPED_OBJECT_EDEFAULT == null ? wrappedObject != null : !WRAPPED_OBJECT_EDEFAULT.equals(wrappedObject);
+    case TriqPackage.NAMED_OBJ__DEEP_COMPLETE:
+      return deepComplete != DEEP_COMPLETE_EDEFAULT;
+    case TriqPackage.NAMED_OBJ__ICON_ID:
+      return ICON_ID_EDEFAULT == null ? iconId != null : !ICON_ID_EDEFAULT.equals(iconId);
     }
     return super.eIsSet(featureID);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.NAMED_OBJ___GET_CONTAINER:
-        return getContainer();
-      case TriqPackage.NAMED_OBJ___TOP_LEVEL:
-        return topLevel();
-      case TriqPackage.NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING:
-        setProperty((String)arguments.get(0), (String)arguments.get(1), (String)arguments.get(2));
-        return null;
-      case TriqPackage.NAMED_OBJ___APPLY_WRAPPED_OBJECT:
-        applyWrappedObject();
-        return null;
-      case TriqPackage.NAMED_OBJ___BUILD_WRAPPED_OBJECT:
-        buildWrappedObject();
-        return null;
-      case TriqPackage.NAMED_OBJ___GET_FULL_NAME:
-        return getFullName();
-      case TriqPackage.NAMED_OBJ___GET_CHILD__STRING:
-        return getChild((String)arguments.get(0));
-      case TriqPackage.NAMED_OBJ___WELCOME__VISITOR_BOOLEAN:
-        welcome((Visitor)arguments.get(0), (Boolean)arguments.get(1));
-        return null;
+    case TriqPackage.NAMED_OBJ___GET_CONTAINER:
+      return getContainer();
+    case TriqPackage.NAMED_OBJ___TOP_LEVEL:
+      return topLevel();
+    case TriqPackage.NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING:
+      setProperty((String) arguments.get(0), (String) arguments.get(1), (String) arguments.get(2));
+      return null;
+    case TriqPackage.NAMED_OBJ___APPLY_WRAPPED_OBJECT:
+      applyWrappedObject();
+      return null;
+    case TriqPackage.NAMED_OBJ___BUILD_WRAPPED_OBJECT:
+      buildWrappedObject();
+      return null;
+    case TriqPackage.NAMED_OBJ___GET_FULL_NAME:
+      return getFullName();
+    case TriqPackage.NAMED_OBJ___GET_CHILD__STRING:
+      return getChild((String) arguments.get(0));
+    case TriqPackage.NAMED_OBJ___WELCOME__VISITOR_BOOLEAN:
+      welcome((Visitor) arguments.get(0), (Boolean) arguments.get(1));
+      return null;
     }
     return super.eInvoke(operationID, arguments);
   }
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public String toString() {
-    if (eIsProxy()) return super.toString();
+    if (eIsProxy())
+      return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");

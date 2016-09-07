@@ -45,14 +45,15 @@ public class ExecutionStatusManager extends AbstractSourceProvider {
   private static ExecutionStatusManager instance;
 
   /**
-   * This map maintains the process handles for each running model. For the moment we only support 1 execution at a time for a given model.
-   * (but we already want to support the concurrent execution of different models)
+   * This map maintains the process handles for each running model. For the moment we only support 1 execution at a time for a given model. (but we already want
+   * to support the concurrent execution of different models)
    */
   private static Map<String, ProcessHandle> workflowExecutionHandles = new ConcurrentHashMap<>();
 
   /**
-   * We assume that this constructor will only be invoked once in a Triquetrum editor RCP application!
-   * The construction is driven from an extension defined in the plugin.xml :
+   * We assume that this constructor will only be invoked once in a Triquetrum editor RCP application! The construction is driven from an extension defined in
+   * the plugin.xml :
+   * 
    * <pre>
    *  &lt;extension point="org.eclipse.ui.services">
    *    &lt;sourceProvider provider="org.eclipse.triquetrum.workflow.editor.ExecutionStatusManager">
@@ -98,8 +99,8 @@ public class ExecutionStatusManager extends AbstractSourceProvider {
   /**
    * Stores the handle to a running workflow.
    * <p>
-   * Only 1 instance of a workflow model can be running at a given time, in the current Triq editor version.
-   * When an extra handle registration is attempted for a same model, an IllegalStateException is thrown.
+   * Only 1 instance of a workflow model can be running at a given time, in the current Triq editor version. When an extra handle registration is attempted for
+   * a same model, an IllegalStateException is thrown.
    * </p>
    *
    * @param handle
@@ -131,9 +132,10 @@ public class ExecutionStatusManager extends AbstractSourceProvider {
   /**
    * Fire a status change event for the given handle.
    * <p>
-   * Remark that this method has no clue if an effective status change occurred or not.
-   * That decision should already have been made by the component invoking this method.
+   * Remark that this method has no clue if an effective status change occurred or not. That decision should already have been made by the component invoking
+   * this method.
    * </p>
+   * 
    * @param handle
    */
   public void fireStatusChanged(ProcessHandle handle) {
@@ -147,9 +149,10 @@ public class ExecutionStatusManager extends AbstractSourceProvider {
   /**
    * Fire a status change event for the model associated with the given model.
    * <p>
-   * Remark that this method has no clue if an effective status change occurred or not.
-   * That decision should already have been made by the component invoking this method.
+   * Remark that this method has no clue if an effective status change occurred or not. That decision should already have been made by the component invoking
+   * this method.
    * </p>
+   * 
    * @param modelCode
    */
   public void fireStatusChanged(String modelCode) {

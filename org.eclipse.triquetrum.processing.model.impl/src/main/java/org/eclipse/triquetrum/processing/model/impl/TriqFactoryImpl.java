@@ -51,7 +51,7 @@ public class TriqFactoryImpl implements TriqFactory {
 
   @Override
   public <V extends Serializable> Attribute<V> createAttribute(AttributeHolder holder, String name, V value) {
-    return new AttributeImpl<V>(holder, attrKeyGenerator.getAndIncrement(), new Date(), name, value);
+    return new AttributeImpl<>(holder, attrKeyGenerator.getAndIncrement(), new Date(), name, value);
   }
 
   @Override
@@ -61,12 +61,12 @@ public class TriqFactoryImpl implements TriqFactory {
 
   @Override
   public <T> ProcessingEvent<T> createEvent(T context, String topic, String message, Map<String, String> properties) {
-    return new ProcessingEventImpl<T>(context, eventKeyGenerator.getAndIncrement(), new Date(), topic, message, properties);
+    return new ProcessingEventImpl<>(context, eventKeyGenerator.getAndIncrement(), new Date(), topic, message, properties);
   }
 
   @Override
   public <T> ProcessingErrorEvent<T> createErrorEvent(T context, ErrorCode errorCode, String description, Throwable cause, Map<String, String> properties) {
-    return new ProcessingErrorEventImpl<T>(context, eventKeyGenerator.getAndIncrement(), new Date(), errorCode, description, cause);
+    return new ProcessingErrorEventImpl<>(context, eventKeyGenerator.getAndIncrement(), new Date(), errorCode, description, cause);
   }
 
   @Override
@@ -76,7 +76,7 @@ public class TriqFactoryImpl implements TriqFactory {
 
   @Override
   public <V extends Serializable> ResultItem<V> createResultItem(ResultBlock resultBlock, String name, V value) {
-    return new ResultItemImpl<V>(resultBlock, resultItemKeyGenerator.getAndIncrement(), new Date(), name, value);
+    return new ResultItemImpl<>(resultBlock, resultItemKeyGenerator.getAndIncrement(), new Date(), name, value);
   }
 
 }

@@ -17,11 +17,9 @@ import org.eclipse.graphiti.features.impl.DefaultReconnectionFeature;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
-import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Relation;
-import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
 // TODO build logic for the special case where we reconnect away from a vertex.
@@ -60,12 +58,12 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
       NamedObj startBO = (NamedObj) getBusinessObjectForPictogramElement(startAnchor);
 
       try {
-        ((Linkable)oldBO).unlink(relation);
-        ((Linkable)startBO).unlink(relation);
-        ((Linkable)endBO).unlink(relation);
+        ((Linkable) oldBO).unlink(relation);
+        ((Linkable) startBO).unlink(relation);
+        ((Linkable) endBO).unlink(relation);
         // Only check this after all the unlink/link actions, as relation and newRelation might be the same instance,
         // so we don't want to delete relation yet before doing the new links!
-        if(!relation.isConnected()) {
+        if (!relation.isConnected()) {
           // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
           // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
           EcoreUtil.delete(relation, true);

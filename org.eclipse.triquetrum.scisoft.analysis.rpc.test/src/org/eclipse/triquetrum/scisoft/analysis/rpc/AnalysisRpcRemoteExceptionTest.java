@@ -12,7 +12,6 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.scisoft.analysis.rpc;
 
-import org.eclipse.triquetrum.scisoft.analysis.rpc.AnalysisRpcRemoteException;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

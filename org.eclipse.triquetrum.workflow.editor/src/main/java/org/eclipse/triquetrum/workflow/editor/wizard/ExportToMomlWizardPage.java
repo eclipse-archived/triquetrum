@@ -56,33 +56,31 @@ public class ExportToMomlWizardPage extends WizardExportResourcesPage {
   }
 
   /**
-   *  Set up and execute the passed Operation.  Answer a boolean indicating success.
+   * Set up and execute the passed Operation. Answer a boolean indicating success.
    *
-   *  @return boolean
+   * @return boolean
    */
   protected boolean executeExportOperation(MomlExportOperation op) {
-      op.setCreateLeadupStructure(false);
-      op.setOverwriteFiles(false);
+    op.setCreateLeadupStructure(false);
+    op.setOverwriteFiles(false);
 
-      try {
-          getContainer().run(true, true, op);
-      } catch (InterruptedException e) {
-          return false;
-      } catch (InvocationTargetException e) {
-          displayErrorDialog(e.getTargetException());
-          return false;
-      }
+    try {
+      getContainer().run(true, true, op);
+    } catch (InterruptedException e) {
+      return false;
+    } catch (InvocationTargetException e) {
+      displayErrorDialog(e.getTargetException());
+      return false;
+    }
 
-      IStatus status = op.getStatus();
-      if (!status.isOK()) {
-          ErrorDialog.openError(getContainer().getShell(),
-                  "Export Problems",
-                  null, // no special message
-                  status);
-          return false;
-      }
+    IStatus status = op.getStatus();
+    if (!status.isOK()) {
+      ErrorDialog.openError(getContainer().getShell(), "Export Problems", null, // no special message
+          status);
+      return false;
+    }
 
-      return true;
+    return true;
   }
 
   /**

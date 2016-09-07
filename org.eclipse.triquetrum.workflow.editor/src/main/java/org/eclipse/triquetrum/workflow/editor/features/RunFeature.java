@@ -60,20 +60,20 @@ public class RunFeature extends AbstractExecutionManagementFeature {
     ProcessHandle workflowExecutionHandle = executionService.start(StartMode.RUN, ptolemyModel, null, null, new ProcessEventListener() {
       @Override
       public void handle(ProcessEvent event) {
-          LOGGER.trace("ProcessEventListener.handle() - entry : {} -> {}", selection.getName(), event);
-          ProcessingStatus status = event.getStatus();
-          if(status!=null) {
-            // we need to update the state of process handle, and the accompanying execution commands in the toolbar
-            // this requires display to help us out with UI thread handling...
-            display.syncExec(new Runnable() {
-              @Override
-              public void run() {
-                ProcessHandle handle = status.isFinalStatus() ? removeProcessHandle(selection) : getProcessHandleForSelection(selection);
-                fireExecutionStatusChange(handle);
-              }
-            });
-          }
-          LOGGER.trace("ProcessEventListener.handle() - exit : {} -> {}", selection.getName(), event);
+        LOGGER.trace("ProcessEventListener.handle() - entry : {} -> {}", selection.getName(), event);
+        ProcessingStatus status = event.getStatus();
+        if (status != null) {
+          // we need to update the state of process handle, and the accompanying execution commands in the toolbar
+          // this requires display to help us out with UI thread handling...
+          display.syncExec(new Runnable() {
+            @Override
+            public void run() {
+              ProcessHandle handle = status.isFinalStatus() ? removeProcessHandle(selection) : getProcessHandleForSelection(selection);
+              fireExecutionStatusChange(handle);
+            }
+          });
+        }
+        LOGGER.trace("ProcessEventListener.handle() - exit : {} -> {}", selection.getName(), event);
       }
     });
     // TODO there is a risk here that for very fast model executions, the listener has already been invoked before this next step is done.

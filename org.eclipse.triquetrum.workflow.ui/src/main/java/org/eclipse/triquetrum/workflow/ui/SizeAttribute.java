@@ -28,25 +28,21 @@ import ptolemy.kernel.util.Workspace;
 //// SizeAttribute
 
 /**
- * This attribute stores the width and height of a graphical control.
- * The token in this attribute is an IntMatrixToken containing a matrix of dimension 1x2,
- * containing the width and the height, in that order.
- * By default, this attribute has visibility NONE, so the user will not see it in parameter editing dialogs.
+ * This attribute stores the width and height of a graphical control. The token in this attribute is an IntMatrixToken containing a matrix of dimension 1x2,
+ * containing the width and the height, in that order. By default, this attribute has visibility NONE, so the user will not see it in parameter editing dialogs.
  * <p>
- * Note that this attribute is typically used to record the size of a control within a shell (a top-level window).
- * To record the size and position of the shell, use WindowPropertiesAttribute.
+ * Note that this attribute is typically used to record the size of a control within a shell (a top-level window). To record the size and position of the shell,
+ * use WindowPropertiesAttribute.
  *
- * @author Edward A. Lee,  Contributors: Erwin De Ley
+ * @author Edward A. Lee, Contributors: Erwin De Ley
  * @see WindowPropertiesAttribute
  */
 @SuppressWarnings("restriction")
 public class SizeAttribute extends Parameter implements ControlListener {
   /**
-   * Construct an attribute with the given name contained by the specified entity.
-   * The container argument must not be null, or a NullPointerException will be thrown.
-   * This attribute will use the workspace of the container for synchronization and version counts.
-   * If the name argument is null, then the name is set to the empty string.
-   * Increment the version of the workspace.
+   * Construct an attribute with the given name contained by the specified entity. The container argument must not be null, or a NullPointerException will be
+   * thrown. This attribute will use the workspace of the container for synchronization and version counts. If the name argument is null, then the name is set
+   * to the empty string. Increment the version of the workspace.
    *
    * @param container
    *          The container.
@@ -66,8 +62,8 @@ public class SizeAttribute extends Parameter implements ControlListener {
   //// public methods ////
 
   /**
-   * Clone the attribute into the specified workspace.
-   * This calls the base class and then sets the attribute public members to refer to the attributes of the new attribute.
+   * Clone the attribute into the specified workspace. This calls the base class and then sets the attribute public members to refer to the attributes of the
+   * new attribute.
    *
    * @param workspace
    *          The workspace for the new attribute
@@ -122,9 +118,8 @@ public class SizeAttribute extends Parameter implements ControlListener {
   }
 
   /**
-   * Set the size of the specified control to match the current value of the attribute.
-   * If the value of the attribute has not been set, then do nothing.
-   * If it has not already done so, this method also registers with the control as a listener for control events like resizing.
+   * Set the size of the specified control to match the current value of the attribute. If the value of the attribute has not been set, then do nothing. If it
+   * has not already done so, this method also registers with the control as a listener for control events like resizing.
    *
    * @param control
    *          The control whose size is to be set.

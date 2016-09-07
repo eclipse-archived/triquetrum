@@ -28,8 +28,8 @@ public abstract class AbstractDrawingStrategy<A extends VisibleAttribute> implem
 
   protected Point getTopLeftLocation(A visibleAttribute, Graphics graphics) {
     Location location = (Location) visibleAttribute.getAttribute("_location");
-    int x1 = (int)location.getLocation()[0];
-    int y1 = (int)location.getLocation()[1];
+    int x1 = (int) location.getLocation()[0];
+    int y1 = (int) location.getLocation()[1];
     return new Point(x1, y1);
   }
 

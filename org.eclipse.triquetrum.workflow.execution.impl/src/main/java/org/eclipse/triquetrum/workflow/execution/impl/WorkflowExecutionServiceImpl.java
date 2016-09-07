@@ -58,7 +58,7 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
   public ProcessHandle start(StartMode mode, ModelHandle modelHandle, String processContextId, Map<String, String> parameterOverrides,
       ProcessEventListener listener, String... breakpointNames) {
 
-    if (processContextId == null || processContextId.trim().length()==0) {
+    if (processContextId == null || processContextId.trim().length() == 0) {
       processContextId = UUID.randomUUID().toString();
     }
 
@@ -72,8 +72,8 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
   }
 
   @Override
-  public ProcessHandle start(StartMode mode, CompositeActor model, String processId, Map<String, String> parameterOverrides,
-      ProcessEventListener listener, String... breakpointNames) {
+  public ProcessHandle start(StartMode mode, CompositeActor model, String processId, Map<String, String> parameterOverrides, ProcessEventListener listener,
+      String... breakpointNames) {
     return start(mode, new ModelHandleImpl(model), processId, parameterOverrides, listener, breakpointNames);
   }
 
@@ -101,8 +101,9 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
   }
 
   @Override
-  public ProcessHandle waitUntilFinished(ProcessHandle processHandle, long time, TimeUnit unit) throws TimeoutException, InterruptedException, WorkflowNotExecutingException, ExecutionException {
-    WorkflowExecutionFuture fet = ((ProcessHandleImpl)processHandle).getFet();
+  public ProcessHandle waitUntilFinished(ProcessHandle processHandle, long time, TimeUnit unit)
+      throws TimeoutException, InterruptedException, WorkflowNotExecutingException, ExecutionException {
+    WorkflowExecutionFuture fet = ((ProcessHandleImpl) processHandle).getFet();
     if (fet != null) {
       try {
         fet.get(time, unit);
@@ -120,8 +121,8 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
    */
   @Override
   public ProcessHandle terminate(ProcessHandle processHandle) throws WorkflowNotExecutingException {
-    WorkflowExecutionFuture fet = ((ProcessHandleImpl)processHandle).getFet();
-    if(fet==null) {
+    WorkflowExecutionFuture fet = ((ProcessHandleImpl) processHandle).getFet();
+    if (fet == null) {
       throw new WorkflowNotExecutingException(processHandle.getModelHandle());
     } else {
       fet.cancel(true);
@@ -131,8 +132,8 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
 
   @Override
   public ProcessHandle suspend(ProcessHandle processHandle) throws WorkflowNotExecutingException {
-    WorkflowExecutionFuture fet = ((ProcessHandleImpl)processHandle).getFet();
-    if(fet==null) {
+    WorkflowExecutionFuture fet = ((ProcessHandleImpl) processHandle).getFet();
+    if (fet == null) {
       throw new WorkflowNotExecutingException(processHandle.getModelHandle());
     } else {
       // TODO check if we can/need to do something with the boolean result...
@@ -143,8 +144,8 @@ public class WorkflowExecutionServiceImpl implements WorkflowExecutionService {
 
   @Override
   public ProcessHandle resume(ProcessHandle processHandle) throws WorkflowNotExecutingException {
-    WorkflowExecutionFuture fet = ((ProcessHandleImpl)processHandle).getFet();
-    if(fet==null) {
+    WorkflowExecutionFuture fet = ((ProcessHandleImpl) processHandle).getFet();
+    if (fet == null) {
       throw new WorkflowNotExecutingException(processHandle.getModelHandle());
     } else {
       // TODO check if we can/need to do something with the boolean result...

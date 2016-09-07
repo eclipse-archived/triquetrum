@@ -31,9 +31,10 @@ public class PauseFeature extends AbstractExecutionManagementFeature {
 
   @Override
   protected boolean isAvailableForSelection(CompositeActor selection) {
-    return getProcessHandleForSelection(selection)!=null;
+    return getProcessHandleForSelection(selection) != null;
   }
 
+  @Override
   protected void doExecute(WorkflowExecutionService executionService, CompositeActor selection) throws TriqException {
     ProcessHandle processHandle = getProcessHandleForSelection(selection);
     executionService.suspend(processHandle);

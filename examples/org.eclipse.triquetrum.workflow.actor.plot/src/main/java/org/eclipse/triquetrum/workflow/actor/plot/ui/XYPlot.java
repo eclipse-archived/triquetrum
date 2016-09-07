@@ -104,19 +104,19 @@ public class XYPlot extends AbstractPlaceableSWT {
               traceDataProvider.setBufferSize(100);
               traceDataProviders.add(traceDataProvider);
               // create the trace
-              String traceName = (seriesNames.length>i) ? seriesNames[i] : seriesNames[seriesNames.length-1];
+              String traceName = (seriesNames.length > i) ? seriesNames[i] : seriesNames[seriesNames.length - 1];
               Trace trace = new Trace(traceName, xyGraph.primaryXAxis, xyGraph.primaryYAxis, traceDataProvider);
               // set trace properties
               PointStyle pointStyle = PointStyle.NONE;
               try {
                 pointStyle = PointStyle.valueOf(actor.plotPointStyle.stringValue());
-                if(!PointStyle.NONE.equals(pointStyle)) {
+                if (!PointStyle.NONE.equals(pointStyle)) {
                   // increase the point size a bit as the point shapes are barely noticeable otherwise
                   trace.setPointSize(6);
                 }
               } catch (Exception e) {
                 // it's OK, this is not a critical issue just leave it at the default NONE.
-                LOGGER.warn("Error determining the desired plot Point Style",e);
+                LOGGER.warn("Error determining the desired plot Point Style", e);
               }
               trace.setPointStyle(pointStyle);
               TraceType traceType = TraceType.SOLID_LINE;
@@ -124,7 +124,7 @@ public class XYPlot extends AbstractPlaceableSWT {
                 traceType = TraceType.valueOf(actor.plotLineStyle.stringValue());
               } catch (Exception e) {
                 // it's OK, this is not a critical issue just leave it at the default SOLIDE_LINE.
-                LOGGER.warn("Error determining the desired plot Line Style",e);
+                LOGGER.warn("Error determining the desired plot Line Style", e);
               }
               trace.setTraceType(traceType);
               // add the trace to xyGraph

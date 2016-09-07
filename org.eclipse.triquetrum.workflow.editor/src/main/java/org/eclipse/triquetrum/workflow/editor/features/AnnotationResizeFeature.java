@@ -33,6 +33,7 @@ public class AnnotationResizeFeature extends DefaultResizeShapeFeature {
     super(fp);
   }
 
+  @Override
   public boolean canResizeShape(IResizeShapeContext context) {
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
     return (BoCategory.Annotation.equals(boCategory));
@@ -52,8 +53,8 @@ public class AnnotationResizeFeature extends DefaultResizeShapeFeature {
       if (BoCategory.Annotation.equals(boCategory)) {
         MultiText text = EditorUtils.getGraphicsAlgorithmOfShape(shape, MultiText.class);
         if (text != null) {
-          text.setWidth(width-5);
-          text.setHeight(height / (annotation.getTextSize()+5));
+          text.setWidth(width - 5);
+          text.setHeight(height / (annotation.getTextSize() + 5));
           Graphiti.getGaService().setLocationAndSize(text, 5, 0, width, height);
         }
       }

@@ -87,8 +87,9 @@ public class PythonHelper {
   // }
   //
   public static String runPythonFile(String file, String[] args, String[] envp, boolean failOnAnyOutput) throws Exception {
-    if (args == null)
+    if (args == null) {
       args = new String[0];
+    }
     String[] allArgs = new String[2 + args.length];
     allArgs[0] = PYTHON_EXE;
     allArgs[1] = file;
@@ -111,8 +112,9 @@ public class PythonHelper {
   }
 
   public static PythonRunInfo runPythonFileBackground(String file, String[] args, String[] envp) throws Exception {
-    if (args == null)
+    if (args == null) {
       args = new String[0];
+    }
     String[] allArgs = new String[2 + args.length];
     allArgs[0] = PYTHON_EXE;
     allArgs[1] = file;

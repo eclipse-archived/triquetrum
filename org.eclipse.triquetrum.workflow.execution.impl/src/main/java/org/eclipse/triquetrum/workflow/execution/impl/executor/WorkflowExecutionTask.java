@@ -38,7 +38,6 @@ import ptolemy.actor.Manager.State;
 import ptolemy.kernel.ComponentEntity;
 import ptolemy.kernel.Port;
 
-
 /**
  * @author erwin
  */
@@ -46,7 +45,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
 
   private final static Logger LOGGER = LoggerFactory.getLogger(WorkflowExecutionTask.class);
 
-  private final static Map<State, ProcessingStatus> STATUS_MAPPING = new HashMap<State, ProcessingStatus>();
+  private final static Map<State, ProcessingStatus> STATUS_MAPPING = new HashMap<>();
 
   private final ModelHandle modelHandle;
   private final StartMode mode;
@@ -57,12 +56,11 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
   private volatile boolean canceled;
   private volatile boolean busy;
   private volatile boolean suspended;
-  private volatile Set<String> suspendedElements = new ConcurrentSkipListSet<String>();
+  private volatile Set<String> suspendedElements = new ConcurrentSkipListSet<>();
   private Manager manager;
   private EventListener listener;
 
-  public WorkflowExecutionTask(StartMode mode, ModelHandle modelHandle, String processId,
-      Map<String, String> parameterOverrides, EventListener listener,
+  public WorkflowExecutionTask(StartMode mode, ModelHandle modelHandle, String processId, Map<String, String> parameterOverrides, EventListener listener,
       String... breakpointNames) {
     this.mode = mode;
     if (modelHandle == null)
@@ -70,11 +68,12 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
     this.modelHandle = modelHandle;
     this.processId = processId;
     status = ProcessingStatus.IDLE;
-    this.parameterOverrides = (parameterOverrides != null) ? new HashMap<String, String>(parameterOverrides) : null;
-    this.breakpointNames = (breakpointNames != null) ? new HashSet<String>(Arrays.asList(breakpointNames)) : null;
+    this.parameterOverrides = (parameterOverrides != null) ? new HashMap<>(parameterOverrides) : null;
+    this.breakpointNames = (breakpointNames != null) ? new HashSet<>(Arrays.asList(breakpointNames)) : null;
     this.listener = listener;
   }
 
+  @Override
   public RunnableFuture<ProcessingStatus> newFutureTask() {
     return new WorkflowExecutionFuture(this);
   }
@@ -131,7 +130,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
       if (e.getCause() instanceof ProcessingException) {
         throw ((ProcessingException) e.getCause());
       } else {
-        throw new ProcessingException(ErrorCode.MODEL_EXECUTION_ERROR, "Error running "+modelHandle, null, e);
+        throw new ProcessingException(ErrorCode.MODEL_EXECUTION_ERROR, "Error running " + modelHandle, null, e);
       }
     }
     if (LOGGER.isTraceEnabled()) {
@@ -143,6 +142,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
   /**
    * Cancel the model execution in a clean way.
    */
+  @Override
   public synchronized void cancel() {
     if (!status.isFinalStatus()) {
       LOGGER.trace("cancel() - Context {} - Flow {}", processId, modelHandle.getCode());
@@ -232,8 +232,8 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
   }
 
   /**
-   * Updates the model execution status to <code>ProcessStatus.FINISHED</code>, or <code>ProcessStatus.INTERRUPTED</code>
-   * if the execution finished due to a cancel.
+   * Updates the model execution status to <code>ProcessStatus.FINISHED</code>, or <code>ProcessStatus.INTERRUPTED</code> if the execution finished due to a
+   * cancel.
    */
   @Override
   public void executionFinished(ptolemy.actor.Manager manager) {

@@ -15,7 +15,7 @@ import org.eclipse.graphiti.ui.platform.AbstractImageProvider;
 
 public class ImageProvider extends AbstractImageProvider {
 
-//  private final static Logger LOGGER = LoggerFactory.getLogger(ImageProvider.class);
+  // private final static Logger LOGGER = LoggerFactory.getLogger(ImageProvider.class);
 
   private static final String ROOT_FOLDER_FOR_IMG = "icons/";
 
@@ -60,8 +60,8 @@ public class ImageProvider extends AbstractImageProvider {
       URI imageURI = URI.createPlatformPluginURI(providerBundleName + "/" + imageFilePath, true);
       addImageFilePath(imageId, imageURI.toString());
     }
-//    else {
-//      LOGGER.debug("Provider {} : Image ID {} already assigned. {} ignored.", new Object[] {providerBundleName, imageId, imageFilePath});
-//    }
+    // else {
+    // LOGGER.debug("Provider {} : Image ID {} already assigned. {} ignored.", new Object[] {providerBundleName, imageId, imageFilePath});
+    // }
   }
 }
