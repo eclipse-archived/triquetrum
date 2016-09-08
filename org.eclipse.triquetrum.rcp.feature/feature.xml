@@ -9,11 +9,10 @@
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
-
 <feature
       id="org.eclipse.triquetrum.rcp.feature"
       label="Triquetrum RCP Feature"
-      version="1.0.0.qualifier"
+      version="0.1.0.qualifier"
       provider-name="Eclipse Triquetrum">
 
    <description url="https://projects.eclipse.org/projects/technology.triquetrum">

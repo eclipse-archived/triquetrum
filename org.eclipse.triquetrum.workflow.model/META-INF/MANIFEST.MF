@@ -10,9 +10,9 @@ Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.eclipse.triquetrum.workflow.model;version="1.0.0",
- org.eclipse.triquetrum.workflow.model.impl;version="1.0.0",
- org.eclipse.triquetrum.workflow.model.util;version="1.0.0"
+Export-Package: org.eclipse.triquetrum.workflow.model;version="0.1.0",
+ org.eclipse.triquetrum.workflow.model.impl;version="0.1.0",
+ org.eclipse.triquetrum.workflow.model.util;version="0.1.0"
 Import-Package: com.microstar.xml;version="10.1.0",
  org.eclipse.graphiti.mm;version="0.12.1",
  org.eclipse.graphiti.mm.algorithms;version="0.12.1",

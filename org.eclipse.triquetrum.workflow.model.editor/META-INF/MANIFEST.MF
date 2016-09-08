@@ -3,7 +3,7 @@ Bundle-SymbolicName: org.eclipse.triquetrum.workflow.model.editor;sing
  leton:=true
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;visibility:=reexport,
- org.eclipse.triquetrum.workflow.model.edit;visibility:=reexport,
+ org.eclipse.triquetrum.workflow.model.edit;bundle-version="0.1.0";visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.emf.edit.ui;visibility:=reexport,
  org.eclipse.ui.ide;visibility:=reexport

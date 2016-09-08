@@ -4,11 +4,12 @@
 # The default behavior, for people who have not set core.autocrlf.
 * text=auto
 
-.classpath text
+# Wildcards here.
 *.java text
-.project text
 *.properties text
 *.xml text
 
-
-
+# Filenames here.
+.classpath text
+.project text
+MANIFEST.MF text
