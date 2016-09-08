@@ -9,11 +9,10 @@
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
-
 <feature
       id="org.eclipse.triquetrum.core.feature"
       label="Triquetrum core feature"
-      version="1.0.0.qualifier">
+      version="0.1.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -32,7 +31,7 @@
       <import plugin="org.slf4j.api"/>
       <import plugin="org.eclipse.osgi"/>
       <import plugin="org.eclipse.osgi.services"/>
-      <import feature="org.eclipse.triquetrum.ptolemy.feature" version="1.0.0.qualifier"/>
+      <import feature="org.eclipse.triquetrum.ptolemy.feature" version="0.1.0.qualifier"/>
    </requires>
 
    <plugin
