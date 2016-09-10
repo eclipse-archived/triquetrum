@@ -27,9 +27,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.Linkable;
+import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+import org.eclipse.triquetrum.workflow.model.Vertex;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
 
 import ptolemy.actor.IOPort;
@@ -107,8 +109,8 @@ public class PortImpl extends NamedObjImpl implements Port {
   protected boolean multiPort = MULTI_PORT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list.
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see #getLinkedRelations()
    * @generated
    * @ordered
@@ -118,7 +120,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   /**
    * The cached value of the '{@link #getInsideLinkedRelations() <em>Inside Linked Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getInsideLinkedRelations()
    * @generated
    * @ordered
@@ -128,7 +130,7 @@ public class PortImpl extends NamedObjImpl implements Port {
   /**
    * The cached value of the '{@link #getOutsideLinkedRelations() <em>Outside Linked Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @see #getOutsideLinkedRelations()
    * @generated
    * @ordered
@@ -144,6 +146,20 @@ public class PortImpl extends NamedObjImpl implements Port {
     super();
     // this is the default type from Ptolemy that we'll be using
     setWrappedType("ptolemy.actor.TypedIOPort");
+  }
+
+  @Override
+  protected void eBasicSetContainer(InternalEObject newContainer) {
+    super.eBasicSetContainer(newContainer);
+    if(newContainer==null && wrappedObject!=null) {
+      try {
+        getWrappedObject().setContainer(null);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        // should never happen when setting a null container
+        e.printStackTrace();
+      }
+    }
   }
 
   /**
@@ -227,7 +243,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -243,7 +259,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -300,6 +316,61 @@ public class PortImpl extends NamedObjImpl implements Port {
   }
 
   /**
+   * <!-- begin-user-doc --> This method checks if this port can be the src for a new connection. For ports, this is true when the port is an atomic actor's
+   * output port, or is a port inside a submodel CompositeActor.
+   *
+   * @return true if the src can be a starting point for a new connection <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean isPotentialStart() {
+    return (isOutput() && canAcceptNewOutsideRelation()) || (isInput() && canAcceptNewInsideRelation());
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   *
+   * @generated NOT
+   */
+  public boolean isPotentialEnd(Linkable start) {
+    // Output ports can only be a valid target when their container is a CompositeActor,
+    // and the source is an input port or vertex within the same composite or an output port of an actor within that composite.
+    if(isOutput() && canAcceptNewInsideRelation()) {
+      NamedObj targetContainerModelLevel = getContainer();
+      boolean isCorrectContainer = targetContainerModelLevel instanceof CompositeActor;
+      if(isCorrectContainer) {
+        boolean isSrcValidInSameComposite =
+            targetContainerModelLevel.equals(start.getContainer())
+             && ((start instanceof Port) && ((Port)start).isInput());
+        boolean isSrcValidInActorInSameComposite =
+            targetContainerModelLevel.equals(start.getContainer().getContainer())
+             && ((start instanceof Vertex)
+                 || ((start instanceof Port) && ((Port)start).isOutput())
+                )
+            ;
+        return isSrcValidInActorInSameComposite || isSrcValidInSameComposite;
+      } else {
+        return false;
+      }
+    }
+    if (isInput()) {
+      // Input ports and Vertex targets can only receive connections from sources that are in the same encompassing model level,
+      // i.e. in the container of the target's container.
+      // For source ports we need to differentiate between plain actor output ports and input ports on a submodel CompositeActor.
+      NamedObj targetContainerModelLevel = getContainer().getContainer();
+      boolean isSrcValidVertex =
+          (start instanceof Vertex) && (targetContainerModelLevel.equals(start.getContainer().getContainer()));
+      boolean isSrcValidPort =
+          (start instanceof Port)
+            && (((Port)start).isOutput() && targetContainerModelLevel.equals(start.getContainer().getContainer())
+                ||((Port)start).isInput() && targetContainerModelLevel.equals(start.getContainer())
+               );
+      return isSrcValidVertex || isSrcValidPort;
+    }
+    return false;
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -353,7 +424,6 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
    * @generated
    */
   @Override
@@ -443,6 +513,19 @@ public class PortImpl extends NamedObjImpl implements Port {
       getWrappedObject().setInput(isInput());
       getWrappedObject().setOutput(isOutput());
       getWrappedObject().setMultiport(isMultiPort());
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public void buildWrappedLinks() {
+    try {
       for (Relation r : getLinkedRelations()) {
         getWrappedObject().link((ptolemy.kernel.Relation) r.getWrappedObject());
       }
@@ -572,26 +655,6 @@ public class PortImpl extends NamedObjImpl implements Port {
    * @generated
    */
   @Override
-  public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
-    if (baseClass == Linkable.class) {
-      switch (baseOperationID) {
-      case TriqPackage.LINKABLE___LINK__RELATION:
-        return TriqPackage.PORT___LINK__RELATION;
-      case TriqPackage.LINKABLE___UNLINK__RELATION:
-        return TriqPackage.PORT___UNLINK__RELATION;
-      default:
-        return -1;
-      }
-    }
-    return super.eDerivedOperationID(baseOperationID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
     case TriqPackage.PORT___CAN_ACCEPT_NEW_OUTSIDE_RELATION:
@@ -604,6 +667,13 @@ public class PortImpl extends NamedObjImpl implements Port {
     case TriqPackage.PORT___UNLINK__RELATION:
       unlink((Relation) arguments.get(0));
       return null;
+      case TriqPackage.PORT___IS_POTENTIAL_START:
+        return isPotentialStart();
+      case TriqPackage.PORT___IS_POTENTIAL_END__LINKABLE:
+        return isPotentialEnd((Linkable)arguments.get(0));
+      case TriqPackage.PORT___BUILD_WRAPPED_LINKS:
+        buildWrappedLinks();
+        return null;
     }
     return super.eInvoke(operationID, arguments);
   }

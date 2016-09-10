@@ -69,7 +69,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="director" eType="#//Director"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//NamedObj #//Linkable">
+  <eClassifiers xsi:type="ecore:EClass" name="Port" eSuperTypes="#//Linkable">
     <eOperations name="canAcceptNewOutsideRelation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eOperations name="canAcceptNewInsideRelation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="input" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -83,13 +83,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="outsideLinkedRelations"
         upperBound="-1" eType="#//Relation" changeable="false" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//NamedObj">
-    <eOperations name="link">
-      <eParameters name="relation" eType="#//Relation"/>
-    </eOperations>
-    <eOperations name="unlink">
-      <eParameters name="relation" eType="#//Relation"/>
-    </eOperations>
+  <eClassifiers xsi:type="ecore:EClass" name="Relation" eSuperTypes="#//Linkable">
     <eOperations name="isConnected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eOperations name="getVertex" eType="#//Vertex"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
@@ -105,13 +99,19 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Vertex" eSuperTypes="#//Location #//Linkable"/>
   <eClassifiers xsi:type="ecore:EDataType" name="PtolemyNamedObj" instanceClassName="ptolemy.kernel.util.NamedObj"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Linkable" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="Linkable" abstract="true" interface="true"
+      eSuperTypes="#//NamedObj">
     <eOperations name="link">
       <eParameters name="relation" eType="#//Relation"/>
     </eOperations>
     <eOperations name="unlink">
       <eParameters name="relation" eType="#//Relation"/>
     </eOperations>
+    <eOperations name="isPotentialStart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="isPotentialEnd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="start" eType="#//Linkable"/>
+    </eOperations>
+    <eOperations name="buildWrappedLinks"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Visitor" instanceClassName="org.eclipse.triquetrum.workflow.model.util.Visitor"/>
 </ecore:EPackage>

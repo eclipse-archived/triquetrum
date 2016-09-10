@@ -10,7 +10,6 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IRemoveContext;
 import org.eclipse.graphiti.features.impl.DefaultRemoveFeature;
@@ -45,11 +44,6 @@ public class ConnectionRemoveFeature extends DefaultRemoveFeature {
       Linkable endBO = (Linkable) getBusinessObjectForPictogramElement(connectionPE.getEnd());
       startBO.unlink(relation);
       endBO.unlink(relation);
-      if (!relation.isConnected()) {
-        // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
-        // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
-        EcoreUtil.delete(relation, true);
-      }
     }
     super.remove(context);
   }

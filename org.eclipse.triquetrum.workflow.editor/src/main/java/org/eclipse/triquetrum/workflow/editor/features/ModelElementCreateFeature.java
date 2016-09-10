@@ -175,6 +175,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
           relation = TriqFactory.eINSTANCE.createRelation();
           relation.setName(EditorUtils.buildUniqueName(model, "_R"));
           model.getRelations().add(relation);
+          relation.welcome(new PtObjectBuilderAndApplierVisitor(), true);
         }
         relation.getAttributes().add((Vertex) result);
       } else if (result instanceof Attribute) {

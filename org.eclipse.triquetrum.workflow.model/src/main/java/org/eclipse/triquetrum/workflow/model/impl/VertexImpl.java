@@ -15,6 +15,8 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.triquetrum.workflow.model.Linkable;
+import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.Vertex;
@@ -70,20 +72,61 @@ public class VertexImpl extends LocationImpl implements Vertex {
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   * <!-- begin-user-doc -->
+     * A Vertex can always be the src for a new connection.
+     *
+     * @return true
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean isPotentialStart() {
+    return true;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * Vertex targets can only receive connections from sources that are in the same encompassing model level,
+   * i.e. in the container of the vertex's container (i.e. relation).
+   * For output ports as starts, the port's actor must be in the same model level.
+   * Input ports can also be a start for a link, if they are in a composite actor that also contains this vertex.
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  public boolean isPotentialEnd(Linkable start) {
+    NamedObj targetContainerModelLevel = getContainer().getContainer();
+    boolean isSrcValidVertex =
+        (start instanceof Vertex) && (targetContainerModelLevel.equals(start.getContainer().getContainer()));
+    boolean isSrcValidPort =
+        (start instanceof Port)
+          && (((Port)start).isOutput() && targetContainerModelLevel.equals(start.getContainer().getContainer())
+              ||((Port)start).isInput() && targetContainerModelLevel.equals(start.getContainer())
+             );
+    return isSrcValidVertex || isSrcValidPort;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void buildWrappedLinks() {
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
   public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
     if (baseClass == Linkable.class) {
       switch (baseOperationID) {
-      case TriqPackage.LINKABLE___LINK__RELATION:
-        return TriqPackage.VERTEX___LINK__RELATION;
-      case TriqPackage.LINKABLE___UNLINK__RELATION:
-        return TriqPackage.VERTEX___UNLINK__RELATION;
-      default:
-        return -1;
+        case TriqPackage.LINKABLE___LINK__RELATION: return TriqPackage.VERTEX___LINK__RELATION;
+        case TriqPackage.LINKABLE___UNLINK__RELATION: return TriqPackage.VERTEX___UNLINK__RELATION;
+        case TriqPackage.LINKABLE___IS_POTENTIAL_START: return TriqPackage.VERTEX___IS_POTENTIAL_START;
+        case TriqPackage.LINKABLE___IS_POTENTIAL_END__LINKABLE: return TriqPackage.VERTEX___IS_POTENTIAL_END__LINKABLE;
+        case TriqPackage.LINKABLE___BUILD_WRAPPED_LINKS: return TriqPackage.VERTEX___BUILD_WRAPPED_LINKS;
+        default: return -1;
       }
     }
     return super.eDerivedOperationID(baseOperationID, baseClass);
@@ -103,6 +146,13 @@ public class VertexImpl extends LocationImpl implements Vertex {
     case TriqPackage.VERTEX___UNLINK__RELATION:
       unlink((Relation) arguments.get(0));
       return null;
+      case TriqPackage.VERTEX___IS_POTENTIAL_START:
+        return isPotentialStart();
+      case TriqPackage.VERTEX___IS_POTENTIAL_END__LINKABLE:
+        return isPotentialEnd((Linkable)arguments.get(0));
+      case TriqPackage.VERTEX___BUILD_WRAPPED_LINKS:
+        buildWrappedLinks();
+        return null;
     }
     return super.eInvoke(operationID, arguments);
   }

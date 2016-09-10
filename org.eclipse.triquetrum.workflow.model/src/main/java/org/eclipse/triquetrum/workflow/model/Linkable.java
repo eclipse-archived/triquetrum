@@ -10,8 +10,6 @@
  */
 package org.eclipse.triquetrum.workflow.model;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Linkable</b></em>'. <!-- end-user-doc -->
  *
@@ -20,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Linkable extends EObject {
+public interface Linkable extends NamedObj {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -36,5 +34,31 @@ public interface Linkable extends EObject {
    * @generated
    */
   void unlink(Relation relation);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model kind="operation"
+   * @generated
+   */
+  boolean isPotentialStart();
+
+  /**
+   * <!-- begin-user-doc -->
+     * This method checks whether a connection's src and target are of the right type and on the right model level
+     * to be a matching pair to be connected.
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  boolean isPotentialEnd(Linkable start);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  void buildWrappedLinks();
 
 } // Linkable

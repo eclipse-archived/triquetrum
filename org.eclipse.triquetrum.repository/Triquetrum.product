@@ -35,11 +35,9 @@
       </win>
    </launcher>
 
-
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
-
 
    <plugins>
    </plugins>
@@ -119,7 +117,10 @@
       <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
       <plugin id="org.eclipse.osgi" autoStart="true" startLevel="-1" />
       <plugin id="org.eclipse.triquetrum.common" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.processing.actor" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.processing.model.impl.memory" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.processing.service.impl" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.python.actor" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.actor.plot" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.actor.ui" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.editor" autoStart="true" startLevel="0" />

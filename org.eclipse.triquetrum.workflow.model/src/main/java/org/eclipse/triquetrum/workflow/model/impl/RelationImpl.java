@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
+import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
@@ -30,6 +31,7 @@ import org.eclipse.triquetrum.workflow.model.Vertex;
 
 import ptolemy.kernel.ComponentRelation;
 import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.NameDuplicationException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Relation</b></em>'. <!-- end-user-doc -->
@@ -85,6 +87,20 @@ public class RelationImpl extends NamedObjImpl implements Relation {
    */
   protected RelationImpl() {
     super();
+  }
+
+  @Override
+  protected void eBasicSetContainer(InternalEObject newContainer) {
+    super.eBasicSetContainer(newContainer);
+    if(newContainer==null && wrappedObject!=null) {
+      try {
+        getWrappedObject().setContainer(null);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        // should never happen when setting a null container
+        e.printStackTrace();
+      }
+    }
   }
 
   /**
@@ -148,6 +164,28 @@ public class RelationImpl extends NamedObjImpl implements Relation {
       getLinkedRelations().remove(relation);
       getLinkingRelations().remove(relation);
     }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isPotentialStart() {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isPotentialEnd(Linkable start) {
+    // TODO: implement this method
+    // Ensure that you remove @generated or mark it @generated NOT
+    throw new UnsupportedOperationException();
   }
 
   /**
@@ -279,8 +317,20 @@ public class RelationImpl extends NamedObjImpl implements Relation {
     try {
       ptolemy.kernel.CompositeEntity container = (ptolemy.kernel.CompositeEntity) (getContainer() != null ? getContainer().getWrappedObject() : null);
       wrappedObject = container.newRelation(getName());
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void buildWrappedLinks() {
+    try {
       for (Relation r : getLinkedRelations()) {
-        // TODO fix the problem/risk that r's wrapped object is not yet created
         getWrappedObject().link((ptolemy.kernel.Relation) r.getWrappedObject());
       }
     } catch (Exception e) {
@@ -421,16 +471,23 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-    case TriqPackage.RELATION___LINK__RELATION:
-      link((Relation) arguments.get(0));
-      return null;
-    case TriqPackage.RELATION___UNLINK__RELATION:
-      unlink((Relation) arguments.get(0));
-      return null;
-    case TriqPackage.RELATION___IS_CONNECTED:
-      return isConnected();
-    case TriqPackage.RELATION___GET_VERTEX:
-      return getVertex();
+      case TriqPackage.RELATION___IS_CONNECTED:
+        return isConnected();
+      case TriqPackage.RELATION___GET_VERTEX:
+        return getVertex();
+      case TriqPackage.RELATION___LINK__RELATION:
+        link((Relation) arguments.get(0));
+        return null;
+      case TriqPackage.RELATION___UNLINK__RELATION:
+        unlink((Relation) arguments.get(0));
+        return null;
+      case TriqPackage.RELATION___IS_POTENTIAL_START:
+        return isPotentialStart();
+      case TriqPackage.RELATION___IS_POTENTIAL_END__LINKABLE:
+        return isPotentialEnd((Linkable)arguments.get(0));
+      case TriqPackage.RELATION___BUILD_WRAPPED_LINKS:
+        buildWrappedLinks();
+        return null;
     }
     return super.eInvoke(operationID, arguments);
   }
