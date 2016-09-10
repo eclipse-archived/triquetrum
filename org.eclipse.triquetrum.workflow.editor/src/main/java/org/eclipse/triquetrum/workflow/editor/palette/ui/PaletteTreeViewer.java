@@ -42,8 +42,7 @@ import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 
 /**
- * Try to merge features of {@link TreeViewer} into the {@link PaletteViewer}
- * and use a {@link FilteredTree} with that as well.
+ * Try to merge features of {@link TreeViewer} into the {@link PaletteViewer} and use a {@link FilteredTree} with that as well.
  *
  */
 public class PaletteTreeViewer extends PaletteViewer {
@@ -109,6 +108,7 @@ public class PaletteTreeViewer extends PaletteViewer {
   /**
    * @see org.eclipse.gef.EditPartViewer#findObjectAtExcluding(Point, Collection, EditPartViewer.Conditional)
    */
+  @Override
   public EditPart findObjectAtExcluding(Point pt, Collection exclude, Conditional condition) {
     if (getControl() == null)
       return null;
@@ -123,7 +123,7 @@ public class PaletteTreeViewer extends PaletteViewer {
 
     if (tie != null) {
       result = (EditPart) tie.getData();
-    } else if(tree.getData() instanceof EditPart){
+    } else if (tree.getData() instanceof EditPart) {
       result = (EditPart) tree.getData();
     }
     while (result != null) {
@@ -137,6 +137,7 @@ public class PaletteTreeViewer extends PaletteViewer {
   /**
    * @see org.eclipse.gef.ui.parts.AbstractEditPartViewer#fireSelectionChanged()
    */
+  @Override
   protected void fireSelectionChanged() {
     super.fireSelectionChanged();
     showSelectionInTree();
@@ -145,12 +146,14 @@ public class PaletteTreeViewer extends PaletteViewer {
   /**
    * "Hooks up" a Control, i.e. sets it as the control for the RootTreeEditPart, adds necessary listener for proper operation, etc.
    */
+  @Override
   protected void hookControl() {
     if (getControl() == null)
       return;
 
     final Tree tree = getTreeControl();
     tree.addSelectionListener(new SelectionListener() {
+      @Override
       public void widgetSelected(SelectionEvent e) {
         TreeItem[] ties = tree.getSelection();
         Object newSelection[] = new Object[ties.length];
@@ -161,6 +164,7 @@ public class PaletteTreeViewer extends PaletteViewer {
         ignore = false;
       }
 
+      @Override
       public void widgetDefaultSelected(SelectionEvent e) {
         widgetSelected(e);
       }
@@ -177,6 +181,7 @@ public class PaletteTreeViewer extends PaletteViewer {
   /**
    * @see org.eclipse.gef.ui.parts.AbstractEditPartViewer#reveal(org.eclipse.gef.EditPart)
    */
+  @Override
   public void reveal(EditPart part) {
     if (!(part instanceof TreeEditPart))
       return;
@@ -190,6 +195,7 @@ public class PaletteTreeViewer extends PaletteViewer {
   /**
    * Creates or disposes a DragSource as needed, and sets the supported transfer types. Clients should not need to call or override this method.
    */
+  @Override
   protected void refreshDragSourceAdapter() {
     if (getControl() == null)
       return;
@@ -205,6 +211,7 @@ public class PaletteTreeViewer extends PaletteViewer {
   /**
    * Creates or disposes a DropTarget as needed, and sets the supported transfer types. Clients should not need to call or override this method.
    */
+  @Override
   protected void refreshDropTargetAdapter() {
     if (getControl() == null)
       return;
@@ -230,7 +237,7 @@ public class PaletteTreeViewer extends PaletteViewer {
     }
     TreeItem[] treeItems = new TreeItem[treeParts.size()];
     for (int i = 0; i < treeParts.size(); i++) {
-      TreeEditPart part = (TreeEditPart) treeParts.get(i);
+      TreeEditPart part = treeParts.get(i);
       treeItems[i] = (TreeItem) part.getWidget();
     }
     tree.setSelection(treeItems);
@@ -240,6 +247,7 @@ public class PaletteTreeViewer extends PaletteViewer {
    * Unhooks a control so that it can be reset. This method deactivates the contents, removes the Control as being the Control of the RootTreeEditPart, etc. It
    * does not remove the listeners because it is causing errors, although that would be a desirable outcome.
    */
+  @Override
   protected void unhookControl() {
     if (getControl() == null)
       return;

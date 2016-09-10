@@ -15,19 +15,18 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
+
 import ptolemy.kernel.util.NamedObj;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Attribute</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Attribute</b></em>'. <!-- end-user-doc -->
  *
  * @generated
  */
 public class AttributeImpl extends NamedObjImpl implements Attribute {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated NOT
    */
   protected AttributeImpl() {
@@ -53,7 +52,7 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
   @Override
   public void buildWrappedObject() {
     try {
-      NamedObj container = (NamedObj) (getContainer() != null ? getContainer().getWrappedObject() : null);
+      NamedObj container = getContainer() != null ? getContainer().getWrappedObject() : null;
       wrappedObject = PtolemyUtil._createAttribute(container, getWrappedType(), getName());
     } catch (Exception e) {
       // TODO Auto-generated catch block
@@ -67,8 +66,8 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -76,4 +75,4 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
     return TriqPackage.Literals.ATTRIBUTE;
   }
 
-} //AttributeImpl
+} // AttributeImpl

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Actor UI integration (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.actor.ui
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
 Import-Package: org.eclipse.swt,
@@ -19,5 +19,5 @@ Import-Package: org.eclipse.swt,
  ptolemy.kernel.util;version="11.0.0",
  ptolemy.util;version="11.0.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.actor.ui.activator.Activator
-Require-Bundle: org.eclipse.triquetrum.workflow.ui;bundle-version="1.0.0"
+Require-Bundle: org.eclipse.triquetrum.workflow.ui;bundle-version="0.1.0"
 

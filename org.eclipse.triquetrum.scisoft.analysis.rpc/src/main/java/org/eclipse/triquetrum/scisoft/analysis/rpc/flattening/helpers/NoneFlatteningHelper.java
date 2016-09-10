@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -28,7 +28,7 @@ public class NoneFlatteningHelper implements IFlattener<Object> {
 
   @Override
   public Object flatten(Object obj, IRootFlattener rootFlattener) {
-    Map<String, Object> outMap = new HashMap<String, Object>();
+    Map<String, Object> outMap = new HashMap<>();
     outMap.put(IFlattener.TYPE_KEY, TYPE_NAME);
     if (obj == null) {
       outMap.put(TYPED_NONE_TYPE, NULL);

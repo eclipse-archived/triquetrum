@@ -50,26 +50,30 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   /**
    * This is true when :
    * <ul>
-   * <li>the src is an atomic actor's output port, or is a port inside a submodel CompositeActor.
-   * For that last case, the condition to effectively allow the complete creation of a new connection, depends on the target port :
+   * <li>the src is an atomic actor's output port, or is a port inside a submodel CompositeActor. For that last case, the condition to effectively allow the
+   * complete creation of a new connection, depends on the target port :
    * <ul>
-   * <li>if the src port is an input port of a submodel, the target port must be an input port of an actor inside that submodel or a vertex or an output port of the submodel itself</li>
+   * <li>if the src port is an input port of a submodel, the target port must be an input port of an actor inside that submodel or a vertex or an output port of
+   * the submodel itself</li>
    * <li>if the src port is an output port of a submodel, the target port must be a vertex or an input port of an actor in the parent model.</li>
-   * </ul></li>
+   * </ul>
+   * </li>
    * <li>the src is a vertex. Then the target must be in the same (sub)model level and must be either :
    * <ul>
    * <li>a vertex</li>
    * <li>an input port of an actor</li>
    * <li>an output port in the current submodel CompositeActor</li>
-   * </ul></li>
+   * </ul>
+   * </li>
    * </ul>
    *
    */
+  @Override
   public boolean canCreate(ICreateConnectionContext context) {
     // return true if both anchors belong to a Port or Vertex and can accept the connection
     Linkable source = getAnchorBO(context.getSourceAnchor());
     Linkable target = getAnchorBO(context.getTargetAnchor());
-    if(target!=null) {
+    if (target != null) {
       if (source.isPotentialStart() && target.isPotentialEnd(source)) {
         return true;
       }
@@ -78,12 +82,14 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   }
 
   /**
-   * This method checks if the src is either a vertex or a port that can be the src for a new connection.
-   * For ports, this is true when the port is an atomic actor's output port, or is a port inside a submodel CompositeActor.
+   * This method checks if the src is either a vertex or a port that can be the src for a new connection. For ports, this is true when the port is an atomic
+   * actor's output port, or is a port inside a submodel CompositeActor.
    *
-   * @param context containing the selected source anchor
+   * @param context
+   *          containing the selected source anchor
    * @return true if the src can be a starting point for a new connection
    */
+  @Override
   public boolean canStartConnection(ICreateConnectionContext context) {
     // return true if start anchor belongs to a Port or Vertex
     NamedObj anchorBO = getAnchorBO(context.getSourceAnchor());
@@ -91,6 +97,7 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   }
 
 
+  @Override
   public Connection create(ICreateConnectionContext context) {
     try {
       Connection newConnection = null;
@@ -127,7 +134,7 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
       if (object instanceof Vertex) {
         return (Vertex) object;
       } else {
-        throw new IllegalArgumentException("Anchor " + anchor + " linked to invalid object "+object);
+        throw new IllegalArgumentException("Anchor " + anchor + " linked to invalid object " + object);
       }
     }
     return null;

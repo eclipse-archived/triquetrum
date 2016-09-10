@@ -4,34 +4,29 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  */
 package org.eclipse.triquetrum.workflow.model.provider;
-
 
 import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
-
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.triquetrum.workflow.model.Vertex} object.
- * <!-- begin-user-doc -->
- * <!-- end-user-doc -->
+ * This is the item provider adapter for a {@link org.eclipse.triquetrum.workflow.model.Vertex} object. <!-- begin-user-doc --> <!-- end-user-doc -->
+ * 
  * @generated
  */
 public class VertexItemProvider extends LocationItemProvider {
   /**
-   * This constructs an instance from a factory and a notifier.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * This constructs an instance from a factory and a notifier. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   public VertexItemProvider(AdapterFactory adapterFactory) {
@@ -39,9 +34,8 @@ public class VertexItemProvider extends LocationItemProvider {
   }
 
   /**
-   * This returns the property descriptors for the adapted class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * This returns the property descriptors for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,9 +48,8 @@ public class VertexItemProvider extends LocationItemProvider {
   }
 
   /**
-   * This returns Vertex.gif.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * This returns Vertex.gif. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -65,25 +58,20 @@ public class VertexItemProvider extends LocationItemProvider {
   }
 
   /**
-   * This returns the label text for the adapted class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * This returns the label text for the adapted class. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public String getText(Object object) {
-    String label = ((Vertex)object).getName();
-    return label == null || label.length() == 0 ?
-      getString("_UI_Vertex_type") :
-      getString("_UI_Vertex_type") + " " + label;
+    String label = ((Vertex) object).getName();
+    return label == null || label.length() == 0 ? getString("_UI_Vertex_type") : getString("_UI_Vertex_type") + " " + label;
   }
-  
 
   /**
-   * This handles model notifications by calling {@link #updateChildren} to update any cached
-   * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * This handles model notifications by calling {@link #updateChildren} to update any cached children and by creating a viewer notification, which it passes to
+   * {@link #fireNotifyChanged}. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -93,10 +81,9 @@ public class VertexItemProvider extends LocationItemProvider {
   }
 
   /**
-   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children
-   * that can be created under this object.
-   * <!-- begin-user-doc -->
+   * This adds {@link org.eclipse.emf.edit.command.CommandParameter}s describing the children that can be created under this object. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override

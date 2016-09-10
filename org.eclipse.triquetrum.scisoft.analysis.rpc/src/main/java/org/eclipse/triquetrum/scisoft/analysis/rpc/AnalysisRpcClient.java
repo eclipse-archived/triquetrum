@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * Generally it is expected that a provider of a service will write a wrapper class that delegates to {@link AnalysisRpcClient} and provides a "nice" interface
  * which is strongly typed.
  * <p>
- * 
+ *
  * @see AnalysisRpcBasicTest See the Ananlysis Rpc Basic Test for an example of use
  */
 public class AnalysisRpcClient {
@@ -48,7 +48,7 @@ public class AnalysisRpcClient {
 
   /**
    * Create a new AnalysisRpc client that connects to a server on the given port
-   * 
+   *
    * @param port
    *          to connect to
    */
@@ -100,7 +100,7 @@ public class AnalysisRpcClient {
    * If the delegated to method throws an exception, it is re-thrown here wrapped as an {@link AnalysisRpcException}. If the delegated to method returns an
    * exception, it will be thrown rather than returned.
    * <p>
-   * 
+   *
    * @param destination
    *          target handler in server
    * @param args
@@ -120,7 +120,7 @@ public class AnalysisRpcClient {
 
   /**
    * Issue a RPC call by calling request, entering debug mode if server is available.
-   * 
+   *
    * @param suspend
    *          suspend on entry to handler
    * @see #request(String, Object[])
@@ -131,9 +131,9 @@ public class AnalysisRpcClient {
 
   /**
    * Test if the server is up and running.
-   * 
+   *
    * @warning The AnalysisRpc server may become unreachable between is_alive being called and a request being made.
-   * 
+   *
    * @return True if communication is working
    */
   public boolean isAlive() {
@@ -148,7 +148,7 @@ public class AnalysisRpcClient {
   /**
    * Set PyDev Debugger settrace options. See pydevd.py for further documentation. Calling this method overrides previous settings and this only has an effect
    * if it is called before any calls to {@link #request_debug(String, Object[], boolean)}
-   * 
+   *
    * @param options
    *          Key/Value pairs of parameters to settrace to their desired values.
    * @throws AnalysisRpcException
@@ -163,19 +163,19 @@ public class AnalysisRpcClient {
 
   /**
    * Convenience method around {@link #setPyDevSetTraceParams(Map)} for the most common situation where only the port needs to be overridden.
-   * 
+   *
    * @param port
    * @throws AnalysisRpcException
    */
   public void setPyDevSetTracePort(int port) throws AnalysisRpcException {
-    Map<String, Object> options = new HashMap<String, Object>();
+    Map<String, Object> options = new HashMap<>();
     options.put("port", port);
     setPyDevSetTraceParams(options);
   }
 
   /**
    * Poll isAlive until True, raise an exception if isAlive is not true before the timeout.
-   * 
+   *
    * @throws AnalysisRpcException
    */
   public void waitUntilAlive() throws AnalysisRpcException {
@@ -186,7 +186,7 @@ public class AnalysisRpcClient {
 
   /**
    * Poll isAlive until True, raise an exception if isAlive is not true before the timeout.
-   * 
+   *
    * @param milliseconds
    *          timeout time
    * @throws AnalysisRpcException
@@ -207,7 +207,7 @@ public class AnalysisRpcClient {
 
   /**
    * Return port number in use
-   * 
+   *
    * @return port
    */
   public int getPort() {
@@ -216,7 +216,7 @@ public class AnalysisRpcClient {
 
   /**
    * Create a proxy that implements the given interfaces. All methods that are called on the proxy must be declared to throw {@link AnalysisRpcException}.
-   * 
+   *
    * @param loader
    *          class loader to use. See {@link Proxy#newProxyInstance(ClassLoader, Class[], InvocationHandler)} for details on the class loader.
    * @param interfaces
@@ -231,7 +231,7 @@ public class AnalysisRpcClient {
 
   /**
    * Convenience wrapper around {@link #newProxyInstance(ClassLoader, Class[])}
-   * 
+   *
    * @param interfaces
    *          to implement in proxy. The class loader used is the class loader of the first interface in the list.
    * @param debug
@@ -243,7 +243,7 @@ public class AnalysisRpcClient {
 
   /**
    * Convenience wrapper around {@link #newProxyInstance(Class[])}
-   * 
+   *
    * @param single_interface
    *          Sinlge Interface to make proxy for
    * @param debug
@@ -257,7 +257,7 @@ public class AnalysisRpcClient {
 
   /**
    * Convenience wrapper around {@link #newProxyInstance(Class[])} with no debug
-   * 
+   *
    * @param single_interface
    *          Sinlge Interface to make proxy for
    */

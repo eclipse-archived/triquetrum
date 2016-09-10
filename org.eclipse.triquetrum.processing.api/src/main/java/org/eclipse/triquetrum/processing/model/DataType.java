@@ -18,17 +18,8 @@ import java.util.function.Predicate;
  * A type enumerator for data items that are used in the Triquetrum processing model.
  */
 public enum DataType {
-  BOOLEAN(Boolean.class),
-  STRING(String.class),
-  DATE(Date.class),
-  MAP(Map.class),
-  SHORT(Short.class),
-  INTEGER(Integer.class),
-  LONG(Long.class),
-  FLOAT(Float.class),
-  DOUBLE(Double.class),
-  ANY(o -> o!=null),
-  NULL(o -> o==null);
+  BOOLEAN(Boolean.class), STRING(String.class), DATE(Date.class), MAP(Map.class), SHORT(Short.class), INTEGER(Integer.class), LONG(Long.class), FLOAT(
+      Float.class), DOUBLE(Double.class), ANY(o -> o != null), NULL(o -> o == null);
 
   /**
    *

@@ -33,16 +33,15 @@ public class ActorDeleteFeature extends DefaultDeleteFeature {
     return (BoCategory.Actor.equals(boCategory));
   }
 
-
   @Override
   protected void deleteBusinessObject(Object bo) {
     Actor actor = (Actor) bo;
     // TODO adapt when Triq supports relations between >2 ports
     // then we should handle deletion of individual links i.o directly deleting complete relations (cfr ptolemy)
-    for(Port p : actor.getInputPorts()) {
+    for (Port p : actor.getInputPorts()) {
       deleteLinkedRelations(p);
     }
-    for(Port p : actor.getOutputPorts()) {
+    for (Port p : actor.getOutputPorts()) {
       deleteLinkedRelations(p);
     }
     super.deleteBusinessObject(bo);
@@ -50,7 +49,7 @@ public class ActorDeleteFeature extends DefaultDeleteFeature {
 
   private void deleteLinkedRelations(Port p) {
     Collection<Relation> relations = new HashSet<>(p.getLinkedRelations());
-    for(Relation r : relations) {
+    for (Relation r : relations) {
       super.deleteBusinessObject(r);
     }
   }

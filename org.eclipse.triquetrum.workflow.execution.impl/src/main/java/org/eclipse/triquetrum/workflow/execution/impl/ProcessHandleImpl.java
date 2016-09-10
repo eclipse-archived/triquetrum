@@ -22,7 +22,7 @@ import org.eclipse.triquetrum.workflow.execution.impl.executor.WorkflowExecution
  */
 public class ProcessHandleImpl implements ProcessHandle {
   private static final long serialVersionUID = -1405401220946130936L;
-  
+
   private WorkflowExecutionFuture fet;
   private Date creationTS;
 
@@ -38,12 +38,12 @@ public class ProcessHandleImpl implements ProcessHandle {
   public WorkflowExecutionFuture getFet() {
     return fet;
   }
-  
+
   @Override
   public Date getCreationTS() {
     return creationTS;
   }
-  
+
   @Override
   public ModelHandle getModelHandle() {
     return fet.getModelHandle();

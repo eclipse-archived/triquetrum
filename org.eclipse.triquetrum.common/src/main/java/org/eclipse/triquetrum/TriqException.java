@@ -22,9 +22,9 @@ import ptolemy.kernel.util.Nameable;
 public class TriqException extends Exception {
 
   /**
-   * The main token that was being processed when the exception was generated. In general, an actor's processing can
-   * depend on multiple received messages. But in many cases one of the received messages can be designated as
-   * "the most important one". This one could then be selected for alternative flow continuations ico errors.
+   * The main token that was being processed when the exception was generated. In general, an actor's processing can depend on multiple received messages. But
+   * in many cases one of the received messages can be designated as "the most important one". This one could then be selected for alternative flow
+   * continuations ico errors.
    */
   private Token dataContext;
   /**
@@ -67,7 +67,7 @@ public class TriqException extends Exception {
     if (errorCode == null) {
       throw new IllegalArgumentException("error code can not be null");
     }
-    if(rootException!=null) {
+    if (rootException != null) {
       initCause(rootException);
     }
     this.errorCode = errorCode;
@@ -103,6 +103,7 @@ public class TriqException extends Exception {
   /**
    * @return a string with the full info about the exception, incl severity, context etc.
    */
+  @Override
   public String getMessage() {
     if (detailedMessage == null) {
       StringBuilder msgBldr = new StringBuilder(getErrorCode() + " - " + super.getMessage());
@@ -113,7 +114,7 @@ public class TriqException extends Exception {
       if (dataContext != null) {
         msgBldr.append("\n\t -- token:" + dataContext);
       }
-      if(getCause()!=null) {
+      if (getCause() != null) {
         msgBldr.append("\n - RootException:" + getCause());
       }
       detailedMessage = msgBldr.toString();

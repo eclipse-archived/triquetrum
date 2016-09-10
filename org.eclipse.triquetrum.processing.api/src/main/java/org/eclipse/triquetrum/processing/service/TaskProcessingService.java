@@ -17,8 +17,7 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.triquetrum.processing.model.Task;
 
 /**
- * Responsible for the actual processing of a submitted {@link Task}
- * that matches the selection criteria of a particular service instance.
+ * Responsible for the actual processing of a submitted {@link Task} that matches the selection criteria of a particular service instance.
  */
 public interface TaskProcessingService {
 
@@ -28,23 +27,24 @@ public interface TaskProcessingService {
   String getName();
 
   /**
-   * Process the given Task within the given timeout, if this service instance is capable of handling it. If the
-   * service is unable to handle it, it should simply return <code>null</code> immediately.
+   * Process the given Task within the given timeout, if this service instance is capable of handling it. If the service is unable to handle it, it should
+   * simply return <code>null</code> immediately.
    * <p>
-   * Service implementations are by preference non-blocking, and should just return a {@link Future} to the finished
-   * Task. In case of errors they should also set the relevant exception on the returned Future.
+   * Service implementations are by preference non-blocking, and should just return a {@link Future} to the finished Task. In case of errors they should also
+   * set the relevant exception on the returned Future.
    * </p>
    * <p>
    * Blocking service implementations are of course possible, and must return a pre-filled Future.
    * </p>
+   * 
    * @param task
    *          the Task that must be processed
    * @param timeout
    *          the timeout period; null or <=0 values indicate : no timeout should be set.
    * @param unit
    *          the {@link TimeUnit} of the timeout period
-   * @return a Future to the task after processing is finished or null if this service is unable to process the given
-   *         task. In case of processing errors, the future will throw a ProcessingException when trying to get its value.
+   * @return a Future to the task after processing is finished or null if this service is unable to process the given task. In case of processing errors, the
+   *         future will throw a ProcessingException when trying to get its value.
    */
   CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit);
 

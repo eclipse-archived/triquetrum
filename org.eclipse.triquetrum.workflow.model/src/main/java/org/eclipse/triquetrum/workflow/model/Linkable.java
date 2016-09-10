@@ -11,9 +11,7 @@
 package org.eclipse.triquetrum.workflow.model;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Linkable</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Linkable</b></em>'. <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getLinkable()
@@ -22,16 +20,16 @@ package org.eclipse.triquetrum.workflow.model;
  */
 public interface Linkable extends NamedObj {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */
   void link(Relation relation);
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */

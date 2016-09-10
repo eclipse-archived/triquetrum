@@ -20,7 +20,6 @@ import org.eclipse.triquetrum.scisoft.analysis.rpc.IAnalysisRpcHandler;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 
-
 public class FlatteningViaAnalysisRpcTest extends FlatteningTestAbstract {
   private static AnalysisRpcServer server;
   private static AnalysisRpcClient client;
@@ -41,8 +40,9 @@ public class FlatteningViaAnalysisRpcTest extends FlatteningTestAbstract {
 
   @AfterClass
   public static void stop() {
-    if (server != null)
+    if (server != null) {
       server.shutdown();
+    }
     server = null;
     client = null;
   }
@@ -52,8 +52,9 @@ public class FlatteningViaAnalysisRpcTest extends FlatteningTestAbstract {
     try {
       return client.request("loopback", new Object[] { inObj });
     } catch (AnalysisRpcException e) {
-      if (e.getCause().getClass() == Exception.class)
+      if (e.getCause().getClass() == Exception.class) {
         return e.getCause();
+      }
       throw new RuntimeException(e);
     }
   }

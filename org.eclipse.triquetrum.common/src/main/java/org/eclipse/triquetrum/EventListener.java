@@ -10,11 +10,9 @@
  *******************************************************************************/
 package org.eclipse.triquetrum;
 
-
 /**
  *
- * TODO : check what's better : different methods per large event categories
- * or one hyper-generic method as below...
+ * TODO : check what's better : different methods per large event categories or one hyper-generic method as below...
  *
  */
 public interface EventListener<T extends Event> extends java.util.EventListener {

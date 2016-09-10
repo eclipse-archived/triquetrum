@@ -76,7 +76,7 @@ public class MockTaskProcessingService implements TaskProcessingService {
     if (!canProcess(task)) {
       return null;
     } else {
-     return CompletableFuture.supplyAsync(() -> doProcess(task));
+      return CompletableFuture.supplyAsync(() -> doProcess(task));
     }
   }
 

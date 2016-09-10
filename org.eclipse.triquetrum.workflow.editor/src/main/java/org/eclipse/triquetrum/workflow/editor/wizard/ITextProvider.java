@@ -12,5 +12,5 @@ package org.eclipse.triquetrum.workflow.editor.wizard;
 
 interface ITextProvider {
 
-	String getText();
+  String getText();
 }

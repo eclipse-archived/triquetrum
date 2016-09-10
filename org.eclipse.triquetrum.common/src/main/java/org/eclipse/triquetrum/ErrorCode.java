@@ -44,14 +44,13 @@ public class ErrorCode extends Enumerated<ErrorCode> {
   private Severity severity;
   private String topic;
   private String description;
-  
+
   private String formattedCode;
   private String formattedString;
 
   /**
-   * ErrorCode constructor with automatically generated topic, based on the category prefix and the severity :
-   * PREFIX/SEVERITY.
-   * 
+   * ErrorCode constructor with automatically generated topic, based on the category prefix and the severity : PREFIX/SEVERITY.
+   *
    * @param name
    * @param code
    * @param category
@@ -85,7 +84,7 @@ public class ErrorCode extends Enumerated<ErrorCode> {
   public String getCode() {
     return code;
   }
-  
+
   public int getCodeAsInteger() {
     return codeAsInteger;
   }
@@ -105,9 +104,9 @@ public class ErrorCode extends Enumerated<ErrorCode> {
   public String getDescription() {
     return description;
   }
-  
+
   public String getFormattedCode() {
-    if(formattedCode==null) {
+    if (formattedCode == null) {
       formattedCode = "[" + getCategory().getPrefixChain() + FORMATTEDCODE_SEPARATOR_CHAR + getCode() + "]";
     }
     return formattedCode;
@@ -127,7 +126,7 @@ public class ErrorCode extends Enumerated<ErrorCode> {
 
   @Override
   public String toString() {
-    if(formattedString==null) {
+    if (formattedString == null) {
       formattedString = name() + TOSTRING_SEPARATOR + getSeverity() + TOSTRING_SEPARATOR + getFormattedCode() + TOSTRING_SEPARATOR + getDescription();
     }
     return formattedString;

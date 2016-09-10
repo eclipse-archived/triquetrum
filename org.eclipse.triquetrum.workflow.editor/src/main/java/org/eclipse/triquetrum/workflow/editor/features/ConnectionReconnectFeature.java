@@ -81,12 +81,12 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
       NamedObj startBO = (NamedObj) getBusinessObjectForPictogramElement(startAnchor);
 
       try {
-        ((Linkable)oldBO).unlink(relation);
-        ((Linkable)startBO).unlink(relation);
-        ((Linkable)endBO).unlink(relation);
+        ((Linkable) oldBO).unlink(relation);
+        ((Linkable) startBO).unlink(relation);
+        ((Linkable) endBO).unlink(relation);
         // Only check this after all the unlink/link actions, as relation and newRelation might be the same instance,
         // so we don't want to delete relation yet before doing the new links!
-        if(!relation.isConnected()) {
+        if (!relation.isConnected()) {
           // TODO check if/how we might want keep an unconnected Vertex around after all links were deleted/removed
           // I guess with the check above, such vertex would be deleted as well at the moment the last connection/link is removed/deleted.
           EcoreUtil.delete(relation, true);

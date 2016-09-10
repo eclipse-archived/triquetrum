@@ -17,22 +17,20 @@ import ptolemy.actor.CompositeActor;
 /**
  * This interface offers operations to manage Models in a repository.
  * <p>
- * As Models can be large and complex structures, lightweight ModelHandles are used as intermediate entities for most
- * actions that must be done on the repository. <br/>
- * A ModelHandle allows to obtain its associated Model, and/or metadata like the identifying "code", version info etc.
- * <br/>
- * For environments with high throughputs and/or large models, it may be beneficial to use "compacted" ModelHandles as
- * much as possible. These have only the necessary metadata but not the actual Model nor raw flow definition XML/MOML.
- * Only when really needed should the flow definition be retrieved via <code>loadModelHandleWithContent</code>.
+ * As Models can be large and complex structures, lightweight ModelHandles are used as intermediate entities for most actions that must be done on the
+ * repository. <br/>
+ * A ModelHandle allows to obtain its associated Model, and/or metadata like the identifying "code", version info etc. <br/>
+ * For environments with high throughputs and/or large models, it may be beneficial to use "compacted" ModelHandles as much as possible. These have only the
+ * necessary metadata but not the actual Model nor raw flow definition XML/MOML. Only when really needed should the flow definition be retrieved via
+ * <code>loadModelHandleWithContent</code>.
  * </p>
  * <p>
- * The repository may be able to maintain different versions for the Models, in which case it is possible to indicate
- * the current active version/revision. The active version is the one that will be used when actions (e.g. executing)
- * are performed on a Model by name or identifying code.
+ * The repository may be able to maintain different versions for the Models, in which case it is possible to indicate the current active version/revision. The
+ * active version is the one that will be used when actions (e.g. executing) are performed on a Model by name or identifying code.
  * </p>
  * <p>
- * This interface offers a basic "linear" view on Models in a repository. More advanced repository interfaces (e.g.
- * including Projects, rules modules, images and other asset types) will/must be defined separately.
+ * This interface offers a basic "linear" view on Models in a repository. More advanced repository interfaces (e.g. including Projects, rules modules, images
+ * and other asset types) will/must be defined separately.
  * </p>
  *
  * @author erwin
@@ -77,8 +75,7 @@ public interface WorkflowRepositoryService {
   ModelHandle[] delete(String modelCode) throws EntryNotFoundException;
 
   /**
-   * Updates the Model definition in the repository, using the given ModelHandle to identify the repository entry that
-   * must be updated.
+   * Updates the Model definition in the repository, using the given ModelHandle to identify the repository entry that must be updated.
    * <p>
    * In a versioned repository, this should increase the major version nr for the model.
    * </p>
@@ -86,8 +83,8 @@ public interface WorkflowRepositoryService {
    * @param handle
    * @param updatedModel
    * @param activate
-   *          true if the given model should be directly set as the active revision; false if the current active
-   *          revision for the same modelCode should remain active.
+   *          true if the given model should be directly set as the active revision; false if the current active revision for the same modelCode should remain
+   *          active.
    * @return the handle to the updated repository entry
    * @throws EntryNotFoundException
    *           when the handle does not correspond to a Model entry in this repository
@@ -128,8 +125,7 @@ public interface WorkflowRepositoryService {
   /**
    *
    * @param handle
-   *          a handle that may be a "compacted" one, i.e. without the actual model definition but just with
-   *          code/version/location metadata.
+   *          a handle that may be a "compacted" one, i.e. without the actual model definition but just with code/version/location metadata.
    * @return the handle with the raw model definition filled in
    * @throws EntryNotFoundException
    */

@@ -11,25 +11,22 @@
 package org.eclipse.triquetrum.workflow.model;
 
 import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Named Obj</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Named Obj</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getAttributes <em>Attributes</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedType <em>Wrapped Type</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedObject <em>Wrapped Object</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#isDeepComplete <em>Deep Complete</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getIconId <em>Icon Id</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getName <em>Name</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getAttributes <em>Attributes</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedType <em>Wrapped Type</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedObject <em>Wrapped Object</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#isDeepComplete <em>Deep Complete</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.NamedObj#getIconId <em>Icon Id</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj()
@@ -38,14 +35,12 @@ import org.eclipse.triquetrum.workflow.model.util.Visitor;
  */
 public interface NamedObj extends EObject {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * The default value is <code>"new"</code>.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Name</b></em>' attribute. The default value is <code>"new"</code>. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Name</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_Name()
@@ -55,24 +50,24 @@ public interface NamedObj extends EObject {
   String getName();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getName <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @param value
+   *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
    * @generated
    */
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Attributes</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Attribute}.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Attributes</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.triquetrum.workflow.model.Attribute}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Attributes</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Attributes</em>' containment reference list isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Attributes</em>' containment reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_Attributes()
    * @model containment="true"
@@ -81,13 +76,12 @@ public interface NamedObj extends EObject {
   EList<Attribute> getAttributes();
 
   /**
-   * Returns the value of the '<em><b>Wrapped Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Wrapped Type</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Wrapped Type</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Wrapped Type</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Wrapped Type</em>' attribute.
    * @see #setWrappedType(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_WrappedType()
@@ -97,10 +91,11 @@ public interface NamedObj extends EObject {
   String getWrappedType();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedType <em>Wrapped Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Wrapped Type</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedType <em>Wrapped Type</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Wrapped Type</em>' attribute.
    * @see #getWrappedType()
    * @generated
    */
@@ -109,50 +104,50 @@ public interface NamedObj extends EObject {
   /**
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Container</em>' reference isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Container</em>' reference isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @model kind="operation"
    * @generated
    */
   NamedObj getContainer();
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */
   NamedObj topLevel();
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model nameRequired="true"
    * @generated
    */
   void setProperty(String name, String value, String className);
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */
   void applyWrappedObject();
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */
   void buildWrappedObject();
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model kind="operation"
    * @generated
    */
@@ -160,30 +155,29 @@ public interface NamedObj extends EObject {
 
   /**
    * <!-- begin-user-doc -->
-   * @return the contained element with the given simple name or null if not present
-   * <!-- end-user-doc -->
+   * 
+   * @return the contained element with the given simple name or null if not present <!-- end-user-doc -->
    * @model
    * @generated
    */
   NamedObj getChild(String name);
 
   /**
-   * <!-- begin-user-doc -->
-   * Welcome the visitor by calling its visit() method with this NamedObj instance itself as argument.
-   * If deep is true, the NamedObj should also forward the welcome call to its children.
+   * <!-- begin-user-doc --> Welcome the visitor by calling its visit() method with this NamedObj instance itself as argument. If deep is true, the NamedObj
+   * should also forward the welcome call to its children.
    *
-   * @param visitor the visitor that wants to visit this NamedObj
-   * @param deep if false, only visit this NamedObj; if true also visit the children of this NamedObj
-   * <!-- end-user-doc -->
+   * @param visitor
+   *          the visitor that wants to visit this NamedObj
+   * @param deep
+   *          if false, only visit this NamedObj; if true also visit the children of this NamedObj <!-- end-user-doc -->
    * @model visitorDataType="org.eclipse.triquetrum.workflow.model.Visitor"
    * @generated
    */
   void welcome(Visitor visitor, boolean deep);
 
   /**
-   * Returns the value of the '<em><b>Wrapped Object</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the value of the '<em><b>Wrapped Object</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Wrapped Object</em>' attribute.
    * @see #setWrappedObject(ptolemy.kernel.util.NamedObj)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_WrappedObject()
@@ -193,24 +187,23 @@ public interface NamedObj extends EObject {
   ptolemy.kernel.util.NamedObj getWrappedObject();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedObject <em>Wrapped Object</em>}' attribute.
-   * <!-- begin-user-doc -->
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getWrappedObject <em>Wrapped Object</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Wrapped Object</em>' attribute.
+   * 
+   * @param value
+   *          the new value of the '<em>Wrapped Object</em>' attribute.
    * @see #getWrappedObject()
    * @generated
    */
   void setWrappedObject(ptolemy.kernel.util.NamedObj value);
 
   /**
-   * Returns the value of the '<em><b>Deep Complete</b></em>' attribute.
-   * The default value is <code>"false"</code>.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Deep Complete</b></em>' attribute. The default value is <code>"false"</code>. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Deep Complete</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Deep Complete</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Deep Complete</em>' attribute.
    * @see #setDeepComplete(boolean)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_DeepComplete()
@@ -220,23 +213,23 @@ public interface NamedObj extends EObject {
   boolean isDeepComplete();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#isDeepComplete <em>Deep Complete</em>}' attribute.
-   * <!-- begin-user-doc -->
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#isDeepComplete <em>Deep Complete</em>}' attribute. <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Deep Complete</em>' attribute.
+   * 
+   * @param value
+   *          the new value of the '<em>Deep Complete</em>' attribute.
    * @see #isDeepComplete()
    * @generated
    */
   void setDeepComplete(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Icon Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Icon Id</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Icon Id</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Icon Id</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Icon Id</em>' attribute.
    * @see #setIconId(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getNamedObj_IconId()
@@ -246,10 +239,11 @@ public interface NamedObj extends EObject {
   String getIconId();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getIconId <em>Icon Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Icon Id</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getIconId <em>Icon Id</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Icon Id</em>' attribute.
    * @see #getIconId()
    * @generated
    */

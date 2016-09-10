@@ -78,10 +78,10 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
     try {
       FileUtils.deleteDirectory(rootFolder);
       if (!rootFolder.mkdirs()) {
-        LOGGER.error(ErrorCode.ERROR + " - Failed to recreate clean repository directory");
+        LOGGER.error(org.eclipse.triquetrum.ErrorCode.ERROR + " - Failed to recreate clean repository directory");
       }
     } catch (IOException e) {
-      LOGGER.error(ErrorCode.ERROR + " - Failed to clear repository directory", e);
+      LOGGER.error(org.eclipse.triquetrum.ErrorCode.ERROR + " - Failed to clear repository directory", e);
     }
   }
 
@@ -138,7 +138,7 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
     try {
       FileUtils.deleteDirectory(new File(rootFolder, flowCode));
     } catch (IOException e) {
-      LOGGER.error(ErrorCode.ERROR + " - Failed to delete " + flowCode, e);
+      LOGGER.error(org.eclipse.triquetrum.ErrorCode.ERROR + " - Failed to delete " + flowCode, e);
     }
     return results;
   }
@@ -260,7 +260,7 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
     if (!codeFolder.isDirectory()) {
       throw new EntryNotFoundException("Invalid flow code " + flowCode);
     } else {
-      ArrayList<ModelHandle> results = new ArrayList<ModelHandle>();
+      ArrayList<ModelHandle> results = new ArrayList<>();
       File[] versionFolders = codeFolder.listFiles(new DirectoryFilter());
       // prophylactic null check to keep FindBugs happy
       if (versionFolders != null) {

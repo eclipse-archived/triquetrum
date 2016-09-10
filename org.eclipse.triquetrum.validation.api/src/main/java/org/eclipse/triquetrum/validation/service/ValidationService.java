@@ -16,7 +16,7 @@ import org.eclipse.triquetrum.validation.ValidationException;
  *
  */
 public interface ValidationService<T> {
-  
+
   void validate(T toBeValidated) throws ValidationException;
 
 }

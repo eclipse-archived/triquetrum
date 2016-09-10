@@ -22,7 +22,6 @@ import org.eclipse.triquetrum.scisoft.analysis.rpc.internal.TypeHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Abstract implementation of {@link IAnalysisRpcHandler} that uses reflection to resolve method name to call.
  * <p>

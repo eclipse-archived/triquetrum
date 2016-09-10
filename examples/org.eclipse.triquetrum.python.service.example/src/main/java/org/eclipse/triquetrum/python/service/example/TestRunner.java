@@ -43,6 +43,7 @@ public class TestRunner implements CommandProvider {
   private static final String PLUGIN_ID = "org.eclipse.triquetrum.python.service.example";
   private static final String OVERRIDE_LOCATION_PROPERTY = PLUGIN_ID + ".scripts.user";
 
+  @Override
   public String getHelp() {
     StringBuffer buffer = new StringBuffer();
     buffer.append("\n---Python RPC test---\n");
@@ -65,7 +66,7 @@ public class TestRunner implements CommandProvider {
         script += ".py";
       }
       service = PythonService.openConnection("python");
-      Map<String, Serializable> data = new HashMap<String, Serializable>();
+      Map<String, Serializable> data = new HashMap<>();
       String param = null;
       while ((param = ci.nextArgument()) != null) {
         String[] parts = param.split("=");

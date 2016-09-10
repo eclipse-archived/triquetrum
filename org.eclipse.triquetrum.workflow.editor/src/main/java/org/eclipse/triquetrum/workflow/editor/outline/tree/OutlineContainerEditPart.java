@@ -12,6 +12,7 @@ package org.eclipse.triquetrum.workflow.editor.outline.tree;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.gef.EditPart;
 import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.swt.graphics.Image;
@@ -19,13 +20,12 @@ import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 
-
 /**
  * Tree EditPart for the Container.
  */
 public class OutlineContainerEditPart extends OutlineEditPart {
   private EditPart context;
-  
+
   /**
    * Constructor, which initializes this using the model given as input.
    */
@@ -37,21 +37,22 @@ public class OutlineContainerEditPart extends OutlineEditPart {
   /**
    * Creates and installs pertinent EditPolicies.
    */
+  @Override
   protected void createEditPolicies() {
     super.createEditPolicies();
   }
 
   @Override
   protected Image getImage() {
-    return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, 
-        ImageConstants.IMG_COMPOSITE);
+    return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, ImageConstants.IMG_COMPOSITE);
   }
 
   /**
    * Returns the children of this from the model, as this is capable enough of holding EditParts.
-   * 
+   *
    * @return List of children.
    */
+  @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected List getModelChildren() {
     ArrayList children = new ArrayList();
@@ -68,7 +69,7 @@ public class OutlineContainerEditPart extends OutlineEditPart {
     if (!showChildren)
       return children;
 
-    if (actor.getDirector()!=null) {
+    if (actor.getDirector() != null) {
       children.add(actor.getDirector());
     }
 

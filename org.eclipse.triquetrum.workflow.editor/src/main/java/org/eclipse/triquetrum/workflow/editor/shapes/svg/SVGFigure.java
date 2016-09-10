@@ -42,12 +42,12 @@ public class SVGFigure extends Figure {
   private boolean failedToLoadDocument;
   private SimpleImageTranscoder transcoder;
 
-  private static WeakHashMap<String, Document> documentsMap = new WeakHashMap<String, Document>();
-
+  private static WeakHashMap<String, Document> documentsMap = new WeakHashMap<>();
 
   public int getTranslateX() {
     return translateX;
   }
+
   public void setTranslateX(int translateX) {
     this.translateX = translateX;
   }
@@ -55,6 +55,7 @@ public class SVGFigure extends Figure {
   public int getTranslateY() {
     return translateY;
   }
+
   public void setTranslateY(int translateY) {
     this.translateY = translateY;
   }
@@ -83,12 +84,12 @@ public class SVGFigure extends Figure {
       return;
     }
     String parser = XMLResourceDescriptor.getXMLParserClassName();
-    parser = parser !=null ? parser : "org.apache.xerces.parsers.SAXParser";
+    parser = parser != null ? parser : "org.apache.xerces.parsers.SAXParser";
     SAXSVGDocumentFactory factory = new SAXSVGDocumentFactory(parser);
     try {
       Document document;
       if (documentsMap.containsKey(uri))
-         document = documentsMap.get(uri);
+        document = documentsMap.get(uri);
       else {
         document = factory.createDocument(uri);
         documentsMap.put(uri, document);
@@ -99,7 +100,6 @@ public class SVGFigure extends Figure {
       TriqEditorPlugin.logError("Error loading SVG file", e);
     }
   }
-
 
   protected final Document getDocument() {
     if (failedToLoadDocument) {
@@ -178,10 +178,11 @@ public class SVGFigure extends Figure {
   }
 
   /**
-   * Converts an AWT based buffered image into an SWT <code>Image</code>. This will always return an <code>Image</code> that
-   * has 24 bit depth regardless of the type of AWT buffered image that is passed into the method.
+   * Converts an AWT based buffered image into an SWT <code>Image</code>. This will always return an <code>Image</code> that has 24 bit depth regardless of the
+   * type of AWT buffered image that is passed into the method.
    *
-   * @param awtImage the {@link java.awt.image.BufferedImage} to be converted to an <code>Image</code>
+   * @param awtImage
+   *          the {@link java.awt.image.BufferedImage} to be converted to an <code>Image</code>
    * @return an <code>Image</code> that represents the same image data as the AWT <code>BufferedImage</code> type.
    */
   private static org.eclipse.swt.graphics.Image toSWT(Device device, BufferedImage awtImage) {

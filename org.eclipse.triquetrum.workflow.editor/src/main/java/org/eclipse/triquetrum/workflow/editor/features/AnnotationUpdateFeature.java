@@ -59,8 +59,7 @@ public class AnnotationUpdateFeature extends AbstractUpdateFeature {
           Color currentTextColor = text.getForeground();
           int currentTextSize = text.getFont().getSize();
           String currentTextFont = text.getFont().getName();
-          annotationChanged = (annotation.getText() != null && !annotation.getText().equals(boValue))
-              || (annotation.getTextSize() != currentTextSize)
+          annotationChanged = (annotation.getText() != null && !annotation.getText().equals(boValue)) || (annotation.getTextSize() != currentTextSize)
               || (annotation.getColor() != null && !annotation.getColor().equals(EditorUtils.toString(currentTextColor)))
               || (!annotation.getFontFamily().equals(currentTextFont));
         } else {

@@ -24,16 +24,18 @@ public class Activator implements BundleActivator {
   private WorkflowRepositoryService repoSvc;
   private ServiceRegistration<WorkflowRepositoryService> repoSvcReg;
 
+  @Override
   public void start(BundleContext context) throws Exception {
-    File userHome              = new File(System.getProperty("user.home"));
+    File userHome = new File(System.getProperty("user.home"));
     File defaultRootFolderPath = new File(userHome, ".triquetrum/workflow-repository");
-    String rootFolderPath      = System.getProperty("org.eclipse.triquetrum.workflow.repository.root", defaultRootFolderPath.getAbsolutePath());
+    String rootFolderPath = System.getProperty("org.eclipse.triquetrum.workflow.repository.root", defaultRootFolderPath.getAbsolutePath());
     repoSvc = new WorkflowRepositoryServiceImpl(rootFolderPath);
-    Hashtable<String, String> svcProps = new Hashtable<String, String>();
+    Hashtable<String, String> svcProps = new Hashtable<>();
     svcProps.put("type", "FILE");
     repoSvcReg = context.registerService(WorkflowRepositoryService.class, repoSvc, svcProps);
   }
 
+  @Override
   public void stop(BundleContext context) throws Exception {
     repoSvcReg.unregister();
     repoSvc = null;

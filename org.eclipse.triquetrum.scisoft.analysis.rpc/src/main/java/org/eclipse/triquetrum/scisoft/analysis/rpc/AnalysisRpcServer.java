@@ -33,7 +33,6 @@ import org.eclipse.triquetrum.scisoft.analysis.rpc.internal.HandlerRequestProces
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Server class for AnalysisRpc.
  * <p>

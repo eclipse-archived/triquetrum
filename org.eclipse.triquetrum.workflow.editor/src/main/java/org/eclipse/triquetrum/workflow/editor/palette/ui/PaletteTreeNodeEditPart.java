@@ -27,6 +27,7 @@ public class PaletteTreeNodeEditPart extends PaletteEntryEditPart {
     super(model);
   }
 
+  @Override
   protected String getDefaultImageID() {
     return ImageConstants.IMG_FOLDER;
   }
@@ -48,6 +49,7 @@ public class PaletteTreeNodeEditPart extends PaletteEntryEditPart {
     }
   }
 
+  @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected List getModelChildren() {
     List children = new ArrayList();

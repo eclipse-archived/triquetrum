@@ -36,134 +36,130 @@ import org.eclipse.triquetrum.workflow.model.Vertex;
 import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model <b>Package</b>.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!-- end-user-doc -->
+ *
  * @generated
  */
 public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass namedObjEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass attributeEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass annotationEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass parameterEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass directorEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass entityEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass compositeEntityEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass actorEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass compositeActorEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass portEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass relationEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass locationEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass vertexEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EClass linkableEClass = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EDataType ptolemyNamedObjEDataType = null;
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private EDataType visitorEDataType = null;
 
   /**
-   * Creates an instance of the model <b>Package</b>, registered with
-   * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-   * package URI value.
-   * <p>Note: the correct way to create the package is via the static
-   * factory method {@link #init init()}, which also performs
-   * initialization of the package, or returns the registered package,
-   * if one already exists.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates an instance of the model <b>Package</b>, registered with {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package package
+   * URI value.
+   * <p>
+   * Note: the correct way to create the package is via the static factory method {@link #init init()}, which also performs initialization of the package, or
+   * returns the registered package, if one already exists. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see org.eclipse.emf.ecore.EPackage.Registry
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#eNS_URI
    * @see #init()
@@ -174,29 +170,31 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private static boolean isInited = false;
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
-   * <p>This method is used to initialize {@link TriqPackage#eINSTANCE} when that field is accessed.
-   * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   *
+   * <p>
+   * This method is used to initialize {@link TriqPackage#eINSTANCE} when that field is accessed. Clients should not invoke it directly. Instead, they should
+   * simply access that field to obtain the package. <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @see #eNS_URI
    * @see #createPackageContents()
    * @see #initializePackageContents()
    * @generated
    */
   public static TriqPackage init() {
-    if (isInited) return (TriqPackage)EPackage.Registry.INSTANCE.getEPackage(TriqPackage.eNS_URI);
+    if (isInited)
+      return (TriqPackage) EPackage.Registry.INSTANCE.getEPackage(TriqPackage.eNS_URI);
 
     // Obtain or create and register package
-    TriqPackageImpl theTriqPackage = (TriqPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TriqPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TriqPackageImpl());
+    TriqPackageImpl theTriqPackage = (TriqPackageImpl) (EPackage.Registry.INSTANCE.get(eNS_URI) instanceof TriqPackageImpl
+        ? EPackage.Registry.INSTANCE.get(eNS_URI) : new TriqPackageImpl());
 
     isInited = true;
 
@@ -209,15 +207,14 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     // Mark meta-data to indicate it can't be changed
     theTriqPackage.freeze();
 
-  
     // Update the registry and return the package
     EPackage.Registry.INSTANCE.put(TriqPackage.eNS_URI, theTriqPackage);
     return theTriqPackage;
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getNamedObj() {
@@ -225,62 +222,62 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getNamedObj_Name() {
-    return (EAttribute)namedObjEClass.getEStructuralFeatures().get(0);
+    return (EAttribute) namedObjEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getNamedObj_Attributes() {
-    return (EReference)namedObjEClass.getEStructuralFeatures().get(1);
+    return (EReference) namedObjEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getNamedObj_WrappedType() {
-    return (EAttribute)namedObjEClass.getEStructuralFeatures().get(2);
+    return (EAttribute) namedObjEClass.getEStructuralFeatures().get(2);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getNamedObj_WrappedObject() {
-    return (EAttribute)namedObjEClass.getEStructuralFeatures().get(3);
+    return (EAttribute) namedObjEClass.getEStructuralFeatures().get(3);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getNamedObj_DeepComplete() {
-    return (EAttribute)namedObjEClass.getEStructuralFeatures().get(4);
+    return (EAttribute) namedObjEClass.getEStructuralFeatures().get(4);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getNamedObj_IconId() {
-    return (EAttribute)namedObjEClass.getEStructuralFeatures().get(5);
+    return (EAttribute) namedObjEClass.getEStructuralFeatures().get(5);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getNamedObj__GetContainer() {
@@ -288,8 +285,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getNamedObj__TopLevel() {
@@ -297,8 +294,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getNamedObj__SetProperty__String_String_String() {
@@ -306,8 +303,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getNamedObj__ApplyWrappedObject() {
@@ -315,8 +312,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getNamedObj__BuildWrappedObject() {
@@ -324,8 +321,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getNamedObj__GetFullName() {
@@ -333,8 +330,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getNamedObj__GetChild__String() {
@@ -342,8 +339,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getNamedObj__Welcome__Visitor_boolean() {
@@ -351,8 +348,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getAttribute() {
@@ -360,8 +357,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getAnnotation() {
@@ -369,62 +366,62 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getAnnotation_Text() {
-    return (EAttribute)annotationEClass.getEStructuralFeatures().get(0);
+    return (EAttribute) annotationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getAnnotation_FontFamily() {
-    return (EAttribute)annotationEClass.getEStructuralFeatures().get(1);
+    return (EAttribute) annotationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getAnnotation_TextSize() {
-    return (EAttribute)annotationEClass.getEStructuralFeatures().get(2);
+    return (EAttribute) annotationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getAnnotation_Bold() {
-    return (EAttribute)annotationEClass.getEStructuralFeatures().get(3);
+    return (EAttribute) annotationEClass.getEStructuralFeatures().get(3);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getAnnotation_Italic() {
-    return (EAttribute)annotationEClass.getEStructuralFeatures().get(4);
+    return (EAttribute) annotationEClass.getEStructuralFeatures().get(4);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getAnnotation_Color() {
-    return (EAttribute)annotationEClass.getEStructuralFeatures().get(5);
+    return (EAttribute) annotationEClass.getEStructuralFeatures().get(5);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getParameter() {
@@ -432,17 +429,17 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getParameter_Expression() {
-    return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
+    return (EAttribute) parameterEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getDirector() {
@@ -450,8 +447,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getDirector__GetParameters() {
@@ -459,8 +456,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getEntity() {
@@ -468,26 +465,26 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getEntity_InputPorts() {
-    return (EReference)entityEClass.getEStructuralFeatures().get(0);
+    return (EReference) entityEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getEntity_OutputPorts() {
-    return (EReference)entityEClass.getEStructuralFeatures().get(1);
+    return (EReference) entityEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getEntity__GetParameters() {
@@ -495,8 +492,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getCompositeEntity() {
@@ -504,26 +501,26 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getCompositeEntity_Entities() {
-    return (EReference)compositeEntityEClass.getEStructuralFeatures().get(0);
+    return (EReference) compositeEntityEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getCompositeEntity_Relations() {
-    return (EReference)compositeEntityEClass.getEStructuralFeatures().get(1);
+    return (EReference) compositeEntityEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getActor() {
@@ -531,8 +528,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getCompositeActor() {
@@ -540,17 +537,17 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getCompositeActor_Director() {
-    return (EReference)compositeActorEClass.getEStructuralFeatures().get(0);
+    return (EReference) compositeActorEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getPort() {
@@ -558,26 +555,26 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getPort_Input() {
-    return (EAttribute)portEClass.getEStructuralFeatures().get(0);
+    return (EAttribute) portEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getPort_Output() {
-    return (EAttribute)portEClass.getEStructuralFeatures().get(1);
+    return (EAttribute) portEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getPort__CanAcceptNewInsideRelation() {
@@ -585,44 +582,44 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getPort_MultiPort() {
-    return (EAttribute)portEClass.getEStructuralFeatures().get(2);
+    return (EAttribute) portEClass.getEStructuralFeatures().get(2);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getPort_LinkedRelations() {
-    return (EReference)portEClass.getEStructuralFeatures().get(3);
+    return (EReference) portEClass.getEStructuralFeatures().get(3);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getPort_InsideLinkedRelations() {
-    return (EReference)portEClass.getEStructuralFeatures().get(4);
+    return (EReference) portEClass.getEStructuralFeatures().get(4);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getPort_OutsideLinkedRelations() {
-    return (EReference)portEClass.getEStructuralFeatures().get(5);
+    return (EReference) portEClass.getEStructuralFeatures().get(5);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getPort__CanAcceptNewOutsideRelation() {
@@ -630,8 +627,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getRelation() {
@@ -639,35 +636,35 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getRelation_LinkedRelations() {
-    return (EReference)relationEClass.getEStructuralFeatures().get(0);
+    return (EReference) relationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getRelation_LinkingRelations() {
-    return (EReference)relationEClass.getEStructuralFeatures().get(1);
+    return (EReference) relationEClass.getEStructuralFeatures().get(1);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EReference getRelation_LinkedPorts() {
-    return (EReference)relationEClass.getEStructuralFeatures().get(2);
+    return (EReference) relationEClass.getEStructuralFeatures().get(2);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getRelation__IsConnected() {
@@ -675,8 +672,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getRelation__GetVertex() {
@@ -684,8 +681,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getLocation() {
@@ -693,17 +690,17 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EAttribute getLocation_Expression() {
-    return (EAttribute)locationEClass.getEStructuralFeatures().get(0);
+    return (EAttribute) locationEClass.getEStructuralFeatures().get(0);
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getLocation__GetLocation() {
@@ -711,8 +708,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getVertex() {
@@ -720,8 +717,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EClass getLinkable() {
@@ -729,8 +726,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getLinkable__Link__Relation() {
@@ -738,8 +735,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getLinkable__Unlink__Relation() {
@@ -747,8 +744,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getLinkable__IsPotentialStart() {
@@ -756,8 +753,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getLinkable__IsPotentialEnd__Linkable() {
@@ -765,8 +762,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EOperation getLinkable__BuildWrappedLinks() {
@@ -774,8 +771,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EDataType getVisitor() {
@@ -783,8 +780,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public EDataType getPtolemyNamedObj() {
@@ -792,30 +789,30 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public TriqFactory getTriqFactory() {
-    return (TriqFactory)getEFactoryInstance();
+    return (TriqFactory) getEFactoryInstance();
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private boolean isCreated = false;
 
   /**
-   * Creates the meta-model objects for the package.  This method is
-   * guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Creates the meta-model objects for the package. This method is guarded to have no affect on any invocation but its first. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   *
    * @generated
    */
   public void createPackageContents() {
-    if (isCreated) return;
+    if (isCreated)
+      return;
     isCreated = true;
 
     // Create classes and their features
@@ -901,21 +898,21 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   private boolean isInitialized = false;
 
   /**
-   * Complete the initialization of the package and its meta-model.  This
-   * method is guarded to have no affect on any invocation but its first.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Complete the initialization of the package and its meta-model. This method is guarded to have no affect on any invocation but its first. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   public void initializePackageContents() {
-    if (isInitialized) return;
+    if (isInitialized)
+      return;
     isInitialized = true;
 
     // Initialize package
@@ -945,12 +942,18 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
 
     // Initialize classes, features, and operations; add parameters
     initEClass(namedObjEClass, NamedObj.class, "NamedObj", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getNamedObj_Name(), ecorePackage.getEString(), "name", "new", 1, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getNamedObj_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNamedObj_WrappedType(), ecorePackage.getEString(), "wrappedType", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNamedObj_WrappedObject(), this.getPtolemyNamedObj(), "wrappedObject", null, 0, 1, NamedObj.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNamedObj_DeepComplete(), ecorePackage.getEBoolean(), "deepComplete", "false", 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getNamedObj_IconId(), ecorePackage.getEString(), "iconId", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_Name(), ecorePackage.getEString(), "name", "new", 1, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getNamedObj_Attributes(), this.getAttribute(), null, "attributes", null, 0, -1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_WrappedType(), ecorePackage.getEString(), "wrappedType", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_WrappedObject(), this.getPtolemyNamedObj(), "wrappedObject", null, 0, 1, NamedObj.class, IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_DeepComplete(), ecorePackage.getEBoolean(), "deepComplete", "false", 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getNamedObj_IconId(), ecorePackage.getEString(), "iconId", null, 0, 1, NamedObj.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getNamedObj__GetContainer(), this.getNamedObj(), "getContainer", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -977,58 +980,80 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEClass(attributeEClass, Attribute.class, "Attribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getAnnotation_Text(), ecorePackage.getEString(), "text", "Configure to edit text.", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAnnotation_FontFamily(), ecorePackage.getEString(), "fontFamily", "Arial", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAnnotation_TextSize(), ecorePackage.getEInt(), "textSize", "8", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAnnotation_Bold(), ecorePackage.getEBoolean(), "bold", "false", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAnnotation_Italic(), ecorePackage.getEBoolean(), "italic", "false", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAnnotation_Color(), ecorePackage.getEString(), "color", "0,0,0,255", 1, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Text(), ecorePackage.getEString(), "text", "Configure to edit text.", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_FontFamily(), ecorePackage.getEString(), "fontFamily", "Arial", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_TextSize(), ecorePackage.getEInt(), "textSize", "8", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Bold(), ecorePackage.getEBoolean(), "bold", "false", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Italic(), ecorePackage.getEBoolean(), "italic", "false", 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnnotation_Color(), ecorePackage.getEString(), "color", "0,0,0,255", 1, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getParameter_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getParameter_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(directorEClass, Director.class, "Director", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEOperation(getDirector__GetParameters(), this.getParameter(), "getParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(entityEClass, Entity.class, "Entity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEntity_InputPorts(), this.getPort(), null, "inputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEntity_OutputPorts(), this.getPort(), null, "outputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEntity_InputPorts(), this.getPort(), null, "inputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEntity_OutputPorts(), this.getPort(), null, "outputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getEntity__GetParameters(), this.getParameter(), "getParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(compositeEntityEClass, CompositeEntity.class, "CompositeEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCompositeEntity_Entities(), this.getEntity(), null, "entities", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCompositeEntity_Relations(), this.getRelation(), null, "relations", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompositeEntity_Entities(), this.getEntity(), null, "entities", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompositeEntity_Relations(), this.getRelation(), null, "relations", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actorEClass, Actor.class, "Actor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(compositeActorEClass, CompositeActor.class, "CompositeActor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCompositeActor_Director(), this.getDirector(), null, "director", null, 0, 1, CompositeActor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompositeActor_Director(), this.getDirector(), null, "director", null, 0, 1, CompositeActor.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(portEClass, Port.class, "Port", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPort_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPort_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPort_MultiPort(), ecorePackage.getEBoolean(), "multiPort", "false", 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPort_LinkedRelations(), this.getRelation(), this.getRelation_LinkedPorts(), "linkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPort_InsideLinkedRelations(), this.getRelation(), null, "insideLinkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getPort_OutsideLinkedRelations(), this.getRelation(), null, "outsideLinkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPort_Input(), ecorePackage.getEBoolean(), "input", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPort_Output(), ecorePackage.getEBoolean(), "output", null, 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPort_MultiPort(), ecorePackage.getEBoolean(), "multiPort", "false", 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPort_LinkedRelations(), this.getRelation(), this.getRelation_LinkedPorts(), "linkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPort_InsideLinkedRelations(), this.getRelation(), null, "insideLinkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE,
+        !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getPort_OutsideLinkedRelations(), this.getRelation(), null, "outsideLinkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE,
+        !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEOperation(getPort__CanAcceptNewOutsideRelation(), ecorePackage.getEBoolean(), "canAcceptNewOutsideRelation", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getPort__CanAcceptNewInsideRelation(), ecorePackage.getEBoolean(), "canAcceptNewInsideRelation", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(relationEClass, Relation.class, "Relation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getRelation_LinkedRelations(), this.getRelation(), this.getRelation_LinkingRelations(), "linkedRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRelation_LinkingRelations(), this.getRelation(), this.getRelation_LinkedRelations(), "linkingRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRelation_LinkedRelations(), this.getRelation(), this.getRelation_LinkingRelations(), "linkedRelations", null, 0, -1, Relation.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRelation_LinkingRelations(), this.getRelation(), this.getRelation_LinkedRelations(), "linkingRelations", null, 0, -1, Relation.class,
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getRelation__IsConnected(), ecorePackage.getEBoolean(), "isConnected", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getRelation__GetVertex(), this.getVertex(), "getVertex", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(locationEClass, Location.class, "Location", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getLocation_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLocation_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, Location.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getLocation__GetLocation(), ecorePackage.getEDouble(), "getLocation", 0, -1, IS_UNIQUE, IS_ORDERED);
 
@@ -1057,4 +1082,4 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createResource(eNS_URI);
   }
 
-} //TriqPackageImpl
+} // TriqPackageImpl
