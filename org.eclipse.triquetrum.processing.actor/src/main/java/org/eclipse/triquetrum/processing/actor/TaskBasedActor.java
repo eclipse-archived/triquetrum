@@ -54,8 +54,8 @@ import ptolemy.kernel.util.NameDuplicationException;
  * </p>
  * TODO check about how to implement mandatory vs optional inputs. For now, all ports are assumed to have a token available for each iteration.
  * <p>
- * In a later phase, we should be able to maintain a registry of known task types, and they should have specifications of inputs & outputs
- * from which we could auto-create the corresponding ports. For now the user needs to manage that manually.
+ * In a later phase, we should be able to maintain a registry of known task types, and they should have specifications of inputs & outputs from which we could
+ * auto-create the corresponding ports. For now the user needs to manage that manually.
  * </p>
  */
 public class TaskBasedActor extends TypedAtomicActor {
@@ -73,20 +73,13 @@ public class TaskBasedActor extends TypedAtomicActor {
    * Defines the error record token structure.
    */
   private static final RecordType ERROR_RECORDTYPE = new RecordType(
-      new String[]{TaskBasedActor.ERROR_RECORD_TASK_ID,
-          TaskBasedActor.ERROR_RECORD_ERROR_CODE,
-          TaskBasedActor.ERROR_RECORD_ERROR_SEVERITY,
-          TaskBasedActor.ERROR_RECORD_SHORT_DESCRIPTION,
-          TaskBasedActor.ERROR_RECORD_DESCRIPTION},
-      new Type[]{BaseType.LONG,
-          BaseType.STRING,
-          BaseType.STRING,
-          BaseType.STRING,
-          BaseType.STRING});
+      new String[] { TaskBasedActor.ERROR_RECORD_TASK_ID, TaskBasedActor.ERROR_RECORD_ERROR_CODE, TaskBasedActor.ERROR_RECORD_ERROR_SEVERITY,
+          TaskBasedActor.ERROR_RECORD_SHORT_DESCRIPTION, TaskBasedActor.ERROR_RECORD_DESCRIPTION },
+      new Type[] { BaseType.LONG, BaseType.STRING, BaseType.STRING, BaseType.STRING, BaseType.STRING });
 
   /**
-   * Used to specify the task type for tasks submitted by the actor instance.
-   * This type is a plain text thing that is typically used as main matching criterium by {@link TaskProcessingService} implementations.
+   * Used to specify the task type for tasks submitted by the actor instance. This type is a plain text thing that is typically used as main matching criterium
+   * by {@link TaskProcessingService} implementations.
    */
   public StringParameter taskType;
   /**
@@ -99,15 +92,16 @@ public class TaskBasedActor extends TypedAtomicActor {
    */
   public StringParameter timeUnitParameter;
   /**
-   * The output port that is used to send out error information when a task submission results in an exception.
-   * The error information is sent using a {@link RecordToken} with structure as defined in ERROR_RECORDTYPE.
+   * The output port that is used to send out error information when a task submission results in an exception. The error information is sent using a
+   * {@link RecordToken} with structure as defined in ERROR_RECORDTYPE.
    */
   public TypedIOPort errorPort;
 
   /**
    * The standard constructor for an actor implementation.
    *
-   * @param container the (sub)model in which this actor must be created.
+   * @param container
+   *          the (sub)model in which this actor must be created.
    * @param name
    * @throws IllegalActionException
    * @throws NameDuplicationException
@@ -162,15 +156,14 @@ public class TaskBasedActor extends TypedAtomicActor {
 
     // The actual output sending is done when the task has been processed, which is an asynchronous thing!
     // TODO check what this means for Ptolemy II MoC formalisms!
-    TaskProcessingBrokerTracker.getBroker()
-      .process(task, getTimeOutValue(), TimeUnit.valueOf(timeUnitParameter.stringValue()))
-      .exceptionally(ex -> handleError(task, null, ex))
-      .thenAccept(t -> sendOutput(t));
+    TaskProcessingBrokerTracker.getBroker().process(task, getTimeOutValue(), TimeUnit.valueOf(timeUnitParameter.stringValue()))
+        .exceptionally(ex -> handleError(task, null, ex)).thenAccept(t -> sendOutput(t));
   }
 
   /**
-   * Gets the first result block, if present, and iterates its result items.
-   * For each result item, if an output port exists with a matching name, an output token is sent with the item's value.
+   * Gets the first result block, if present, and iterates its result items. For each result item, if an output port exists with a matching name, an output
+   * token is sent with the item's value.
+   * 
    * @param t
    */
   protected final void sendOutput(Task t) {
@@ -187,19 +180,19 @@ public class TaskBasedActor extends TypedAtomicActor {
   }
 
   protected final Task handleError(Task t, Object detailedContext, Throwable ex) {
-    if(ex instanceof CompletionException) {
+    if (ex instanceof CompletionException) {
       ex = ex.getCause();
     }
 
     String description = null;
     TriqFactory factory = TriqFactoryTracker.getDefaultFactory();
     ProcessingErrorEvent<Task> errorEvent = null;
-    if(ex instanceof TriqException) {
+    if (ex instanceof TriqException) {
       TriqException triqEx = (TriqException) ex;
-      description = (detailedContext!=null ? detailedContext.toString() : (triqEx.getSimpleMessage()!=null ? triqEx.getSimpleMessage() : ""));
+      description = (detailedContext != null ? detailedContext.toString() : (triqEx.getSimpleMessage() != null ? triqEx.getSimpleMessage() : ""));
       errorEvent = factory.createErrorEvent(t, triqEx.getErrorCode(), description, ex, null);
     } else {
-      description = (detailedContext!=null ? detailedContext.toString() : ex.getMessage());
+      description = (detailedContext != null ? detailedContext.toString() : ex.getMessage());
       errorEvent = factory.createErrorEvent(t, ErrorCode.TASK_ERROR, description, ex, null);
     }
 
@@ -215,7 +208,7 @@ public class TaskBasedActor extends TypedAtomicActor {
       recordMap.put(TaskBasedActor.ERROR_RECORD_DESCRIPTION, ConversionUtilities.convertJavaTypeToToken(errorEvent.getDescription()));
       errorPort.send(0, new RecordToken(recordMap));
     } catch (Exception e) {
-      LOGGER.error(ErrorCode.ERROR + " - Error sending error output for task " + t.getId(), e);
+      LOGGER.error(org.eclipse.triquetrum.ErrorCode.ERROR + " - Error sending error output for task " + t.getId(), e);
     }
     return t;
   }

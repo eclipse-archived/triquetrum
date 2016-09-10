@@ -116,11 +116,11 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
     // that contain expressions with references to other parameters that may be later in the list.
 
     // First we take parameters ...
-    for (Parameter p : (List<Parameter>) ptolemyModel.attributeList(Parameter.class)) {
+    for (Parameter p : ptolemyModel.attributeList(Parameter.class)) {
       createModelElement(model, featureProvider, p, model);
     }
     // ... and annotations (i.e. TextAttributes)
-    for (TextAttribute a : (List<TextAttribute>) ptolemyModel.attributeList(TextAttribute.class)) {
+    for (TextAttribute a : ptolemyModel.attributeList(TextAttribute.class)) {
       createModelElement(model, featureProvider, a, model);
     }
 
@@ -129,7 +129,7 @@ public class FillDiagramFromPtolemyModelCommand extends RecordingCommand {
       createModelElement(model, featureProvider, p, model);
     }
 
-    for (Entity entity : (List<Entity>) ptolemyModel.entityList(Entity.class)) {
+    for (Entity entity : ptolemyModel.entityList(Entity.class)) {
       // TODO ensure the actors' port anchors are added to the anchorMap
       createModelElement(model, featureProvider, entity, model);
     }

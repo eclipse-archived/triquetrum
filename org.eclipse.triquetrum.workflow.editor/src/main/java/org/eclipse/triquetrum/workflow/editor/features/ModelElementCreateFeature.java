@@ -113,6 +113,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
     this.wrappedObject = wrappedObject;
   }
 
+  @Override
   public boolean canCreate(ICreateContext context) {
     if (context.getTargetContainer() instanceof Diagram) {
       // make sure we can only set 1 Director per model level
@@ -128,6 +129,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
     }
   }
 
+  @Override
   public Object[] create(ICreateContext context) {
     try {
       CompositeActor model = (CompositeActor) getBusinessObjectForPictogramElement(context.getTargetContainer());

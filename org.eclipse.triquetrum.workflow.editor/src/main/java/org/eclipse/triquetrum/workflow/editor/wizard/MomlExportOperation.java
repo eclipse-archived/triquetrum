@@ -251,7 +251,7 @@ public class MomlExportOperation implements IRunnableWithProgress {
       // 1. obtain Diagram for the file
       Diagram diagram = GraphitiUiInternal.getEmfService().getDiagramFromFile(file, new ResourceSetImpl());
       // 2. find root CompositeActor
-      CompositeActor toplevel =  (CompositeActor) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
+      CompositeActor toplevel = (CompositeActor) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(diagram);
       // 3. push location info of diagram model elements to the Ptolemy II model elements
       pushLocations(diagram, toplevel);
       // 4. exportMOML to the destination file
@@ -265,14 +265,13 @@ public class MomlExportOperation implements IRunnableWithProgress {
   }
 
   /**
-   * Iterate over the shape's (deep) children and push the Graphiti diagram's location info
-   * to the corresponding model elements.
+   * Iterate over the shape's (deep) children and push the Graphiti diagram's location info to the corresponding model elements.
    *
    * @param modelContainer
    * @param modelElement
    */
   private void pushLocations(ContainerShape modelContainer, CompositeEntity modelElement) {
-    for(Shape modelShape : modelContainer.getChildren()) {
+    for (Shape modelShape : modelContainer.getChildren()) {
       double x = modelShape.getGraphicsAlgorithm().getX();
       double y = modelShape.getGraphicsAlgorithm().getY();
       NamedObj bo = (NamedObj) Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(modelShape);
@@ -283,8 +282,8 @@ public class MomlExportOperation implements IRunnableWithProgress {
         errorTable.add(new Status(IStatus.WARNING, PlatformUI.PLUGIN_ID, 0, NLS.bind("Error setting location for {0}: {1}", bo.getName(), e.getMessage()), e));
       }
       // a composite entity should always have a container shape but one never knows, so let's double-check
-      if((modelShape instanceof ContainerShape) && (bo instanceof CompositeEntity)) {
-        pushLocations((ContainerShape) modelShape, (CompositeEntity)bo);
+      if ((modelShape instanceof ContainerShape) && (bo instanceof CompositeEntity)) {
+        pushLocations((ContainerShape) modelShape, (CompositeEntity) bo);
       }
     }
   }

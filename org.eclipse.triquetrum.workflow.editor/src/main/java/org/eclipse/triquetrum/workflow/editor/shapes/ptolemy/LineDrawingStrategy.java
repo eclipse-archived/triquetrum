@@ -31,19 +31,19 @@ public class LineDrawingStrategy extends AbstractDrawingStrategy<LineAttribute> 
     Color fgColor = graphics.getForegroundColor();
     java.awt.Color color = lineAttr.lineColor.asColor();
     if (color != null) {
-        Color rgb = resourceManager.createColor(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
-        graphics.setForegroundColor(rgb);
+      Color rgb = resourceManager.createColor(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
+      graphics.setForegroundColor(rgb);
     }
 
     try {
-      float lineWidth = (float) ((DoubleToken)lineAttr.lineWidth.getToken()).doubleValue();
+      float lineWidth = (float) ((DoubleToken) lineAttr.lineWidth.getToken()).doubleValue();
       graphics.setLineWidthFloat(lineWidth);
-      int x2_step = (int) ((DoubleToken)lineAttr.x.getToken()).doubleValue();
-      int y2_step = (int) ((DoubleToken)lineAttr.y.getToken()).doubleValue();
+      int x2_step = (int) ((DoubleToken) lineAttr.x.getToken()).doubleValue();
+      int y2_step = (int) ((DoubleToken) lineAttr.y.getToken()).doubleValue();
       Point tlp = getTopLeftLocation(lineAttr, graphics);
       graphics.drawLine(tlp, tlp.getTranslated(x2_step, y2_step));
     } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for "+lineAttr.getFullName(), e);
+      LOGGER.error("Error reading dimensions for " + lineAttr.getFullName(), e);
     }
     graphics.setForegroundColor(fgColor);
   }
@@ -51,12 +51,12 @@ public class LineDrawingStrategy extends AbstractDrawingStrategy<LineAttribute> 
   @Override
   protected Dimension getDimension(LineAttribute lineAttr, Graphics graphics, ResourceManager resourceManager) {
     try {
-      int x2_step = (int) ((DoubleToken)lineAttr.x.getToken()).doubleValue();
-      int y2_step = (int) ((DoubleToken)lineAttr.y.getToken()).doubleValue();
+      int x2_step = (int) ((DoubleToken) lineAttr.x.getToken()).doubleValue();
+      int y2_step = (int) ((DoubleToken) lineAttr.y.getToken()).doubleValue();
       return new Dimension(x2_step, y2_step);
     } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for "+lineAttr.getFullName(), e);
-      return new Dimension(0,0);
+      LOGGER.error("Error reading dimensions for " + lineAttr.getFullName(), e);
+      return new Dimension(0, 0);
     }
   }
 }

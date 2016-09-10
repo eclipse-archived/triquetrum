@@ -10,11 +10,8 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.model;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Actor</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Actor</b></em>'. <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getActor()

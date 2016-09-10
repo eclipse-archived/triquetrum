@@ -29,6 +29,7 @@ import org.eclipse.triquetrum.workflow.model.TriqPackage;
 public class DirectorImpl extends AttributeImpl implements Director {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   protected DirectorImpl() {
@@ -42,6 +43,7 @@ public class DirectorImpl extends AttributeImpl implements Director {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -54,6 +56,7 @@ public class DirectorImpl extends AttributeImpl implements Director {
    *
    * @generated NOT
    */
+  @Override
   public EList<Parameter> getParameters() {
     // TODO: improve this with a jdk8 collection filter thing
     EList<Parameter> result = new BasicEList<>();
@@ -73,13 +76,14 @@ public class DirectorImpl extends AttributeImpl implements Director {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.DIRECTOR___GET_PARAMETERS:
-        return getParameters();
+    case TriqPackage.DIRECTOR___GET_PARAMETERS:
+      return getParameters();
     }
     return super.eInvoke(operationID, arguments);
   }

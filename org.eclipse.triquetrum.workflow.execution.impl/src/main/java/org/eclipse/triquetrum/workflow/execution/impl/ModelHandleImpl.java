@@ -24,43 +24,43 @@ import ptolemy.actor.CompositeActor;
  *
  */
 class ModelHandleImpl implements ModelHandle {
-	private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-	private URI resourceLocator;
-	private String code;
-	private VersionSpecification version;
-	private String rawModelDefinition;
-	private transient CompositeActor model;
+  private URI resourceLocator;
+  private String code;
+  private VersionSpecification version;
+  private String rawModelDefinition;
+  private transient CompositeActor model;
 
-	public ModelHandleImpl(CompositeActor model) {
-		code = model.getName();
-		this.model = model;
-	}
+  public ModelHandleImpl(CompositeActor model) {
+    code = model.getName();
+    this.model = model;
+  }
 
-	@Override
-	public String getCode() {
-		return code;
-	}
+  @Override
+  public String getCode() {
+    return code;
+  }
 
-	@Override
-	public CompositeActor getModel() {
-		return model;
-	}
+  @Override
+  public CompositeActor getModel() {
+    return model;
+  }
 
-	@Override
-	public String getRawModelDefinition() {
-		return rawModelDefinition;
-	}
+  @Override
+  public String getRawModelDefinition() {
+    return rawModelDefinition;
+  }
 
-	@Override
-	public URI getResourceLocation() {
-		return resourceLocator;
-	}
+  @Override
+  public URI getResourceLocation() {
+    return resourceLocator;
+  }
 
-	@Override
-	public VersionSpecification getVersion() {
-		return version;
-	}
+  @Override
+  public VersionSpecification getVersion() {
+    return version;
+  }
 
   @Override
   public int hashCode() {

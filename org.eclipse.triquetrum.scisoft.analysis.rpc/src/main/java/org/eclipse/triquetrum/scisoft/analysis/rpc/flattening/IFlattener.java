@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012-2016 Diamond Light Source Ltd., 
+ * Copyright (c) 2012-2016 Diamond Light Source Ltd.,
  *                         Kichwa Coders & iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -30,7 +30,7 @@ import java.util.Map;
  * this example a specialised {@link Map}.
  * <li>{@link AddHelperSimpleWithInterfaceFlatteningTest} - Flattener for a simple class. Demonstrates use of {@link IFlattens}.
  * </ul>
- * 
+ *
  * @param <T>
  */
 public interface IFlattener<T> {
@@ -38,7 +38,7 @@ public interface IFlattener<T> {
   /**
    * Common name for all objects that serialize as a Map for the key name specifying the type of the object. Normally the value associated is the canonical name
    * from Java, but it can be any unique string.
-   * 
+   *
    * @see Class#getCanonicalName()
    */
   public static final String TYPE_KEY = "__type__";
@@ -48,7 +48,7 @@ public interface IFlattener<T> {
    * <p>
    * The normal thing to do would be to represent the object as a dictionary ({@link Map}) with the special key __type__ ({@link IFlattener#TYPE_KEY}) used to
    * identify the type of the object so that the unflattener can identify and unflatten it. By convention, the __type__ key is the qualified Java type name.
-   * 
+   *
    * @param obj
    *          object to flatten
    * @param rootFlattener
@@ -59,7 +59,7 @@ public interface IFlattener<T> {
 
   /**
    * Takes a flattened object and reconstructs the original object. Will only be called if canUnFlatten(obj) is true
-   * 
+   *
    * @param obj
    *          which is of flattened form and which is {@link FlattenedFormChecker#legal(Object)}
    * @param rootFlattener
@@ -70,7 +70,7 @@ public interface IFlattener<T> {
 
   /**
    * Tests whether an object can be flattened by this IFlattener
-   * 
+   *
    * @param obj
    *          object to test
    * @return true if obj can be flattened
@@ -79,7 +79,7 @@ public interface IFlattener<T> {
 
   /**
    * Tests whether an object can be unflattened by this IFlattener
-   * 
+   *
    * @param obj
    *          which is of flattened form and which is {@link FlattenedFormChecker#legal(Object)}
    * @return true if obj can be unflattened
@@ -91,21 +91,21 @@ public interface IFlattener<T> {
    * <p>
    * When a flattened form object is passed to {@link IFlattener#canUnFlatten(Object)} or {@link IFlattener#canUnFlatten(Object)} the guarantee is that the Key
    * is of type {@link String}. Therefore it is safe to add @SuppressWarnings("unchecked") in a case like this:
-   * 
+   *
    * <pre>
    * public boolean canUnFlatten(Object obj) {
    *   if (obj instanceof Map) {
    *      &#64;SuppressWarnings("unchecked")
    *      Map&lt;String, Object&gt; map = (Map&lt;String, Object&gt;) obj;
    *      // ...
-   * 
+   *
    * </pre>
    */
   public static class FlattenedFormChecker {
     /**
      * Make sure the flattened object contains only legal types for XML RPC transmission.
      * <p>
-     * 
+     *
      * @param flat
      *          the flattened object
      * @return true if the flat object is legal

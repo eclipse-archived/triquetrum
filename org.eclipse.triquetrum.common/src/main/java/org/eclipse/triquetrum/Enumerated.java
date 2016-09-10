@@ -24,8 +24,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /**
- * <code>Enumerated</code> is the extendable implementation of the java enum. It has the same interface of the java
- * <code>enum</code> type, but it allows inheritance and dynamic addition of enum values.
+ * <code>Enumerated</code> is the extendable implementation of the java enum. It has the same interface of the java <code>enum</code> type, but it allows
+ * inheritance and dynamic addition of enum values.
  *
  * @param <T>
  *          the enumType of an enum. This should always be the class that directly extends <code>Enumerated</code>.
@@ -63,7 +63,7 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
       throw new NullPointerException("EnumType is null");
 
     enumType = getEnumType(enumType);
-    SortedSet<? extends Enumerated<?>> values = (SortedSet<? extends Enumerated<?>>) enumerateds.get(enumType);
+    SortedSet<? extends Enumerated<?>> values = enumerateds.get(enumType);
     if (values != null)
       values.clear();
   }
@@ -73,8 +73,8 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
   }
 
   /**
-   * Returns the enum constant of the specified enum type with the specified name. The name must match exactly an
-   * identifier used to declare an enum constant in this type. (Extraneous whitespace characters are not permitted.)
+   * Returns the enum constant of the specified enum type with the specified name. The name must match exactly an identifier used to declare an enum constant in
+   * this type. (Extraneous whitespace characters are not permitted.)
    *
    * @param enumType
    *          the <tt>Class</tt> object of the enum type from which to return a constant
@@ -140,12 +140,12 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
     SortedSet<Enumerated<?>> values = (SortedSet<Enumerated<?>>) enumerateds.get(rootType);
 
     if (values == null)
-      return (new TreeSet<T>());
+      return (new TreeSet<>());
 
     if (enumType == rootType)
       return ((SortedSet<T>) values);
 
-    TreeSet<T> selectedValues = new TreeSet<T>();
+    TreeSet<T> selectedValues = new TreeSet<>();
     for (Enumerated<?> enumerated : values)
       if (enumType.isInstance(enumerated))
         selectedValues.add((T) enumerated);
@@ -153,15 +153,15 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
   }
 
   /**
-   * The name of this enum constant, as declared in the enum declaration. Most programmers should use the
-   * {@link #toString} method rather than accessing this field.
+   * The name of this enum constant, as declared in the enum declaration. Most programmers should use the {@link #toString} method rather than accessing this
+   * field.
    */
   private final String name;
 
   /**
-   * The ordinal of this enumeration constant (its position in the enum declaration, where the initial constant is
-   * assigned an ordinal of zero). Most programmers will have no use for this field. It is designed for use by
-   * sophisticated enum-based data structures, such as {@link java.util.EnumSet} and {@link java.util.EnumMap}.
+   * The ordinal of this enumeration constant (its position in the enum declaration, where the initial constant is assigned an ordinal of zero). Most
+   * programmers will have no use for this field. It is designed for use by sophisticated enum-based data structures, such as {@link java.util.EnumSet} and
+   * {@link java.util.EnumMap}.
    */
   private final int ordinal;
 
@@ -171,11 +171,9 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
 
   /**
    * @param name
-   *          - The name of this enum constant, which is the identifier used to declare it. Must be non-null and
-   *          non-blank.
+   *          - The name of this enum constant, which is the identifier used to declare it. Must be non-null and non-blank.
    * @param ordinal
-   *          - The ordinal of this enumeration constant (its position in the enum declaration, where the initial
-   *          constant is assigned an ordinal of zero).
+   *          - The ordinal of this enumeration constant (its position in the enum declaration, where the initial constant is assigned an ordinal of zero).
    */
   protected Enumerated(String name, int ordinal) {
     if (name == null || name.trim().length() == 0)
@@ -187,7 +185,7 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
     Class<? extends Enumerated<?>> enumType = getEnumType();
     SortedSet<T> values = (SortedSet<T>) enumerateds.get(enumType);
     if (values == null) {
-      enumerateds.put(enumType, values = new TreeSet<T>());
+      enumerateds.put(enumType, values = new TreeSet<>());
       this.ordinal = (ordinal == AUTOINCREMENT) ? (0) : (ordinal);
     } else {
       T value = null;
@@ -207,26 +205,26 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
   }
 
   /**
-   * returns the same instance. This guarantees that enumerateds are never cloned, which is necessary to preserve their
-   * "singleton" status.
+   * returns the same instance. This guarantees that enumerateds are never cloned, which is necessary to preserve their "singleton" status.
    *
    * @return T the same instance
    */
+  @Override
   protected final T clone() {
     return ((T) this);
   }
 
   /**
-   * Compares this enum with the specified object for order. Returns a negative integer, zero, or a positive integer as
-   * this object is less than, equal to, or greater than the specified object. Enumerated constants are only comparable
-   * to other enum constants of the same enum type. The natural order implemented by this method is the order in which
-   * the constants are declared.
+   * Compares this enum with the specified object for order. Returns a negative integer, zero, or a positive integer as this object is less than, equal to, or
+   * greater than the specified object. Enumerated constants are only comparable to other enum constants of the same enum type. The natural order implemented by
+   * this method is the order in which the constants are declared.
    */
+  @Override
   public final int compareTo(T object) {
     if (!getEnumType().isInstance(object))
       throw new ClassCastException();
 
-    return (ordinal - ((Enumerated<?>)object).ordinal);
+    return (ordinal - ((Enumerated<?>) object).ordinal);
   }
 
   /**
@@ -236,6 +234,7 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
    *          the object to be compared for equality with this object.
    * @return true if the specified object is equal to this enum constant.
    */
+  @Override
   public final boolean equals(Object object) {
     return (this == object);
   }
@@ -249,15 +248,15 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
    *
    * @return a hash code for this enum constant.
    */
+  @Override
   public final int hashCode() {
     return (System.identityHashCode(this));
   }
 
   /**
-   * Returns the name of this enum constant, exactly as declared in its enum declaration. <b>Most programmers should use
-   * the {@link #toString} method in preference to this one, as the toString method may return a more user-friendly
-   * name.</b> This method is designed primarily for use in specialized situations where correctness depends on getting
-   * the exact name, which will not vary from release to release.
+   * Returns the name of this enum constant, exactly as declared in its enum declaration. <b>Most programmers should use the {@link #toString} method in
+   * preference to this one, as the toString method may return a more user-friendly name.</b> This method is designed primarily for use in specialized
+   * situations where correctness depends on getting the exact name, which will not vary from release to release.
    *
    * @return the name of this enum constant
    */
@@ -266,9 +265,9 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
   }
 
   /**
-   * Returns the ordinal of this enumeration constant (its position in its enum declaration, where the initial constant
-   * is assigned an ordinal of zero). Most programmers will have no use for this method. It is designed for use by
-   * sophisticated enum-based data structures, such as {@link java.util.EnumSet} and {@link java.util.EnumMap}.
+   * Returns the ordinal of this enumeration constant (its position in its enum declaration, where the initial constant is assigned an ordinal of zero). Most
+   * programmers will have no use for this method. It is designed for use by sophisticated enum-based data structures, such as {@link java.util.EnumSet} and
+   * {@link java.util.EnumMap}.
    *
    * @return the ordinal of this enumeration constant
    */
@@ -294,12 +293,12 @@ public abstract class Enumerated<T extends Enumerated<?>> implements Comparable<
   }
 
   /**
-   * Returns the name of this enum constant, as contained in the declaration. This method may be overridden, though it
-   * typically isn't necessary or desirable. An enum type should override this method when a more "programmer-friendly"
-   * string form exists.
+   * Returns the name of this enum constant, as contained in the declaration. This method may be overridden, though it typically isn't necessary or desirable.
+   * An enum type should override this method when a more "programmer-friendly" string form exists.
    *
    * @return the name of this enum constant
    */
+  @Override
   public String toString() {
     return (name);
   }

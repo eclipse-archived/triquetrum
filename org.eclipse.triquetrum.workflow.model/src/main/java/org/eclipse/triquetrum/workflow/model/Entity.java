@@ -13,16 +13,14 @@ package org.eclipse.triquetrum.workflow.model;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Entity</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Entity</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Entity#getInputPorts <em>Input Ports</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Entity#getOutputPorts <em>Output Ports</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Entity#getInputPorts <em>Input Ports</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Entity#getOutputPorts <em>Output Ports</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getEntity()
@@ -31,14 +29,13 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Entity extends NamedObj {
   /**
-   * Returns the value of the '<em><b>Input Ports</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Port}.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Input Ports</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.triquetrum.workflow.model.Port}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Input Ports</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Input Ports</em>' containment reference list isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Input Ports</em>' containment reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getEntity_InputPorts()
    * @model containment="true"
@@ -47,14 +44,13 @@ public interface Entity extends NamedObj {
   EList<Port> getInputPorts();
 
   /**
-   * Returns the value of the '<em><b>Output Ports</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Port}.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Output Ports</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.triquetrum.workflow.model.Port}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Output Ports</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Output Ports</em>' containment reference list isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Output Ports</em>' containment reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getEntity_OutputPorts()
    * @model containment="true"
@@ -63,8 +59,8 @@ public interface Entity extends NamedObj {
   EList<Port> getOutputPorts();
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model kind="operation"
    * @generated
    */

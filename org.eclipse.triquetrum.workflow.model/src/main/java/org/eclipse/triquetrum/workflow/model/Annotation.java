@@ -11,20 +11,18 @@
 package org.eclipse.triquetrum.workflow.model;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Annotation</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Annotation</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#getText <em>Text</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#getFontFamily <em>Font Family</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#getTextSize <em>Text Size</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#isBold <em>Bold</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#isItalic <em>Italic</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#getColor <em>Color</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#getText <em>Text</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#getFontFamily <em>Font Family</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#getTextSize <em>Text Size</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#isBold <em>Bold</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#isItalic <em>Italic</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Annotation#getColor <em>Color</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation()
@@ -33,14 +31,12 @@ package org.eclipse.triquetrum.workflow.model;
  */
 public interface Annotation extends Attribute {
   /**
-   * Returns the value of the '<em><b>Text</b></em>' attribute.
-   * The default value is <code>"Configure to edit text."</code>.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Text</b></em>' attribute. The default value is <code>"Configure to edit text."</code>. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Text</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Text</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Text</em>' attribute.
    * @see #setText(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation_Text()
@@ -50,24 +46,23 @@ public interface Annotation extends Attribute {
   String getText();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#getText <em>Text</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Text</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#getText <em>Text</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @param value
+   *          the new value of the '<em>Text</em>' attribute.
    * @see #getText()
    * @generated
    */
   void setText(String value);
 
   /**
-   * Returns the value of the '<em><b>Font Family</b></em>' attribute.
-   * The default value is <code>"Arial"</code>.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Font Family</b></em>' attribute. The default value is <code>"Arial"</code>. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Font Family</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Font Family</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Font Family</em>' attribute.
    * @see #setFontFamily(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation_FontFamily()
@@ -77,24 +72,23 @@ public interface Annotation extends Attribute {
   String getFontFamily();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#getFontFamily <em>Font Family</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Font Family</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#getFontFamily <em>Font Family</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Font Family</em>' attribute.
    * @see #getFontFamily()
    * @generated
    */
   void setFontFamily(String value);
 
   /**
-   * Returns the value of the '<em><b>Text Size</b></em>' attribute.
-   * The default value is <code>"8"</code>.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Text Size</b></em>' attribute. The default value is <code>"8"</code>. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Text Size</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Text Size</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Text Size</em>' attribute.
    * @see #setTextSize(int)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation_TextSize()
@@ -104,24 +98,23 @@ public interface Annotation extends Attribute {
   int getTextSize();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#getTextSize <em>Text Size</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Text Size</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#getTextSize <em>Text Size</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Text Size</em>' attribute.
    * @see #getTextSize()
    * @generated
    */
   void setTextSize(int value);
 
   /**
-   * Returns the value of the '<em><b>Bold</b></em>' attribute.
-   * The default value is <code>"false"</code>.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Bold</b></em>' attribute. The default value is <code>"false"</code>. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Bold</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Bold</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Bold</em>' attribute.
    * @see #setBold(boolean)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation_Bold()
@@ -131,24 +124,23 @@ public interface Annotation extends Attribute {
   boolean isBold();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#isBold <em>Bold</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Bold</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#isBold <em>Bold</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @param value
+   *          the new value of the '<em>Bold</em>' attribute.
    * @see #isBold()
    * @generated
    */
   void setBold(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Italic</b></em>' attribute.
-   * The default value is <code>"false"</code>.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Italic</b></em>' attribute. The default value is <code>"false"</code>. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Italic</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Italic</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Italic</em>' attribute.
    * @see #setItalic(boolean)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation_Italic()
@@ -158,24 +150,23 @@ public interface Annotation extends Attribute {
   boolean isItalic();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#isItalic <em>Italic</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Italic</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#isItalic <em>Italic</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Italic</em>' attribute.
    * @see #isItalic()
    * @generated
    */
   void setItalic(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Color</b></em>' attribute.
-   * The default value is <code>"0,0,0,255"</code>.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Color</b></em>' attribute. The default value is <code>"0,0,0,255"</code>. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Color</em>' reference isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Color</em>' reference isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Color</em>' attribute.
    * @see #setColor(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getAnnotation_Color()
@@ -185,10 +176,11 @@ public interface Annotation extends Attribute {
   String getColor();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#getColor <em>Color</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Color</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Annotation#getColor <em>Color</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Color</em>' attribute.
    * @see #getColor()
    * @generated
    */

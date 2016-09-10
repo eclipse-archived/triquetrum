@@ -13,17 +13,15 @@ package org.eclipse.triquetrum.workflow.model;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Relation</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Relation</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation()
@@ -32,15 +30,14 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Relation extends Linkable {
   /**
-   * Returns the value of the '<em><b>Linked Relations</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Relation}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Linked Relations</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is
+   * '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}'. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Linked Relations</em>' reference list isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Linked Relations</em>' reference list isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Linked Relations</em>' reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation_LinkedRelations()
    * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations
@@ -50,15 +47,14 @@ public interface Relation extends Linkable {
   EList<Relation> getLinkedRelations();
 
   /**
-   * Returns the value of the '<em><b>Linking Relations</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Relation}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}'.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Linking Relations</b></em>' reference list. The list contents are of type
+   * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is
+   * '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}'. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Linking Relations</em>' reference list isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Linking Relations</em>' reference list isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Linking Relations</em>' reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation_LinkingRelations()
    * @see org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations
@@ -68,27 +64,26 @@ public interface Relation extends Linkable {
   EList<Relation> getLinkingRelations();
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model kind="operation"
    * @generated
    */
   boolean isConnected();
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model kind="operation"
    * @generated
    */
   Vertex getVertex();
 
   /**
-   * Returns the value of the '<em><b>Linked Ports</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Port}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations <em>Linked Relations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * Returns the value of the '<em><b>Linked Ports</b></em>' reference list. The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Port}.
+   * It is bidirectional and its opposite is '{@link org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations <em>Linked Relations</em>}'. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Linked Ports</em>' reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getRelation_LinkedPorts()
    * @see org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations

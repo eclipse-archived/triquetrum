@@ -40,6 +40,7 @@ public class PaletteLabelProvider implements ILabelProvider, IColorProvider, IFo
   /**
    * @see org.eclipse.jface.viewers.IColorProvider#getBackground(Object)
    */
+  @Override
   public Color getBackground(Object element) {
     return null;
   }
@@ -47,6 +48,7 @@ public class PaletteLabelProvider implements ILabelProvider, IColorProvider, IFo
   /**
    * @see org.eclipse.jface.viewers.IColorProvider#getForeground(Object)
    */
+  @Override
   public Color getForeground(Object element) {
     return null;
   }
@@ -54,6 +56,7 @@ public class PaletteLabelProvider implements ILabelProvider, IColorProvider, IFo
   /**
    * @see org.eclipse.jface.viewers.ILabelProvider#getImage(Object)
    */
+  @Override
   public Image getImage(Object element) {
     PaletteEntryEditPart entry = (PaletteEntryEditPart) element;
     return entry.getImage();
@@ -62,6 +65,7 @@ public class PaletteLabelProvider implements ILabelProvider, IColorProvider, IFo
   /**
    * @see org.eclipse.jface.viewers.ILabelProvider#getText(Object)
    */
+  @Override
   public String getText(Object element) {
     return ((PaletteEntryEditPart) element).getText();
   }
@@ -71,18 +75,21 @@ public class PaletteLabelProvider implements ILabelProvider, IColorProvider, IFo
    *
    * @see org.eclipse.jface.viewers.IBaseLabelProvider#addListener(ILabelProviderListener)
    */
+  @Override
   public void addListener(ILabelProviderListener listener) {
   }
 
   /**
    * @see org.eclipse.jface.viewers.IBaseLabelProvider#dispose()
    */
+  @Override
   public void dispose() {
   }
 
   /**
    * @see org.eclipse.jface.viewers.IBaseLabelProvider#isLabelProperty(Object, String)
    */
+  @Override
   public boolean isLabelProperty(Object element, String property) {
     return false;
   }
@@ -92,6 +99,7 @@ public class PaletteLabelProvider implements ILabelProvider, IColorProvider, IFo
    *
    * @see org.eclipse.jface.viewers.IBaseLabelProvider#removeListener(ILabelProviderListener)
    */
+  @Override
   public void removeListener(ILabelProviderListener listener) {
   }
 

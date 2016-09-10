@@ -10,17 +10,14 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.model;
 
-
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Parameter</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Parameter</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.Parameter#getExpression <em>Expression</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.Parameter#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getParameter()
@@ -30,13 +27,12 @@ package org.eclipse.triquetrum.workflow.model;
 public interface Parameter extends Attribute {
 
   /**
-   * Returns the value of the '<em><b>Expression</b></em>' attribute.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Expression</b></em>' attribute. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expression</em>' attribute isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Expression</em>' attribute isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Expression</em>' attribute.
    * @see #setExpression(String)
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getParameter_Expression()
@@ -46,10 +42,11 @@ public interface Parameter extends Attribute {
   String getExpression();
 
   /**
-   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Parameter#getExpression <em>Expression</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression</em>' attribute.
+   * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.Parameter#getExpression <em>Expression</em>}' attribute. <!-- begin-user-doc --> <!--
+   * end-user-doc -->
+   * 
+   * @param value
+   *          the new value of the '<em>Expression</em>' attribute.
    * @see #getExpression()
    * @generated
    */

@@ -26,7 +26,7 @@ public class ActorBreakpointListener implements DebugListener {
 
   private WorkflowExecutionTask fet;
   private String name;
-  
+
   public ActorBreakpointListener(String name, WorkflowExecutionTask fet) {
     this.fet = fet;
     this.name = name;
@@ -39,7 +39,7 @@ public class ActorBreakpointListener implements DebugListener {
       if (BREAKPOINT_EVENT_TYPE.equals(fe.getType())) {
         Actor a = fe.getActor();
         LOGGER.info("Suspend on breakpoint {}", name);
-        if(fet!=null) {
+        if (fet != null) {
           fet.addSuspendedElement(name);
         }
         a.getManager().pauseOnBreakpoint(name);

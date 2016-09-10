@@ -16,19 +16,16 @@ import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 
 import ptolemy.actor.AtomicActor;
-import ptolemy.kernel.Entity;
 
 /**
- * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Actor</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model object '<em><b>Actor</b></em>'. <!-- end-user-doc -->
  *
  * @generated
  */
 public class ActorImpl extends EntityImpl implements Actor {
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   protected ActorImpl() {
@@ -50,8 +47,8 @@ public class ActorImpl extends EntityImpl implements Actor {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   *
    * @generated
    */
   @Override
@@ -64,4 +61,4 @@ public class ActorImpl extends EntityImpl implements Actor {
     return (AtomicActor<?>) super.getWrappedObject();
   }
 
-} //ActorImpl
+} // ActorImpl

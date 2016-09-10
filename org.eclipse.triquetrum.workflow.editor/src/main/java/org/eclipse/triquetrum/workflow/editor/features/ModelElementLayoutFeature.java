@@ -38,11 +38,13 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     super(fp);
   }
 
+  @Override
   public boolean canLayout(ILayoutContext context) {
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
     return BoCategory.CompositeActor.equals(boCategory) || BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory);
   }
 
+  @Override
   public boolean layout(ILayoutContext context) {
     boolean anythingChanged = false;
     ContainerShape containerShape = (ContainerShape) context.getPictogramElement();

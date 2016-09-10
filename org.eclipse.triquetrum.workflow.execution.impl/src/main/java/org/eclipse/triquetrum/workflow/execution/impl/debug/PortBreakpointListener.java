@@ -27,7 +27,7 @@ public class PortBreakpointListener implements DebugListener {
 
   private WorkflowExecutionTask fet;
   private String name;
-  
+
   public PortBreakpointListener(String name, WorkflowExecutionTask fet) {
     this.fet = fet;
     this.name = name;
@@ -37,14 +37,13 @@ public class PortBreakpointListener implements DebugListener {
   public void event(DebugEvent event) {
     if (event instanceof IOPortEvent) {
       IOPortEvent pe = (IOPortEvent) event;
-      if ((BREAKPOINT_EVENT_TYPE_INPUT_PORT == pe.getEventType()) 
-          || (BREAKPOINT_EVENT_TYPE_OUTPUT_PORT == pe.getEventType())) {
+      if ((BREAKPOINT_EVENT_TYPE_INPUT_PORT == pe.getEventType()) || (BREAKPOINT_EVENT_TYPE_OUTPUT_PORT == pe.getEventType())) {
         Port p = pe.getPort();
         LOGGER.info("Suspend on breakpoint {}", p.getFullName());
-        if(fet!=null) {
+        if (fet != null) {
           fet.addSuspendedElement(name);
         }
-        ((CompositeActor)p.toplevel()).getManager().pauseOnBreakpoint(p.getFullName());
+        ((CompositeActor) p.toplevel()).getManager().pauseOnBreakpoint(p.getFullName());
       }
     }
   }

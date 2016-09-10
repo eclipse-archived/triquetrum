@@ -9,11 +9,10 @@
      Contributors:
         Erwin De Ley - initial API and implementation and/or initial documentation
  -->
-
 <feature
       id="org.eclipse.triquetrum.ptolemy.feature"
       label="Triquetrum ptolemy feature"
-      version="1.0.0.qualifier">
+      version="0.1.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]

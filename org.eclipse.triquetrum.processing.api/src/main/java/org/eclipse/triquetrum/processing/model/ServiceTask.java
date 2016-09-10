@@ -10,28 +10,24 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.processing.model;
 
-
 /**
  * This is the interface for tasks that use external services.
  * <p>
- * Interactions with external services typically involve some kind of
- * request/response mechanism across one or more dedicated protocols.
- * <br/>
- * On the task-level we want to be able to (optionally) trace the literal request and response contents.
- * The technical implementation of the actual interaction is handled by a set of service&adapter-implementations.
+ * Interactions with external services typically involve some kind of request/response mechanism across one or more dedicated protocols. <br/>
+ * On the task-level we want to be able to (optionally) trace the literal request and response contents. The technical implementation of the actual interaction
+ * is handled by a set of service&adapter-implementations.
  * </p>
  */
 public interface ServiceTask extends Task {
 
   /**
-   * The topic of the task's context event of sending a request to an external service.
-   * The raw service request will be (optionally) stored with this event.
+   * The topic of the task's context event of sending a request to an external service. The raw service request will be (optionally) stored with this event.
    */
   final static String REQUEST_SENT_EVENT_TOPIC = "REQUEST SENT";
 
   /**
-   * The topic of the task's context event of receiving a response from an external service.
-   * The raw service response will be (optionally) stored with this event.
+   * The topic of the task's context event of receiving a response from an external service. The raw service response will be (optionally) stored with this
+   * event.
    */
   final static String RESPONSE_RECEIVED_EVENT_TOPIC = "RESPONSE RECEIVED";
 
@@ -45,7 +41,8 @@ public interface ServiceTask extends Task {
 
   /**
    *
-   * @param traceIt true to activate the tracing of service requests&responses
+   * @param traceIt
+   *          true to activate the tracing of service requests&responses
    */
   void setTraceRequestResponse(boolean traceIt);
 
@@ -57,7 +54,8 @@ public interface ServiceTask extends Task {
 
   /**
    *
-   * @param request some human-readable raw representation of the request, e.g. XML, as sent to the backing service
+   * @param request
+   *          some human-readable raw representation of the request, e.g. XML, as sent to the backing service
    */
   void setServiceRequest(String request);
 
@@ -69,7 +67,8 @@ public interface ServiceTask extends Task {
 
   /**
    *
-   * @param response some human-readable raw representation of the response, e.g. XML, as obtained from the backing service
+   * @param response
+   *          some human-readable raw representation of the response, e.g. XML, as obtained from the backing service
    */
   void setServiceResponse(String response);
 }

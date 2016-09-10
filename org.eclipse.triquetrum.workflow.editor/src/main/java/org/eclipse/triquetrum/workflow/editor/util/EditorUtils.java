@@ -246,13 +246,13 @@ public class EditorUtils {
     if (child instanceof ComponentEntity) {
       ((ComponentEntity) child).setContainer((CompositeEntity) container);
     } else if (child instanceof Director) {
-      ((Director) child).setContainer((CompositeEntity) container);
+      ((Director) child).setContainer(container);
     } else if (child instanceof Vertex) {
       ((TypedIORelation) ((Vertex) child).getContainer()).setContainer((CompositeEntity) container);
     } else if (child instanceof TextAttribute) {
-      ((TextAttribute) child).setContainer((CompositeEntity) container);
+      ((TextAttribute) child).setContainer(container);
     } else if (child instanceof Variable) {
-      ((Variable) child).setContainer((CompositeEntity) container);
+      ((Variable) child).setContainer(container);
     } else if (child instanceof TypedIOPort) {
       ((TypedIOPort) child).setContainer((CompositeEntity) container);
     }
@@ -345,7 +345,7 @@ public class EditorUtils {
     if (attributes == null)
       return;
     if (attributes.size() > 0) {
-      Locatable locationAttribute = (Locatable) attributes.get(0);
+      Locatable locationAttribute = attributes.get(0);
       locationAttribute.setLocation(location);
       ptObject.attributeChanged((Attribute) attributes.get(0));
     } else {
@@ -437,11 +437,11 @@ public class EditorUtils {
     if (target instanceof Vertex) {
       // use the vertex's relation
       relation = (Relation) target.getContainer();
-      ((Linkable)source).link(relation);
+      ((Linkable) source).link(relation);
     } else if (source instanceof Vertex) {
       // use the vertex's relation
       relation = (Relation) source.getContainer();
-      ((Linkable)target).link(relation);
+      ((Linkable) target).link(relation);
     } else {
       // Create a new relation directly linking 2 ports
       // We need to determine what should be the relation container :
@@ -460,15 +460,15 @@ public class EditorUtils {
         relationContainer = (CompositeActor) srcContainer.getContainer();
       }
 
-      if(ptRelation!=null) {
+      if (ptRelation != null) {
         relation.setWrappedObject(ptRelation);
       } else {
         relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
       }
       relationContainer.getRelations().add(relation);
       relation.welcome(new PtObjectBuilderAndApplierVisitor(), true);
-      ((Linkable)source).link(relation);
-      ((Linkable)target).link(relation);
+      ((Linkable) source).link(relation);
+      ((Linkable) target).link(relation);
     }
     return relation;
   }

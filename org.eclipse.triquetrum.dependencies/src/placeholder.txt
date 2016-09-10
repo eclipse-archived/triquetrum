@@ -1,2 +1,0 @@
-Do not delete or Git will ignore the source directory. 
-~JJB 20150724 9:28

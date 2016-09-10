@@ -41,7 +41,7 @@ public class RectangleDrawingStrategy extends AbstractDrawingStrategy<RectangleA
       Point tlp = getTopLeftLocation(rectangleAttr, graphics);
       graphics.fillRectangle(tlp.x, tlp.y, width, height);
     } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for "+rectangleAttr.getFullName(), e);
+      LOGGER.error("Error reading dimensions for " + rectangleAttr.getFullName(), e);
     }
     graphics.setBackgroundColor(fgColor);
   }
@@ -53,8 +53,8 @@ public class RectangleDrawingStrategy extends AbstractDrawingStrategy<RectangleA
       int height = (int) ((DoubleToken) rectangleAttr.height.getToken()).doubleValue();
       return new Dimension(width, height);
     } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for "+rectangleAttr.getFullName(), e);
-      return new Dimension(0,0);
+      LOGGER.error("Error reading dimensions for " + rectangleAttr.getFullName(), e);
+      return new Dimension(0, 0);
     }
   }
 }

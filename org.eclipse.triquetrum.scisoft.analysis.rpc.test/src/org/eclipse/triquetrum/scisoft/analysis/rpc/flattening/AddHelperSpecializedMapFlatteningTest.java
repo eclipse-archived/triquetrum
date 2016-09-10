@@ -18,10 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.IFlattener;
-import org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.IFlattens;
-import org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.IRootFlattener;
-import org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.RootFlattener;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

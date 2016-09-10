@@ -57,8 +57,8 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
   //// public methods ////
 
   /**
-   * Append the string value of the token to the text area on the screen. Each value is terminated with a newline character.
-   * This is executed in the UI event thread.
+   * Append the string value of the token to the text area on the screen. Each value is terminated with a newline character. This is executed in the UI event
+   * thread.
    *
    * @param value
    *          The string to be displayed
@@ -171,13 +171,10 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
   }
 
   /**
-   * Specify the container in which the data should be displayed.
-   * An instance of JTextArea will be added to that container.
-   * This method needs to be called before the first call to initialize().
-   * Otherwise, an instance of JTextArea will be placed in its own frame.
-   * The text area is also placed in its own frame if this method is called with a null argument.
-   * The background of the text area is set equal to that of the container (unless it is null).
-   * This is executed in the Swing event thread.
+   * Specify the container in which the data should be displayed. An instance of JTextArea will be added to that container. This method needs to be called
+   * before the first call to initialize(). Otherwise, an instance of JTextArea will be placed in its own frame. The text area is also placed in its own frame
+   * if this method is called with a null argument. The background of the text area is set equal to that of the container (unless it is null). This is executed
+   * in the Swing event thread.
    *
    * @param portableContainer
    *          The container into which to place the text area, or null to specify that there is no current container.
@@ -191,7 +188,7 @@ public class DisplayJavaSWT extends AbstractPlaceableSWT implements DisplayInter
         if (container == null) {
           // Reset everything.
           if (_shell != null) {
-              _shell.dispose();
+            _shell.dispose();
           }
           _shell = null;
           textArea = null;

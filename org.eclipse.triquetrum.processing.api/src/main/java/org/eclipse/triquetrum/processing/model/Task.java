@@ -38,13 +38,14 @@ import org.eclipse.triquetrum.processing.ProcessingException;
 public interface Task extends Serializable, Identifiable, AttributeHolder {
 
   /**
-   * A Task can be linked to an external/business entity, e.g. an experiment ID, a customer ticket or a business order etc.
-   * This (optional, non-unique) identifier can refer to this external entity.
+   * A Task can be linked to an external/business entity, e.g. an experiment ID, a customer ticket or a business order etc. This (optional, non-unique)
+   * identifier can refer to this external entity.
    * <p>
    * Alternatively, it can just be used to maintain a more-or-less readable key that can be used to refer to related Tasks.
    * </p>
-   * @return an optional key that can be used to refer to an associated (business) entity, or can serve as a simple (non-unique) readable key,
-   * to refer to this Task.
+   * 
+   * @return an optional key that can be used to refer to an associated (business) entity, or can serve as a simple (non-unique) readable key, to refer to this
+   *         Task.
    */
   String getExternalReference();
 
@@ -76,7 +77,8 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
 
   /**
    *
-   * @param executor the party or system component that has been selected to become responsible for the handling of this task.
+   * @param executor
+   *          the party or system component that has been selected to become responsible for the handling of this task.
    */
   void setExecutor(String executor);
 
@@ -91,7 +93,8 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
   /**
    * Set the id of the process that is handling this task.
    *
-   * @param id the (optional) Id of the process in which this Task is handled.
+   * @param id
+   *          the (optional) Id of the process in which this Task is handled.
    */
   void setProcessId(String id);
 
@@ -103,23 +106,29 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
   /**
    * Set the new status of the task.
    * <p>
-   * There is currently no formally enforced state transition model.
-   * The only assumption is that once a Task has been set to a "final" state,
-   * the setter will fail if any more state changes are attempted.
+   * There is currently no formally enforced state transition model. The only assumption is that once a Task has been set to a "final" state, the setter will
+   * fail if any more state changes are attempted.
    * </p>
-   * @param status the new Task status
-   * @param extraInfos optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
-   * @throws IllegalStateException if the current status does not allow to set the new status (e.g. the current status is final)
+   * 
+   * @param status
+   *          the new Task status
+   * @param extraInfos
+   *          optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
+   * @throws IllegalStateException
+   *           if the current status does not allow to set the new status (e.g. the current status is final)
    */
   void setStatus(ProcessingStatus status, String... extraInfos) throws IllegalStateException;
 
   /**
-   * Tasks may fail for different reasons. If the failure can be represented as an exception, it should be wrapped in a ProcessingException
-   * and passed in here, optionally with some extra info.
+   * Tasks may fail for different reasons. If the failure can be represented as an exception, it should be wrapped in a ProcessingException and passed in here,
+   * optionally with some extra info.
    *
-   * @param cause the (optional) exception that represents the cause of the error in this Task's processing.
-   * @param extraInfos optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
-   * @throws IllegalStateException if the current status does not allow to set the new status (e.g. the current status is final)
+   * @param cause
+   *          the (optional) exception that represents the cause of the error in this Task's processing.
+   * @param extraInfos
+   *          optional extra info messages that may be sent out in ProcessingEvents to status change listeners.
+   * @throws IllegalStateException
+   *           if the current status does not allow to set the new status (e.g. the current status is final)
    */
   void setErrorStatus(ProcessingException cause, String... extraInfos) throws IllegalStateException;
 
@@ -138,12 +147,13 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
   /**
    * Adds an extra result for this Task.
    * <p>
-   * Depending on the Task implementation, there may be restrictions on adding results.
-   * E.g. that only one result block with a same type may be present.
-   * For such cases, the method must return a boolean success indicator (cfr. the Java Collection APIs)
+   * Depending on the Task implementation, there may be restrictions on adding results. E.g. that only one result block with a same type may be present. For
+   * such cases, the method must return a boolean success indicator (cfr. the Java Collection APIs)
    * </p>
+   * 
    * @param resultBlock
-   * @throws IllegalStateException if a result could no longer be added to this Task, e.g. because it's already in a final status.
+   * @throws IllegalStateException
+   *           if a result could no longer be added to this Task, e.g. because it's already in a final status.
    */
   void addResult(ResultBlock resultBlock) throws IllegalStateException;
 
@@ -161,7 +171,8 @@ public interface Task extends Serializable, Identifiable, AttributeHolder {
   /**
    *
    * @param task
-   * @throws IllegalStateException if a subtask could no longer be added to this Task, e.g. because it's already in a final status.
+   * @throws IllegalStateException
+   *           if a subtask could no longer be added to this Task, e.g. because it's already in a final status.
    */
   void addSubTask(Task task) throws IllegalStateException;
 

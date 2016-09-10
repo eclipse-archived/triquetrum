@@ -17,34 +17,35 @@ import java.util.concurrent.TimeUnit;
 import org.eclipse.triquetrum.processing.model.Task;
 
 /**
- * Maintains a set of {@link TaskProcessingService}s and delegates the actual processing
- * of submitted {@link Task}s to a service instance capable of handling it.
+ * Maintains a set of {@link TaskProcessingService}s and delegates the actual processing of submitted {@link Task}s to a service instance capable of handling
+ * it.
  *
  */
 public interface TaskProcessingBroker {
 
   /**
-   * @param task the {@link Task} that must be processed
-   * @param timeout the timeout period; null or <=0 values indicate : no timeout should be set.
-   * @param unit the {@link TimeUnit} of the timeunit period
-   * @return a Future to the task processing result.
-   * The future may contain a ProcessingException for several typical reasons :
-   * <ul>
-   * <li>when the delivery has failed of the task to a service able to process it. E.g. when no service is found for it.</li>
-   * <li>when there was an error in the service's processing of the task</li>
-   * </ul>
+   * @param task
+   *          the {@link Task} that must be processed
+   * @param timeout
+   *          the timeout period; null or <=0 values indicate : no timeout should be set.
+   * @param unit
+   *          the {@link TimeUnit} of the timeunit period
+   * @return a Future to the task processing result. The future may contain a ProcessingException for several typical reasons :
+   *         <ul>
+   *         <li>when the delivery has failed of the task to a service able to process it. E.g. when no service is found for it.</li>
+   *         <li>when there was an error in the service's processing of the task</li>
+   *         </ul>
    */
   CompletableFuture<Task> process(Task task, Long timeout, TimeUnit unit);
 
   /**
    * Process a task's subtasks and optionally mark the (parent) task as done when all subtasks are done.
    * <p>
-   * All subtasks are executed asynchronously and concurrently.
-   * If there are sequencing requirements, i.e. certain subtasks depend on the results of other subtasks,
-   * this method is not the right one to use.
-   * For such cases the task submitter must chain invocations of the separate task process(), 
-   * using the CompletableFuture API as needed to define the chain.
+   * All subtasks are executed asynchronously and concurrently. If there are sequencing requirements, i.e. certain subtasks depend on the results of other
+   * subtasks, this method is not the right one to use. For such cases the task submitter must chain invocations of the separate task process(), using the
+   * CompletableFuture API as needed to define the chain.
    * </p>
+   * 
    * @param task
    * @param timeout
    * @param unit
@@ -56,12 +57,14 @@ public interface TaskProcessingBroker {
   /**
    * Process several tasks concurrently. The method returns a future that will return when all submitted tasks are finished.
    *
-   * @param timeout the timeout period; null or <=0 values indicate : no timeout should be set.
-   * @param unit the {@link TimeUnit} of the timeunit period
-   * @param tasks a number of {@link Task}s that must be processed
-   * @return a Future to the processing results of the tasks.
-   * The future may contain a ProcessingException when there was an error delivering (one of) the tasks to their services.
-   * Individual task processing errors will be returned in their task's error status and event(s).
+   * @param timeout
+   *          the timeout period; null or <=0 values indicate : no timeout should be set.
+   * @param unit
+   *          the {@link TimeUnit} of the timeunit period
+   * @param tasks
+   *          a number of {@link Task}s that must be processed
+   * @return a Future to the processing results of the tasks. The future may contain a ProcessingException when there was an error delivering (one of) the tasks
+   *         to their services. Individual task processing errors will be returned in their task's error status and event(s).
    */
   CompletableFuture<List<Task>> process(Long timeout, TimeUnit unit, Task... tasks);
 

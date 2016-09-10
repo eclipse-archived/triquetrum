@@ -61,8 +61,6 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
   public static final int PORT_SIZE = 12;
 
   private static final IColorConstant ACTOR_NAME_FOREGROUND = IColorConstant.BLACK;
-  private static final IColorConstant PARAM_FOREGROUND = IColorConstant.DARK_GRAY;
-
   private static final IColorConstant ACTOR_FOREGROUND = new ColorConstant(98, 131, 167);
   private static final IColorConstant ACTOR_BACKGROUND = new ColorConstant(187, 218, 247);
   public static final IColorConstant PORT_FOREGROUND = IColorConstant.BLACK;
@@ -84,11 +82,13 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
+  @Override
   public boolean canAdd(IAddContext context) {
     // check if user wants to add an actor
     return ((context.getNewObject() instanceof Actor) || (context.getNewObject() instanceof CompositeActor));
   }
 
+  @Override
   public PictogramElement add(IAddContext context) {
     Entity addedActor = (Entity) context.getNewObject();
     ContainerShape targetContainer = context.getTargetContainer();
@@ -96,10 +96,10 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     // This should be a duplicate from what's in ModelElementCreateFeature,
     // to link the toplevel CompositeActor to the Diagram.
     // So let's try to do without this.
-//    Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
-//    if (topLevelForDiagram == null) {
-//      link(getDiagram(), addedActor.getContainer());
-//    }
+    // Object topLevelForDiagram = getBusinessObjectForPictogramElement(getDiagram());
+    // if (topLevelForDiagram == null) {
+    // link(getDiagram(), addedActor.getContainer());
+    // }
 
     int xLocation = context.getX();
     int yLocation = context.getY();
@@ -155,7 +155,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           // TODO find a way to get the full name from our Triq NamedObj,
           // then we don't need to depend on the presence of the wrapped object.
           Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-          if(anchorMap != null && p.getWrappedObject() != null) {
+          if (anchorMap != null && p.getWrappedObject() != null) {
             anchorMap.put(p.getWrappedObject().getFullName(), anchor);
           }
         }
@@ -181,7 +181,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           // TODO find a way to get the full name from our Triq NamedObj,
           // then we don't need to depend on the presence of the wrapped object.
           Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-          if(anchorMap != null && p.getWrappedObject() != null) {
+          if (anchorMap != null && p.getWrappedObject() != null) {
             anchorMap.put(p.getWrappedObject().getFullName(), anchor);
           }
         }
@@ -193,8 +193,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     return containerShape;
   }
 
-  protected GraphicsAlgorithm buildDefaultShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape,
-      Entity addedActor,
+  protected GraphicsAlgorithm buildDefaultShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape, Entity addedActor,
       String iconResource) {
 
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
@@ -208,17 +207,17 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     actorShapeGA.setLineWidth(2);
     gaService.setLocationAndSize(actorShapeGA, SHAPE_X_OFFSET, 0, width, height);
 
-      // add the actor's icon
-      if (!StringUtils.isBlank(iconResource)) {
-        try {
-          final Shape imageShape = peCreateService.createShape(containerShape, false);
-          final Image image = gaService.createImage(imageShape, iconResource);
-          addedActor.setIconId(iconResource);
-          gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
-        } catch (Exception e) {
-          LOGGER.error(ErrorCode.MODEL_CONFIGURATION_ERROR + " - Error trying to add actor icon for " + addedActor, e);
-        }
+    // add the actor's icon
+    if (!StringUtils.isBlank(iconResource)) {
+      try {
+        final Shape imageShape = peCreateService.createShape(containerShape, false);
+        final Image image = gaService.createImage(imageShape, iconResource);
+        addedActor.setIconId(iconResource);
+        gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
+      } catch (Exception e) {
+        LOGGER.error(ErrorCode.MODEL_CONFIGURATION_ERROR + " - Error trying to add actor icon for " + addedActor, e);
       }
+    }
 
     // SHAPE WITH LINE
     {
@@ -260,34 +259,34 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
 
     // SHAPES for basic configurable parameters (other parameters will be in the
     // Configure dialogue, but not shown by default in the actor shape)
-//    {
-//      int pIndex = 0;
-//      for (Parameter param : addedActor.getParameters()) {
-//        // create shape for text
-//        Shape shape = peCreateService.createShape(containerShape, false);
-//
-//        // create and set text graphics algorithm
-//        String pName = param.getName();
-//        String pVal = param.getExpression();
-//        pName = (pName.length() > 12) ? pName.substring(0, 12) : pName;
-//        pVal = (pVal.length() > 12) ? pVal.substring(0, 12) : pVal;
-//
-//        Text text = gaService.createText(shape, pName + " : " + pVal);
-//        // IUiLayoutService uil = GraphitiUi.getUiLayoutService();
-//        // IDimension dim = uil.calculateTextSize(text.getValue(),
-//        // text.getFont());
-//
-//        text.setForeground(manageColor(PARAM_FOREGROUND));
-//        text.setHorizontalAlignment(Orientation.ALIGNMENT_LEFT);
-//        // vertical alignment has as default value "center"
-//        text.setFont(gaService.manageFont(getDiagram(), IGaService.DEFAULT_FONT, 8));
-//        gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 5, 22 + 15 * pIndex++, width, 20);
-//
-//        // create link and wire it
-//        link(shape, param, BoCategories.Parameter);
-//        Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
-//      }
-//    }
+    // {
+    // int pIndex = 0;
+    // for (Parameter param : addedActor.getParameters()) {
+    // // create shape for text
+    // Shape shape = peCreateService.createShape(containerShape, false);
+    //
+    // // create and set text graphics algorithm
+    // String pName = param.getName();
+    // String pVal = param.getExpression();
+    // pName = (pName.length() > 12) ? pName.substring(0, 12) : pName;
+    // pVal = (pVal.length() > 12) ? pVal.substring(0, 12) : pVal;
+    //
+    // Text text = gaService.createText(shape, pName + " : " + pVal);
+    // // IUiLayoutService uil = GraphitiUi.getUiLayoutService();
+    // // IDimension dim = uil.calculateTextSize(text.getValue(),
+    // // text.getFont());
+    //
+    // text.setForeground(manageColor(PARAM_FOREGROUND));
+    // text.setHorizontalAlignment(Orientation.ALIGNMENT_LEFT);
+    // // vertical alignment has as default value "center"
+    // text.setFont(gaService.manageFont(getDiagram(), IGaService.DEFAULT_FONT, 8));
+    // gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 5, 22 + 15 * pIndex++, width, 20);
+    //
+    // // create link and wire it
+    // link(shape, param, BoCategories.Parameter);
+    // Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
+    // }
+    // }
 
     return actorShapeGA;
   }

@@ -13,16 +13,14 @@ package org.eclipse.triquetrum.workflow.model;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Composite Entity</b></em>'.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> A representation of the model object '<em><b>Composite Entity</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.CompositeEntity#getEntities <em>Entities</em>}</li>
- *   <li>{@link org.eclipse.triquetrum.workflow.model.CompositeEntity#getRelations <em>Relations</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.CompositeEntity#getEntities <em>Entities</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.CompositeEntity#getRelations <em>Relations</em>}</li>
  * </ul>
  *
  * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getCompositeEntity()
@@ -31,14 +29,13 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface CompositeEntity extends Entity {
   /**
-   * Returns the value of the '<em><b>Entities</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Entity}.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Entities</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.triquetrum.workflow.model.Entity}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Entities</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Entities</em>' containment reference list isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Entities</em>' containment reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getCompositeEntity_Entities()
    * @model containment="true"
@@ -47,14 +44,13 @@ public interface CompositeEntity extends Entity {
   EList<Entity> getEntities();
 
   /**
-   * Returns the value of the '<em><b>Relations</b></em>' containment reference list.
-   * The list contents are of type {@link org.eclipse.triquetrum.workflow.model.Relation}.
-   * <!-- begin-user-doc -->
+   * Returns the value of the '<em><b>Relations</b></em>' containment reference list. The list contents are of type
+   * {@link org.eclipse.triquetrum.workflow.model.Relation}. <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Relations</em>' containment reference isn't clear,
-   * there really should be more of a description here...
+   * If the meaning of the '<em>Relations</em>' containment reference isn't clear, there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
+   * 
    * @return the value of the '<em>Relations</em>' containment reference list.
    * @see org.eclipse.triquetrum.workflow.model.TriqPackage#getCompositeEntity_Relations()
    * @model containment="true"

@@ -24,8 +24,9 @@ public class FlatteningViaAnalysisRpcToPythonTest extends FlatteningViaAnalysisR
     try {
       return client.request("loopback", new Object[] { inObj });
     } catch (AnalysisRpcException e) {
-      if (e.getCause().getClass() == Exception.class)
+      if (e.getCause().getClass() == Exception.class) {
         return e.getCause();
+      }
       throw new RuntimeException(e);
     }
 

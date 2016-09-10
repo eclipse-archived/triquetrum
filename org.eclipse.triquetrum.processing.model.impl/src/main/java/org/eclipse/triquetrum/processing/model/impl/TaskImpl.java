@@ -192,9 +192,8 @@ public class TaskImpl extends AbstractIdentifiable implements Task {
 
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(19, 23).appendSuper(super.hashCode())
-        .append(type).append(correlationId).append(externalRef).append(status)
-        .append(initiator).append(executor).toHashCode();
+    return new HashCodeBuilder(19, 23).appendSuper(super.hashCode()).append(type).append(correlationId).append(externalRef).append(status).append(initiator)
+        .append(executor).toHashCode();
   }
 
   @Override
@@ -206,20 +205,14 @@ public class TaskImpl extends AbstractIdentifiable implements Task {
     if (getClass() != obj.getClass())
       return false;
     TaskImpl other = (TaskImpl) obj;
-    return new EqualsBuilder().appendSuper(super.equals(obj))
-        .append(type, other.type)
-        .append(correlationId, other.correlationId)
-        .append(externalRef, other.externalRef)
-        .append(status, other.status)
-        .append(initiator, other.initiator)
-        .append(executor, other.executor).isEquals();
+    return new EqualsBuilder().appendSuper(super.equals(obj)).append(type, other.type).append(correlationId, other.correlationId)
+        .append(externalRef, other.externalRef).append(status, other.status).append(initiator, other.initiator).append(executor, other.executor).isEquals();
   }
 
   @Override
   public String toString() {
-    return "TaskImpl [getId()=" + getId() + ", getCreationTS()=" + getCreationTS()
-        + ", correlationId=" + correlationId + ", externalRef=" + externalRef
-        + ", type=" + type + ", status=" + status + ", initiator=" + initiator
-        + ", executor=" + executor + ", processId=" + processId + ", endTS=" + endTS + "]";
+    return "TaskImpl [getId()=" + getId() + ", getCreationTS()=" + getCreationTS() + ", correlationId=" + correlationId + ", externalRef=" + externalRef
+        + ", type=" + type + ", status=" + status + ", initiator=" + initiator + ", executor=" + executor + ", processId=" + processId + ", endTS=" + endTS
+        + "]";
   }
 }

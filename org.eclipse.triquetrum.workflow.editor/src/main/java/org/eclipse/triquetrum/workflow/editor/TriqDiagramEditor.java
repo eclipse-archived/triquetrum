@@ -42,15 +42,14 @@ public class TriqDiagramEditor extends DiagramEditor {
   public final static String EDITOR_ID = "org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor";
   public final static String DIAGRAM_FILE_EXTENSION = "tdml";
 
-
   @Override
   public void init(IEditorSite site, IEditorInput input) throws PartInitException {
     super.init(site, input);
 
     Diagram d = getDiagramTypeProvider().getDiagram();
     Object toplevel = getDiagramTypeProvider().getFeatureProvider().getBusinessObjectForPictogramElement(d);
-    if(toplevel != null && toplevel instanceof NamedObj) {
-      ((NamedObj)toplevel).welcome(new PtObjectBuilderVisitor(), true);
+    if (toplevel != null && toplevel instanceof NamedObj) {
+      ((NamedObj) toplevel).welcome(new PtObjectBuilderVisitor(), true);
       ((NamedObj)toplevel).welcome(new PtObjectLinkerVisitor(), true);
     }
   }
@@ -60,6 +59,7 @@ public class TriqDiagramEditor extends DiagramEditor {
     return new TriqDiagramBehavior(this);
   }
 
+  @Override
   public Object getAdapter(@SuppressWarnings("rawtypes") Class type) {
     if (IContentOutlinePage.class.equals(type)) {
       DiagramEditorOutlinePage outlinePage = new DiagramEditorOutlinePage(this);
@@ -98,16 +98,19 @@ public class TriqDiagramEditor extends DiagramEditor {
       String diagramName = fileName.substring(0, fileName.lastIndexOf('.'));
       getEditingDomain().getCommandStack().execute(new AbstractCommand() {
         String oldName;
+
         @Override
         public boolean canExecute() {
           return true;
         }
+
         @Override
         public void redo() {
           if (oldName != null) {
             getDiagramTypeProvider().getDiagram().setName(oldName);
           }
         }
+
         @Override
         public void execute() {
           oldName = getDiagramTypeProvider().getDiagram().getName();
@@ -128,7 +131,7 @@ public class TriqDiagramEditor extends DiagramEditor {
   public static String[] selectSaveAsDestinationPath(Shell shell) {
     FileDialog fileDialog = new FileDialog(shell, SWT.SAVE);
 
-    String[] fileExtensionFilters = new String[] { "*."+DIAGRAM_FILE_EXTENSION };
+    String[] fileExtensionFilters = new String[] { "*." + DIAGRAM_FILE_EXTENSION };
     ;
     fileDialog.setFilterExtensions(fileExtensionFilters);
     fileDialog.open();

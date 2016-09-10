@@ -14,9 +14,8 @@ import org.eclipse.triquetrum.processing.model.Task;
 import org.eclipse.triquetrum.validation.service.ValidationService;
 
 /**
- * TODO To be evaluated if this kind of "marker interface" adds any value.
- * It may be handy as the interface for the OSGi service registration and retrieval?
- * 
+ * TODO To be evaluated if this kind of "marker interface" adds any value. It may be handy as the interface for the OSGi service registration and retrieval?
+ *
  */
-public interface TaskValidationService extends ValidationService<Task>{
+public interface TaskValidationService extends ValidationService<Task> {
 }

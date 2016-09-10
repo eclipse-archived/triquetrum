@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Plot actors for Triquetrum (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.actor.plot
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.eclipse.triquetrum.workflow.actor.plot.activator.Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
@@ -12,7 +12,7 @@ Import-Package: org.apache.commons.lang;version="2.6.0",
  org.eclipse.nebula.visualization.xygraph.figures,
  org.eclipse.swt.layout,
  org.eclipse.swt.widgets,
- org.eclipse.triquetrum.workflow.ui;version="1.0.0",
+ org.eclipse.triquetrum.workflow.ui;version="0.1.0",
  org.osgi.framework;version="1.8.0",
  org.ptolemy.classloading;version="11.0.0",
  org.ptolemy.classloading.osgi;version="11.0.0",
@@ -25,4 +25,4 @@ Import-Package: org.apache.commons.lang;version="2.6.0",
  ptolemy.kernel;version="11.0.0",
  ptolemy.kernel.util;version="11.0.0",
  ptolemy.util;version="11.0.0"
-Export-Package: org.eclipse.triquetrum.workflow.actor.plot;version="1.0.0"
+Export-Package: org.eclipse.triquetrum.workflow.actor.plot;version="0.1.0"
