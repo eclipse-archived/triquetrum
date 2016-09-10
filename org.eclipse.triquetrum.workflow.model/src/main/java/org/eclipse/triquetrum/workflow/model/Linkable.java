@@ -4,13 +4,11 @@
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  */
 package org.eclipse.triquetrum.workflow.model;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface Linkable extends EObject {
+public interface Linkable extends NamedObj {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -38,5 +36,31 @@ public interface Linkable extends EObject {
    * @generated
    */
   void unlink(Relation relation);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model kind="operation"
+   * @generated
+   */
+  boolean isPotentialStart();
+
+  /**
+   * <!-- begin-user-doc -->
+     * This method checks whether a connection's src and target are of the right type and on the right model level
+     * to be a matching pair to be connected.
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  boolean isPotentialEnd(Linkable start);
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @model
+   * @generated
+   */
+  void buildWrappedLinks();
 
 } // Linkable

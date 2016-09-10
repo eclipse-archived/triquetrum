@@ -33,7 +33,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Port extends NamedObj, Linkable {
+public interface Port extends Linkable {
   /**
    * Returns the value of the '<em><b>Input</b></em>' attribute.
    * <!-- begin-user-doc -->

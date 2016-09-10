@@ -11,9 +11,12 @@
 package org.eclipse.triquetrum.workflow.model.impl;
 
 import org.eclipse.emf.ecore.EClass;
-
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
+
+import ptolemy.actor.AtomicActor;
+import ptolemy.kernel.Entity;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,6 +35,20 @@ public class ActorImpl extends EntityImpl implements Actor {
     super();
   }
 
+  @Override
+  protected void eBasicSetContainer(InternalEObject newContainer) {
+    super.eBasicSetContainer(newContainer);
+    if(newContainer==null && wrappedObject!=null) {
+      try {
+        getWrappedObject().setContainer(null);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        // should never happen when setting a null container
+        e.printStackTrace();
+      }
+    }
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -40,6 +57,11 @@ public class ActorImpl extends EntityImpl implements Actor {
   @Override
   protected EClass eStaticClass() {
     return TriqPackage.Literals.ACTOR;
+  }
+
+  @Override
+  public AtomicActor<?> getWrappedObject() {
+    return (AtomicActor<?>) super.getWrappedObject();
   }
 
 } //ActorImpl

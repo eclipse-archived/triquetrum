@@ -17,11 +17,10 @@ import org.eclipse.graphiti.features.impl.DefaultReconnectionFeature;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
-import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
-import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.Vertex;
 
 // TODO build logic for the special case where we reconnect away from a vertex.
@@ -37,6 +36,28 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
 
   public ConnectionReconnectFeature(IFeatureProvider fp) {
     super(fp);
+  }
+
+  @Override
+  public boolean canReconnect(IReconnectionContext context) {
+    boolean result = super.canReconnect(context);
+    if(result) {
+      // return true if both anchors belong to a Port or Vertex and can accept the connection
+      Linkable currentSource = getAnchorBO(context.getConnection().getStart());
+      Linkable currentTarget = getAnchorBO(context.getConnection().getEnd());
+      Linkable oldBO = getAnchorBO(context.getOldAnchor());
+      Linkable newBO = getAnchorBO(context.getNewAnchor());
+      if(newBO!=null) {
+        if(oldBO==currentSource) {
+          return newBO.isPotentialStart();
+        } else if(oldBO==currentTarget) {
+          return newBO.isPotentialEnd(currentSource);
+        }
+      }
+      return false;
+
+    }
+    return result;
   }
 
   @Override
@@ -73,9 +94,11 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
 
         if (endBO instanceof Vertex) {
           newRelation = (Relation) endBO.getContainer();
+          ((Linkable) startBO).link(newRelation);
         } else {
           if (startBO instanceof Vertex) {
             newRelation = (Relation) startBO.getContainer();
+            ((Linkable) endBO).link(newRelation);
           } else {
             newRelation = EditorUtils.createRelation(startBO, endBO, null);
           }
@@ -92,5 +115,23 @@ public class ConnectionReconnectFeature extends DefaultReconnectionFeature {
   @Override
   public boolean hasDoneChanges() {
     return hasDoneChanges;
+  }
+
+  /**
+   * Returns the Port or Vertex belonging to the anchor, or null if not available.
+   */
+  private Linkable getAnchorBO(Anchor anchor) {
+    if (anchor != null) {
+      Object object = getBusinessObjectForPictogramElement(anchor);
+      if (object instanceof Port) {
+        return (Port) object;
+      }
+      if (object instanceof Vertex) {
+        return (Vertex) object;
+      } else {
+        throw new IllegalArgumentException("Anchor " + anchor + " linked to invalid object "+object);
+      }
+    }
+    return null;
   }
 }

@@ -66,6 +66,20 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
     super();
   }
 
+  @Override
+  protected void eBasicSetContainer(InternalEObject newContainer) {
+    super.eBasicSetContainer(newContainer);
+    if(newContainer==null && wrappedObject!=null) {
+      try {
+        getWrappedObject().setContainer(null);
+      } catch (Exception e) {
+        // TODO Auto-generated catch block
+        // should never happen when setting a null container
+        e.printStackTrace();
+      }
+    }
+  }
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
@@ -130,6 +144,11 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
       relations = new EObjectContainmentEList<Relation>(Relation.class, this, TriqPackage.COMPOSITE_ENTITY__RELATIONS);
     }
     return relations;
+  }
+
+  @Override
+  public ptolemy.kernel.CompositeEntity getWrappedObject() {
+    return (ptolemy.kernel.CompositeEntity) super.getWrappedObject();
   }
 
   /**

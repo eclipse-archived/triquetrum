@@ -670,7 +670,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getRelation__Link__Relation() {
+  public EOperation getRelation__IsConnected() {
     return relationEClass.getEOperations().get(0);
   }
 
@@ -679,26 +679,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * <!-- end-user-doc -->
    * @generated
    */
-  public EOperation getRelation__Unlink__Relation() {
-    return relationEClass.getEOperations().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EOperation getRelation__IsConnected() {
-    return relationEClass.getEOperations().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EOperation getRelation__GetVertex() {
-    return relationEClass.getEOperations().get(3);
+    return relationEClass.getEOperations().get(1);
   }
 
   /**
@@ -762,6 +744,33 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    */
   public EOperation getLinkable__Unlink__Relation() {
     return linkableEClass.getEOperations().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getLinkable__IsPotentialStart() {
+    return linkableEClass.getEOperations().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getLinkable__IsPotentialEnd__Linkable() {
+    return linkableEClass.getEOperations().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EOperation getLinkable__BuildWrappedLinks() {
+    return linkableEClass.getEOperations().get(4);
   }
 
   /**
@@ -870,8 +879,6 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEReference(relationEClass, RELATION__LINKED_RELATIONS);
     createEReference(relationEClass, RELATION__LINKING_RELATIONS);
     createEReference(relationEClass, RELATION__LINKED_PORTS);
-    createEOperation(relationEClass, RELATION___LINK__RELATION);
-    createEOperation(relationEClass, RELATION___UNLINK__RELATION);
     createEOperation(relationEClass, RELATION___IS_CONNECTED);
     createEOperation(relationEClass, RELATION___GET_VERTEX);
 
@@ -884,6 +891,9 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     linkableEClass = createEClass(LINKABLE);
     createEOperation(linkableEClass, LINKABLE___LINK__RELATION);
     createEOperation(linkableEClass, LINKABLE___UNLINK__RELATION);
+    createEOperation(linkableEClass, LINKABLE___IS_POTENTIAL_START);
+    createEOperation(linkableEClass, LINKABLE___IS_POTENTIAL_END__LINKABLE);
+    createEOperation(linkableEClass, LINKABLE___BUILD_WRAPPED_LINKS);
 
     // Create data types
     ptolemyNamedObjEDataType = createEDataType(PTOLEMY_NAMED_OBJ);
@@ -926,12 +936,12 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     compositeEntityEClass.getESuperTypes().add(this.getEntity());
     actorEClass.getESuperTypes().add(this.getEntity());
     compositeActorEClass.getESuperTypes().add(this.getCompositeEntity());
-    portEClass.getESuperTypes().add(this.getNamedObj());
     portEClass.getESuperTypes().add(this.getLinkable());
-    relationEClass.getESuperTypes().add(this.getNamedObj());
+    relationEClass.getESuperTypes().add(this.getLinkable());
     locationEClass.getESuperTypes().add(this.getAttribute());
     vertexEClass.getESuperTypes().add(this.getLocation());
     vertexEClass.getESuperTypes().add(this.getLinkable());
+    linkableEClass.getESuperTypes().add(this.getNamedObj());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(namedObjEClass, NamedObj.class, "NamedObj", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1013,12 +1023,6 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEReference(getRelation_LinkingRelations(), this.getRelation(), this.getRelation_LinkedRelations(), "linkingRelations", null, 0, -1, Relation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRelation_LinkedPorts(), this.getPort(), this.getPort_LinkedRelations(), "linkedPorts", null, 0, -1, Relation.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    op = initEOperation(getRelation__Link__Relation(), null, "link", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getRelation(), "relation", 0, 1, IS_UNIQUE, IS_ORDERED);
-
-    op = initEOperation(getRelation__Unlink__Relation(), null, "unlink", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, this.getRelation(), "relation", 0, 1, IS_UNIQUE, IS_ORDERED);
-
     initEOperation(getRelation__IsConnected(), ecorePackage.getEBoolean(), "isConnected", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getRelation__GetVertex(), this.getVertex(), "getVertex", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1037,6 +1041,13 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
 
     op = initEOperation(getLinkable__Unlink__Relation(), null, "unlink", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, this.getRelation(), "relation", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getLinkable__IsPotentialStart(), ecorePackage.getEBoolean(), "isPotentialStart", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    op = initEOperation(getLinkable__IsPotentialEnd__Linkable(), ecorePackage.getEBoolean(), "isPotentialEnd", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, this.getLinkable(), "start", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getLinkable__BuildWrappedLinks(), null, "buildWrappedLinks", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     // Initialize data types
     initEDataType(ptolemyNamedObjEDataType, ptolemy.kernel.util.NamedObj.class, "PtolemyNamedObj", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);

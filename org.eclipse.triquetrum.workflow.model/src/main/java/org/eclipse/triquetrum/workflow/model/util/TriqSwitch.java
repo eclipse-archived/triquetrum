@@ -163,14 +163,15 @@ public class TriqSwitch<T> {
       case TriqPackage.PORT: {
         Port port = (Port)theEObject;
         T result = casePort(port);
-        if (result == null) result = caseNamedObj(port);
         if (result == null) result = caseLinkable(port);
+        if (result == null) result = caseNamedObj(port);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
       case TriqPackage.RELATION: {
         Relation relation = (Relation)theEObject;
         T result = caseRelation(relation);
+        if (result == null) result = caseLinkable(relation);
         if (result == null) result = caseNamedObj(relation);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -196,6 +197,7 @@ public class TriqSwitch<T> {
       case TriqPackage.LINKABLE: {
         Linkable linkable = (Linkable)theEObject;
         T result = caseLinkable(linkable);
+        if (result == null) result = caseNamedObj(linkable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }

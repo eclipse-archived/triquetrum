@@ -73,7 +73,7 @@ public class ParameterImpl extends AttributeImpl implements Parameter {
     super.buildWrappedObject();
     try {
       if (!(wrappedObject instanceof Settable)) {
-        throw new Exception("Property cannot be assigned a value: " + getName() + " (instance " + wrappedObject + " is not of " + wrappedType + ")");
+        throw new Exception("Property cannot be assigned a value: " + getName() + " (instance " + wrappedObject + " is not a " + wrappedType + ")");
       } else if (getExpression() != null) {
         Settable settable = (Settable) wrappedObject;
         settable.setExpression(getExpression());

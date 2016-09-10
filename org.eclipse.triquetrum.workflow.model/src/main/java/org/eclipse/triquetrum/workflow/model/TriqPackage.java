@@ -1688,240 +1688,6 @@ public interface TriqPackage extends EPackage {
   int PORT = 9;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__NAME = NAMED_OBJ__NAME;
-
-  /**
-   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__ATTRIBUTES = NAMED_OBJ__ATTRIBUTES;
-
-  /**
-   * The feature id for the '<em><b>Wrapped Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__WRAPPED_TYPE = NAMED_OBJ__WRAPPED_TYPE;
-
-  /**
-   * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__WRAPPED_OBJECT = NAMED_OBJ__WRAPPED_OBJECT;
-
-  /**
-   * The feature id for the '<em><b>Deep Complete</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__DEEP_COMPLETE = NAMED_OBJ__DEEP_COMPLETE;
-
-  /**
-   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__ICON_ID = NAMED_OBJ__ICON_ID;
-
-  /**
-   * The feature id for the '<em><b>Input</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__INPUT = NAMED_OBJ_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Output</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__OUTPUT = NAMED_OBJ_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Multi Port</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__MULTI_PORT = NAMED_OBJ_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Linked Relations</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Inside Linked Relations</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__INSIDE_LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 4;
-
-  /**
-   * The feature id for the '<em><b>Outside Linked Relations</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT__OUTSIDE_LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 5;
-
-  /**
-   * The number of structural features of the '<em>Port</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 6;
-
-  /**
-   * The operation id for the '<em>Get Container</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___GET_CONTAINER = NAMED_OBJ___GET_CONTAINER;
-
-  /**
-   * The operation id for the '<em>Top Level</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___TOP_LEVEL = NAMED_OBJ___TOP_LEVEL;
-
-  /**
-   * The operation id for the '<em>Set Property</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
-
-  /**
-   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___APPLY_WRAPPED_OBJECT = NAMED_OBJ___APPLY_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Build Wrapped Object</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Get Full Name</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___GET_FULL_NAME = NAMED_OBJ___GET_FULL_NAME;
-
-  /**
-   * The operation id for the '<em>Get Child</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___GET_CHILD__STRING = NAMED_OBJ___GET_CHILD__STRING;
-
-  /**
-   * The operation id for the '<em>Welcome</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___WELCOME__VISITOR_BOOLEAN = NAMED_OBJ___WELCOME__VISITOR_BOOLEAN;
-
-  /**
-   * The operation id for the '<em>Link</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___LINK__RELATION = NAMED_OBJ_OPERATION_COUNT + 0;
-
-  /**
-   * The operation id for the '<em>Unlink</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___UNLINK__RELATION = NAMED_OBJ_OPERATION_COUNT + 1;
-
-  /**
-   * The operation id for the '<em>Can Accept New Outside Relation</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___CAN_ACCEPT_NEW_OUTSIDE_RELATION = NAMED_OBJ_OPERATION_COUNT + 2;
-
-  /**
-   * The operation id for the '<em>Can Accept New Inside Relation</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT___CAN_ACCEPT_NEW_INSIDE_RELATION = NAMED_OBJ_OPERATION_COUNT + 3;
-
-  /**
-   * The number of operations of the '<em>Port</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PORT_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 4;
-
-  /**
    * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.RelationImpl <em>Relation</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1932,213 +1698,6 @@ public interface TriqPackage extends EPackage {
   int RELATION = 10;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__NAME = NAMED_OBJ__NAME;
-
-  /**
-   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__ATTRIBUTES = NAMED_OBJ__ATTRIBUTES;
-
-  /**
-   * The feature id for the '<em><b>Wrapped Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__WRAPPED_TYPE = NAMED_OBJ__WRAPPED_TYPE;
-
-  /**
-   * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__WRAPPED_OBJECT = NAMED_OBJ__WRAPPED_OBJECT;
-
-  /**
-   * The feature id for the '<em><b>Deep Complete</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__DEEP_COMPLETE = NAMED_OBJ__DEEP_COMPLETE;
-
-  /**
-   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__ICON_ID = NAMED_OBJ__ICON_ID;
-
-  /**
-   * The feature id for the '<em><b>Linked Relations</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__LINKED_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Linking Relations</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__LINKING_RELATIONS = NAMED_OBJ_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Linked Ports</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION__LINKED_PORTS = NAMED_OBJ_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Relation</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 3;
-
-  /**
-   * The operation id for the '<em>Get Container</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___GET_CONTAINER = NAMED_OBJ___GET_CONTAINER;
-
-  /**
-   * The operation id for the '<em>Top Level</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___TOP_LEVEL = NAMED_OBJ___TOP_LEVEL;
-
-  /**
-   * The operation id for the '<em>Set Property</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
-
-  /**
-   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___APPLY_WRAPPED_OBJECT = NAMED_OBJ___APPLY_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Build Wrapped Object</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
-
-  /**
-   * The operation id for the '<em>Get Full Name</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___GET_FULL_NAME = NAMED_OBJ___GET_FULL_NAME;
-
-  /**
-   * The operation id for the '<em>Get Child</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___GET_CHILD__STRING = NAMED_OBJ___GET_CHILD__STRING;
-
-  /**
-   * The operation id for the '<em>Welcome</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___WELCOME__VISITOR_BOOLEAN = NAMED_OBJ___WELCOME__VISITOR_BOOLEAN;
-
-  /**
-   * The operation id for the '<em>Link</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___LINK__RELATION = NAMED_OBJ_OPERATION_COUNT + 0;
-
-  /**
-   * The operation id for the '<em>Unlink</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___UNLINK__RELATION = NAMED_OBJ_OPERATION_COUNT + 1;
-
-  /**
-   * The operation id for the '<em>Is Connected</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___IS_CONNECTED = NAMED_OBJ_OPERATION_COUNT + 2;
-
-  /**
-   * The operation id for the '<em>Get Vertex</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION___GET_VERTEX = NAMED_OBJ_OPERATION_COUNT + 3;
-
-  /**
-   * The number of operations of the '<em>Relation</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RELATION_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 4;
-
-  /**
    * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.LocationImpl <em>Location</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2147,6 +1706,710 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   int LOCATION = 11;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.VertexImpl <em>Vertex</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.triquetrum.workflow.model.impl.VertexImpl
+   * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getVertex()
+   * @generated
+   */
+  int VERTEX = 12;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.Linkable <em>Linkable</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.triquetrum.workflow.model.Linkable
+   * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getLinkable()
+   * @generated
+   */
+  int LINKABLE = 13;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE__NAME = NAMED_OBJ__NAME;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE__ATTRIBUTES = NAMED_OBJ__ATTRIBUTES;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE__WRAPPED_TYPE = NAMED_OBJ__WRAPPED_TYPE;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE__WRAPPED_OBJECT = NAMED_OBJ__WRAPPED_OBJECT;
+
+  /**
+   * The feature id for the '<em><b>Deep Complete</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE__DEEP_COMPLETE = NAMED_OBJ__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE__ICON_ID = NAMED_OBJ__ICON_ID;
+
+  /**
+   * The number of structural features of the '<em>Linkable</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Get Container</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___GET_CONTAINER = NAMED_OBJ___GET_CONTAINER;
+
+  /**
+   * The operation id for the '<em>Top Level</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___TOP_LEVEL = NAMED_OBJ___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___SET_PROPERTY__STRING_STRING_STRING = NAMED_OBJ___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___APPLY_WRAPPED_OBJECT = NAMED_OBJ___APPLY_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___BUILD_WRAPPED_OBJECT = NAMED_OBJ___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Get Full Name</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___GET_FULL_NAME = NAMED_OBJ___GET_FULL_NAME;
+
+  /**
+   * The operation id for the '<em>Get Child</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___GET_CHILD__STRING = NAMED_OBJ___GET_CHILD__STRING;
+
+  /**
+   * The operation id for the '<em>Welcome</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___WELCOME__VISITOR_BOOLEAN = NAMED_OBJ___WELCOME__VISITOR_BOOLEAN;
+
+  /**
+   * The operation id for the '<em>Link</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___LINK__RELATION = NAMED_OBJ_OPERATION_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Unlink</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___UNLINK__RELATION = NAMED_OBJ_OPERATION_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Is Potential Start</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___IS_POTENTIAL_START = NAMED_OBJ_OPERATION_COUNT + 2;
+
+  /**
+   * The operation id for the '<em>Is Potential End</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___IS_POTENTIAL_END__LINKABLE = NAMED_OBJ_OPERATION_COUNT + 3;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Links</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE___BUILD_WRAPPED_LINKS = NAMED_OBJ_OPERATION_COUNT + 4;
+
+  /**
+   * The number of operations of the '<em>Linkable</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKABLE_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__NAME = LINKABLE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__ATTRIBUTES = LINKABLE__ATTRIBUTES;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__WRAPPED_TYPE = LINKABLE__WRAPPED_TYPE;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__WRAPPED_OBJECT = LINKABLE__WRAPPED_OBJECT;
+
+  /**
+   * The feature id for the '<em><b>Deep Complete</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__DEEP_COMPLETE = LINKABLE__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__ICON_ID = LINKABLE__ICON_ID;
+
+  /**
+   * The feature id for the '<em><b>Input</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__INPUT = LINKABLE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Output</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__OUTPUT = LINKABLE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Multi Port</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__MULTI_PORT = LINKABLE_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Linked Relations</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Inside Linked Relations</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__INSIDE_LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Outside Linked Relations</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT__OUTSIDE_LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 5;
+
+  /**
+   * The number of structural features of the '<em>Port</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 6;
+
+  /**
+   * The operation id for the '<em>Get Container</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___GET_CONTAINER = LINKABLE___GET_CONTAINER;
+
+  /**
+   * The operation id for the '<em>Top Level</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___TOP_LEVEL = LINKABLE___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___SET_PROPERTY__STRING_STRING_STRING = LINKABLE___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___APPLY_WRAPPED_OBJECT = LINKABLE___APPLY_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___BUILD_WRAPPED_OBJECT = LINKABLE___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Get Full Name</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___GET_FULL_NAME = LINKABLE___GET_FULL_NAME;
+
+  /**
+   * The operation id for the '<em>Get Child</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___GET_CHILD__STRING = LINKABLE___GET_CHILD__STRING;
+
+  /**
+   * The operation id for the '<em>Welcome</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___WELCOME__VISITOR_BOOLEAN = LINKABLE___WELCOME__VISITOR_BOOLEAN;
+
+  /**
+   * The operation id for the '<em>Link</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___LINK__RELATION = LINKABLE___LINK__RELATION;
+
+  /**
+   * The operation id for the '<em>Unlink</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___UNLINK__RELATION = LINKABLE___UNLINK__RELATION;
+
+  /**
+   * The operation id for the '<em>Is Potential Start</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___IS_POTENTIAL_START = LINKABLE___IS_POTENTIAL_START;
+
+  /**
+   * The operation id for the '<em>Is Potential End</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___IS_POTENTIAL_END__LINKABLE = LINKABLE___IS_POTENTIAL_END__LINKABLE;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Links</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___BUILD_WRAPPED_LINKS = LINKABLE___BUILD_WRAPPED_LINKS;
+
+  /**
+   * The operation id for the '<em>Can Accept New Outside Relation</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___CAN_ACCEPT_NEW_OUTSIDE_RELATION = LINKABLE_OPERATION_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Can Accept New Inside Relation</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT___CAN_ACCEPT_NEW_INSIDE_RELATION = LINKABLE_OPERATION_COUNT + 1;
+
+  /**
+   * The number of operations of the '<em>Port</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PORT_OPERATION_COUNT = LINKABLE_OPERATION_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__NAME = LINKABLE__NAME;
+
+  /**
+   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__ATTRIBUTES = LINKABLE__ATTRIBUTES;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__WRAPPED_TYPE = LINKABLE__WRAPPED_TYPE;
+
+  /**
+   * The feature id for the '<em><b>Wrapped Object</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__WRAPPED_OBJECT = LINKABLE__WRAPPED_OBJECT;
+
+  /**
+   * The feature id for the '<em><b>Deep Complete</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__DEEP_COMPLETE = LINKABLE__DEEP_COMPLETE;
+
+  /**
+   * The feature id for the '<em><b>Icon Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__ICON_ID = LINKABLE__ICON_ID;
+
+  /**
+   * The feature id for the '<em><b>Linked Relations</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Linking Relations</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__LINKING_RELATIONS = LINKABLE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Linked Ports</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION__LINKED_PORTS = LINKABLE_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Relation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 3;
+
+  /**
+   * The operation id for the '<em>Get Container</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___GET_CONTAINER = LINKABLE___GET_CONTAINER;
+
+  /**
+   * The operation id for the '<em>Top Level</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___TOP_LEVEL = LINKABLE___TOP_LEVEL;
+
+  /**
+   * The operation id for the '<em>Set Property</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___SET_PROPERTY__STRING_STRING_STRING = LINKABLE___SET_PROPERTY__STRING_STRING_STRING;
+
+  /**
+   * The operation id for the '<em>Apply Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___APPLY_WRAPPED_OBJECT = LINKABLE___APPLY_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Object</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___BUILD_WRAPPED_OBJECT = LINKABLE___BUILD_WRAPPED_OBJECT;
+
+  /**
+   * The operation id for the '<em>Get Full Name</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___GET_FULL_NAME = LINKABLE___GET_FULL_NAME;
+
+  /**
+   * The operation id for the '<em>Get Child</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___GET_CHILD__STRING = LINKABLE___GET_CHILD__STRING;
+
+  /**
+   * The operation id for the '<em>Welcome</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___WELCOME__VISITOR_BOOLEAN = LINKABLE___WELCOME__VISITOR_BOOLEAN;
+
+  /**
+   * The operation id for the '<em>Link</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___LINK__RELATION = LINKABLE___LINK__RELATION;
+
+  /**
+   * The operation id for the '<em>Unlink</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___UNLINK__RELATION = LINKABLE___UNLINK__RELATION;
+
+  /**
+   * The operation id for the '<em>Is Potential Start</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___IS_POTENTIAL_START = LINKABLE___IS_POTENTIAL_START;
+
+  /**
+   * The operation id for the '<em>Is Potential End</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___IS_POTENTIAL_END__LINKABLE = LINKABLE___IS_POTENTIAL_END__LINKABLE;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Links</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___BUILD_WRAPPED_LINKS = LINKABLE___BUILD_WRAPPED_LINKS;
+
+  /**
+   * The operation id for the '<em>Is Connected</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___IS_CONNECTED = LINKABLE_OPERATION_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Get Vertex</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION___GET_VERTEX = LINKABLE_OPERATION_COUNT + 1;
+
+  /**
+   * The number of operations of the '<em>Relation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RELATION_OPERATION_COUNT = LINKABLE_OPERATION_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2309,16 +2572,6 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int LOCATION_OPERATION_COUNT = ATTRIBUTE_OPERATION_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.VertexImpl <em>Vertex</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.triquetrum.workflow.model.impl.VertexImpl
-   * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getVertex()
-   * @generated
-   */
-  int VERTEX = 12;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2492,59 +2745,40 @@ public interface TriqPackage extends EPackage {
   int VERTEX___UNLINK__RELATION = LOCATION_OPERATION_COUNT + 1;
 
   /**
+   * The operation id for the '<em>Is Potential Start</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX___IS_POTENTIAL_START = LOCATION_OPERATION_COUNT + 2;
+
+  /**
+   * The operation id for the '<em>Is Potential End</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX___IS_POTENTIAL_END__LINKABLE = LOCATION_OPERATION_COUNT + 3;
+
+  /**
+   * The operation id for the '<em>Build Wrapped Links</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VERTEX___BUILD_WRAPPED_LINKS = LOCATION_OPERATION_COUNT + 4;
+
+  /**
    * The number of operations of the '<em>Vertex</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VERTEX_OPERATION_COUNT = LOCATION_OPERATION_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.Linkable <em>Linkable</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.triquetrum.workflow.model.Linkable
-   * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getLinkable()
-   * @generated
-   */
-  int LINKABLE = 13;
-
-  /**
-   * The number of structural features of the '<em>Linkable</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LINKABLE_FEATURE_COUNT = 0;
-
-  /**
-   * The operation id for the '<em>Link</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LINKABLE___LINK__RELATION = 0;
-
-  /**
-   * The operation id for the '<em>Unlink</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LINKABLE___UNLINK__RELATION = 1;
-
-  /**
-   * The number of operations of the '<em>Linkable</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LINKABLE_OPERATION_COUNT = 2;
+  int VERTEX_OPERATION_COUNT = LOCATION_OPERATION_COUNT + 5;
 
   /**
    * The meta object id for the '<em>Visitor</em>' data type.
@@ -3095,26 +3329,6 @@ public interface TriqPackage extends EPackage {
   EReference getRelation_LinkedPorts();
 
   /**
-   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Relation#link(org.eclipse.triquetrum.workflow.model.Relation) <em>Link</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Link</em>' operation.
-   * @see org.eclipse.triquetrum.workflow.model.Relation#link(org.eclipse.triquetrum.workflow.model.Relation)
-   * @generated
-   */
-  EOperation getRelation__Link__Relation();
-
-  /**
-   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Relation#unlink(org.eclipse.triquetrum.workflow.model.Relation) <em>Unlink</em>}' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the '<em>Unlink</em>' operation.
-   * @see org.eclipse.triquetrum.workflow.model.Relation#unlink(org.eclipse.triquetrum.workflow.model.Relation)
-   * @generated
-   */
-  EOperation getRelation__Unlink__Relation();
-
-  /**
    * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Relation#isConnected() <em>Is Connected</em>}' operation.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3204,6 +3418,36 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   EOperation getLinkable__Unlink__Relation();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Linkable#isPotentialStart() <em>Is Potential Start</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Is Potential Start</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Linkable#isPotentialStart()
+   * @generated
+   */
+  EOperation getLinkable__IsPotentialStart();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Linkable#isPotentialEnd(org.eclipse.triquetrum.workflow.model.Linkable) <em>Is Potential End</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Is Potential End</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Linkable#isPotentialEnd(org.eclipse.triquetrum.workflow.model.Linkable)
+   * @generated
+   */
+  EOperation getLinkable__IsPotentialEnd__Linkable();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Linkable#buildWrappedLinks() <em>Build Wrapped Links</em>}' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Build Wrapped Links</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Linkable#buildWrappedLinks()
+   * @generated
+   */
+  EOperation getLinkable__BuildWrappedLinks();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.triquetrum.workflow.model.util.Visitor <em>Visitor</em>}'.
@@ -3673,22 +3917,6 @@ public interface TriqPackage extends EPackage {
     EReference RELATION__LINKED_PORTS = eINSTANCE.getRelation_LinkedPorts();
 
     /**
-     * The meta object literal for the '<em><b>Link</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation RELATION___LINK__RELATION = eINSTANCE.getRelation__Link__Relation();
-
-    /**
-     * The meta object literal for the '<em><b>Unlink</b></em>' operation.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EOperation RELATION___UNLINK__RELATION = eINSTANCE.getRelation__Unlink__Relation();
-
-    /**
      * The meta object literal for the '<em><b>Is Connected</b></em>' operation.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3765,6 +3993,30 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EOperation LINKABLE___UNLINK__RELATION = eINSTANCE.getLinkable__Unlink__Relation();
+
+    /**
+     * The meta object literal for the '<em><b>Is Potential Start</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation LINKABLE___IS_POTENTIAL_START = eINSTANCE.getLinkable__IsPotentialStart();
+
+    /**
+     * The meta object literal for the '<em><b>Is Potential End</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation LINKABLE___IS_POTENTIAL_END__LINKABLE = eINSTANCE.getLinkable__IsPotentialEnd__Linkable();
+
+    /**
+     * The meta object literal for the '<em><b>Build Wrapped Links</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation LINKABLE___BUILD_WRAPPED_LINKS = eINSTANCE.getLinkable__BuildWrappedLinks();
 
     /**
      * The meta object literal for the '<em>Visitor</em>' data type.
