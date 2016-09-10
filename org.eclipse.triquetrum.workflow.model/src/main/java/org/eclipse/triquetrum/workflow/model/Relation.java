@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Relation extends NamedObj {
+public interface Relation extends Linkable {
   /**
    * Returns the value of the '<em><b>Linked Relations</b></em>' reference list. The list contents are of type
    * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is
@@ -62,22 +62,6 @@ public interface Relation extends NamedObj {
    * @generated
    */
   EList<Relation> getLinkingRelations();
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @model
-   * @generated
-   */
-  void link(Relation relation);
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @model
-   * @generated
-   */
-  void unlink(Relation relation);
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->

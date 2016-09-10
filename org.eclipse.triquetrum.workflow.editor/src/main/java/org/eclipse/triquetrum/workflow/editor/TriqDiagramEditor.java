@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.triquetrum.workflow.editor.outline.DiagramEditorOutlinePage;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.util.PtObjectBuilderVisitor;
+import org.eclipse.triquetrum.workflow.model.util.PtObjectLinkerVisitor;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
@@ -49,6 +50,7 @@ public class TriqDiagramEditor extends DiagramEditor {
     Object toplevel = getDiagramTypeProvider().getFeatureProvider().getBusinessObjectForPictogramElement(d);
     if (toplevel != null && toplevel instanceof NamedObj) {
       ((NamedObj) toplevel).welcome(new PtObjectBuilderVisitor(), true);
+      ((NamedObj)toplevel).welcome(new PtObjectLinkerVisitor(), true);
     }
   }
 

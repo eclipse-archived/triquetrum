@@ -443,18 +443,29 @@ public class EditorUtils {
       relation = (Relation) source.getContainer();
       ((Linkable) target).link(relation);
     } else {
-      // create a new relation directly linking 2 ports
+      // Create a new relation directly linking 2 ports
+      // We need to determine what should be the relation container :
+      // - if the relation connects ports on the outside that belong to (composite) actors, the ports share the same container-container and that is the one.
+      // - if the relation connects ports on the inside, they must be in the same composite and that is the container for the relation as well.
+      // Remark that the direction of the relation/connection should already have been checked (e.g. target should be an input port and source an output port)
+      // as well as the fact whether the ports are on compatible levels to be connected.
       relation = TriqFactory.eINSTANCE.createRelation();
-      NamedObj relationContainer = source.getContainer();
-      while (!(relationContainer instanceof CompositeActor)) {
-        relationContainer = relationContainer.getContainer();
+      CompositeActor relationContainer = null;
+      NamedObj srcContainer = source.getContainer();
+      NamedObj targetContainer = target.getContainer();
+      if(srcContainer==targetContainer && (srcContainer instanceof CompositeActor)) {
+        relationContainer = (CompositeActor) srcContainer;
+      } else {
+        // this should always be valid, i.e. both sides should have the same "super"-container and the relation must be created in there
+        relationContainer = (CompositeActor) srcContainer.getContainer();
       }
+
       if (ptRelation != null) {
         relation.setWrappedObject(ptRelation);
       } else {
         relation.setName(EditorUtils.buildUniqueName(relationContainer, "_R"));
       }
-      ((CompositeActor) relationContainer).getRelations().add(relation);
+      relationContainer.getRelations().add(relation);
       relation.welcome(new PtObjectBuilderAndApplierVisitor(), true);
       ((Linkable) source).link(relation);
       ((Linkable) target).link(relation);

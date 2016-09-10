@@ -17,7 +17,7 @@ import org.eclipse.graphiti.features.impl.AbstractCreateConnectionFeature;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
-import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
@@ -71,10 +71,10 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   @Override
   public boolean canCreate(ICreateConnectionContext context) {
     // return true if both anchors belong to a Port or Vertex and can accept the connection
-    NamedObj source = getAnchorBO(context.getSourceAnchor());
-    NamedObj target = getAnchorBO(context.getTargetAnchor());
+    Linkable source = getAnchorBO(context.getSourceAnchor());
+    Linkable target = getAnchorBO(context.getTargetAnchor());
     if (target != null) {
-      if (isPotentialConnectionStart(source) && isPotentialConnectionTarget(source, target)) {
+      if (source.isPotentialStart() && target.isPotentialEnd(source)) {
         return true;
       }
     }
@@ -92,79 +92,10 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   @Override
   public boolean canStartConnection(ICreateConnectionContext context) {
     // return true if start anchor belongs to a Port or Vertex
-    NamedObj port = getAnchorBO(context.getSourceAnchor());
-    return isPotentialConnectionStart(port);
+    NamedObj anchorBO = getAnchorBO(context.getSourceAnchor());
+    return (anchorBO instanceof Linkable) && ((Linkable)anchorBO).isPotentialStart();
   }
 
-  /**
-   * This method checks if the src is either a vertex or a port that can be the src for a new connection. For ports, this is true when the port is an atomic
-   * actor's output port, or is a port inside a submodel CompositeActor.
-   *
-   * @param src
-   * @return true if the src can be a starting point for a new connection
-   */
-  private boolean isPotentialConnectionStart(NamedObj src) {
-    if (src == null) {
-      return false;
-    }
-    if (src instanceof Port) {
-      Port p = (Port) src;
-      return p.canAcceptNewOutsideRelation() || p.canAcceptNewInsideRelation();
-    }
-    return (src instanceof Vertex);
-  }
-
-  /**
-   * This method checks whether a connection's src and target are of the right type and on the right model level to be a matching pair to be connected.
-   *
-   * @see {@link #canCreate(ICreateConnectionContext) canCreate}
-   *
-   * @param src
-   * @param target
-   * @return
-   */
-  private boolean isPotentialConnectionTarget(NamedObj src, NamedObj target) {
-    if (target == null) {
-      return false;
-    }
-    boolean targetIsInputPort = false;
-    if (target instanceof Port) {
-      Port p = (Port) target;
-      if (p.canAcceptNewOutsideRelation()) {
-        // Output ports can only be a valid target when their container is a CompositeActor,
-        // and the source is an input port or vertex within the same composite or an output port of an actor within that composite.
-        if (p.isOutput()) {
-          NamedObj targetContainerModelLevel = p.getContainer();
-          boolean isCorrectContainer = targetContainerModelLevel instanceof CompositeActor;
-          if (isCorrectContainer) {
-            boolean isSrcValidInSameComposite = targetContainerModelLevel.equals(src.getContainer()) && ((src instanceof Port) && ((Port) src).isInput());
-            boolean isSrcValidInActorInSameComposite = targetContainerModelLevel.equals(src.getContainer().getContainer())
-                && ((src instanceof Vertex) || ((src instanceof Port) && ((Port) src).isOutput()));
-            return isSrcValidInActorInSameComposite || isSrcValidInSameComposite;
-          } else {
-            return false;
-          }
-        } else if (p.isInput()) {
-          targetIsInputPort = true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    }
-    if (targetIsInputPort || (target instanceof Vertex)) {
-      // Input ports and Vertex targets can only receive connections from sources that are in the same encompassing model level,
-      // i.e. in the container of the target's container.
-      // For source ports we need to differentiate between plain actor output ports and input ports on a submodel CompositeActor.
-      NamedObj targetContainerModelLevel = target.getContainer().getContainer();
-      boolean isSrcValidVertex = (src instanceof Vertex) && (targetContainerModelLevel.equals(src.getContainer().getContainer()));
-      boolean isSrcValidPort = (src instanceof Port) && (((Port) src).isOutput() && targetContainerModelLevel.equals(src.getContainer().getContainer())
-          || ((Port) src).isInput() && targetContainerModelLevel.equals(src.getContainer()));
-      return isSrcValidVertex || isSrcValidPort;
-    }
-    return false;
-  }
 
   @Override
   public Connection create(ICreateConnectionContext context) {
@@ -194,7 +125,7 @@ public class ConnectionCreateFeature extends AbstractCreateConnectionFeature {
   /**
    * Returns the Port or Vertex belonging to the anchor, or null if not available.
    */
-  private NamedObj getAnchorBO(Anchor anchor) {
+  private Linkable getAnchorBO(Anchor anchor) {
     if (anchor != null) {
       Object object = getBusinessObjectForPictogramElement(anchor);
       if (object instanceof Port) {
