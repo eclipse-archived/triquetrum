@@ -38,7 +38,7 @@ public class ModelElementNameDirectEditFeature extends AbstractDirectEditingFeat
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
     // The name of an actor (or other model element) is the only
     // Text element that is linked to it as its business object
-    return ((BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory) || (BoCategory.Port.equals(boCategory))) && (ga instanceof Text));
+    return ((BoCategory.CompositeActor.equals(boCategory) || BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory) || (BoCategory.Port.equals(boCategory))) && (ga instanceof Text));
   }
 
   @Override

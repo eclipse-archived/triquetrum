@@ -42,7 +42,6 @@ import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.model.Actor;
-import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Port;
@@ -55,14 +54,14 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
   private final static Logger LOGGER = LoggerFactory.getLogger(ActorAddFeature.class);
 
   public static final int SHAPE_X_OFFSET = 8;
-  private static final int ICON_X_OFFSET = SHAPE_X_OFFSET + 3;
-  private static final int ICON_Y_OFFSET = 3;
-  private static final int ICON_SIZE = 16;
+  public static final int ICON_X_OFFSET = SHAPE_X_OFFSET + 3;
+  public static final int ICON_Y_OFFSET = 3;
+  public static final int ICON_SIZE = 16;
   public static final int PORT_SIZE = 12;
 
-  private static final IColorConstant ACTOR_NAME_FOREGROUND = IColorConstant.BLACK;
-  private static final IColorConstant ACTOR_FOREGROUND = new ColorConstant(98, 131, 167);
-  private static final IColorConstant ACTOR_BACKGROUND = new ColorConstant(187, 218, 247);
+  public static final IColorConstant ACTOR_NAME_FOREGROUND = IColorConstant.BLACK;
+  public static final IColorConstant ACTOR_FOREGROUND = new ColorConstant(98, 131, 167);
+  public static final IColorConstant ACTOR_BACKGROUND = new ColorConstant(187, 218, 247);
   public static final IColorConstant PORT_FOREGROUND = IColorConstant.BLACK;
   public static final IColorConstant PORT_BACKGROUND_MULTIPORT = IColorConstant.WHITE;
   public static final IColorConstant PORT_BACKGROUND_SINGLEPORT = IColorConstant.BLACK;
@@ -85,7 +84,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
   @Override
   public boolean canAdd(IAddContext context) {
     // check if user wants to add an actor
-    return ((context.getNewObject() instanceof Actor) || (context.getNewObject() instanceof CompositeActor));
+    return (context.getNewObject() instanceof Actor);
   }
 
   @Override
@@ -152,11 +151,9 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           portShape.setBackground(manageColor(portColour));
           portShape.setLineWidth(1);
           gaService.setLocationAndSize(portShape, -PORT_SIZE, -halfPortSize, PORT_SIZE, PORT_SIZE);
-          // TODO find a way to get the full name from our Triq NamedObj,
-          // then we don't need to depend on the presence of the wrapped object.
           Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-          if (anchorMap != null && p.getWrappedObject() != null) {
-            anchorMap.put(p.getWrappedObject().getFullName(), anchor);
+          if (anchorMap != null) {
+            anchorMap.put(p.getFullName(), anchor);
           }
         }
       }
@@ -178,11 +175,9 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           portShape.setLineWidth(1);
           gaService.setLocationAndSize(portShape, 0, -halfPortSize, PORT_SIZE, PORT_SIZE);
           anchor.setLocation(createService.createPoint(0, yOffsetForPorts + (pIndex++) * PORT_SIZE));
-          // TODO find a way to get the full name from our Triq NamedObj,
-          // then we don't need to depend on the presence of the wrapped object.
           Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-          if (anchorMap != null && p.getWrappedObject() != null) {
-            anchorMap.put(p.getWrappedObject().getFullName(), anchor);
+          if (anchorMap != null) {
+            anchorMap.put(p.getFullName(), anchor);
           }
         }
       }

@@ -57,6 +57,8 @@ import org.eclipse.triquetrum.workflow.editor.features.ActorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationUpdateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.CompositeActorAddFeature;
+import org.eclipse.triquetrum.workflow.editor.features.CompositeActorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionDeleteFeature;
@@ -163,8 +165,10 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public IAddFeature getAddFeature(IAddContext context) {
     if (context.getNewObject() instanceof Director) {
       return new DirectorAddFeature(this);
-    } else if ((context.getNewObject() instanceof Actor) || (context.getNewObject() instanceof CompositeActor)) {
+    } else if (context.getNewObject() instanceof Actor) {
       return new ActorAddFeature(this);
+    } else if (context.getNewObject() instanceof CompositeActor) {
+      return new CompositeActorAddFeature(this);
     } else if (context.getNewObject() instanceof Relation) {
       return new ConnectionAddFeature(this);
     } else if (context.getNewObject() instanceof Vertex) {
@@ -191,6 +195,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new DirectorUpdateFeature(this);
     } else if (bo instanceof Actor) {
       return new ActorUpdateFeature(this);
+    } else if (bo instanceof CompositeActor) {
+      return new CompositeActorUpdateFeature(this);
     }
     return super.getUpdateFeature(context);
   }
