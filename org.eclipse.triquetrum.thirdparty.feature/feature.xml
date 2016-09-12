@@ -13,7 +13,7 @@
       id="org.eclipse.triquetrum.thirdparty.feature"
       label="Triquetrum thirdpart deps feature"
       version="0.1.0.qualifier"
-      license-feature="org.eclipse.triquetrum.core.feature"
+      license-feature="org.eclipse.triquetrum.ptolemy.feature"
       license-feature-version="0.1.0.qualifier">
 
    <description url="https://wiki.eclipse.org/Triquetrum">
