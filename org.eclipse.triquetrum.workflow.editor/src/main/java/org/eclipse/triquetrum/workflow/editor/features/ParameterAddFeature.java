@@ -21,7 +21,6 @@ import org.eclipse.graphiti.mm.algorithms.Ellipse;
 import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
@@ -29,6 +28,7 @@ import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Parameter;
 
@@ -69,10 +69,8 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
   public boolean canAdd(IAddContext context) {
     // check if user wants to add a parameter
     if (context.getNewObject() instanceof Parameter) {
-      // check if user wants to add to a diagram
-      if (context.getTargetContainer() instanceof Diagram) {
-        return true;
-      }
+      Object parentObject = getBusinessObjectForPictogramElement(context.getTargetContainer());
+      return (parentObject instanceof CompositeActor);
     }
     return false;
   }
@@ -80,14 +78,14 @@ public class ParameterAddFeature extends AbstractAddShapeFeature {
   @Override
   public PictogramElement add(IAddContext context) {
     Parameter addedParameter = (Parameter) context.getNewObject();
-    Diagram targetDiagram = (Diagram) context.getTargetContainer();
+    ContainerShape targetContainer = context.getTargetContainer();
     int xLocation = context.getX();
     int yLocation = context.getY();
 
     // CONTAINER SHAPE WITH ROUNDED RECTANGLE
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
     IGaService gaService = Graphiti.getGaService();
-    ContainerShape containerShape = peCreateService.createContainerShape(targetDiagram, true);
+    ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
 
     Rectangle invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
     gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, WIDTH + 10, HEIGHT);

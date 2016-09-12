@@ -455,6 +455,10 @@ public class EditorUtils {
       NamedObj targetContainer = target.getContainer();
       if(srcContainer==targetContainer && (srcContainer instanceof CompositeActor)) {
         relationContainer = (CompositeActor) srcContainer;
+      } else if (srcContainer instanceof CompositeActor) {
+        relationContainer = (CompositeActor) srcContainer;
+      } else if (targetContainer instanceof CompositeActor) {
+        relationContainer = (CompositeActor) targetContainer;
       } else {
         // this should always be valid, i.e. both sides should have the same "super"-container and the relation must be created in there
         relationContainer = (CompositeActor) srcContainer.getContainer();

@@ -159,16 +159,6 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
           text.setValue(actor.getName());
           result = true;
           Graphiti.getPeService().setPropertyValue(shape, FeatureConstants.BO_NAME, actor.getName());
-        } else if (BoCategory.Parameter.equals(boCategory)) {
-          Text text = (Text) shape.getGraphicsAlgorithm();
-          Parameter param = (Parameter) getBusinessObjectForPictogramElement(shape);
-          String pName = param.getName();
-          String pVal = param.getExpression();
-          pName = (pName.length() > 12) ? pName.substring(0, 12) : pName;
-          pVal = (pVal.length() > 12) ? pVal.substring(0, 12) : pVal;
-          text.setValue(pName + " : " + pVal);
-          Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
-          result = true;
         }
       }
 
