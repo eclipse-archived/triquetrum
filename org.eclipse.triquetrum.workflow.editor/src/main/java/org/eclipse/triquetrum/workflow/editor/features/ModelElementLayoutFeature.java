@@ -70,7 +70,7 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     // height of visible rectangle (same as invisible rectangle)
     double heightChangeRatio = 1;
     if (rectangle.getHeight() != invisibleRectangle.getHeight()) {
-      heightChangeRatio = invisibleRectangle.getHeight() / rectangle.getHeight();
+      heightChangeRatio = (double) invisibleRectangle.getHeight() / rectangle.getHeight();
       rectangle.setHeight(invisibleRectangle.getHeight());
       anythingChanged = true;
     }
@@ -95,7 +95,7 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
         GraphicsAlgorithm ga = shape.getGraphicsAlgorithm();
         IDimension size = gaService.calculateSize(ga);
         if (rectangleWidth != size.getWidth()) {
-          int shapeXOffset = isActor ? ActorAddFeature.SHAPE_X_OFFSET : DirectorAddFeature.SHAPE_X_OFFSET;
+          int shapeXOffset = isActor ? ActorAddFeature.SHAPE_X_OFFSET : 0;
           if (ga instanceof Polyline) {
             Polyline polyline = (Polyline) ga;
             Point secondPoint = polyline.getPoints().get(1);
