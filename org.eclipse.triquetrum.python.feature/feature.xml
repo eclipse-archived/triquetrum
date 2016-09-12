@@ -13,14 +13,28 @@
       id="org.eclipse.triquetrum.python.feature"
       label="Python Feature"
       version="0.1.0.qualifier"
-      provider-name="Eclipse Triquetrum">
+      provider-name="Eclipse Triquetrum"
+      license-feature="org.eclipse.triquetrum.core.feature"
+      license-feature-version="0.1.0.qualifier">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="https://wiki.eclipse.org/Triquetrum">
+      The Python/Triquetrum Interface, which allows Triquetrum Actors
+to access C-based Python code.
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright>
+      /*******************************************************************************
+* Copyright (c) 2015-2016 iSencia Belgium NV.
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License
+v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*
+* Contributors:
+*    Erwin De Ley - initial API and implementation and/or initial
+documentation
+*******************************************************************************/
    </copyright>
 
    <license url="http://www.example.com/license">
