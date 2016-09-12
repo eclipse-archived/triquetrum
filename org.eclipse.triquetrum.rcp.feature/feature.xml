@@ -13,10 +13,12 @@
       id="org.eclipse.triquetrum.rcp.feature"
       label="Triquetrum RCP Feature"
       version="0.1.0.qualifier"
-      provider-name="Eclipse Triquetrum">
+      provider-name="Eclipse Triquetrum"
+      license-feature="org.eclipse.triquetrum.core.feature"
+      license-feature-version="0.1.0.qualifier">
 
-   <description url="https://projects.eclipse.org/projects/technology.triquetrum">
-      This feature groups all individual Triquetrum features, to define the default Triquetrum RCP application.
+   <description url="https://wiki.eclipse.org/Triquetrum">
+      All the individual Triquetrum features, to define the default Triquetrum RCP application.
    </description>
 
    <copyright>
