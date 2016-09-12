@@ -14,7 +14,7 @@
       label="Triquetrum RCP Feature"
       version="0.1.0.qualifier"
       provider-name="Eclipse Triquetrum"
-      license-feature="org.eclipse.triquetrum.core.feature"
+      license-feature="org.eclipse.triquetrum.ptolemy.feature"
       license-feature-version="0.1.0.qualifier">
 
    <description url="https://wiki.eclipse.org/Triquetrum">
