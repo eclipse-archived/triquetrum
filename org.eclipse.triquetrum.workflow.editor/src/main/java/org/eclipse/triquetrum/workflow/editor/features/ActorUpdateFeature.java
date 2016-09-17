@@ -28,7 +28,6 @@ import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
 import org.eclipse.graphiti.mm.algorithms.Text;
-import org.eclipse.graphiti.mm.algorithms.styles.Point;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
@@ -39,9 +38,8 @@ import org.eclipse.graphiti.services.ICreateService;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
-import org.eclipse.triquetrum.workflow.model.Actor;
+import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
-import org.eclipse.triquetrum.workflow.model.Parameter;
 import org.eclipse.triquetrum.workflow.model.Port;
 
 /**
@@ -56,7 +54,7 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
   @Override
   public boolean canUpdate(IUpdateContext context) {
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
-    return (BoCategory.Actor.equals(boCategory));
+    return (BoCategory.Actor.equals(boCategory)) || (BoCategory.CompositeActor.equals(boCategory) && !getDiagram().equals(context.getPictogramElement()));
   }
 
   /**
@@ -71,8 +69,6 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
    * <ul>
    * <li>Actor's name</li>
    * <li>Count of input and output ports</li>
-   * <li>Count of parameters</li>
-   * <li>Parameter values</li>
    * </ul>
    * Changed port names are assumed to be handled by a separate PortUpdateFeature (TBD).
    * </p>
@@ -88,8 +84,8 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
 
     PictogramElement pictogramElement = context.getPictogramElement();
     Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-    if (bo instanceof Actor && pictogramElement instanceof ContainerShape) {
-      Actor actor = (Actor) bo;
+    if (bo instanceof Entity && pictogramElement instanceof ContainerShape) {
+      Entity actor = (Entity) bo;
       ContainerShape cs = (ContainerShape) pictogramElement;
 
       inputPortCount = actor.getInputPorts().size();
@@ -103,7 +99,7 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
           BoCategory boCategory = BoCategory.retrieveFrom(shape);
           if (shape.getGraphicsAlgorithm() instanceof Text) {
             Text text = (Text) shape.getGraphicsAlgorithm();
-            if (BoCategory.Actor.equals(boCategory)) {
+            if (BoCategory.Actor.equals(boCategory) || BoCategory.CompositeActor.equals(boCategory)) {
               // it's the text field with the name of the actor
               String actorNameInGraph = text.getValue();
               actorNameChanged = !actorName.equals(actorNameInGraph);
@@ -148,27 +144,18 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
 
     PictogramElement pe = context.getPictogramElement();
     Object bo = getBusinessObjectForPictogramElement(pe);
-    if ((pe instanceof ContainerShape) && (bo instanceof Actor)) {
+    if ((pe instanceof ContainerShape) && (bo instanceof Entity)) {
       ContainerShape cs = (ContainerShape) pe;
-      Actor actor = (Actor) bo;
+      Entity actor = (Entity) bo;
 
       for (Shape shape : cs.getChildren()) {
         BoCategory boCategory = BoCategory.retrieveFrom(shape);
-        if (BoCategory.Actor.equals(boCategory) && shape.getGraphicsAlgorithm() instanceof Text) {
+        boolean isEntityCategory = BoCategory.Actor.equals(boCategory) || BoCategory.CompositeActor.equals(boCategory);
+        if (isEntityCategory && shape.getGraphicsAlgorithm() instanceof Text) {
           Text text = (Text) shape.getGraphicsAlgorithm();
           text.setValue(actor.getName());
           result = true;
           Graphiti.getPeService().setPropertyValue(shape, FeatureConstants.BO_NAME, actor.getName());
-        } else if (BoCategory.Parameter.equals(boCategory)) {
-          Text text = (Text) shape.getGraphicsAlgorithm();
-          Parameter param = (Parameter) getBusinessObjectForPictogramElement(shape);
-          String pName = param.getName();
-          String pVal = param.getExpression();
-          pName = (pName.length() > 12) ? pName.substring(0, 12) : pName;
-          pVal = (pVal.length() > 12) ? pVal.substring(0, 12) : pVal;
-          text.setValue(pName + " : " + pVal);
-          Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
-          result = true;
         }
       }
 
@@ -242,8 +229,6 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
         a = createAnchor(containerShape, containerGA, anchors, i, p, width, height);
       }
     }
-    // finally we must set the locations for all anchors according to their position in the list
-    relocateAnchors(height, anchors);
   }
 
   private Anchor createAnchor(ContainerShape containerShape, GraphicsAlgorithm containerGA, List<Anchor> anchors, int i, Port p, int width, int height) {
@@ -255,7 +240,7 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
 
     ICreateService createService = Graphiti.getCreateService();
     FixPointAnchor anchor = createService.createFixPointAnchor(containerShape);
-    int anchorX = p.isOutput() ? (15 + width) : 0;
+    int anchorX = p.isOutput() ? width : 0;
     anchor.setLocation(createService.createPoint(anchorX, yOffsetForPorts + i * ActorAddFeature.PORT_SIZE));
     anchor.setReferencedGraphicsAlgorithm(containerGA);
     link(anchor, p, p.isOutput() ? BoCategory.Output : BoCategory.Input);
@@ -271,20 +256,6 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
 
     anchors.add(i, anchor);
     return anchor;
-  }
-
-  private void relocateAnchors(int height, List<Anchor> anchors) {
-    int halfPortSize = ActorAddFeature.PORT_SIZE / 2;
-    int anchorsCount = anchors.size();
-    anchorsCount = anchorsCount > 0 ? anchorsCount : 1;
-    int yOffsetForPorts = height / (2 * anchorsCount);
-    yOffsetForPorts = yOffsetForPorts > halfPortSize ? yOffsetForPorts : halfPortSize;
-
-    for (int i = 0; i < anchors.size(); ++i) {
-      FixPointAnchor a = (FixPointAnchor) anchors.get(i);
-      Point aLoc = a.getLocation();
-      a.setLocation(Graphiti.getCreateService().createPoint(aLoc.getX(), yOffsetForPorts + i * ActorAddFeature.PORT_SIZE));
-    }
   }
 
   protected void link(PictogramElement pe, Object businessObject, BoCategory category) {

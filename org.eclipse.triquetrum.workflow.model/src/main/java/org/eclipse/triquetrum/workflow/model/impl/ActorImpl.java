@@ -25,7 +25,7 @@ import ptolemy.actor.AtomicActor;
 public class ActorImpl extends EntityImpl implements Actor {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected ActorImpl() {
@@ -35,7 +35,7 @@ public class ActorImpl extends EntityImpl implements Actor {
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
     super.eBasicSetContainer(newContainer);
-    if(newContainer==null && wrappedObject!=null) {
+    if (newContainer == null && wrappedObject != null) {
       try {
         getWrappedObject().setContainer(null);
       } catch (Exception e) {
@@ -48,7 +48,7 @@ public class ActorImpl extends EntityImpl implements Actor {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

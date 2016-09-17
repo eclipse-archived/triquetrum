@@ -101,20 +101,6 @@
 	            icon="icons/composite.gif"
 	            type="CompositeActor">
 	      </entry>
-	      <entry
-	            class="ptolemy.actor.TypedIOPort"
-	            displayName="Input Port"
-	            icon="icons/input.gif"
-	            type="Port">
-	            <property name="input" />
-	      </entry>
-	      <entry
-	            class="ptolemy.actor.TypedIOPort"
-	            displayName="Output Port"
-	            icon="icons/output.gif"
-	            type="Port">
-	            <property name="output" />
-	      </entry>
       </group>
       <group displayName="Test" icon="icons/test.gif">
 	      <entry

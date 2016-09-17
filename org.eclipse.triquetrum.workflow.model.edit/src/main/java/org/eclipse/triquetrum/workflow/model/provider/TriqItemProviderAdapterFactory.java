@@ -56,7 +56,7 @@ public class TriqItemProviderAdapterFactory extends TriqAdapterFactory implement
    * 
    * @generated
    */
-  protected Collection<Object> supportedTypes = new ArrayList<>();
+  protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
    * This constructs an instance. <!-- begin-user-doc --> <!-- end-user-doc -->

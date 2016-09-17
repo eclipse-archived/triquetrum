@@ -31,8 +31,8 @@ import org.eclipse.emf.common.util.EList;
 public interface Relation extends Linkable {
   /**
    * Returns the value of the '<em><b>Linked Relations</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is
-   * '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}'. <!-- begin-user-doc -->
+   * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.triquetrum.workflow.model.Relation#getLinkingRelations <em>Linking Relations</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Linked Relations</em>' reference list isn't clear, there really should be more of a description here...
    * </p>
@@ -48,8 +48,8 @@ public interface Relation extends Linkable {
 
   /**
    * Returns the value of the '<em><b>Linking Relations</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is
-   * '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}'. <!-- begin-user-doc -->
+   * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedRelations <em>Linked Relations</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Linking Relations</em>' reference list isn't clear, there really should be more of a description here...
    * </p>

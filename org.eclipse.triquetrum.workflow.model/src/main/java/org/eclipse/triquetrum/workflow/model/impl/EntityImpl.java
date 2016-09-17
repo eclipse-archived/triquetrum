@@ -92,7 +92,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
   @Override
   public EList<Port> getInputPorts() {
     if (inputPorts == null) {
-      inputPorts = new EObjectContainmentEList<>(Port.class, this, TriqPackage.ENTITY__INPUT_PORTS);
+      inputPorts = new EObjectContainmentEList<Port>(Port.class, this, TriqPackage.ENTITY__INPUT_PORTS);
     }
     return inputPorts;
   }
@@ -105,7 +105,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
   @Override
   public EList<Port> getOutputPorts() {
     if (outputPorts == null) {
-      outputPorts = new EObjectContainmentEList<>(Port.class, this, TriqPackage.ENTITY__OUTPUT_PORTS);
+      outputPorts = new EObjectContainmentEList<Port>(Port.class, this, TriqPackage.ENTITY__OUTPUT_PORTS);
     }
     return outputPorts;
   }

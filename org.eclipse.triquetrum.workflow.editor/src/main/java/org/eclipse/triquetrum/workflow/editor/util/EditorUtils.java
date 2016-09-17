@@ -63,6 +63,48 @@ import ptolemy.vergil.kernel.attributes.TextAttribute;
 public class EditorUtils {
 
   /**
+   *
+   * @param pe
+   * @return true if this pe is in collapsed state, based on triq-specific properties being maintained on it.
+   */
+  public static boolean isCollapsed(PictogramElement pe) {
+    return Graphiti.getPeService().getPropertyValue(pe, "isCollapsed") != null && Graphiti.getPeService().getPropertyValue(pe, "isCollapsed").equals("true");
+  }
+
+  /**
+   * Set the pe as being collapsed and store its original (expanded) size. If the pe is already collapsed, nothing is done.
+   *
+   * @param pe
+   * @param originalWidth
+   * @param originalHeight
+   */
+  public static void setCollapsed(PictogramElement pe, int originalWidth, int originalHeight) {
+    if (!isCollapsed(pe)) {
+      Graphiti.getPeService().setPropertyValue(pe, "original_width", String.valueOf(originalWidth));
+      Graphiti.getPeService().setPropertyValue(pe, "original_height", String.valueOf(originalHeight));
+      Graphiti.getPeService().setPropertyValue(pe, "isCollapsed", "true");
+    }
+  }
+
+  /**
+   * Set the pe as being expanded, i.e. showing all its contents as originally designed. If the pe is not collapsed, nothing is done and the pe's current size
+   * is returned.
+   *
+   * @param pe
+   * @return the original size of the pe, in its expanded state.
+   */
+  public static int[] setExpanded(PictogramElement pe) {
+    if (isCollapsed(pe)) {
+      int originalWidth = Integer.parseInt(Graphiti.getPeService().getPropertyValue(pe, "original_width"));
+      int originalHeight = Integer.parseInt(Graphiti.getPeService().getPropertyValue(pe, "original_height"));
+      Graphiti.getPeService().setPropertyValue(pe, "isCollapsed", "false");
+      return new int[] { originalWidth, originalHeight };
+    } else {
+      return new int[] {pe.getGraphicsAlgorithm().getWidth(), pe.getGraphicsAlgorithm().getHeight()};
+    }
+  }
+
+  /**
    * Opens a dialog to change the color.
    *
    * @param color
@@ -443,21 +485,20 @@ public class EditorUtils {
       relation = (Relation) source.getContainer();
       ((Linkable) target).link(relation);
     } else {
-      // Create a new relation directly linking 2 ports
-      // We need to determine what should be the relation container :
-      // - if the relation connects ports on the outside that belong to (composite) actors, the ports share the same container-container and that is the one.
-      // - if the relation connects ports on the inside, they must be in the same composite and that is the container for the relation as well.
-      // Remark that the direction of the relation/connection should already have been checked (e.g. target should be an input port and source an output port)
-      // as well as the fact whether the ports are on compatible levels to be connected.
+      // Create a new relation directly linking 2 ports.
+      // We need to determine what should be the relation container : the lowest common container that is a CompositeActor.
       relation = TriqFactory.eINSTANCE.createRelation();
       CompositeActor relationContainer = null;
-      NamedObj srcContainer = source.getContainer();
-      NamedObj targetContainer = target.getContainer();
-      if(srcContainer==targetContainer && (srcContainer instanceof CompositeActor)) {
-        relationContainer = (CompositeActor) srcContainer;
+      NamedObj potentialRelationContainer = source.getLowestCommonContainer(target);
+      if(potentialRelationContainer instanceof CompositeActor) {
+        relationContainer = (CompositeActor) potentialRelationContainer;
       } else {
-        // this should always be valid, i.e. both sides should have the same "super"-container and the relation must be created in there
-        relationContainer = (CompositeActor) srcContainer.getContainer();
+        // this should only happen when connecting an output port and an input port of the same atomic actor
+        if (potentialRelationContainer.getContainer() instanceof CompositeActor) {
+          relationContainer = (CompositeActor) potentialRelationContainer.getContainer();
+        } else {
+          throw new IllegalActionException(source.getWrappedObject(), target.getWrappedObject(), "Unsupported source and target hierarchy for creating a relation");
+        }
       }
 
       if (ptRelation != null) {

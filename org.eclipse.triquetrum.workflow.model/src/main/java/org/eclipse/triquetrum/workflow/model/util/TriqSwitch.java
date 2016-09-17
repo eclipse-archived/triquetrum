@@ -93,117 +93,158 @@ public class TriqSwitch<T> {
    */
   protected T doSwitch(int classifierID, EObject theEObject) {
     switch (classifierID) {
-      case TriqPackage.NAMED_OBJ: {
-        NamedObj namedObj = (NamedObj)theEObject;
-        T result = caseNamedObj(namedObj);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.ATTRIBUTE: {
-        Attribute attribute = (Attribute)theEObject;
-        T result = caseAttribute(attribute);
-        if (result == null) result = caseNamedObj(attribute);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.ANNOTATION: {
-        Annotation annotation = (Annotation)theEObject;
-        T result = caseAnnotation(annotation);
-        if (result == null) result = caseAttribute(annotation);
-        if (result == null) result = caseNamedObj(annotation);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.PARAMETER: {
-        Parameter parameter = (Parameter)theEObject;
-        T result = caseParameter(parameter);
-        if (result == null) result = caseAttribute(parameter);
-        if (result == null) result = caseNamedObj(parameter);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.DIRECTOR: {
-        Director director = (Director)theEObject;
-        T result = caseDirector(director);
-        if (result == null) result = caseAttribute(director);
-        if (result == null) result = caseNamedObj(director);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.ENTITY: {
-        Entity entity = (Entity)theEObject;
-        T result = caseEntity(entity);
-        if (result == null) result = caseNamedObj(entity);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.COMPOSITE_ENTITY: {
-        CompositeEntity compositeEntity = (CompositeEntity)theEObject;
-        T result = caseCompositeEntity(compositeEntity);
-        if (result == null) result = caseEntity(compositeEntity);
-        if (result == null) result = caseNamedObj(compositeEntity);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.ACTOR: {
-        Actor actor = (Actor)theEObject;
-        T result = caseActor(actor);
-        if (result == null) result = caseEntity(actor);
-        if (result == null) result = caseNamedObj(actor);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.COMPOSITE_ACTOR: {
-        CompositeActor compositeActor = (CompositeActor)theEObject;
-        T result = caseCompositeActor(compositeActor);
-        if (result == null) result = caseCompositeEntity(compositeActor);
-        if (result == null) result = caseEntity(compositeActor);
-        if (result == null) result = caseNamedObj(compositeActor);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.PORT: {
-        Port port = (Port)theEObject;
-        T result = casePort(port);
-        if (result == null) result = caseLinkable(port);
-        if (result == null) result = caseNamedObj(port);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.RELATION: {
-        Relation relation = (Relation)theEObject;
-        T result = caseRelation(relation);
-        if (result == null) result = caseLinkable(relation);
-        if (result == null) result = caseNamedObj(relation);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.LOCATION: {
-        Location location = (Location)theEObject;
-        T result = caseLocation(location);
-        if (result == null) result = caseAttribute(location);
-        if (result == null) result = caseNamedObj(location);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.VERTEX: {
-        Vertex vertex = (Vertex)theEObject;
-        T result = caseVertex(vertex);
-        if (result == null) result = caseLocation(vertex);
-        if (result == null) result = caseLinkable(vertex);
-        if (result == null) result = caseAttribute(vertex);
-        if (result == null) result = caseNamedObj(vertex);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case TriqPackage.LINKABLE: {
-        Linkable linkable = (Linkable)theEObject;
-        T result = caseLinkable(linkable);
-        if (result == null) result = caseNamedObj(linkable);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      default: return defaultCase(theEObject);
+    case TriqPackage.NAMED_OBJ: {
+      NamedObj namedObj = (NamedObj) theEObject;
+      T result = caseNamedObj(namedObj);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.ATTRIBUTE: {
+      Attribute attribute = (Attribute) theEObject;
+      T result = caseAttribute(attribute);
+      if (result == null)
+        result = caseNamedObj(attribute);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.ANNOTATION: {
+      Annotation annotation = (Annotation) theEObject;
+      T result = caseAnnotation(annotation);
+      if (result == null)
+        result = caseAttribute(annotation);
+      if (result == null)
+        result = caseNamedObj(annotation);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.PARAMETER: {
+      Parameter parameter = (Parameter) theEObject;
+      T result = caseParameter(parameter);
+      if (result == null)
+        result = caseAttribute(parameter);
+      if (result == null)
+        result = caseNamedObj(parameter);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.DIRECTOR: {
+      Director director = (Director) theEObject;
+      T result = caseDirector(director);
+      if (result == null)
+        result = caseAttribute(director);
+      if (result == null)
+        result = caseNamedObj(director);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.ENTITY: {
+      Entity entity = (Entity) theEObject;
+      T result = caseEntity(entity);
+      if (result == null)
+        result = caseNamedObj(entity);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.COMPOSITE_ENTITY: {
+      CompositeEntity compositeEntity = (CompositeEntity) theEObject;
+      T result = caseCompositeEntity(compositeEntity);
+      if (result == null)
+        result = caseEntity(compositeEntity);
+      if (result == null)
+        result = caseNamedObj(compositeEntity);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.ACTOR: {
+      Actor actor = (Actor) theEObject;
+      T result = caseActor(actor);
+      if (result == null)
+        result = caseEntity(actor);
+      if (result == null)
+        result = caseNamedObj(actor);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.COMPOSITE_ACTOR: {
+      CompositeActor compositeActor = (CompositeActor) theEObject;
+      T result = caseCompositeActor(compositeActor);
+      if (result == null)
+        result = caseCompositeEntity(compositeActor);
+      if (result == null)
+        result = caseEntity(compositeActor);
+      if (result == null)
+        result = caseNamedObj(compositeActor);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.PORT: {
+      Port port = (Port) theEObject;
+      T result = casePort(port);
+      if (result == null)
+        result = caseLinkable(port);
+      if (result == null)
+        result = caseNamedObj(port);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.RELATION: {
+      Relation relation = (Relation) theEObject;
+      T result = caseRelation(relation);
+      if (result == null)
+        result = caseLinkable(relation);
+      if (result == null)
+        result = caseNamedObj(relation);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.LOCATION: {
+      Location location = (Location) theEObject;
+      T result = caseLocation(location);
+      if (result == null)
+        result = caseAttribute(location);
+      if (result == null)
+        result = caseNamedObj(location);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.VERTEX: {
+      Vertex vertex = (Vertex) theEObject;
+      T result = caseVertex(vertex);
+      if (result == null)
+        result = caseLocation(vertex);
+      if (result == null)
+        result = caseLinkable(vertex);
+      if (result == null)
+        result = caseAttribute(vertex);
+      if (result == null)
+        result = caseNamedObj(vertex);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    case TriqPackage.LINKABLE: {
+      Linkable linkable = (Linkable) theEObject;
+      T result = caseLinkable(linkable);
+      if (result == null)
+        result = caseNamedObj(linkable);
+      if (result == null)
+        result = defaultCase(theEObject);
+      return result;
+    }
+    default:
+      return defaultCase(theEObject);
     }
   }
 

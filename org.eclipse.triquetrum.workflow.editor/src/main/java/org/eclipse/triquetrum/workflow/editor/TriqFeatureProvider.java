@@ -49,6 +49,7 @@ import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
@@ -57,6 +58,8 @@ import org.eclipse.triquetrum.workflow.editor.features.ActorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationUpdateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.CompositeActorAddFeature;
+import org.eclipse.triquetrum.workflow.editor.features.CompositeActorCollapseExpandFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionDeleteFeature;
@@ -75,6 +78,7 @@ import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.VertexAddFeature;
+import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
@@ -121,9 +125,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
 
   @Override
   public ILayoutFeature getLayoutFeature(ILayoutContext context) {
-    PictogramElement pictogramElement = context.getPictogramElement();
-    Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-    if (bo instanceof CompositeActor || bo instanceof Actor || bo instanceof Director) {
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    if (BoCategory.CompositeActor.equals(boCategory) || BoCategory.Actor.equals(boCategory)) {
       return new ModelElementLayoutFeature(this);
     }
     return super.getLayoutFeature(context);
@@ -131,9 +134,12 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
 
   @Override
   public ICustomFeature[] getCustomFeatures(ICustomContext context) {
-    // The annotation color change is currently not done via a direct custom feature,
-    // but is done via the Annotation configuration form.
-    return new ICustomFeature[] { /* new AnnotationChangeColorFeature(this), */ new ModelElementConfigureFeature(this) };
+    PictogramElement[] pes = context.getPictogramElements();
+    boolean isCollapsed = false;
+    if (pes != null && pes.length == 1) {
+      isCollapsed = EditorUtils.isCollapsed(pes[0]);
+    }
+    return new ICustomFeature[] { new ModelElementConfigureFeature(this), new CompositeActorCollapseExpandFeature(this, isCollapsed) };
   }
 
   @Override
@@ -163,8 +169,10 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public IAddFeature getAddFeature(IAddContext context) {
     if (context.getNewObject() instanceof Director) {
       return new DirectorAddFeature(this);
-    } else if ((context.getNewObject() instanceof Actor) || (context.getNewObject() instanceof CompositeActor)) {
+    } else if (context.getNewObject() instanceof Actor) {
       return new ActorAddFeature(this);
+    } else if (context.getNewObject() instanceof CompositeActor) {
+      return new CompositeActorAddFeature(this);
     } else if (context.getNewObject() instanceof Relation) {
       return new ConnectionAddFeature(this);
     } else if (context.getNewObject() instanceof Vertex) {
@@ -189,7 +197,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new AnnotationUpdateFeature(this);
     } else if (bo instanceof Director) {
       return new DirectorUpdateFeature(this);
-    } else if (bo instanceof Actor) {
+    } else if ((bo instanceof Actor) || (bo instanceof CompositeActor && !(pictogramElement instanceof Diagram))) {
       return new ActorUpdateFeature(this);
     }
     return super.getUpdateFeature(context);
