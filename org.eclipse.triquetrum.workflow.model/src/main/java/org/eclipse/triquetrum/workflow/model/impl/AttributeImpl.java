@@ -38,7 +38,7 @@ public class AttributeImpl extends NamedObjImpl implements Attribute {
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
     super.eBasicSetContainer(newContainer);
-    if(newContainer==null && wrappedObject!=null) {
+    if (newContainer == null && wrappedObject != null) {
       try {
         getWrappedObject().setContainer(null);
       } catch (Exception e) {

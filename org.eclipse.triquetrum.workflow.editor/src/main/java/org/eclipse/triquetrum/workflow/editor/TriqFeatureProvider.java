@@ -52,6 +52,7 @@ import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ActorCollapseExpandFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorDeleteFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationAddFeature;
@@ -77,6 +78,7 @@ import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.VertexAddFeature;
+import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
@@ -133,9 +135,12 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
 
   @Override
   public ICustomFeature[] getCustomFeatures(ICustomContext context) {
-    // The annotation color change is currently not done via a direct custom feature,
-    // but is done via the Annotation configuration form.
-    return new ICustomFeature[] { /* new AnnotationChangeColorFeature(this), */ new ModelElementConfigureFeature(this) };
+    PictogramElement[] pes = context.getPictogramElements();
+    boolean isCollapsed = false;
+    if (pes != null && pes.length == 1) {
+      isCollapsed = EditorUtils.isCollapsed(pes[0]);
+    }
+    return new ICustomFeature[] { new ModelElementConfigureFeature(this), new ActorCollapseExpandFeature(this, isCollapsed) };
   }
 
   @Override

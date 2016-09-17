@@ -31,7 +31,6 @@ import org.eclipse.triquetrum.workflow.model.Vertex;
 
 import ptolemy.kernel.ComponentRelation;
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.kernel.util.NameDuplicationException;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Relation</b></em>'. <!-- end-user-doc -->
@@ -92,7 +91,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
     super.eBasicSetContainer(newContainer);
-    if(newContainer==null && wrappedObject!=null) {
+    if (newContainer == null && wrappedObject != null) {
       try {
         getWrappedObject().setContainer(null);
       } catch (Exception e) {
@@ -121,7 +120,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public EList<Relation> getLinkedRelations() {
     if (linkedRelations == null) {
-      linkedRelations = new EObjectWithInverseResolvingEList.ManyInverse<>(Relation.class, this, TriqPackage.RELATION__LINKED_RELATIONS,
+      linkedRelations = new EObjectWithInverseResolvingEList.ManyInverse<Relation>(Relation.class, this, TriqPackage.RELATION__LINKED_RELATIONS,
           TriqPackage.RELATION__LINKING_RELATIONS);
     }
     return linkedRelations;
@@ -135,7 +134,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public EList<Relation> getLinkingRelations() {
     if (linkingRelations == null) {
-      linkingRelations = new EObjectWithInverseResolvingEList.ManyInverse<>(Relation.class, this, TriqPackage.RELATION__LINKING_RELATIONS,
+      linkingRelations = new EObjectWithInverseResolvingEList.ManyInverse<Relation>(Relation.class, this, TriqPackage.RELATION__LINKING_RELATIONS,
           TriqPackage.RELATION__LINKED_RELATIONS);
     }
     return linkingRelations;
@@ -167,10 +166,11 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public boolean isPotentialStart() {
     // TODO: implement this method
     // Ensure that you remove @generated or mark it @generated NOT
@@ -178,10 +178,11 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
+  @Override
   public boolean isPotentialEnd(Linkable start) {
     // TODO: implement this method
     // Ensure that you remove @generated or mark it @generated NOT
@@ -219,7 +220,7 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public EList<Port> getLinkedPorts() {
     if (linkedPorts == null) {
-      linkedPorts = new EObjectWithInverseResolvingEList.ManyInverse<>(Port.class, this, TriqPackage.RELATION__LINKED_PORTS,
+      linkedPorts = new EObjectWithInverseResolvingEList.ManyInverse<Port>(Port.class, this, TriqPackage.RELATION__LINKED_PORTS,
           TriqPackage.PORT__LINKED_RELATIONS);
     }
     return linkedPorts;
@@ -324,10 +325,11 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   }
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated NOT
    */
+  @Override
   public void buildWrappedLinks() {
     try {
       for (Relation r : getLinkedRelations()) {
@@ -471,23 +473,23 @@ public class RelationImpl extends NamedObjImpl implements Relation {
   @Override
   public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
     switch (operationID) {
-      case TriqPackage.RELATION___IS_CONNECTED:
-        return isConnected();
-      case TriqPackage.RELATION___GET_VERTEX:
-        return getVertex();
-      case TriqPackage.RELATION___LINK__RELATION:
-        link((Relation) arguments.get(0));
-        return null;
-      case TriqPackage.RELATION___UNLINK__RELATION:
-        unlink((Relation) arguments.get(0));
-        return null;
-      case TriqPackage.RELATION___IS_POTENTIAL_START:
-        return isPotentialStart();
-      case TriqPackage.RELATION___IS_POTENTIAL_END__LINKABLE:
-        return isPotentialEnd((Linkable)arguments.get(0));
-      case TriqPackage.RELATION___BUILD_WRAPPED_LINKS:
-        buildWrappedLinks();
-        return null;
+    case TriqPackage.RELATION___IS_CONNECTED:
+      return isConnected();
+    case TriqPackage.RELATION___GET_VERTEX:
+      return getVertex();
+    case TriqPackage.RELATION___LINK__RELATION:
+      link((Relation) arguments.get(0));
+      return null;
+    case TriqPackage.RELATION___UNLINK__RELATION:
+      unlink((Relation) arguments.get(0));
+      return null;
+    case TriqPackage.RELATION___IS_POTENTIAL_START:
+      return isPotentialStart();
+    case TriqPackage.RELATION___IS_POTENTIAL_END__LINKABLE:
+      return isPotentialEnd((Linkable) arguments.get(0));
+    case TriqPackage.RELATION___BUILD_WRAPPED_LINKS:
+      buildWrappedLinks();
+      return null;
     }
     return super.eInvoke(operationID, arguments);
   }
