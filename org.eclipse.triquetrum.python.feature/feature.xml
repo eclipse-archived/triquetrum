@@ -42,8 +42,6 @@ documentation
    </license>
 
    <requires>
-      <import plugin="org.apache.ws.commons.util"/>
-      <import plugin="org.apache.xmlrpc"/>
       <import feature="org.eclipse.triquetrum.core.feature" version="0.1.0.qualifier"/>
       <import feature="org.eclipse.triquetrum.ptolemy.feature" version="0.1.0.qualifier"/>
       <import plugin="org.slf4j.api"/>
@@ -64,6 +62,34 @@ documentation
 
    <plugin
          id="org.eclipse.triquetrum.scisoft.analysis.rpc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.xmlrpc.client"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.xmlrpc.common"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.xmlrpc.server"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.ws.commons.util"
          download-size="0"
          install-size="0"
          version="0.0.0"

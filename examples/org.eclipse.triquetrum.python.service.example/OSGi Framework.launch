@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.EquinoxLauncher">
 <booleanAttribute key="append.args" value="true"/>
-<booleanAttribute key="automaticAdd" value="true"/>
+<booleanAttribute key="automaticAdd" value="false"/>
 <booleanAttribute key="automaticValidate" value="false"/>
 <stringAttribute key="bootstrap" value=""/>
 <stringAttribute key="checked" value="[NONE]"/>
@@ -18,9 +18,9 @@
 <booleanAttribute key="pde.generated.config" value="true"/>
 <stringAttribute key="pde.version" value="3.3"/>
 <booleanAttribute key="show_selected_only" value="false"/>
-<stringAttribute key="target_bundles" value="javax.activation@default:default,javax.xml.bind@default:default,javax.xml.stream@default:default,javax.xml@default:default,org.apache.commons.codec@default:default,org.apache.commons.httpclient@default:default,org.apache.commons.lang@default:default,org.apache.commons.logging@default:default,org.apache.felix.gogo.command@default:default,org.apache.felix.gogo.runtime@default:default,org.apache.felix.gogo.shell@default:default,org.apache.log4j@default:default,org.apache.ws.commons.util@default:default,org.apache.xmlrpc@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.console@default:default,org.eclipse.equinox.ds@1:true,org.eclipse.equinox.region@default:false,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.simpleconfigurator@1:true,org.eclipse.equinox.transforms.hook@default:false,org.eclipse.equinox.util@default:default,org.eclipse.equinox.weaving.hook@default:false,org.eclipse.osgi.compatibility.state@default:false,org.eclipse.osgi.services@default:default,org.eclipse.osgi@-1:true,org.hamcrest.core@default:default,org.junit@default:default,org.slf4j.api@default:default,org.slf4j.impl.log4j12@default:false"/>
+<stringAttribute key="target_bundles" value="javax.activation@default:default,javax.servlet@default:default,javax.xml.bind@default:default,javax.xml.stream@default:default,javax.xml@default:default,org.apache.commons.codec@default:default,org.apache.commons.httpclient@default:default,org.apache.commons.lang@default:default,org.apache.commons.logging@default:default,org.apache.felix.gogo.command@default:default,org.apache.felix.gogo.runtime@default:default,org.apache.felix.gogo.shell@default:default,org.apache.log4j@default:default,org.apache.ws.commons.util@default:default,org.apache.xmlrpc.client@default:default,org.apache.xmlrpc.common@default:default,org.apache.xmlrpc.server@default:default,org.eclipse.equinox.app@default:default,org.eclipse.equinox.common@2:true,org.eclipse.equinox.console@default:default,org.eclipse.equinox.ds@1:true,org.eclipse.equinox.registry@default:default,org.eclipse.equinox.simpleconfigurator@1:true,org.eclipse.equinox.util@default:default,org.eclipse.osgi.compatibility.state@default:false,org.eclipse.osgi.services@default:default,org.eclipse.osgi@-1:true,org.hamcrest.core@default:default,org.junit@default:default,org.slf4j.api@default:default,org.slf4j.impl.log4j12@default:false"/>
 <booleanAttribute key="tracing" value="false"/>
 <booleanAttribute key="useCustomFeatures" value="false"/>
 <booleanAttribute key="useDefaultConfigArea" value="true"/>
-<stringAttribute key="workspace_bundles" value="org.eclipse.triquetrum.python.service.example@default:default,org.eclipse.triquetrum.python.service@default:default,org.eclipse.triquetrum.scisoft.analysis.rpc.test@default:false,org.eclipse.triquetrum.scisoft.analysis.rpc@default:default"/>
+<stringAttribute key="workspace_bundles" value="org.eclipse.triquetrum.python.service.example@default:default,org.eclipse.triquetrum.python.service@default:default,org.eclipse.triquetrum.scisoft.analysis.rpc@default:default"/>
 </launchConfiguration>
