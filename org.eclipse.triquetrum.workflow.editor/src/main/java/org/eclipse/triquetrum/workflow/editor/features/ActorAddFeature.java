@@ -48,15 +48,16 @@ import org.eclipse.triquetrum.workflow.model.Port;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// TODO refactor ActorAddFeature for its handling of custom/external icon definitions
 public class ActorAddFeature extends AbstractAddShapeFeature {
 
   private final static Logger LOGGER = LoggerFactory.getLogger(ActorAddFeature.class);
 
-  public static final int SHAPE_X_OFFSET = 8;
-  public static final int ICON_X_OFFSET = SHAPE_X_OFFSET + 3;
-  public static final int ICON_Y_OFFSET = 3;
-  public static final int ICON_SIZE = 16;
+  public static final int ACTOR_DEFAULT_HEIGHT = 60;
+  public static final int ACTOR_DEFAULT_WIDTH = 100;
+  public static final int ACTOR_X_OFFSET = 8;
+  public static final int ACTOR_ICON_X_OFFSET = ACTOR_X_OFFSET + 3;
+  public static final int ACTOR_ICON_Y_OFFSET = 3;
+  public static final int ACTOR_ICON_SIZE = 16;
   public static final int PORT_SIZE = 12;
 
   public static final IColorConstant ACTOR_NAME_FOREGROUND = IColorConstant.BLACK;
@@ -192,23 +193,26 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       String iconResource) {
 
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
-    int width = 100;
-    int height = 61;
+    int width = ACTOR_DEFAULT_WIDTH;
+    int height = ACTOR_DEFAULT_HEIGHT;
 
     // create and set graphics algorithm
     RoundedRectangle actorShapeGA = gaService.createRoundedRectangle(invisibleRectangle, 5, 5);
     actorShapeGA.setForeground(manageColor(ACTOR_FOREGROUND));
     actorShapeGA.setBackground(manageColor(ACTOR_BACKGROUND));
     actorShapeGA.setLineWidth(2);
-    gaService.setLocationAndSize(actorShapeGA, SHAPE_X_OFFSET, 0, width, height);
+    gaService.setLocationAndSize(actorShapeGA, ACTOR_X_OFFSET, 0, width, height);
 
     // add the actor's icon
     if (!StringUtils.isBlank(iconResource)) {
       try {
-        final Shape imageShape = peCreateService.createShape(containerShape, false);
-        final Image image = gaService.createImage(imageShape, iconResource);
+        final Shape shape = peCreateService.createShape(containerShape, false);
+        final Image image = gaService.createImage(shape, iconResource);
         addedActor.setIconId(iconResource);
-        gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
+        gaService.setLocationAndSize(image, ACTOR_ICON_X_OFFSET, ACTOR_ICON_Y_OFFSET, ACTOR_ICON_SIZE, ACTOR_ICON_SIZE);
+
+        // create link and wire it
+        link(shape, addedActor, BoCategory.Actor);
       } catch (Exception e) {
         LOGGER.error(ErrorCode.MODEL_CONFIGURATION_ERROR + " - Error trying to add actor icon for " + addedActor, e);
       }
@@ -220,9 +224,12 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       Shape shape = peCreateService.createShape(containerShape, false);
 
       // create and set graphics algorithm
-      Polyline polyline = gaService.createPolyline(shape, new int[] { SHAPE_X_OFFSET, 20, SHAPE_X_OFFSET + width, 20 });
+      Polyline polyline = gaService.createPolyline(shape, new int[] { ACTOR_X_OFFSET, 20, ACTOR_X_OFFSET + width, 20 });
       polyline.setForeground(manageColor(ACTOR_FOREGROUND));
       polyline.setLineWidth(2);
+
+      // create link and wire it
+      link(shape, addedActor, BoCategory.Actor);
     }
 
     // SHAPE WITH actor name as TEXT
@@ -236,7 +243,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
       // vertical alignment has as default value "center"
       text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
-      gaService.setLocationAndSize(text, SHAPE_X_OFFSET + 20, 0, width - 25, 20);
+      gaService.setLocationAndSize(text, ACTOR_X_OFFSET + 20, 0, width - 25, 20);
 
       // create link and wire it
       link(shape, addedActor, BoCategory.Actor);
@@ -302,7 +309,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       property.setValue(iconResource);
       extFigure.getProperties().add(property);
     }
-    gaService.setLocationAndSize(extFigure, SHAPE_X_OFFSET, 0, 40, 40);
+    gaService.setLocationAndSize(extFigure, ACTOR_X_OFFSET, 0, 40, 40);
     return extFigure;
   }
 }

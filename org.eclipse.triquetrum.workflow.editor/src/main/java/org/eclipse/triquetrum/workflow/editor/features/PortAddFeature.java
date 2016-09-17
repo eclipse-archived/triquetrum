@@ -73,51 +73,46 @@ public class PortAddFeature extends AbstractAddShapeFeature {
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
     ICreateService createService = Graphiti.getCreateService();
     IGaService gaService = Graphiti.getGaService();
-    ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
+//    ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
+    FixPointAnchor anchor = peCreateService.createFixPointAnchor(targetContainer);
 
     // define a default size for the shape
     int width = 20;
     int height = 20;
 
-    Rectangle invisibleRectangle; // need to access it later
-    {
-      invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
+    Rectangle invisibleRectangle = gaService.createInvisibleRectangle(targetContainer);
 
-      // add anchors at the right side of the port, depending on it being input or output
-      // FIXME for the moment a port can not be both input and output
-      FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
-      if (addedPort.isInput()) {
-        gaService.setLocationAndSize(invisibleRectangle, 0, yLocation, width, height);
-        anchor.setLocation(createService.createPoint(10, 0));
-        anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-        link(anchor, addedPort, BoCategory.Input);
-        // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
-        int xy[] = new int[] { 10, 0, 20, 10, 10, 20, 10, 15, 0, 15, 0, 5, 10, 5 };
-        Polygon portShape = gaService.createPolygon(anchor, xy);
-        portShape.setForeground(manageColor(PORT_BACKGROUND));
-        gaService.setLocationAndSize(portShape, -10, 0, width, height);
-      } else {
-        gaService.setLocationAndSize(invisibleRectangle, containerWidth-width, yLocation, width, height);
-        anchor.setLocation(createService.createPoint(2, 0));
-        anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-        link(anchor, addedPort, BoCategory.Output);
-        anchor.setVisible(true);
-        // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
-        int xy[] = new int[] { 10, 0, 20, 10, 10, 20, 10, 15, 0, 15, 0, 5, 10, 5 };
-        Polygon portShape = gaService.createPolygon(anchor, xy);
-        portShape.setForeground(manageColor(PORT_BACKGROUND));
-        gaService.setLocationAndSize(portShape, 0, 0, width, height);
-      }
-
-      Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-      if (anchorMap != null) {
-        anchorMap.put(addedPort.getFullName(), anchor);
-      }
-      link(containerShape, addedPort, BoCategory.Port);
+    // FIXME for the moment a port can not be both input and output
+    if (addedPort.isInput()) {
+      gaService.setLocationAndSize(invisibleRectangle, 0, yLocation, width, height);
+      anchor.setLocation(createService.createPoint(10, 0));
+      anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
+      link(anchor, addedPort, BoCategory.Input);
+      // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
+      int xy[] = new int[] { 10, 0, 20, 10, 10, 20, 10, 15, 0, 15, 0, 5, 10, 5 };
+      Polygon portShape = gaService.createPolygon(anchor, xy);
+      portShape.setForeground(manageColor(PORT_BACKGROUND));
+      gaService.setLocationAndSize(portShape, -10, 0, width, height);
+    } else {
+      gaService.setLocationAndSize(invisibleRectangle, containerWidth-width, yLocation, width, height);
+      anchor.setLocation(createService.createPoint(2, 0));
+      anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
+      link(anchor, addedPort, BoCategory.Output);
+      anchor.setVisible(true);
+      // create and set graphics algorithm (we would normally call this the shape of the thing ;-) )
+      int xy[] = new int[] { 10, 0, 20, 10, 10, 20, 10, 15, 0, 15, 0, 5, 10, 5 };
+      Polygon portShape = gaService.createPolygon(anchor, xy);
+      portShape.setForeground(manageColor(PORT_BACKGROUND));
+      gaService.setLocationAndSize(portShape, 0, 0, width, height);
     }
 
-    layoutPictogramElement(containerShape);
+    Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
+    if (anchorMap != null) {
+      anchorMap.put(addedPort.getFullName(), anchor);
+    }
 
-    return containerShape;
+    layoutPictogramElement(anchor);
+
+    return anchor;
   }
 }

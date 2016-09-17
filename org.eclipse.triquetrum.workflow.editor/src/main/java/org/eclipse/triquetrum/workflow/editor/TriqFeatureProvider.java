@@ -49,17 +49,17 @@ import org.eclipse.graphiti.features.context.IResizeShapeContext;
 import org.eclipse.graphiti.features.context.IUpdateContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.pictograms.Connection;
+import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
-import org.eclipse.triquetrum.workflow.editor.features.ActorCollapseExpandFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorDeleteFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.CompositeActorAddFeature;
-import org.eclipse.triquetrum.workflow.editor.features.CompositeActorUpdateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.CompositeActorCollapseExpandFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionCreateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionDeleteFeature;
@@ -125,9 +125,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
 
   @Override
   public ILayoutFeature getLayoutFeature(ILayoutContext context) {
-    PictogramElement pictogramElement = context.getPictogramElement();
-    Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-    if (bo instanceof CompositeActor || bo instanceof Actor || bo instanceof Director) {
+    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
+    if (BoCategory.CompositeActor.equals(boCategory) || BoCategory.Actor.equals(boCategory)) {
       return new ModelElementLayoutFeature(this);
     }
     return super.getLayoutFeature(context);
@@ -140,7 +139,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     if (pes != null && pes.length == 1) {
       isCollapsed = EditorUtils.isCollapsed(pes[0]);
     }
-    return new ICustomFeature[] { new ModelElementConfigureFeature(this), new ActorCollapseExpandFeature(this, isCollapsed) };
+    return new ICustomFeature[] { new ModelElementConfigureFeature(this), new CompositeActorCollapseExpandFeature(this, isCollapsed) };
   }
 
   @Override
@@ -198,10 +197,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new AnnotationUpdateFeature(this);
     } else if (bo instanceof Director) {
       return new DirectorUpdateFeature(this);
-    } else if (bo instanceof Actor) {
+    } else if ((bo instanceof Actor) || (bo instanceof CompositeActor && !(pictogramElement instanceof Diagram))) {
       return new ActorUpdateFeature(this);
-    } else if (bo instanceof CompositeActor) {
-      return new CompositeActorUpdateFeature(this);
     }
     return super.getUpdateFeature(context);
   }

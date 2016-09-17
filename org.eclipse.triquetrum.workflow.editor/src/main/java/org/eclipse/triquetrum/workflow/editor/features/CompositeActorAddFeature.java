@@ -44,6 +44,9 @@ public class CompositeActorAddFeature extends ActorAddFeature {
   public static final IColorConstant COMPACTOR_FOREGROUND = IColorConstant.BLACK;
   public static final IColorConstant COMPACTOR_BACKGROUND = IColorConstant.LIGHT_LIGHT_GRAY;
 
+  public static final int COMPOSITEACTOR_DEFAULT_WIDTH = 120;
+  public static final int COMPOSITEACTOR_DEFAULT_HEIGHT = 60;
+
   public CompositeActorAddFeature(IFeatureProvider fp) {
     super(fp);
   }
@@ -98,8 +101,8 @@ public class CompositeActorAddFeature extends ActorAddFeature {
       String iconResource) {
 
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
-    int width = 100;
-    int height = 61;
+    int width = COMPOSITEACTOR_DEFAULT_WIDTH;
+    int height = COMPOSITEACTOR_DEFAULT_HEIGHT;
 
     // create and set graphics algorithm
     RoundedRectangle actorShapeGA = gaService.createRoundedRectangle(invisibleRectangle, 5, 5);
@@ -111,10 +114,13 @@ public class CompositeActorAddFeature extends ActorAddFeature {
     // add the actor's icon
     if (!StringUtils.isBlank(iconResource)) {
       try {
-        final Shape imageShape = peCreateService.createShape(containerShape, false);
-        final Image image = gaService.createImage(imageShape, iconResource);
+        final Shape shape = peCreateService.createShape(containerShape, false);
+        final Image image = gaService.createImage(shape, iconResource);
         addedActor.setIconId(iconResource);
-        gaService.setLocationAndSize(image, ICON_X_OFFSET, ICON_Y_OFFSET, ICON_SIZE, ICON_SIZE);
+        gaService.setLocationAndSize(image, ACTOR_ICON_X_OFFSET, ACTOR_ICON_Y_OFFSET, ACTOR_ICON_SIZE, ACTOR_ICON_SIZE);
+
+        // create link and wire it
+        link(shape, addedActor, BoCategory.Actor);
       } catch (Exception e) {
         LOGGER.error(ErrorCode.MODEL_CONFIGURATION_ERROR + " - Error trying to add actor icon for " + addedActor, e);
       }
@@ -129,6 +135,9 @@ public class CompositeActorAddFeature extends ActorAddFeature {
       Polyline polyline = gaService.createPolyline(shape, new int[] { 0, 20, 0 + width, 20 });
       polyline.setForeground(manageColor(COMPACTOR_FOREGROUND));
       polyline.setLineWidth(2);
+
+      // create link and wire it
+      link(shape, addedActor, BoCategory.Actor);
     }
 
     // SHAPE WITH actor name as TEXT
