@@ -1,24 +1,27 @@
 target "Python-RPC" with source allEnvironments configurePhase
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20151118145958/repository/" {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/" {
 	org.apache.commons.lang
 	org.apache.commons.codec
 	org.apache.commons.logging
 	org.apache.commons.httpclient
 	org.apache.log4j
 	org.apache.ws.commons.util
-	org.apache.xmlrpc
+	org.apache.xmlrpc.client
+	org.apache.xmlrpc.common
+	org.apache.xmlrpc.server
 	org.hamcrest.core
 	org.hamcrest.generator
 	org.hamcrest.integration
 	org.hamcrest.library
 	org.junit
-	org.slf4j.api
-	org.slf4j.impl.log4j12
+	org.slf4j.api [1.7.2,1.7.3)
+	org.slf4j.impl.log4j12 [1.7.2,1.7.3)
 	javax.xml
 	javax.xml.bind
 	javax.xml.stream
 	javax.activation
+	javax.servlet
 }
 
 location "http://download.eclipse.org/releases/neon/" {
