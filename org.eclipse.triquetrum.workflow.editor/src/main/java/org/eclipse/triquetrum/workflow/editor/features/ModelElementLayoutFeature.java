@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import java.util.List;
+
 import org.eclipse.graphiti.datatypes.IDimension;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.ILayoutContext;
@@ -27,12 +29,13 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
+import org.eclipse.triquetrum.workflow.model.Entity;
 
 public class ModelElementLayoutFeature extends AbstractLayoutFeature {
 
-  private static final int MIN_HEIGHT = 30;
+  private static final int MIN_HEIGHT = 20;
 
-  private static final int MIN_WIDTH = 50;
+  private static final int MIN_WIDTH = 60;
 
   public ModelElementLayoutFeature(IFeatureProvider fp) {
     super(fp);
@@ -41,7 +44,7 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
   @Override
   public boolean canLayout(ILayoutContext context) {
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
-    return BoCategory.CompositeActor.equals(boCategory) || BoCategory.Actor.equals(boCategory) || BoCategory.Director.equals(boCategory);
+    return BoCategory.CompositeActor.equals(boCategory) || BoCategory.Actor.equals(boCategory);
   }
 
   @Override
@@ -54,6 +57,9 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
 
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
     boolean isActor = BoCategory.Actor.equals(boCategory);
+    Entity relatedBO = (Entity) getBusinessObjectForPictogramElement(containerShape);
+    int nrInputs = relatedBO.getInputPorts().size();
+    int nrOutputs = relatedBO.getOutputPorts().size();
 
     boolean containsExtFigure = EditorUtils.containsExternallyDefinedFigure(containerShape);
 
@@ -61,16 +67,15 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     // this layout feature is the one based on determining size of externally defined figures.
     // and for those we don't set minimum sizes...
 
+    int minHeight = Math.max(MIN_HEIGHT, Math.max(MIN_HEIGHT + (nrInputs+1)*ActorAddFeature.PORT_SIZE, MIN_HEIGHT + (nrOutputs+1)*ActorAddFeature.PORT_SIZE));
     // height of invisible rectangle
-    if (!containsExtFigure && invisibleRectangle.getHeight() < MIN_HEIGHT) {
-      invisibleRectangle.setHeight(MIN_HEIGHT);
+    if (!containsExtFigure && invisibleRectangle.getHeight() < minHeight) {
+      invisibleRectangle.setHeight(minHeight);
       anythingChanged = true;
     }
 
     // height of visible rectangle (same as invisible rectangle)
-    double heightChangeRatio = 1;
     if (rectangle.getHeight() != invisibleRectangle.getHeight()) {
-      heightChangeRatio = invisibleRectangle.getHeight() / rectangle.getHeight();
       rectangle.setHeight(invisibleRectangle.getHeight());
       anythingChanged = true;
     }
@@ -82,7 +87,9 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     }
 
     // width of visible rectangle (smaller than invisible rectangle)
-    int rectangleWidth = isActor ? invisibleRectangle.getWidth() - 15 : invisibleRectangle.getWidth();
+    int xOffset = isActor ? 15 : 0;
+    int rectangleWidth = invisibleRectangle.getWidth() - xOffset;
+    int rectangleHeight = invisibleRectangle.getHeight();
     if (rectangle.getWidth() != rectangleWidth) {
       rectangle.setWidth(rectangleWidth);
       anythingChanged = true;
@@ -93,38 +100,51 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
       // width of text and line (same as visible rectangle)
       for (Shape shape : containerShape.getChildren()) {
         GraphicsAlgorithm ga = shape.getGraphicsAlgorithm();
-        IDimension size = gaService.calculateSize(ga);
-        if (rectangleWidth != size.getWidth()) {
-          int shapeXOffset = isActor ? ActorAddFeature.SHAPE_X_OFFSET : DirectorAddFeature.SHAPE_X_OFFSET;
-          if (ga instanceof Polyline) {
-            Polyline polyline = (Polyline) ga;
-            Point secondPoint = polyline.getPoints().get(1);
-            Point newSecondPoint = gaService.createPoint(shapeXOffset + rectangleWidth, secondPoint.getY());
-            polyline.getPoints().set(1, newSecondPoint);
-            anythingChanged = true;
-          } else if (ga instanceof Text) {
-            gaService.setLocationAndSize(ga, shapeXOffset + 20, ga.getY(), rectangleWidth - 25, ga.getHeight());
-          } else if (ga instanceof Image) {
-            // remain unchanged
-          } else {
-            gaService.setWidth(ga, rectangleWidth);
-            anythingChanged = true;
+        Object gaBO = getBusinessObjectForPictogramElement(shape);
+        if (gaBO != relatedBO) {
+          // this is to ensure that only the shapes related to the main BO get resized etc.
+          // e.g. when expanding/collapsing a composite actor, we only want to layout the icon, name and horizontal line underneath the name,
+          // and not all child shapes related to contained entities, relations etc.
+          continue;
+        } else {
+          IDimension size = gaService.calculateSize(ga);
+          if (rectangleWidth != size.getWidth()) {
+            int shapeXOffset = isActor ? ActorAddFeature.ACTOR_X_OFFSET : 0;
+            if (ga instanceof Polyline) {
+              Polyline polyline = (Polyline) ga;
+              Point secondPoint = polyline.getPoints().get(1);
+              Point newSecondPoint = gaService.createPoint(shapeXOffset + rectangleWidth, secondPoint.getY());
+              polyline.getPoints().set(1, newSecondPoint);
+              anythingChanged = true;
+            } else if (ga instanceof Text) {
+              gaService.setLocationAndSize(ga, shapeXOffset + 20, ga.getY(), rectangleWidth - 25, ga.getHeight());
+            } else if (ga instanceof Image) {
+              // remain unchanged
+            } else {
+              gaService.setWidth(ga, rectangleWidth);
+              anythingChanged = true;
+            }
           }
         }
       }
     }
 
-    for (Anchor anchor : containerShape.getAnchors()) {
-      FixPointAnchor fpa = (FixPointAnchor) anchor;
-      boCategory = BoCategory.retrieveFrom(anchor);
-      // TODO determine rescaled port Y position in a better way
-      // this Y-rescaling works for increasing heights
-      // but may lead to disappearing ports when shrinking a shape along Y
+    List<Anchor> anchors = containerShape.getAnchors();
+    int yStart = containsExtFigure ? 0 : MIN_HEIGHT;
+    int yOffsetForInputPorts = (rectangleHeight - yStart) / (1 + (nrInputs>0?nrInputs:1));
+    int yOffsetForOutputPorts = (rectangleHeight - yStart) / (1 + (nrOutputs>0?nrOutputs:1));
+    yOffsetForInputPorts = yOffsetForInputPorts > ActorAddFeature.PORT_SIZE ? yOffsetForInputPorts : ActorAddFeature.PORT_SIZE;
+    yOffsetForOutputPorts = yOffsetForOutputPorts > ActorAddFeature.PORT_SIZE ? yOffsetForOutputPorts : ActorAddFeature.PORT_SIZE;
+    int inCnt = 1;
+    int outCnt = 1;
+    for (int i = 0; i < anchors.size(); ++i) {
+      FixPointAnchor fpa = (FixPointAnchor) anchors.get(i);
+      boCategory = BoCategory.retrieveFrom(fpa);
       if (BoCategory.Output.equals(boCategory)) {
-        fpa.setLocation(gaService.createPoint(15 + rectangleWidth, (int) (fpa.getLocation().getY() * heightChangeRatio)));
+        fpa.setLocation(gaService.createPoint(xOffset + rectangleWidth, yStart +  yOffsetForOutputPorts*(outCnt++)));
         anythingChanged = true;
       } else if (BoCategory.Input.equals(boCategory)) {
-        fpa.setLocation(gaService.createPoint(fpa.getLocation().getX(), (int) (fpa.getLocation().getY() * heightChangeRatio)));
+        fpa.setLocation(gaService.createPoint(0, yStart + yOffsetForInputPorts*(inCnt++)));
         anythingChanged = true;
       }
     }

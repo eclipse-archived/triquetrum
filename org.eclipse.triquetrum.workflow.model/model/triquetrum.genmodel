@@ -4,9 +4,9 @@
     modelDirectory="/org.eclipse.triquetrum.workflow.model/src/main/java" editDirectory="/org.eclipse.triquetrum.workflow.model.edit/src/main/java"
     editorDirectory="/org.eclipse.triquetrum.workflow.model.editor/src/main/java"
     modelPluginID="org.eclipse.triquetrum.workflow.model" modelName="Triquetrum" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    testsDirectory="/org.eclipse.triquetrum.workflow.model.tests/src/main/java" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="7.0" copyrightFields="false" runtimeVersion="2.6" operationReflection="true"
-    runtimePlatform="RCP" importOrganizing="true">
+    codeFormatting="true" commentFormatting="true" testsDirectory="/org.eclipse.triquetrum.workflow.model.tests/src/main/java"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    runtimeVersion="2.6" operationReflection="true" runtimePlatform="RCP" importOrganizing="true">
   <foreignModel>triquetrum.ecore</foreignModel>
   <genPackages prefix="Triq" basePackage="org.eclipse.triquetrum.workflow" disposableProviderFactory="true"
       ecorePackage="triquetrum.ecore#/">
@@ -20,9 +20,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/deepComplete"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/iconId"/>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getContainer"/>
-      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getFullName"/>
-      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getChild">
-        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/getChild/name"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getCommonContainer">
+        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/getCommonContainer/other"/>
       </genOperations>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/topLevel"/>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/setProperty">
@@ -32,8 +31,9 @@
       </genOperations>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/applyWrappedObject"/>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/buildWrappedObject"/>
-      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/initializeFrom">
-        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/initializeFrom/ptObject"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getFullName"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getChild">
+        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/getChild/name"/>
       </genOperations>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/welcome">
         <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/welcome/visitor"/>
@@ -71,24 +71,19 @@
     <genClasses ecoreClass="triquetrum.ecore#//Port">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/input"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/output"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Port/linkedRelations"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/multiPort"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Port/linkedRelations"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Port/insideLinkedRelations"/>
-      <genOperations ecoreOperation="triquetrum.ecore#//Port/canAcceptNewRelation"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference triquetrum.ecore#//Port/outsideLinkedRelations"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//Port/canAcceptNewOutsideRelation"/>
       <genOperations ecoreOperation="triquetrum.ecore#//Port/canAcceptNewInsideRelation"/>
     </genClasses>
     <genClasses ecoreClass="triquetrum.ecore#//Relation">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Relation/linkedRelations"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Relation/linkingRelations"/>
-      <genOperations ecoreOperation="triquetrum.ecore#//Relation/link">
-        <genParameters ecoreParameter="triquetrum.ecore#//Relation/link/relation"/>
-      </genOperations>
-      <genOperations ecoreOperation="triquetrum.ecore#//Relation/unlink">
-        <genParameters ecoreParameter="triquetrum.ecore#//Relation/unlink/relation"/>
-      </genOperations>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Relation/linkedPorts"/>
       <genOperations ecoreOperation="triquetrum.ecore#//Relation/isConnected"/>
       <genOperations ecoreOperation="triquetrum.ecore#//Relation/getVertex"/>
-      <genOperations ecoreOperation="triquetrum.ecore#//Relation/getLinkedPorts"/>
     </genClasses>
     <genClasses ecoreClass="triquetrum.ecore#//Location">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Location/expression"/>
@@ -102,6 +97,11 @@
       <genOperations ecoreOperation="triquetrum.ecore#//Linkable/unlink">
         <genParameters ecoreParameter="triquetrum.ecore#//Linkable/unlink/relation"/>
       </genOperations>
+      <genOperations ecoreOperation="triquetrum.ecore#//Linkable/isPotentialStart"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//Linkable/isPotentialEnd">
+        <genParameters ecoreParameter="triquetrum.ecore#//Linkable/isPotentialEnd/start"/>
+      </genOperations>
+      <genOperations ecoreOperation="triquetrum.ecore#//Linkable/buildWrappedLinks"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

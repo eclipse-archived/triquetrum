@@ -36,26 +36,25 @@ public interface Linkable extends NamedObj {
   void unlink(Relation relation);
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model kind="operation"
    * @generated
    */
   boolean isPotentialStart();
 
   /**
-   * <!-- begin-user-doc -->
-     * This method checks whether a connection's src and target are of the right type and on the right model level
-     * to be a matching pair to be connected.
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> This method checks whether a connection's src and target are of the right type and on the right model level to be a matching pair
+   * to be connected. <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */
   boolean isPotentialEnd(Linkable start);
 
   /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @model
    * @generated
    */

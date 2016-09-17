@@ -149,8 +149,8 @@ public interface Port extends Linkable {
 
   /**
    * Returns the value of the '<em><b>Linked Relations</b></em>' reference list. The list contents are of type
-   * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is
-   * '{@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}'. <!-- begin-user-doc -->
+   * {@link org.eclipse.triquetrum.workflow.model.Relation}. It is bidirectional and its opposite is '
+   * {@link org.eclipse.triquetrum.workflow.model.Relation#getLinkedPorts <em>Linked Ports</em>}'. <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Linked Relations</em>' reference list isn't clear, there really should be more of a description here...
    * </p>

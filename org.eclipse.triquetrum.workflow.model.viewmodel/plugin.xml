@@ -10,6 +10,8 @@
         Erwin De Ley - initial API and implementation and/or initial documentation
  --><plugin>
    <extension point="org.eclipse.emf.ecp.view.model.provider.xmi.file">
+<file filePath="viewmodels/CompositeActor.view"/>
+
 <file filePath="viewmodels/Port.view"/>
 
 <file filePath="viewmodels/Annotation.view"/>

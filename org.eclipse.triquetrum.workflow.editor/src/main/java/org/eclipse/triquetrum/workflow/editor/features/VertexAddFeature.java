@@ -81,10 +81,8 @@ public class VertexAddFeature extends AbstractAddShapeFeature {
     link(anchor, addedVertex, BoCategory.Relation);
     link(containerShape, addedVertex, BoCategory.Relation);
 
-    // TODO find a way to get the full name from our Triq NamedObj,
-    // then we don't need to depend on the presence of the wrapped object.
     Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-    if (anchorMap != null && addedVertex.getWrappedObject() != null) {
+    if (anchorMap != null) {
       anchorMap.put(addedVertex.getFullName(), anchor);
     }
 

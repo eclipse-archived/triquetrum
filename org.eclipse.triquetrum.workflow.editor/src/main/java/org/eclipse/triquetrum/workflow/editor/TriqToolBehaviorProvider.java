@@ -147,8 +147,11 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
     Object bo = featureProvider.getBusinessObjectForPictogramElement(pe);
     if (bo instanceof Entity) {
       GraphicsAlgorithm invisible = pe.getGraphicsAlgorithm();
-      GraphicsAlgorithm rectangle = invisible.getGraphicsAlgorithmChildren().get(0);
-      return new GraphicsAlgorithm[] { rectangle };
+      if(invisible.getGraphicsAlgorithmChildren().size()>0) {
+        return new GraphicsAlgorithm[] {invisible.getGraphicsAlgorithmChildren().get(0)};
+      } else {
+        return new GraphicsAlgorithm[] {invisible};
+      }
     }
     return super.getClickArea(pe);
   }
