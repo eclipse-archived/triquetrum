@@ -68,7 +68,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   @Override
   protected void eBasicSetContainer(InternalEObject newContainer) {
     super.eBasicSetContainer(newContainer);
-    if(newContainer==null && wrappedObject!=null) {
+    if (newContainer == null && wrappedObject != null) {
       try {
         getWrappedObject().setContainer(null);
       } catch (Exception e) {
@@ -132,7 +132,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   @Override
   public EList<Entity> getEntities() {
     if (entities == null) {
-      entities = new EObjectContainmentEList<>(Entity.class, this, TriqPackage.COMPOSITE_ENTITY__ENTITIES);
+      entities = new EObjectContainmentEList<Entity>(Entity.class, this, TriqPackage.COMPOSITE_ENTITY__ENTITIES);
     }
     return entities;
   }
@@ -145,7 +145,7 @@ public class CompositeEntityImpl extends EntityImpl implements CompositeEntity {
   @Override
   public EList<Relation> getRelations() {
     if (relations == null) {
-      relations = new EObjectContainmentEList<>(Relation.class, this, TriqPackage.COMPOSITE_ENTITY__RELATIONS);
+      relations = new EObjectContainmentEList<Relation>(Relation.class, this, TriqPackage.COMPOSITE_ENTITY__RELATIONS);
     }
     return relations;
   }

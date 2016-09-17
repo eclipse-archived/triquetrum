@@ -52,7 +52,7 @@ public interface NamedObj extends EObject {
   /**
    * Sets the value of the '{@link org.eclipse.triquetrum.workflow.model.NamedObj#getName <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc
    * -->
-   * 
+   *
    * @param value
    *          the new value of the '<em>Name</em>' attribute.
    * @see #getName()
@@ -114,6 +114,22 @@ public interface NamedObj extends EObject {
   NamedObj getContainer();
 
   /**
+   * <!-- begin-user-doc -->Calculates the lowest common container for this and other NamedObj instances, using a tree
+   * <a href="https://en.wikipedia.org/wiki/Lowest_common_ancestor">Lowest Common Ancestor</a> algorithm.
+   * <p>
+   * If both instances are in a same model, this is always defined. In the "worst case" they are both in the same toplevel composite actor.
+   * </p>
+   * <p>
+   * If no common container is found, the method returns null. This is an indication for the fact that both objects are not part of a same model.
+   * </p>
+   * <!-- end-user-doc -->
+   * 
+   * @model
+   * @generated
+   */
+  NamedObj getLowestCommonContainer(NamedObj other);
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @model
@@ -155,7 +171,7 @@ public interface NamedObj extends EObject {
 
   /**
    * <!-- begin-user-doc -->
-   * 
+   *
    * @return the contained element with the given simple name or null if not present <!-- end-user-doc -->
    * @model
    * @generated

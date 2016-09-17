@@ -3,6 +3,9 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="model" nsURI="http://www.eclipse.org/triquetrum" nsPrefix="org.eclipse.triquetrum.workflow">
   <eClassifiers xsi:type="ecore:EClass" name="NamedObj">
     <eOperations name="getContainer" eType="#//NamedObj"/>
+    <eOperations name="getLowestCommonContainer" eType="#//NamedObj">
+      <eParameters name="other" eType="#//NamedObj"/>
+    </eOperations>
     <eOperations name="topLevel" eType="#//NamedObj"/>
     <eOperations name="setProperty">
       <eParameters name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
