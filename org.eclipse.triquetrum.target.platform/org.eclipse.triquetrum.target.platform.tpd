@@ -5,9 +5,9 @@ target "Triq" with allEnvironments configurePhase
 // out, not sure what the best resolution is
 include "org.eclipse.triquetrum.python.rpc.platform.tpd"
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20151118145958/repository/" {
-	org.slf4j.api.source
-	org.slf4j.impl.log4j12.source
+location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/" {
+  org.slf4j.api.source [1.7.2,1.7.3)
+	org.slf4j.impl.log4j12.source [1.7.2,1.7.3)
 	org.apache.commons.io.source
 	org.apache.log4j.source
 	org.apache.commons.io
