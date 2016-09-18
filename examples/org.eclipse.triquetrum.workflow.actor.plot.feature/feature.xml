@@ -11,38 +11,20 @@
  -->
 <feature
       id="org.eclipse.triquetrum.workflow.actor.plot.feature"
-      label="Example plotting actor Feature"
+      label="%featureName"
       version="0.1.0.qualifier"
-      provider-name="Eclipse Triquetrum"
-      license-feature="org.eclipse.triquetrum.ptolemy.feature"
-      license-feature-version="0.1.0.qualifier">
+      provider-name="%providerName">
 
    <description url="https://wiki.eclipse.org/Triquetrum">
-      An xample feature that illustrates dynamic Triquetrum
-extensions.
-In this case it&apos;s about adding an extra actor and its palette
-contribution, for an XYPlotActor.
-As the implementation is based on Eclipse Nebula XYGraph, this
-dependency bundle is also contained in the feature definition.
+      %description
    </description>
 
    <copyright>
-      /*******************************************************************************
-* Copyright (c) 2015-2016 iSencia Belgium NV.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License
-v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*    Erwin De Ley - initial API and implementation and/or initial
-documentation
-*******************************************************************************/
+      %copyright
    </copyright>
 
-   <license url="https://eclipse.org/legal/epl/notice.php">
-      https://eclipse.org/legal/epl/notice.php
+   <license url="%licenseURL">
+      %license
    </license>
 
    <plugin
