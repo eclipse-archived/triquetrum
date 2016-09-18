@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015 iSencia S.L.
+ * Copyright (c) 2015, 2016 iSencia S.L.
  * This code was donated by Jan Vermeulen and the Vilassar office of iSencia Spain.
  *
  * All rights reserved. This program and the accompanying materials
