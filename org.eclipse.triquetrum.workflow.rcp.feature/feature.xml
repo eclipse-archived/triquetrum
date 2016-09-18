@@ -11,32 +11,21 @@
  -->
 <feature
       id="org.eclipse.triquetrum.workflow.rcp.feature"
-      label="Triquetrum RCP feature"
+      label="%featureName"
       version="0.1.0.qualifier"
-      license-feature="org.eclipse.triquetrum.ptolemy.feature"
-      license-feature-version="0.1.0.qualifier">
+      provider-name="%providerName"
+      plugin="org.eclipse.triquetrum.workflow.editor">
 
    <description url="https://wiki.eclipse.org/Triquetrum">
-      The Triquetrum Workflow Rich Client Platform (RCP) Editor.
+      %description
    </description>
 
    <copyright>
-      /*******************************************************************************
-* Copyright (c) 2015-2016 iSencia Belgium NV.
-* All rights reserved. This program and the accompanying materials
-* are made available under the terms of the Eclipse Public License
-v1.0
-* which accompanies this distribution, and is available at
-* http://www.eclipse.org/legal/epl-v10.html
-*
-* Contributors:
-*    Erwin De Ley - initial API and implementation and/or initial
-documentation
-*******************************************************************************/
+      %copyright
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="%licenseURL">
+      %license
    </license>
 
    <requires>
