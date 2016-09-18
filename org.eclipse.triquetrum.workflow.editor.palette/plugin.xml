@@ -127,11 +127,6 @@
       </group>
       <group displayName="Transformation">
         <entry
-             class="org.eclipse.triquetrum.python.actor.activator.PythonActor"
-             displayName="Python Actor"
-             type="Actor">
-        </entry>
-        <entry
              class="org.eclipse.triquetrum.processing.actor.TaskBasedActor"
              displayName="TaskBasedActor"
              type="Actor">

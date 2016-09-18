@@ -1,3 +1,0 @@
-instructions.configure=\
-  addRepository(type:0,location:file${#58}/c:/temp/triquetrum/repository/);\
-  addRepository(type:1,location:file${#58}/c:/temp/triquetrum/repository/);
