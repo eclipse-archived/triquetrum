@@ -1,142 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
-  <!-- Custom properties -->
-  <properties>
-    <target-version>0.1.0-SNAPSHOT</target-version>
-    <tycho-version>0.24.0</tycho-version>
-  </properties>
-  
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>triquetrum</groupId>
+	<!-- Custom properties -->
+	<properties>
+		<releaseName>0.1.0</releaseName>
+		<tycho-version>0.24.0</tycho-version>
+		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
+		<buildId>I${maven.build.timestamp}</buildId>
+	</properties>
 
-  <!-- Changed artifactId to org.eclipse.triquetrum.build -->
-  <!-- <artifactId>triquetrum</artifactId> -->
-  <artifactId>org.eclipse.triquetrum.build</artifactId>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>triquetrum</groupId>
+	<version>0.1.0-SNAPSHOT</version>
 
-  <version>0.1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  <modules>
-    <module>org.eclipse.triquetrum.target.platform</module>
-    <module>org.eclipse.triquetrum.common</module>
-    <module>org.eclipse.triquetrum.logging.dvp</module>
-    <module>org.eclipse.triquetrum.processing.actor</module>
-    <module>org.eclipse.triquetrum.processing.api</module>
-    <module>org.eclipse.triquetrum.processing.model.impl</module>
-    <module>org.eclipse.triquetrum.processing.service.impl</module>
-    <module>org.eclipse.triquetrum.validation.api</module>
-    <module>org.eclipse.triquetrum.workflow.actor.ui</module>
-    <module>org.eclipse.triquetrum.workflow.api</module>
-    <module>org.eclipse.triquetrum.workflow.editor</module>
-    <module>org.eclipse.triquetrum.workflow.editor.palette</module>
-    <module>org.eclipse.triquetrum.workflow.execution.impl</module>
-    <module>org.eclipse.triquetrum.workflow.repository.impl.filesystem</module>
-    <module>org.eclipse.triquetrum.workflow.model</module>
-    <module>org.eclipse.triquetrum.workflow.model.edit</module>
-    <module>org.eclipse.triquetrum.workflow.model.editor</module>
-    <module>org.eclipse.triquetrum.workflow.model.viewmodel</module>
-    <module>org.eclipse.triquetrum.workflow.ui</module>
-    <module>org.eclipse.triquetrum.python.actor</module>
-    <module>org.eclipse.triquetrum.python.service</module>
-    <module>org.eclipse.triquetrum.scisoft.analysis.rpc</module>
-    <module>javadoc</module>
-    <module>org.eclipse.triquetrum.thirdparty.feature</module>
-    <module>org.eclipse.triquetrum.ptolemy.feature</module>
-    <module>org.eclipse.triquetrum.core.feature</module>
-    <module>org.eclipse.triquetrum.workflow.core.feature</module>
-    <module>org.eclipse.triquetrum.python.feature</module>
-    <module>org.eclipse.triquetrum.workflow.rcp.feature</module>
-    <module>org.eclipse.triquetrum.rcp.feature</module>
-    <module>examples</module>
-    <module>org.eclipse.triquetrum.repository</module>
-  </modules>
+	<!-- Changed artifactId to org.eclipse.triquetrum.build -->
+	<!-- <artifactId>triquetrum</artifactId> -->
+	<artifactId>org.eclipse.triquetrum.build</artifactId>
 
-  <build>
-    <plugins>
-        <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>tycho-maven-plugin</artifactId>
-            <version>${tycho-version}</version>
-            <extensions>true</extensions>
-        </plugin>
-        <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>tycho-p2-repository-plugin</artifactId>
-            <version>${tycho-version}</version>
-            <configuration>
-                <includeAllDependencies>true</includeAllDependencies>
-            </configuration>
-        </plugin>
-<!-- This configures the target platform and the supported architectures. -->
-        <plugin>
-            <groupId>org.eclipse.tycho</groupId>
-            <artifactId>target-platform-configuration</artifactId>
-            <version>${tycho-version}</version>
-            <configuration>
-                <environments>
-                    <environment>
-                        <os>linux</os>
-                        <ws>gtk</ws>
-                        <arch>x86</arch>
-                    </environment>
-                    <environment>
-                        <os>linux</os>
-                        <ws>gtk</ws>
-                        <arch>x86_64</arch>
-                    </environment>
-                    <environment>
-                        <os>win32</os>
-                        <ws>win32</ws>
-                        <arch>x86</arch>
-                    </environment>
-                    <environment>
-                        <os>win32</os>
-                        <ws>win32</ws>
-                        <arch>x86_64</arch>
-                    </environment>
-                    <environment>
-                        <os>macosx</os>
-                        <ws>cocoa</ws>
-                        <arch>x86_64</arch>
-                    </environment>
-                </environments>
-                <target>
-                    <artifact>
-                        <groupId>triquetrum</groupId>
-                        <artifactId>org.eclipse.triquetrum.target.platform</artifactId>
-                        <version>0.1.0-SNAPSHOT</version>
-                    </artifact>
-                </target>
-            </configuration>
-        </plugin>
-        <plugin>
-          <!-- FindBugs
-               To invoke, run
-                  mvn findbugs:findbugs
-               
-               To bring up the FindBugs gui for each bundle, run:
-                  mvn findbugs:gui
+	<packaging>pom</packaging>
+	<modules>
+		<module>org.eclipse.triquetrum.target.platform</module>
+		<module>org.eclipse.triquetrum.common</module>
+		<module>org.eclipse.triquetrum.logging.dvp</module>
+		<module>org.eclipse.triquetrum.processing.actor</module>
+		<module>org.eclipse.triquetrum.processing.api</module>
+		<module>org.eclipse.triquetrum.processing.model.impl</module>
+		<module>org.eclipse.triquetrum.processing.service.impl</module>
+		<module>org.eclipse.triquetrum.validation.api</module>
+		<module>org.eclipse.triquetrum.workflow.actor.ui</module>
+		<module>org.eclipse.triquetrum.workflow.api</module>
+		<module>org.eclipse.triquetrum.workflow.editor</module>
+		<module>org.eclipse.triquetrum.workflow.editor.palette</module>
+		<module>org.eclipse.triquetrum.workflow.execution.impl</module>
+		<module>org.eclipse.triquetrum.workflow.repository.impl.filesystem</module>
+		<module>org.eclipse.triquetrum.workflow.model</module>
+		<module>org.eclipse.triquetrum.workflow.model.edit</module>
+		<module>org.eclipse.triquetrum.workflow.model.editor</module>
+		<module>org.eclipse.triquetrum.workflow.model.viewmodel</module>
+		<module>org.eclipse.triquetrum.workflow.ui</module>
+		<module>org.eclipse.triquetrum.python.actor</module>
+		<module>org.eclipse.triquetrum.python.actor.palette</module>
+		<module>org.eclipse.triquetrum.python.service</module>
+		<module>org.eclipse.triquetrum.scisoft.analysis.rpc</module>
+		<module>javadoc</module>
+		<module>org.eclipse.triquetrum.thirdparty.feature</module>
+		<module>org.eclipse.triquetrum.ptolemy.feature</module>
+		<module>org.eclipse.triquetrum.core.feature</module>
+		<module>org.eclipse.triquetrum.workflow.core.feature</module>
+		<module>org.eclipse.triquetrum.python.feature</module>
+		<module>org.eclipse.triquetrum.workflow.rcp.feature</module>
+		<module>org.eclipse.triquetrum.rcp.feature</module>
+		<module>examples</module>
+		<module>org.eclipse.triquetrum.repository</module>
+	</modules>
 
-               docs: http://gleclaire.github.io/findbugs-maven-plugin/   
-          -->
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>findbugs-maven-plugin</artifactId>
-          <version>3.0.3</version>
-          <configuration>
-            <effort>Max</effort>
-            <findbugsXmlOutput>true</findbugsXmlOutput>
-            <failOnError>false</failOnError>
-          </configuration>
-          <executions>
-            <execution>
-              <goals>
-                <goal>check</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-    </plugins>
-  </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.6</version>
+				<executions>
+					<execution>
+						<id>process-about.mappings</id>
+						<phase>prepare-package</phase>
+						<configuration>
+							<outputDirectory>${project.build.directory}</outputDirectory>
+							<overwrite>true</overwrite>
+							<resources>
+								<resource>
+									<directory>${basedir}</directory>
+									<includes>
+										<include>about.mappings</include>
+									</includes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<additionalFileSets>
+						<fileSet>
+							<directory>${project.build.directory}</directory>
+							<includes>
+								<include>about.mappings</include>
+							</includes>
+						</fileSet>
+					</additionalFileSets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-p2-repository-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<includeAllDependencies>true</includeAllDependencies>
+				</configuration>
+			</plugin>
+			<!-- This configures the target platform and the supported architectures. -->
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<environments>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+					<target>
+						<artifact>
+							<groupId>triquetrum</groupId>
+							<artifactId>org.eclipse.triquetrum.target.platform</artifactId>
+							<version>${project.version}</version>
+						</artifact>
+					</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- FindBugs To invoke, run mvn findbugs:findbugs To bring up the FindBugs
+					gui for each bundle, run: mvn findbugs:gui docs: http://gleclaire.github.io/findbugs-maven-plugin/ -->
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>3.0.3</version>
+				<configuration>
+					<effort>Max</effort>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<failOnError>false</failOnError>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
 
