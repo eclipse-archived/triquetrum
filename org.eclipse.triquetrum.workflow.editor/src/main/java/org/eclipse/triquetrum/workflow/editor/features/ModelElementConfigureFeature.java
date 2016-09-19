@@ -19,7 +19,6 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
-import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.util.EclipseUtils;
 import org.eclipse.triquetrum.workflow.editor.views.NamedObjDialog;
@@ -89,6 +88,7 @@ public class ModelElementConfigureFeature extends AbstractCustomFeature {
 
   @Override
   public boolean hasDoneChanges() {
-    return ((TriqDiagramEditor) getDiagramBehavior().getDiagramContainer()).getCommandStack().isDirty();
+    return getDiagram().eResource().isModified();
+//    return ((TriqDiagramEditor) getDiagramBehavior().getDiagramContainer()).getCommandStack().isDirty();
   }
 }
