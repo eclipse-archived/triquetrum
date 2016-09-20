@@ -16,7 +16,9 @@ public class PtObjectBuilderVisitor implements Visitor {
 
   @Override
   public void visit(NamedObj modelElement) {
-    modelElement.buildWrappedObject();
+    if (modelElement.getWrappedObject() == null) {
+      modelElement.buildWrappedObject();
+    }
   }
 
 }
