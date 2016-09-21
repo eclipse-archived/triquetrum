@@ -2,7 +2,16 @@
 by Christoph Daniel Schulze
 See https://wiki.eclipse.org/Milestone_and_Release_Builds
 
-/shared/common/apache-ant-latest/bin/ant -file publish.xml -DtargetDir=/shared/modeling/triquetrum/updates/nightly/ zipIt copy
+Usage:
+ant -file publish.xml -DtargetDir=/shared/technology/triquetrum/updates/nightly/ zipIt copy
+
+See https://wiki.eclipse.org/Hudson#Server_Storage for how to choose the correct path:
+
+   # Medium-term storage:
+   /shared/<project id with . replaced by />
+   # Long-term storage:
+   /home/data/httpd/download.eclipse.org/<project name />
+   
  -->
 <!--
 Provides a number of targets that know what to do with built update
@@ -65,6 +74,9 @@ sites. This includes:
     <!-- ================================================================= -->
     <target name="zipIt"
             description="Produces a zip file from the source directory.">
+
+        <!-- Delete before creating and avoid "A zip file cannot include itself" -->
+        <delete file="${sourceDir}/${targetZipFileName}" />
 
         <!-- Produce a zip archive of the update site -->
         <zip zipfile="${sourceDir}/${targetZipFileName}" update="false">
