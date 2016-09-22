@@ -44,7 +44,10 @@
 		<module>org.eclipse.triquetrum.python.actor.palette</module>
 		<module>org.eclipse.triquetrum.python.service</module>
 		<module>org.eclipse.triquetrum.scisoft.analysis.rpc</module>
-		<module>javadoc</module>
+		<!-- Don't include the javadoc module, see 
+		     https://bugs.eclipse.org/bugs/show_bug.cgi?id=492412 
+		  -->
+		<!-- <module>javadoc</module> -->
 		<module>org.eclipse.triquetrum.thirdparty.feature</module>
 		<module>org.eclipse.triquetrum.ptolemy.feature</module>
 		<module>org.eclipse.triquetrum.core.feature</module>
