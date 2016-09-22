@@ -24,7 +24,7 @@ sites. This includes:
   * zipIt   - Zips the content of ${sourceDir} into a ZIP file at
               ${targetDir}/${targetZipFileName}.
 -->
-<project name="Eclipse Layout Kernel" basedir=".">
+<project name="Eclipse Triquetrum" basedir=".">
 
     <!-- ================================================================= -->
     <!-- P R O P E R T I E S                                               -->
