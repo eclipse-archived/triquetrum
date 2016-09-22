@@ -78,7 +78,7 @@ public class PythonService {
     environment.put("PYTHONPATH", pyBuf.toString());
 
     // TODO: log back python output directly to the log file.
-    processBuilder.redirectInput(Redirect.INHERIT);
+    processBuilder.redirectInput(Redirect.PIPE);
     processBuilder.redirectOutput(Redirect.INHERIT);
     processBuilder.redirectError(Redirect.INHERIT);
     service.process = processBuilder.start();
