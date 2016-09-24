@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.triquetrum.core.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.core.feature" version="0.1.0.qualifier">
+      <category name="triquetrum"/>
+   </feature>
+   <feature url="features/org.eclipse.triquetrum.ptolemy.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.ptolemy.feature" version="0.1.0.qualifier">
+      <category name="triquetrum"/>
+   </feature>
+   <feature url="features/org.eclipse.triquetrum.python.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.python.feature" version="0.1.0.qualifier">
+      <category name="triquetrum"/>
+   </feature>
+   <feature url="features/org.eclipse.triquetrum.rcp.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.rcp.feature" version="0.1.0.qualifier">
+      <category name="triquetrum"/>
+   </feature>
+   <feature url="features/org.eclipse.triquetrum.thirdparty.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.thirdparty.feature" version="0.1.0.qualifier">
+      <category name="triquetrum"/>
+   </feature>
+   <feature url="features/org.eclipse.triquetrum.workflow.actor.plot.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.workflow.actor.plot.feature" version="0.1.0.qualifier">
+      <category name="triquetrum"/>
+   </feature>
+   <feature url="features/org.eclipse.triquetrum.workflow.core.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.workflow.core.feature" version="0.1.0.qualifier">
+      <category name="triquetrum"/>
+   </feature>
+   <feature url="features/org.eclipse.triquetrum.workflow.rcp.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.workflow.rcp.feature" version="0.1.0.qualifier">
+      <category name="triquetrum"/>
+   </feature>
+   <category-def name="triquetrum" label="Triquetrum Scientific Workflow System">
+      <description>
+         Triquetrum delivers an open platform for managing and executing scientific workflows. The goal of Triquetrum is to support a wide range of use cases, ranging from automated processes based on predefined models, to replaying ad-hoc research workflows recorded from a user&apos;s actions in a scientific workbench UI. It will allow to define and execute models from personal pipelines with a few steps to massive models with thousands of elements.
+      </description>
+   </category-def>
+</site>
