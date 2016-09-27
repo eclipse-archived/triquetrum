@@ -24,7 +24,7 @@
    <feature url="features/org.eclipse.triquetrum.workflow.rcp.feature_0.1.0.qualifier.jar" id="org.eclipse.triquetrum.workflow.rcp.feature" version="0.1.0.qualifier">
       <category name="triquetrum"/>
    </feature>
-   <category-def name="triquetrum" label="Triquetrum Scientific Workflow System">
+   <category-def name="triquetrum" label="Triquetrum Scientific Workflow System (Incubation)">
       <description>
          Triquetrum delivers an open platform for managing and executing scientific workflows. The goal of Triquetrum is to support a wide range of use cases, ranging from automated processes based on predefined models, to replaying ad-hoc research workflows recorded from a user&apos;s actions in a scientific workbench UI. It will allow to define and execute models from personal pipelines with a few steps to massive models with thousands of elements.
       </description>
