@@ -19,3 +19,4 @@ Import-Package: org.apache.commons.io;version="2.2.0",
  ptolemy.kernel.util;version="11.0.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.repository.impl.filesystem.activator.Activator
 Export-Package: org.eclipse.triquetrum.workflow.repository.impl.filesystem;version="0.1.0"
+Bundle-ActivationPolicy: lazy

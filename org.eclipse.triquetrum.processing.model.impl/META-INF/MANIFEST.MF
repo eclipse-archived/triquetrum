@@ -13,3 +13,4 @@ Import-Package: org.apache.commons.lang.builder;version="2.6.0",
  org.slf4j;version="1.7.2"
 Export-Package: org.eclipse.triquetrum.processing.model.impl;version="0.1.0"
 Service-Component: OSGI-INF/TriqFactory.xml
+Bundle-ActivationPolicy: lazy
