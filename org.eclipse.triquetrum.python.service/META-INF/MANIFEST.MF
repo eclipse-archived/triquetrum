@@ -12,3 +12,4 @@ Import-Package: org.eclipse.triquetrum.scisoft.analysis.rpc,
 Eclipse-BundleShape: dir
 Require-Bundle: org.eclipse.equinox.common
 Bundle-Vendor: Eclipse Triquetrum
+Bundle-ActivationPolicy: lazy

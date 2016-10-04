@@ -20,4 +20,5 @@ Import-Package: org.eclipse.swt,
  ptolemy.util;version="11.0.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.actor.ui.activator.Activator
 Require-Bundle: org.eclipse.triquetrum.workflow.ui;bundle-version="0.1.0"
+Bundle-ActivationPolicy: lazy
 
