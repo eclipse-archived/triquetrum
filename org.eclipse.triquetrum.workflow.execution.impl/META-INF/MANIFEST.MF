@@ -17,3 +17,4 @@ Import-Package: org.apache.commons.lang.builder;version="2.6.0",
  ptolemy.kernel;version="10.1.0",
  ptolemy.kernel.util;version="11.0.0"
 Service-Component: OSGI-INF/WorkflowExecutionService.xml
+Bundle-ActivationPolicy: lazy
