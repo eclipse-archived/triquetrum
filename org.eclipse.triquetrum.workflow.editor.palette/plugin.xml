@@ -16,7 +16,7 @@
          name="Default Triquetrum palette definition"
          point="org.eclipse.triquetrum.workflow.editor.paletteContribution">
 
-      <group displayName="Utilities">
+      <group displayName="Utilities" priority="1000">
 	      <entry
 	            class="ptolemy.vergil.kernel.attributes.TextAttribute"
 	            displayName="Annotation"
@@ -41,7 +41,7 @@
               type="Vertex">
         </entry>
       </group>
-      <group displayName="Directors">
+      <group displayName="Directors" priority="900">
         <entry
               class="ptolemy.domains.sdf.kernel.SDFDirector"
               displayName="SDF director"
@@ -55,7 +55,7 @@
               type="Director">
         </entry>
       </group>
-      <group displayName="Sources">
+      <group displayName="Sources" priority="800">
 	      <entry
 	            class="ptolemy.actor.lib.Const"
 	            displayName="Constant"
@@ -78,7 +78,7 @@
           </entry>
         </group>
       </group>
-      <group displayName="Sinks">
+      <group displayName="Sinks" priority="700">
         <group displayName="Visualization" icon="icons/display.gif">
           <entry
                 class="ptolemy.actor.lib.gui.Display"
@@ -116,7 +116,7 @@
 	            type="Actor">
 	      </entry>
       </group>
-      <group displayName="Flow control">
+      <group displayName="Flow control" priority="500">
         <entry
               class="ptolemy.actor.lib.RecordDisassembler"
               displayName="RecordDisassembler"
@@ -125,7 +125,7 @@
               type="Actor">
         </entry>
       </group>
-      <group displayName="Transformation">
+      <group displayName="Transformation" priority="300">
         <entry
              class="org.eclipse.triquetrum.processing.actor.TaskBasedActor"
              displayName="TaskBasedActor"

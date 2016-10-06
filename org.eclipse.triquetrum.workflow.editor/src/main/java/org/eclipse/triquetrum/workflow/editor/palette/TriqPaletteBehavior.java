@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.palette;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -17,6 +20,7 @@ import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.gef.palette.CombinedTemplateCreationEntry;
 import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.PaletteViewerProvider;
 import org.eclipse.graphiti.features.ICreateFeature;
@@ -62,7 +66,16 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
     return result;
   }
 
-  public void handlePaletteEntry(PaletteContainer parent, IConfigurationElement parentGroupElem, IConfigurationElement cfgElem) {
+  @SuppressWarnings("unchecked")
+  public synchronized void handlePaletteEntry(PaletteContainer parent, IConfigurationElement parentGroupElem, IConfigurationElement cfgElem) {
+    String priorityStr = cfgElem.getAttribute("priority");
+    priorityStr = StringUtils.isBlank(priorityStr) ? "0" : priorityStr;
+    Integer priority = 0;
+    try {
+      priority = Integer.valueOf("-" + priorityStr);
+    } catch (NumberFormatException e) {
+      // just ignore this and take the default value 0
+    }
     String label = cfgElem.getAttribute("displayName");
     String iconType = cfgElem.getAttribute("iconType");
     iconType = StringUtils.isBlank(iconType) ? TriqFeatureProvider.ICONTYPE_IMG : iconType;
@@ -85,14 +98,36 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
       break;
     }
     case "group": {
-      PaletteTreeNode pg = new PaletteTreeNode(label);
-      pg.setSmallIcon(imgDescriptor);
-      parent.add(pg);
+      // We assume the nr of entries on each level in the palette will be limited
+      // so a straightforward iteration to look for existing groups should not be an issue.
+      PaletteTreeNode pg = null;
+      for (Object pe : parent.getChildren()) {
+        if (pe instanceof PaletteTreeNode && ((PaletteTreeNode)pe).getLabel().equals(label)) {
+          pg = (PaletteTreeNode) pe;
+          // We're a bit limited to determine the real desired priority
+          // when a group is used in different palette contributions
+          // as we have no control on the order in which the contributions
+          // are handled.
+          // So we always go for the highest priority across all contributions.
+          // (but remember that we store them as negative values)
+          if (pg.getPriority() > priority) {
+            pg.setPriority(priority);
+          }
+          break;
+        }
+      }
+      if (pg == null) {
+        pg = new PaletteTreeNode(label);
+        pg.setSmallIcon(imgDescriptor);
+        pg.setPriority(priority);
+        parent.add(pg);
+      }
       for (IConfigurationElement child : cfgElem.getChildren()) {
         handlePaletteEntry(pg, cfgElem, child);
       }
     }
     }
+    Collections.sort(parent.getChildren(), new PaletteEntryComparator());
   }
 
   private TriqFeatureProvider getFeatureProvider() {
@@ -101,5 +136,24 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
 
   private TriqDiagramTypeProvider getDiagramTypeProvider() {
     return (TriqDiagramTypeProvider) this.diagramBehavior.getDiagramTypeProvider();
+  }
+
+  private static class PaletteEntryComparator implements Comparator<PaletteEntry> {
+    @Override
+    public int compare(PaletteEntry o1, PaletteEntry o2) {
+      if(o1 instanceof PaletteTreeNode) {
+        if(o2 instanceof PaletteTreeNode) {
+          int result = ((PaletteTreeNode)o1).getPriority().compareTo(((PaletteTreeNode)o2).getPriority());
+          if(result != 0) {
+            return result;
+          }
+        } else {
+          return 1;
+        }
+      } else if (o2 instanceof PaletteTreeNode) {
+        return -1;
+      }
+      return o1.getLabel().compareTo(o2.getLabel());
+    }
   }
 }
