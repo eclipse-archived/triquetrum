@@ -29,6 +29,8 @@ public class PaletteTreeNode extends PaletteDrawer {
    */
   public static final Object PALETTE_TYPE_NODE = "$Palette Node"; //$NON-NLS-1$
 
+  private Integer priority = 0;
+
   /**
    * Constructor
    *
@@ -50,6 +52,22 @@ public class PaletteTreeNode extends PaletteDrawer {
   public PaletteTreeNode(String label, ImageDescriptor icon) {
     super(label, icon);
     // setType(PALETTE_TYPE_NODE);
+  }
+
+  /**
+   *
+   * @return the priority of this node in its container
+   */
+  public Integer getPriority() {
+    return priority;
+  }
+
+  /**
+   *
+   * @param priority
+   */
+  public void setPriority(Integer priority) {
+    this.priority = priority;
   }
 
   /**
