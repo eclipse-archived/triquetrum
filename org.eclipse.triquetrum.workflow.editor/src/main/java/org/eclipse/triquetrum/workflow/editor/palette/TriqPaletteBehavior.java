@@ -13,7 +13,10 @@ package org.eclipse.triquetrum.workflow.editor.palette;
 import java.util.Collections;
 import java.util.Comparator;
 
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.*;
+
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -30,6 +33,7 @@ import org.eclipse.graphiti.ui.internal.editor.GFCreationTool;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
+import org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteEntryProvider;
 import org.eclipse.triquetrum.workflow.editor.palette.ui.PaletteTreeViewerProvider;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
@@ -68,7 +72,7 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
 
   @SuppressWarnings("unchecked")
   public synchronized void handlePaletteEntry(PaletteContainer parent, IConfigurationElement parentGroupElem, IConfigurationElement cfgElem) {
-    String priorityStr = cfgElem.getAttribute("priority");
+    String priorityStr = cfgElem.getAttribute(PRIORITY);
     priorityStr = StringUtils.isBlank(priorityStr) ? "0" : priorityStr;
     Integer priority = 0;
     try {
@@ -76,20 +80,20 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
     } catch (NumberFormatException e) {
       // just ignore this and take the default value 0
     }
-    String label = cfgElem.getAttribute("displayName");
-    String iconType = cfgElem.getAttribute("iconType");
+    String label = cfgElem.getAttribute(DISPLAY_NAME);
+    String iconType = cfgElem.getAttribute(ICON_TYPE);
     iconType = StringUtils.isBlank(iconType) ? TriqFeatureProvider.ICONTYPE_IMG : iconType;
-    String iconResource = cfgElem.getAttribute("icon");
+    String iconResource = cfgElem.getAttribute(ICON);
     iconResource = !StringUtils.isBlank(iconResource) ? iconResource : null;
     iconResource = TriqFeatureProvider.ICONTYPE_IMG.equalsIgnoreCase(iconType) ? iconResource : null;
     ImageDescriptor imgDescriptor = null;
     if (iconResource != null) {
       getDiagramTypeProvider().getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource, iconResource);
-      imgDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(cfgElem.getDeclaringExtension().getContributor().getName(), iconResource);
+      imgDescriptor = AbstractUIPlugin.imageDescriptorFromPlugin(cfgElem.getContributor().getName(), iconResource);
     }
     switch (cfgElem.getName()) {
     case "entry": {
-      String clazz = cfgElem.getAttribute("class");
+      String clazz = cfgElem.getAttribute(CLASS);
       ICreateFeature createFeature = getFeatureProvider().buildCreateFeature(parentGroupElem, cfgElem);
       TriqPaletteRoot.DefaultCreationFactory cf = new TriqPaletteRoot.DefaultCreationFactory(createFeature, ICreateFeature.class);
       CombinedTemplateCreationEntry pe = new CombinedTemplateCreationEntry(label, clazz, cf, cf, imgDescriptor, imgDescriptor);
@@ -125,6 +129,23 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
       for (IConfigurationElement child : cfgElem.getChildren()) {
         handlePaletteEntry(pg, cfgElem, child);
       }
+
+      String providerClazz = cfgElem.getAttribute(PROVIDER);
+      if(providerClazz!=null) {
+        try {
+          PaletteEntryProvider pep = (PaletteEntryProvider) cfgElem.createExecutableExtension(PROVIDER);
+          for (IConfigurationElement child : pep.getPaletteEntries()) {
+            handlePaletteEntry(pg, cfgElem, child);
+          }
+        } catch (CoreException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        } catch (Exception e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
+      }
+
     }
     }
     Collections.sort(parent.getChildren(), new PaletteEntryComparator());

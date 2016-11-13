@@ -109,3 +109,4 @@ Bundle-Activator: org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin
 Service-Component: OSGI-INF/colorRendererService.xml,
  OSGI-INF/attributesRendererService.xml
 Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.triquetrum.workflow.editor.palette.spi
