@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: TqCL Api
+Bundle-SymbolicName: org.eclipse.triquetrum.commands.api
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: org.eclipse.triquetrum.commands.api.TqCLServices
+Bundle-Vendor: Eclipse Triquetrum
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.osgi.services;bundle-version="3.5.100"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.triquetrum.commands.api,
+ org.eclipse.triquetrum.commands.api.services
+Service-Component: OSGI-INF/librariesProvider.xml
