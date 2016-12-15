@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclipse.triquetrum.commands.xtext.ide
+Bundle-SymbolicName: org.eclipse.triquetrum.commands.xtext.ide;singleton:=true
+Bundle-Version: 0.0.1.qualifier
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.triquetrum.commands.ide.contentassist.antlr,
+ org.eclipse.triquetrum.commands.ide.contentassist.antlr.internal
+Require-Bundle: org.eclipse.xtext.ide;bundle-version="2.10.0",
+ org.eclipse.triquetrum.commands.xtext;bundle-version="1.0.0",
+ org.eclipse.xtext.xbase.ide;bundle-version="2.10.0",
+ org.eclipse.debug.core;bundle-version="3.10.100",
+ org.eclipse.debug.ui;bundle-version="3.11.200",
+ org.eclipse.ui;bundle-version="3.108.0",
+ org.eclipse.core.runtime;bundle-version="3.12.0",
+ org.eclipse.ui.console;bundle-version="3.6.200",
+ org.eclipse.triquetrum.workflow.model;bundle-version="0.1.0",
+ ptolemy.core;bundle-version="11.0.0",
+ org.eclipse.triquetrum.workflow.api;bundle-version="0.1.0",
+ org.eclipse.triquetrum.workflow.editor;bundle-version="0.1.0"
+
