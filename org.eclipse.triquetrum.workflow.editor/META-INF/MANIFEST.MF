@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.graphiti;bundle-version="0.12.0",
  org.eclipse.core.commands;bundle-version="3.7.0",
  org.eclipse.core.resources;bundle-version="3.10.0",
  org.eclipse.core.runtime;bundle-version="3.11.0",
- org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.100"
+ org.eclipse.ui.views.properties.tabbed;bundle-version="3.6.100",
+ org.eclipse.triquetrum.commands.api
 Import-Package: org.apache.batik.bridge;version="1.6.0",
  org.apache.batik.css.engine;version="1.6.0",
  org.apache.batik.dom;version="1.6.1",
@@ -106,7 +107,8 @@ Import-Package: org.apache.batik.bridge;version="1.6.0",
  ptolemy.vergil.icon;version="11.0.0",
  ptolemy.vergil.kernel.attributes;version="11.0.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin
-Service-Component: OSGI-INF/colorRendererService.xml,
- OSGI-INF/attributesRendererService.xml
+Service-Component: OSGI-INF/colorRendererService.xml,OSGI-INF/attributesRendererService.xml,OSGI-INF/librariesProvider.xml,
+ OSGI-INF/ModelBuilderService.xml,OSGI-INF/PtolemyModelBuilderService.xml
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.triquetrum.workflow.editor.palette.spi
+Export-Package: org.eclipse.triquetrum.workflow.editor,
+ org.eclipse.triquetrum.workflow.editor.features

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+       point="org.eclipse.debug.core.launchConfigurationTypes">
+    <launchConfigurationType
+          id="org.eclipse.triquetrum.commands.xtext.launchConfigurationType2"
+          modes="run"
+          name="TCQL"
+          public="true">
+    </launchConfigurationType>
+	 </extension>
+	 <extension
+	       point="org.eclipse.debug.ui.launchShortcuts">
+	    <shortcut
+	          class="org.eclipse.triquetrum.commands.xtext.ide.TqCLLaunchShortcut"
+	          id="org.eclipse.triquetrum.commands.xtext.shortcut.tqcl"
+	          label="Tqcl macro"
+	          modes="run">
+	       <contextualLaunch>
+	          <enablement>
+	             <with
+	                   variable="selection">
+	                <count
+	                      value="1">
+	                </count>
+	                <iterate
+	                      ifEmpty="false"
+	                      operator="or">
+	                   <test
+	                         property="org.eclipse.debug.ui.matchesPattern"
+	                         value="*.tqcl">
+	                   </test>
+	                </iterate>
+	             </with>
+	          </enablement>
+	       </contextualLaunch>
+	    </shortcut>
+     <shortcut
+           class="org.eclipse.triquetrum.commands.xtext.ide.TqCLPtolemyLaunchShortcut"
+           id="org.eclipse.triquetrum.commands.xtext.shortcut.tqcl4Ptolemy"
+           label="Triquetrum Application"
+           modes="run">
+        <contextualLaunch>
+           <enablement>
+              <with
+                    variable="selection">
+                 <count
+                       value="1">
+                 </count>
+                 <iterate
+                       ifEmpty="false"
+                       operator="or">
+                    <test
+                          property="org.eclipse.debug.ui.matchesPattern"
+                          value="*.tqcl">
+                    </test>
+                 </iterate>
+              </with>
+           </enablement>
+        </contextualLaunch>
+     </shortcut>
+	 </extension>
+
+</plugin>
