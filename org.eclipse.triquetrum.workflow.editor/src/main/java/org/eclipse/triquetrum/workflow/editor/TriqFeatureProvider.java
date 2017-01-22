@@ -10,16 +10,18 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor;
 
-import java.util.ArrayList;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.CLASS;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.DISPLAY_NAME;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.ICON;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.ICON_TYPE;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.PROPERTY;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.TYPE;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
 import org.eclipse.graphiti.features.IAddFeature;
@@ -76,8 +78,8 @@ import org.eclipse.triquetrum.workflow.editor.features.ModelElementPasteFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
-import org.eclipse.triquetrum.workflow.editor.features.PortUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
+import org.eclipse.triquetrum.workflow.editor.features.PortUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.VertexAddFeature;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Actor;
@@ -156,14 +158,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
 
   @Override
   public ICreateFeature[] getCreateFeatures() {
-    List<ICreateFeature> results = new ArrayList<>();
-    IExtensionPoint extPoint = Platform.getExtensionRegistry().getExtensionPoint(PALETTE_CONTRIBUTION_EXTENSION_ID);
-    for (IExtension ext : extPoint.getExtensions()) {
-      for (IConfigurationElement cfgElem : ext.getConfigurationElements()) {
-        handlePaletteEntry(results, null, cfgElem);
-      }
-    }
-    return results.toArray(new ICreateFeature[0]);
+    // these are all managed via the palette construction
+    return new ICreateFeature[0];
   }
 
   @Override
@@ -265,51 +261,25 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     return super.getDirectEditingFeature(context);
   }
 
-  public void handlePaletteEntry(List<ICreateFeature> results, IConfigurationElement parentGroupElem, IConfigurationElement cfgElem) {
-    switch (cfgElem.getName()) {
-    case "entry": {
-      ModelElementCreateFeature mecf = buildCreateFeature(parentGroupElem, cfgElem);
-      if (mecf != null) {
-        results.add(mecf);
-      }
-      break;
-    }
-    case "group": {
-      String label = cfgElem.getAttribute("displayName");
-      // this should enforce a single level of groups, i.e. children of subgroups are traversed and added,
-      // but they all get linked to their "top-level" parent group.
-      IConfigurationElement groupElement = parentGroupElem;
-      if (parentGroupElem == null) {
-        groupElement = cfgElem;
-        // no parent, so store this group as a root group
-        rootgroupsByName.put(label, cfgElem);
-      }
-      for (IConfigurationElement child : cfgElem.getChildren()) {
-        handlePaletteEntry(results, groupElement, child);
-      }
-    }
-    }
-  }
-
   public ModelElementCreateFeature buildCreateFeature(IConfigurationElement parentGroupElem, IConfigurationElement cfgElem) {
     ModelElementCreateFeature mecf = null;
-    String group = parentGroupElem != null ? parentGroupElem.getAttribute("displayName") : null;
-    String label = cfgElem.getAttribute("displayName");
-    String clazz = cfgElem.getAttribute("class");
+    String group = parentGroupElem != null ? parentGroupElem.getAttribute(DISPLAY_NAME) : null;
+    String label = cfgElem.getAttribute(DISPLAY_NAME);
+    String clazz = cfgElem.getAttribute(CLASS);
 
-    String iconResource = cfgElem.getAttribute("icon");
+    String iconResource = cfgElem.getAttribute(ICON);
     iconResource = !StringUtils.isBlank(iconResource) ? iconResource : DEFAULT_ACTOR_IMG;
-    String iconType = cfgElem.getAttribute("iconType");
+    String iconType = cfgElem.getAttribute(ICON_TYPE);
     iconType = StringUtils.isBlank(iconType) ? ICONTYPE_IMG : iconType;
 
-    String categoryTypeStr = cfgElem.getAttribute("type");
+    String categoryTypeStr = cfgElem.getAttribute(TYPE);
     try {
       BoCategory category = BoCategory.valueOf(categoryTypeStr);
 
       // look for (optional) attributes
       Map<String, String> properties = new HashMap<>();
       for (IConfigurationElement child : cfgElem.getChildren()) {
-        if ("property".equals(child.getName())) {
+        if (PROPERTY.equals(child.getName())) {
           String name = child.getAttribute("name");
           String value = child.getAttribute("value");
           properties.put(name, value);
