@@ -506,19 +506,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * 
    * @generated
    */
-  @Override
-  public EReference getEntity_InputPorts() {
+  public EReference getEntity_Ports() {
     return (EReference) entityEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public EReference getEntity_OutputPorts() {
-    return (EReference) entityEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -529,6 +518,24 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
   @Override
   public EOperation getEntity__GetParameters() {
     return entityEClass.getEOperations().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EOperation getEntity__GetInputPorts() {
+    return entityEClass.getEOperations().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public EOperation getEntity__GetOutputPorts() {
+    return entityEClass.getEOperations().get(2);
   }
 
   /**
@@ -924,9 +931,10 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEOperation(directorEClass, DIRECTOR___GET_PARAMETERS);
 
     entityEClass = createEClass(ENTITY);
-    createEReference(entityEClass, ENTITY__INPUT_PORTS);
-    createEReference(entityEClass, ENTITY__OUTPUT_PORTS);
+    createEReference(entityEClass, ENTITY__PORTS);
     createEOperation(entityEClass, ENTITY___GET_PARAMETERS);
+    createEOperation(entityEClass, ENTITY___GET_INPUT_PORTS);
+    createEOperation(entityEClass, ENTITY___GET_OUTPUT_PORTS);
 
     compositeEntityEClass = createEClass(COMPOSITE_ENTITY);
     createEReference(compositeEntityEClass, COMPOSITE_ENTITY__ENTITIES);
@@ -1081,12 +1089,14 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     initEOperation(getDirector__GetParameters(), this.getParameter(), "getParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(entityEClass, Entity.class, "Entity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getEntity_InputPorts(), this.getPort(), null, "inputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEntity_OutputPorts(), this.getPort(), null, "outputPorts", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEntity_Ports(), this.getPort(), null, "ports", null, 0, -1, Entity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE,
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getEntity__GetParameters(), this.getParameter(), "getParameters", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getEntity__GetInputPorts(), this.getPort(), "getInputPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
+
+    initEOperation(getEntity__GetOutputPorts(), this.getPort(), "getOutputPorts", 0, -1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(compositeEntityEClass, CompositeEntity.class, "CompositeEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCompositeEntity_Entities(), this.getEntity(), null, "entities", null, 0, -1, CompositeEntity.class, !IS_TRANSIENT, !IS_VOLATILE,

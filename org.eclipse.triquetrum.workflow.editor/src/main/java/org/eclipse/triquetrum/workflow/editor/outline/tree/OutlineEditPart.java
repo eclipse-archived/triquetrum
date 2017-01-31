@@ -56,8 +56,7 @@ public class OutlineEditPart extends org.eclipse.gef.editparts.AbstractTreeEditP
     children.addAll(flowModel.getAttributes());
     if (flowModel instanceof Entity) {
       Entity actor = (Entity) flowModel;
-      children.addAll(actor.getInputPorts());
-      children.addAll(actor.getOutputPorts());
+      children.addAll(actor.getPorts());
       if (flowModel instanceof CompositeEntity) {
         CompositeEntity composite = (CompositeEntity) flowModel;
         children.addAll(composite.getEntities());

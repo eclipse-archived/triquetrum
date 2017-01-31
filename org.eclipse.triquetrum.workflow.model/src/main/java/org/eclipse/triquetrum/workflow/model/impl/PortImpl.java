@@ -56,7 +56,7 @@ import ptolemy.kernel.util.IllegalActionException;
 public class PortImpl extends NamedObjImpl implements Port {
   /**
    * The default value of the '{@link #isInput() <em>Input</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isInput()
    * @generated
    * @ordered
@@ -65,7 +65,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isInput() <em>Input</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isInput()
    * @generated
    * @ordered
@@ -74,7 +74,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The default value of the '{@link #isOutput() <em>Output</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isOutput()
    * @generated
    * @ordered
@@ -83,7 +83,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isOutput()
    * @generated
    * @ordered
@@ -92,7 +92,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The default value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isMultiPort()
    * @generated
    * @ordered
@@ -101,7 +101,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isMultiPort()
    * @generated
    * @ordered
@@ -110,7 +110,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getLinkedRelations()
    * @generated
    * @ordered
@@ -164,7 +164,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -174,7 +174,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -206,7 +206,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -372,7 +372,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -387,7 +387,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -401,7 +401,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -433,7 +433,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -564,7 +564,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -588,7 +588,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -614,7 +614,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -638,7 +638,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -662,7 +662,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -691,7 +691,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
