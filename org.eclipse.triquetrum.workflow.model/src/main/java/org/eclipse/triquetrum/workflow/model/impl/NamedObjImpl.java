@@ -52,7 +52,7 @@ import ptolemy.kernel.util.Settable;
 public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedObj {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -61,7 +61,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The cached value of the '{@link #getName() <em>Name</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getName()
    * @generated
    * @ordered
@@ -70,7 +70,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The cached value of the '{@link #getAttributes() <em>Attributes</em>}' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getAttributes()
    * @generated
    * @ordered
@@ -79,7 +79,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The default value of the '{@link #getWrappedType() <em>Wrapped Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getWrappedType()
    * @generated
    * @ordered
@@ -88,7 +88,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The cached value of the '{@link #getWrappedType() <em>Wrapped Type</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getWrappedType()
    * @generated
    * @ordered
@@ -97,7 +97,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The default value of the '{@link #getWrappedObject() <em>Wrapped Object</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getWrappedObject()
    * @generated
    * @ordered
@@ -106,7 +106,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The cached value of the '{@link #getWrappedObject() <em>Wrapped Object</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getWrappedObject()
    * @generated
    * @ordered
@@ -115,7 +115,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The default value of the '{@link #isDeepComplete() <em>Deep Complete</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isDeepComplete()
    * @generated
    * @ordered
@@ -124,7 +124,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The cached value of the '{@link #isDeepComplete() <em>Deep Complete</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isDeepComplete()
    * @generated
    * @ordered
@@ -133,7 +133,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The default value of the '{@link #getIconId() <em>Icon Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getIconId()
    * @generated
    * @ordered
@@ -142,7 +142,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * The cached value of the '{@link #getIconId() <em>Icon Id</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getIconId()
    * @generated
    * @ordered
@@ -151,7 +151,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   protected NamedObjImpl() {
@@ -160,7 +160,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -170,7 +170,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -226,7 +226,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -283,20 +283,20 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    */
   @Override
   public NamedObj getLowestCommonContainer(NamedObj other) {
-    if(other==null) {
+    if (other == null) {
       return null;
     }
-    if(this==other || this==other.getContainer()) {
+    if (this == other || this == other.getContainer()) {
       return this;
     }
-    if(other==this.getContainer()) {
+    if (other == this.getContainer()) {
       return other;
     }
     NamedObj lcc = null;
     List<NamedObj> thisOnesContainers = getContainmentList();
-    List<NamedObj> theOthersContainers = ((NamedObjImpl)other).getContainmentList();
+    List<NamedObj> theOthersContainers = ((NamedObjImpl) other).getContainmentList();
     for (NamedObj ctr : thisOnesContainers) {
-      if(theOthersContainers.contains(ctr)) {
+      if (theOthersContainers.contains(ctr)) {
         lcc = ctr;
         break;
       }
@@ -306,14 +306,13 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    *
-   * @return the ordered list of containment hierarchy nodes of this NamedObj,
-   * starting with itself and adding its container and that one's container etc,
-   * ending with the toplevel as the last element in the list.
+   * @return the ordered list of containment hierarchy nodes of this NamedObj, starting with itself and adding its container and that one's container etc,
+   *         ending with the toplevel as the last element in the list.
    */
   protected List<NamedObj> getContainmentList() {
     List<NamedObj> thisOnesContainers = new ArrayList<>();
     NamedObj container = this;
-    while(container!=null) {
+    while (container != null) {
       thisOnesContainers.add(container);
       container = container.getContainer();
     }
@@ -384,7 +383,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -428,7 +427,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -438,7 +437,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -451,7 +450,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -461,7 +460,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -495,7 +494,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -509,7 +508,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -533,7 +532,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -565,7 +564,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -595,7 +594,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -619,7 +618,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -653,7 +652,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override

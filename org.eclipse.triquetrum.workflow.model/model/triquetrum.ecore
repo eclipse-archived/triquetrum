@@ -56,9 +56,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//NamedObj">
     <eOperations name="getParameters" upperBound="-1" eType="#//Parameter"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inputPorts" upperBound="-1"
-        eType="#//Port" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outputPorts" upperBound="-1"
+    <eOperations name="getInputPorts" upperBound="-1" eType="#//Port"/>
+    <eOperations name="getOutputPorts" upperBound="-1" eType="#//Port"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ports" upperBound="-1"
         eType="#//Port" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompositeEntity" eSuperTypes="#//Entity">

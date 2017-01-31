@@ -914,20 +914,12 @@ public interface TriqPackage extends EPackage {
   int ENTITY__ICON_ID = NAMED_OBJ__ICON_ID;
 
   /**
-   * The feature id for the '<em><b>Input Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int ENTITY__INPUT_PORTS = NAMED_OBJ_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Output Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int ENTITY__OUTPUT_PORTS = NAMED_OBJ_FEATURE_COUNT + 1;
+  int ENTITY__PORTS = NAMED_OBJ_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Entity</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -935,7 +927,7 @@ public interface TriqPackage extends EPackage {
    * @generated
    * @ordered
    */
-  int ENTITY_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 2;
+  int ENTITY_FEATURE_COUNT = NAMED_OBJ_FEATURE_COUNT + 1;
 
   /**
    * The operation id for the '<em>Get Container</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1018,12 +1010,28 @@ public interface TriqPackage extends EPackage {
   int ENTITY___GET_PARAMETERS = NAMED_OBJ_OPERATION_COUNT + 0;
 
   /**
+   * The operation id for the '<em>Get Input Ports</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ENTITY___GET_INPUT_PORTS = NAMED_OBJ_OPERATION_COUNT + 1;
+
+  /**
+   * The operation id for the '<em>Get Output Ports</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ENTITY___GET_OUTPUT_PORTS = NAMED_OBJ_OPERATION_COUNT + 2;
+
+  /**
    * The number of operations of the '<em>Entity</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int ENTITY_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 1;
+  int ENTITY_OPERATION_COUNT = NAMED_OBJ_OPERATION_COUNT + 3;
 
   /**
    * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.impl.CompositeEntityImpl <em>Composite Entity</em>}' class. <!-- begin-user-doc
@@ -1084,20 +1092,12 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ENTITY__ICON_ID = ENTITY__ICON_ID;
 
   /**
-   * The feature id for the '<em><b>Input Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int COMPOSITE_ENTITY__INPUT_PORTS = ENTITY__INPUT_PORTS;
-
-  /**
-   * The feature id for the '<em><b>Output Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int COMPOSITE_ENTITY__OUTPUT_PORTS = ENTITY__OUTPUT_PORTS;
+  int COMPOSITE_ENTITY__PORTS = ENTITY__PORTS;
 
   /**
    * The feature id for the '<em><b>Entities</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1204,6 +1204,22 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ENTITY___GET_PARAMETERS = ENTITY___GET_PARAMETERS;
 
   /**
+   * The operation id for the '<em>Get Input Ports</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ENTITY___GET_INPUT_PORTS = ENTITY___GET_INPUT_PORTS;
+
+  /**
+   * The operation id for the '<em>Get Output Ports</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ENTITY___GET_OUTPUT_PORTS = ENTITY___GET_OUTPUT_PORTS;
+
+  /**
    * The number of operations of the '<em>Composite Entity</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -1270,20 +1286,12 @@ public interface TriqPackage extends EPackage {
   int ACTOR__ICON_ID = ENTITY__ICON_ID;
 
   /**
-   * The feature id for the '<em><b>Input Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int ACTOR__INPUT_PORTS = ENTITY__INPUT_PORTS;
-
-  /**
-   * The feature id for the '<em><b>Output Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int ACTOR__OUTPUT_PORTS = ENTITY__OUTPUT_PORTS;
+  int ACTOR__PORTS = ENTITY__PORTS;
 
   /**
    * The number of structural features of the '<em>Actor</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1374,6 +1382,22 @@ public interface TriqPackage extends EPackage {
   int ACTOR___GET_PARAMETERS = ENTITY___GET_PARAMETERS;
 
   /**
+   * The operation id for the '<em>Get Input Ports</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ACTOR___GET_INPUT_PORTS = ENTITY___GET_INPUT_PORTS;
+
+  /**
+   * The operation id for the '<em>Get Output Ports</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int ACTOR___GET_OUTPUT_PORTS = ENTITY___GET_OUTPUT_PORTS;
+
+  /**
    * The number of operations of the '<em>Actor</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
@@ -1440,20 +1464,12 @@ public interface TriqPackage extends EPackage {
   int COMPOSITE_ACTOR__ICON_ID = COMPOSITE_ENTITY__ICON_ID;
 
   /**
-   * The feature id for the '<em><b>Input Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The feature id for the '<em><b>Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int COMPOSITE_ACTOR__INPUT_PORTS = COMPOSITE_ENTITY__INPUT_PORTS;
-
-  /**
-   * The feature id for the '<em><b>Output Ports</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   * @ordered
-   */
-  int COMPOSITE_ACTOR__OUTPUT_PORTS = COMPOSITE_ENTITY__OUTPUT_PORTS;
+  int COMPOSITE_ACTOR__PORTS = COMPOSITE_ENTITY__PORTS;
 
   /**
    * The feature id for the '<em><b>Entities</b></em>' containment reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1566,6 +1582,22 @@ public interface TriqPackage extends EPackage {
    * @ordered
    */
   int COMPOSITE_ACTOR___GET_PARAMETERS = COMPOSITE_ENTITY___GET_PARAMETERS;
+
+  /**
+   * The operation id for the '<em>Get Input Ports</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ACTOR___GET_INPUT_PORTS = COMPOSITE_ENTITY___GET_INPUT_PORTS;
+
+  /**
+   * The operation id for the '<em>Get Output Ports</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int COMPOSITE_ACTOR___GET_OUTPUT_PORTS = COMPOSITE_ENTITY___GET_OUTPUT_PORTS;
 
   /**
    * The number of operations of the '<em>Composite Actor</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2920,26 +2952,15 @@ public interface TriqPackage extends EPackage {
   EClass getEntity();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.triquetrum.workflow.model.Entity#getInputPorts <em>Input Ports</em>}'. <!--
+   * Returns the meta object for the containment reference list '{@link org.eclipse.triquetrum.workflow.model.Entity#getPorts <em>Ports</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @return the meta object for the containment reference list '<em>Input Ports</em>'.
-   * @see org.eclipse.triquetrum.workflow.model.Entity#getInputPorts()
-   * @see #getEntity()
-   * @generated
-   */
-  EReference getEntity_InputPorts();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.triquetrum.workflow.model.Entity#getOutputPorts <em>Output Ports</em>}'.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @return the meta object for the containment reference list '<em>Output Ports</em>'.
-   * @see org.eclipse.triquetrum.workflow.model.Entity#getOutputPorts()
+   * @return the meta object for the containment reference list '<em>Ports</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Entity#getPorts()
    * @see #getEntity()
    * @generated
    */
-  EReference getEntity_OutputPorts();
+  EReference getEntity_Ports();
 
   /**
    * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Entity#getParameters() <em>Get Parameters</em>}' operation. <!--
@@ -2950,6 +2971,26 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   EOperation getEntity__GetParameters();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Entity#getInputPorts() <em>Get Input Ports</em>}' operation. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the '<em>Get Input Ports</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Entity#getInputPorts()
+   * @generated
+   */
+  EOperation getEntity__GetInputPorts();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.triquetrum.workflow.model.Entity#getOutputPorts() <em>Get Output Ports</em>}' operation. <!--
+   * begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @return the meta object for the '<em>Get Output Ports</em>' operation.
+   * @see org.eclipse.triquetrum.workflow.model.Entity#getOutputPorts()
+   * @generated
+   */
+  EOperation getEntity__GetOutputPorts();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.CompositeEntity <em>Composite Entity</em>}'. <!-- begin-user-doc --> <!--
@@ -3533,18 +3574,11 @@ public interface TriqPackage extends EPackage {
     EClass ENTITY = eINSTANCE.getEntity();
 
     /**
-     * The meta object literal for the '<em><b>Input Ports</b></em>' containment reference list feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * The meta object literal for the '<em><b>Ports</b></em>' containment reference list feature. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
      */
-    EReference ENTITY__INPUT_PORTS = eINSTANCE.getEntity_InputPorts();
-
-    /**
-     * The meta object literal for the '<em><b>Output Ports</b></em>' containment reference list feature. <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
-     * @generated
-     */
-    EReference ENTITY__OUTPUT_PORTS = eINSTANCE.getEntity_OutputPorts();
+    EReference ENTITY__PORTS = eINSTANCE.getEntity_Ports();
 
     /**
      * The meta object literal for the '<em><b>Get Parameters</b></em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -3552,6 +3586,20 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EOperation ENTITY___GET_PARAMETERS = eINSTANCE.getEntity__GetParameters();
+
+    /**
+     * The meta object literal for the '<em><b>Get Input Ports</b></em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EOperation ENTITY___GET_INPUT_PORTS = eINSTANCE.getEntity__GetInputPorts();
+
+    /**
+     * The meta object literal for the '<em><b>Get Output Ports</b></em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EOperation ENTITY___GET_OUTPUT_PORTS = eINSTANCE.getEntity__GetOutputPorts();
 
     /**
      * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.impl.CompositeEntityImpl <em>Composite Entity</em>}' class. <!--

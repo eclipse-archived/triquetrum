@@ -142,8 +142,7 @@ public class CompositeActorItemProvider extends CompositeEntityItemProvider {
     Object childFeature = feature;
     Object childObject = child;
 
-    boolean qualify = childFeature == TriqPackage.Literals.NAMED_OBJ__ATTRIBUTES || childFeature == TriqPackage.Literals.COMPOSITE_ACTOR__DIRECTOR
-        || childFeature == TriqPackage.Literals.ENTITY__INPUT_PORTS || childFeature == TriqPackage.Literals.ENTITY__OUTPUT_PORTS;
+    boolean qualify = childFeature == TriqPackage.Literals.NAMED_OBJ__ATTRIBUTES || childFeature == TriqPackage.Literals.COMPOSITE_ACTOR__DIRECTOR;
 
     if (qualify) {
       return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
