@@ -10,8 +10,16 @@ import org.eclipse.triquetrum.commands.tqcl.CompositeCommand;
 import org.eclipse.triquetrum.commands.tqcl.Go;
 import org.eclipse.triquetrum.commands.tqcl.TqclPackage;
 
+/**
+ * Interpreter component for {@link CompositeCommand}
+ * @author rtotaro
+ */
 public class CompositeCommandInterpreterComponent implements TqclInterpreterComponent {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.triquetrum.commands.interpreter.TqclInterpreterComponent#interpret(org.eclipse.emf.ecore.EObject, org.eclipse.triquetrum.commands.interpreter.InterpretContext)
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void interpret(EObject element, InterpretContext context) {
 		if (element instanceof CompositeCommand) {
@@ -29,6 +37,9 @@ public class CompositeCommandInterpreterComponent implements TqclInterpreterComp
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.triquetrum.commands.interpreter.TqclInterpreterComponent#intepretedEClasses()
+	 */
 	@Override
 	public List<EClass> intepretedEClasses() {
 		return Arrays.asList(TqclPackage.Literals.COMPOSITE_COMMAND);

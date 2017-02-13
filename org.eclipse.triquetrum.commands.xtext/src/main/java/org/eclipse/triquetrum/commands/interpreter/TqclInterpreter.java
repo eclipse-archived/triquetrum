@@ -29,6 +29,13 @@ import com.google.inject.Injector;
 
 import ptolemy.util.StringUtilities;
 
+/**
+ * The TqCL interpreter, the type of the result is related to the {@link ModelBuilderService} set in the {@link InterpretContext}
+ * @author rtotaro
+ *
+ * @param <CompositeActor> class used to represent the composite actor
+ * @param <Actor> class used to represent the simple acto
+ */
 public class TqclInterpreter<CompositeActor,Actor> {
 
 	private static Map<EClass, TqclInterpreterComponent> components = new HashMap<>(); 
@@ -51,6 +58,15 @@ public class TqclInterpreter<CompositeActor,Actor> {
 		}
 	}
 	
+	/**
+	 * Interpreter the TqCL script
+	 * 
+	 * @param modelName the name of the result model
+	 * @param script to interpret
+	 * @param uri parent directory of the script
+	 * @param modelClass result class, is used to select the right {@link ModelBuilderService}
+	 * @return
+	 */
 	public CompositeActor interpret(String modelName,InputStream script, java.net.URI uri,Class<?> modelClass) {
 		try {
 			Injector injector = new TqclStandaloneSetup().createInjectorAndDoEMFRegistration();

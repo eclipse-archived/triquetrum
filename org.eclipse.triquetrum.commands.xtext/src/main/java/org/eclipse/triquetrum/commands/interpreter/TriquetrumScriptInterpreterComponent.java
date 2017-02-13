@@ -10,8 +10,14 @@ import org.eclipse.triquetrum.commands.tqcl.Command;
 import org.eclipse.triquetrum.commands.tqcl.TqclPackage;
 import org.eclipse.triquetrum.commands.tqcl.TriquetrumScript;
 
+/**
+ * Interpreter component for {@link TriquetrumScript}
+ * @author rtotaro
+ *
+ */
 public class TriquetrumScriptInterpreterComponent implements TqclInterpreterComponent {
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void interpret(EObject element, InterpretContext context) {
 		if (element instanceof TriquetrumScript) {

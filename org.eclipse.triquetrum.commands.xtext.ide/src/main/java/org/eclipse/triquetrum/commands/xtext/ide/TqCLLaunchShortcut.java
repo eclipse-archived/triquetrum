@@ -1,7 +1,5 @@
 package org.eclipse.triquetrum.commands.xtext.ide;
 
-import java.util.Arrays;
-
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.ui.ILaunchShortcut;
@@ -10,13 +8,14 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.triquetrum.commands.interpreter.TqclInterpreter;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 
+
+//TODO: TqCL Macro launcher
 public class TqCLLaunchShortcut implements ILaunchShortcut {
 
 	@Override

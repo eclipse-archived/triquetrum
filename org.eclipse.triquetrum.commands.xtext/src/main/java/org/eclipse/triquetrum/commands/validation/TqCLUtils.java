@@ -19,6 +19,11 @@ import org.eclipse.xtext.EcoreUtil2;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
+/**
+ * Utils class to clean qualified name used in tqcl and create valid name for ptolemy models
+ * @author rtotaro
+ *
+ */
 public class TqCLUtils {
 
 	public static String cleanEntityName(String entityClass) {

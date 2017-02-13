@@ -15,12 +15,20 @@ import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
-import org.eclipse.ui.console.MessageConsoleStream;
 
 import ptolemy.actor.CompositeActor;
 
+/**
+ * Launcher to create and start a ptolemy model
+ * 
+ * @author rtotaro
+ *
+ */
 public class TqCLPtolemyLaunchShortcut implements ILaunchShortcut {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.debug.ui.ILaunchShortcut#launch(org.eclipse.jface.viewers.ISelection, java.lang.String)
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void launch(ISelection selection, String mode) {
@@ -32,16 +40,11 @@ public class TqCLPtolemyLaunchShortcut implements ILaunchShortcut {
 				IConsoleManager consoleManager = ConsolePlugin.getDefault().getConsoleManager();
 				MessageConsole messageConsole = new MessageConsole(file.getName(), "TqCL", null, false);
 				consoleManager.addConsoles(new IConsole[] { messageConsole });
-//				MessageConsoleStream newMessageStream = messageConsole.newMessageStream();
-				// newMessageStream
 
 				TqclInterpreter interpreter = new TqclInterpreter();
 				CompositeActor model = (CompositeActor) interpreter.interpret(file.getName(), file.getContents(),
 						file.getParent().getLocationURI(), CompositeActor.class);
 
-//				String moml = model.exportMoML();
-//				
-//				System.out.println(moml);
 				
 				//workflow service could be exposed by a different plugin; not workflow editor
 				WorkflowExecutionService executionService = TriqEditorPlugin.getDefault().getWorkflowExecutionService();
@@ -54,6 +57,9 @@ public class TqCLPtolemyLaunchShortcut implements ILaunchShortcut {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.debug.ui.ILaunchShortcut#launch(org.eclipse.ui.IEditorPart, java.lang.String)
+	 */
 	@Override
 	public void launch(IEditorPart editor, String mode) {
 		// TODO Auto-generated method stub

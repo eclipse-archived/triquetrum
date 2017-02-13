@@ -166,7 +166,6 @@ public class TqclProposalProvider extends AbstractTqclProposalProvider {
 	@Override
 	public void completeConnectionPort_Port(EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		// TODO Auto-generated method stub
 		super.completeConnectionPort_Port(model, assignment, context, acceptor);
 		if (model instanceof ConnectionPort) {
 			ConnectionPort connectionPort = (ConnectionPort) model;

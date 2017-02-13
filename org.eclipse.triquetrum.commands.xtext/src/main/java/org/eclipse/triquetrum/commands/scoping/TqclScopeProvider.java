@@ -13,9 +13,6 @@
  */
 package org.eclipse.triquetrum.commands.scoping;
 
-import java.util.ArrayList;
-import java.util.function.Consumer;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.triquetrum.commands.tqcl.Category;
@@ -53,6 +50,9 @@ public class TqclScopeProvider extends AbstractTqclScopeProvider {
 		}
 	};
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.xtext.scoping.impl.DelegatingScopeProvider#getScope(org.eclipse.emf.ecore.EObject, org.eclipse.emf.ecore.EReference)
+	 */
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
 		if (context instanceof Go && reference == TqclPackage.Literals.GO__ACTOR) {

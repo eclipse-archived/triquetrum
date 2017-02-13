@@ -10,8 +10,6 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.commands.ui.editor;
 
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;

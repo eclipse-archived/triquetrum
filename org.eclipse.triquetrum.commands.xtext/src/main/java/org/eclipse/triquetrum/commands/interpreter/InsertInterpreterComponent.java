@@ -9,13 +9,21 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.triquetrum.commands.api.services.TcQLException;
 import org.eclipse.triquetrum.commands.tqcl.Category;
+import org.eclipse.triquetrum.commands.tqcl.CompositeCommand;
 import org.eclipse.triquetrum.commands.tqcl.Insert;
 import org.eclipse.triquetrum.commands.tqcl.Parameter;
 import org.eclipse.triquetrum.commands.tqcl.TqclPackage;
 import org.eclipse.triquetrum.commands.validation.TqCLUtils;
 
+/**
+ * Interpreter component for {@link Insert}
+ * @author rtotaro
+ */
 public class InsertInterpreterComponent implements TqclInterpreterComponent {
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.triquetrum.commands.interpreter.TqclInterpreterComponent#interpret(org.eclipse.emf.ecore.EObject, org.eclipse.triquetrum.commands.interpreter.InterpretContext)
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void interpret(EObject element, InterpretContext context) {
@@ -51,6 +59,9 @@ public class InsertInterpreterComponent implements TqclInterpreterComponent {
 		return params;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.eclipse.triquetrum.commands.interpreter.TqclInterpreterComponent#intepretedEClasses()
+	 */
 	@Override
 	public List<EClass> intepretedEClasses() {
 		return Arrays.asList(TqclPackage.Literals.INSERT);

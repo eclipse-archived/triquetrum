@@ -58,6 +58,10 @@ public class TqclValidator extends AbstractTqclValidator {
 	
 	public static final String INVALID_PORT_NAME = "invalidPortName";
 
+	/**
+	 * Check that the library is supported by a {@link TqCLLibraryProvider}
+	 * @param library
+	 */
 	@Check
 	public void checkLibrary(Library library) {
 		String name = library.getName();
@@ -67,6 +71,10 @@ public class TqclValidator extends AbstractTqclValidator {
 		}
 	}
 
+	/**
+	 * Check that entity exists in the imported libraries
+	 * @param library
+	 */
 	@Check
 	public void checkEntityInLibrary(Insert insert) {
 		String entityClass = TqCLUtils.cleanEntityClassName(insert.getEntityClass());
@@ -83,6 +91,10 @@ public class TqclValidator extends AbstractTqclValidator {
 		error(message, TqclPackage.Literals.INSERT__ENTITY_CLASS, INVALID_ENTITY_CLASS);
 	}
 
+	/**
+	 * Check that the name used for model element is an unique identifier
+	 * @param insert
+	 */
 	@Check
 	public void checkNameUnique(Insert insert) {
 		String name = insert.getName();
@@ -102,6 +114,10 @@ public class TqclValidator extends AbstractTqclValidator {
 		}
 	}
 
+	/**
+	 * Check that the ports to connect already exist in the model
+	 * @param connectionPort
+	 */
 	@Check
 	public void checkConnectionPortName(ConnectionPort connectionPort) {
 		String featureName = connectionPort.eContainmentFeature().getName();
@@ -145,6 +161,10 @@ public class TqclValidator extends AbstractTqclValidator {
 		}
 	}
 
+	/**
+	 * Check that the used parameter exists for the inserted actor
+	 * @param insert
+	 */
 	@Check
 	public void checkEntityParameters(Insert insert) {
 		TqCLLibraryProvider tqclLibraryProvider = TqCLServices.getInstance().getTqclLibraryProvider();
