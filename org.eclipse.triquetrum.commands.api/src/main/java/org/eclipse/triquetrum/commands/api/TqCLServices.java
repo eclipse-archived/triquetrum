@@ -26,6 +26,8 @@ public class TqCLServices implements BundleActivator {
 	private static BundleContext context;
 	
 	private static TqCLServices instance;
+	
+	private TcQLLibraryProviderProxy tcQLLibraryProviderProxy;
 
 	static BundleContext getContext() {
 		return context;
@@ -40,6 +42,9 @@ public class TqCLServices implements BundleActivator {
 	public void start(BundleContext bundleContext) throws Exception {
 		TqCLServices.context = bundleContext;
 		instance=this;
+		
+		ServiceReference<TcQLLibraryProviderProxy> serviceReference = getContext().getServiceReference(TcQLLibraryProviderProxy.class);
+		tcQLLibraryProviderProxy = getContext().getService(serviceReference);
 	}
 
 	/*
@@ -80,9 +85,7 @@ public class TqCLServices implements BundleActivator {
 	
 	public TqCLLibraryProvider getTqclLibraryProvider()
 	{
-		ServiceReference<TcQLLibraryProviderProxy> serviceReference = getContext().getServiceReference(TcQLLibraryProviderProxy.class);
-		TcQLLibraryProviderProxy service = getContext().getService(serviceReference);
-		return service;
+		return tcQLLibraryProviderProxy;
 	}
 	
 

@@ -12,6 +12,8 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.triquetrum.commands.api.services.ActorDescriptor;
 import org.eclipse.triquetrum.commands.api.services.DirectorDescriptor;
 import org.eclipse.triquetrum.commands.api.services.EntityDescriptor;
@@ -41,7 +43,11 @@ public class TriquetrumLibraryProvider implements TqCLLibraryProvider {
 	private Map<String, PortDescriptor> ports = new HashMap<>();
 
 	private boolean initialized = false;
-
+	
+	public TriquetrumLibraryProvider() {
+		init();
+	}
+	
 	private void init() {
 		if (initialized) {
 			return;
@@ -176,32 +182,27 @@ public class TriquetrumLibraryProvider implements TqCLLibraryProvider {
 
 	@Override
 	public List<ActorDescriptor> getActors(String library) throws TqCLLibraryException {
-		init();
 		return new ArrayList<>(actors.values());
 	}
 
 	@Override
 	public List<DirectorDescriptor> getDirectors(String library) throws TqCLLibraryException {
-		init();
 		return new ArrayList<>(directors.values());
 	}
 
 	@Override
 	public List<ParameterDescriptor> getParameterTypes(String library) throws TqCLLibraryException {
 
-		init();
 		return new ArrayList<>(parameters.values());
 	}
 
 	@Override
 	public List<PortDescriptor> getPortTypes(String library) throws TqCLLibraryException {
-		init();
 		return new ArrayList<>(ports.values());
 	}
 
 	@Override
 	public List<PortDescriptor> getActorPorts(String actor) throws TqCLLibraryException {
-		init();
 		return actors.get(actor).getPorts();
 	}
 
@@ -243,7 +244,6 @@ public class TriquetrumLibraryProvider implements TqCLLibraryProvider {
 
 	@Override
 	public boolean hasElementInLibrary(String element, String library, String category) {
-		init();
 		if (getLibraryNames().contains(library)) {
 			BoCategory boCategory = BoCategory.valueOf(StringUtils.capitalize(category));
 			switch (boCategory) {
