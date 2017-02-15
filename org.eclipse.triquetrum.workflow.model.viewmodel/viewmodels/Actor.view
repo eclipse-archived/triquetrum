@@ -11,7 +11,7 @@
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/wrappedType"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.categorization.model:CategorizationElement" xmi:id="_GHI6QOeoEea6NtatxyB-pg" name="Categorization">
+  <children xsi:type="org.eclipse.emf.ecp.view.categorization.model:CategorizationElement" xmi:id="_GHI6QOeoEea6NtatxyB-pg">
     <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Category" xmi:id="_m7e6EOeoEea6NtatxyB-pg" name="Attributes">
       <composite xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_MDZn4OepEea6NtatxyB-pg" name="Attributes" addRemoveDisabled="true">
         <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_RF3cMOepEea6NtatxyB-pg">
