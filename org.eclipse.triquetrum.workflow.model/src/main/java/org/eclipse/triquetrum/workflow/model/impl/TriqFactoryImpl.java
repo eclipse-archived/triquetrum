@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.triquetrum.workflow.model.*;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.Attribute;
@@ -112,6 +113,8 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
   @Override
   public Object createFromString(EDataType eDataType, String initialValue) {
     switch (eDataType.getClassifierID()) {
+    case TriqPackage.DIRECTION:
+      return createDirectionFromString(eDataType, initialValue);
     case TriqPackage.PTOLEMY_NAMED_OBJ:
       return createPtolemyNamedObjFromString(eDataType, initialValue);
     case TriqPackage.VISITOR:
@@ -129,6 +132,8 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
   @Override
   public String convertToString(EDataType eDataType, Object instanceValue) {
     switch (eDataType.getClassifierID()) {
+    case TriqPackage.DIRECTION:
+      return convertDirectionToString(eDataType, instanceValue);
     case TriqPackage.PTOLEMY_NAMED_OBJ:
       return convertPtolemyNamedObjToString(eDataType, instanceValue);
     case TriqPackage.VISITOR:
@@ -279,6 +284,27 @@ public class TriqFactoryImpl extends EFactoryImpl implements TriqFactory {
   public Vertex createVertex() {
     VertexImpl vertex = new VertexImpl();
     return vertex;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public Direction createDirectionFromString(EDataType eDataType, String initialValue) {
+    Direction result = Direction.get(initialValue);
+    if (result == null)
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public String convertDirectionToString(EDataType eDataType, Object instanceValue) {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**

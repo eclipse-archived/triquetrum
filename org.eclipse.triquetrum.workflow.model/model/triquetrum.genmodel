@@ -10,6 +10,12 @@
   <foreignModel>triquetrum.ecore</foreignModel>
   <genPackages prefix="Triq" basePackage="org.eclipse.triquetrum.workflow" disposableProviderFactory="true"
       ecorePackage="triquetrum.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="triquetrum.ecore#//Direction">
+      <genEnumLiterals ecoreEnumLiteral="triquetrum.ecore#//Direction/NORTH"/>
+      <genEnumLiterals ecoreEnumLiteral="triquetrum.ecore#//Direction/SOUTH"/>
+      <genEnumLiterals ecoreEnumLiteral="triquetrum.ecore#//Direction/EAST"/>
+      <genEnumLiterals ecoreEnumLiteral="triquetrum.ecore#//Direction/WEST"/>
+    </genEnums>
     <genDataTypes ecoreDataType="triquetrum.ecore#//PtolemyNamedObj"/>
     <genDataTypes ecoreDataType="triquetrum.ecore#//Visitor"/>
     <genClasses ecoreClass="triquetrum.ecore#//NamedObj">
@@ -20,8 +26,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/deepComplete"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//NamedObj/iconId"/>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getContainer"/>
-      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getCommonContainer">
-        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/getCommonContainer/other"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/getLowestCommonContainer">
+        <genParameters ecoreParameter="triquetrum.ecore#//NamedObj/getLowestCommonContainer/other"/>
       </genOperations>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/topLevel"/>
       <genOperations ecoreOperation="triquetrum.ecore#//NamedObj/setProperty">
@@ -56,9 +62,10 @@
       <genOperations ecoreOperation="triquetrum.ecore#//Director/getParameters"/>
     </genClasses>
     <genClasses ecoreClass="triquetrum.ecore#//Entity">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Entity/inputPorts"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Entity/outputPorts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Entity/ports"/>
       <genOperations ecoreOperation="triquetrum.ecore#//Entity/getParameters"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//Entity/getInputPorts"/>
+      <genOperations ecoreOperation="triquetrum.ecore#//Entity/getOutputPorts"/>
     </genClasses>
     <genClasses ecoreClass="triquetrum.ecore#//CompositeEntity">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference triquetrum.ecore#//CompositeEntity/entities"/>
@@ -72,6 +79,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/input"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/output"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/multiPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute triquetrum.ecore#//Port/direction"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Port/linkedRelations"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference triquetrum.ecore#//Port/insideLinkedRelations"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference triquetrum.ecore#//Port/outsideLinkedRelations"/>
