@@ -13,6 +13,7 @@ package org.eclipse.triquetrum.workflow.model;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -1904,12 +1905,20 @@ public interface TriqPackage extends EPackage {
   int PORT__MULTI_PORT = LINKABLE_FEATURE_COUNT + 2;
 
   /**
+   * The feature id for the '<em><b>Direction</b></em>' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  int PORT__DIRECTION = LINKABLE_FEATURE_COUNT + 3;
+
+  /**
    * The feature id for the '<em><b>Linked Relations</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @generated
    * @ordered
    */
-  int PORT__LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 3;
+  int PORT__LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Inside Linked Relations</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1917,7 +1926,7 @@ public interface TriqPackage extends EPackage {
    * @generated
    * @ordered
    */
-  int PORT__INSIDE_LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 4;
+  int PORT__INSIDE_LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Outside Linked Relations</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1925,7 +1934,7 @@ public interface TriqPackage extends EPackage {
    * @generated
    * @ordered
    */
-  int PORT__OUTSIDE_LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 5;
+  int PORT__OUTSIDE_LINKED_RELATIONS = LINKABLE_FEATURE_COUNT + 6;
 
   /**
    * The number of structural features of the '<em>Port</em>' class. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -1933,7 +1942,7 @@ public interface TriqPackage extends EPackage {
    * @generated
    * @ordered
    */
-  int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 6;
+  int PORT_FEATURE_COUNT = LINKABLE_FEATURE_COUNT + 7;
 
   /**
    * The operation id for the '<em>Get Container</em>' operation. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2632,13 +2641,22 @@ public interface TriqPackage extends EPackage {
   int VERTEX_OPERATION_COUNT = LOCATION_OPERATION_COUNT + 5;
 
   /**
+   * The meta object id for the '{@link org.eclipse.triquetrum.workflow.model.Direction <em>Direction</em>}' enum. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see org.eclipse.triquetrum.workflow.model.Direction
+   * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getDirection()
+   * @generated
+   */
+  int DIRECTION = 14;
+
+  /**
    * The meta object id for the '<em>Visitor</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
    * @see org.eclipse.triquetrum.workflow.model.util.Visitor
    * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getVisitor()
    * @generated
    */
-  int VISITOR = 15;
+  int VISITOR = 16;
 
   /**
    * The meta object id for the '<em>Ptolemy Named Obj</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -2647,7 +2665,7 @@ public interface TriqPackage extends EPackage {
    * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getPtolemyNamedObj()
    * @generated
    */
-  int PTOLEMY_NAMED_OBJ = 14;
+  int PTOLEMY_NAMED_OBJ = 15;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.triquetrum.workflow.model.NamedObj <em>Named Obj</em>}'. <!-- begin-user-doc --> <!-- end-user-doc
@@ -3107,6 +3125,17 @@ public interface TriqPackage extends EPackage {
   EAttribute getPort_MultiPort();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.triquetrum.workflow.model.Port#getDirection <em>Direction</em>}'. <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * 
+   * @return the meta object for the attribute '<em>Direction</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Port#getDirection()
+   * @see #getPort()
+   * @generated
+   */
+  EAttribute getPort_Direction();
+
+  /**
    * Returns the meta object for the reference list '{@link org.eclipse.triquetrum.workflow.model.Port#getLinkedRelations <em>Linked Relations</em>}'. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    *
@@ -3308,6 +3337,16 @@ public interface TriqPackage extends EPackage {
    * @generated
    */
   EOperation getLinkable__BuildWrappedLinks();
+
+  /**
+   * Returns the meta object for enum '{@link org.eclipse.triquetrum.workflow.model.Direction <em>Direction</em>}'. <!-- begin-user-doc --> <!-- end-user-doc
+   * -->
+   * 
+   * @return the meta object for enum '<em>Direction</em>'.
+   * @see org.eclipse.triquetrum.workflow.model.Direction
+   * @generated
+   */
+  EEnum getDirection();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.triquetrum.workflow.model.util.Visitor <em>Visitor</em>}'. <!-- begin-user-doc --> <!--
@@ -3691,6 +3730,13 @@ public interface TriqPackage extends EPackage {
     EAttribute PORT__MULTI_PORT = eINSTANCE.getPort_MultiPort();
 
     /**
+     * The meta object literal for the '<em><b>Direction</b></em>' attribute feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+     * 
+     * @generated
+     */
+    EAttribute PORT__DIRECTION = eINSTANCE.getPort_Direction();
+
+    /**
      * The meta object literal for the '<em><b>Linked Relations</b></em>' reference list feature. <!-- begin-user-doc --> <!-- end-user-doc -->
      * 
      * @generated
@@ -3841,6 +3887,16 @@ public interface TriqPackage extends EPackage {
      * @generated
      */
     EOperation LINKABLE___BUILD_WRAPPED_LINKS = eINSTANCE.getLinkable__BuildWrappedLinks();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.triquetrum.workflow.model.Direction <em>Direction</em>}' enum. <!-- begin-user-doc --> <!--
+     * end-user-doc -->
+     * 
+     * @see org.eclipse.triquetrum.workflow.model.Direction
+     * @see org.eclipse.triquetrum.workflow.model.impl.TriqPackageImpl#getDirection()
+     * @generated
+     */
+    EEnum DIRECTION = eINSTANCE.getDirection();
 
     /**
      * The meta object literal for the '<em>Visitor</em>' data type. <!-- begin-user-doc --> <!-- end-user-doc -->

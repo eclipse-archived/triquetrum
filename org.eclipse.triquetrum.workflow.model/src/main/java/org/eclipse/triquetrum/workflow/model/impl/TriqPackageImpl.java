@@ -13,6 +13,7 @@ package org.eclipse.triquetrum.workflow.model.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -22,6 +23,7 @@ import org.eclipse.triquetrum.workflow.model.Annotation;
 import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.CompositeEntity;
+import org.eclipse.triquetrum.workflow.model.Direction;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.Linkable;
@@ -138,6 +140,13 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * @generated
    */
   private EClass linkableEClass = null;
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  private EEnum directionEEnum = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -653,9 +662,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * 
    * @generated
    */
-  @Override
-  public EReference getPort_LinkedRelations() {
-    return (EReference) portEClass.getEStructuralFeatures().get(3);
+  public EAttribute getPort_Direction() {
+    return (EAttribute) portEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -664,7 +672,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * @generated
    */
   @Override
-  public EReference getPort_InsideLinkedRelations() {
+  public EReference getPort_LinkedRelations() {
     return (EReference) portEClass.getEStructuralFeatures().get(4);
   }
 
@@ -674,8 +682,18 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * @generated
    */
   @Override
-  public EReference getPort_OutsideLinkedRelations() {
+  public EReference getPort_InsideLinkedRelations() {
     return (EReference) portEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  @Override
+  public EReference getPort_OutsideLinkedRelations() {
+    return (EReference) portEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -853,6 +871,15 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
    * 
    * @generated
    */
+  public EEnum getDirection() {
+    return directionEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
   @Override
   public EDataType getVisitor() {
     return visitorEDataType;
@@ -949,6 +976,7 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEAttribute(portEClass, PORT__INPUT);
     createEAttribute(portEClass, PORT__OUTPUT);
     createEAttribute(portEClass, PORT__MULTI_PORT);
+    createEAttribute(portEClass, PORT__DIRECTION);
     createEReference(portEClass, PORT__LINKED_RELATIONS);
     createEReference(portEClass, PORT__INSIDE_LINKED_RELATIONS);
     createEReference(portEClass, PORT__OUTSIDE_LINKED_RELATIONS);
@@ -974,6 +1002,9 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     createEOperation(linkableEClass, LINKABLE___IS_POTENTIAL_START);
     createEOperation(linkableEClass, LINKABLE___IS_POTENTIAL_END__LINKABLE);
     createEOperation(linkableEClass, LINKABLE___BUILD_WRAPPED_LINKS);
+
+    // Create enums
+    directionEEnum = createEEnum(DIRECTION);
 
     // Create data types
     ptolemyNamedObjEDataType = createEDataType(PTOLEMY_NAMED_OBJ);
@@ -1117,6 +1148,8 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPort_MultiPort(), ecorePackage.getEBoolean(), "multiPort", "false", 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPort_Direction(), this.getDirection(), "direction", "DEFAULT", 0, 1, Port.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPort_LinkedRelations(), this.getRelation(), this.getRelation_LinkedPorts(), "linkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPort_InsideLinkedRelations(), this.getRelation(), null, "insideLinkedRelations", null, 0, -1, Port.class, !IS_TRANSIENT, !IS_VOLATILE,
@@ -1162,6 +1195,14 @@ public class TriqPackageImpl extends EPackageImpl implements TriqPackage {
     addEParameter(op, this.getLinkable(), "start", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getLinkable__BuildWrappedLinks(), null, "buildWrappedLinks", 0, 1, IS_UNIQUE, IS_ORDERED);
+
+    // Initialize enums and add enum literals
+    initEEnum(directionEEnum, Direction.class, "Direction");
+    addEEnumLiteral(directionEEnum, Direction.NORTH);
+    addEEnumLiteral(directionEEnum, Direction.SOUTH);
+    addEEnumLiteral(directionEEnum, Direction.EAST);
+    addEEnumLiteral(directionEEnum, Direction.WEST);
+    addEEnumLiteral(directionEEnum, Direction.DEFAULT);
 
     // Initialize data types
     initEDataType(ptolemyNamedObjEDataType, ptolemy.kernel.util.NamedObj.class, "PtolemyNamedObj", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
