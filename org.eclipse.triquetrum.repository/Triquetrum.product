@@ -33,9 +33,11 @@
       </win>
    </launcher>
 
+
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
+
 
    <plugins>
    </plugins>
@@ -106,9 +108,27 @@
       <feature id="org.eclipse.emf.ecp.view.unset.feature"/>
       <feature id="org.eclipse.emf.ecp.view.horizontal.feature"/>
       <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.emf.mapping.ecore"/>
+      <feature id="org.eclipse.emf.codegen"/>
+      <feature id="org.eclipse.gmf"/>
+      <feature id="org.eclipse.emf"/>
+      <feature id="org.eclipse.draw2d"/>
+      <feature id="org.eclipse.emf.codegen.ui"/>
+      <feature id="org.eclipse.emf.codegen.ecore"/>
+      <feature id="org.eclipse.emf.converter"/>
+      <feature id="org.eclipse.emf.mapping.ui"/>
+      <feature id="org.eclipse.net4j.util.ui"/>
+      <feature id="org.eclipse.emf.mapping"/>
+      <feature id="org.eclipse.emf.codegen.ecore.ui"/>
+      <feature id="org.eclipse.gmf.runtime.notation"/>
+      <feature id="org.eclipse.emf.ecore.editor"/>
+      <feature id="org.eclipse.emf.mapping.ecore.editor"/>
+      <feature id="org.eclipse.equinox.core.feature"/>
+      <feature id="org.ptolemy.tycho.feature" version="1.0.0.201612021153"/>
    </features>
 
    <configurations>
+      <plugin id="com.ibm.icu" autoStart="false" startLevel="0" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
@@ -136,6 +156,10 @@
    </configurations>
 
    <repositories>
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
    </repositories>
 
