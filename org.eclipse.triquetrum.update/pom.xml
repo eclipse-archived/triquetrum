@@ -9,9 +9,9 @@
     <parent>
       <groupId>triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.build</artifactId>
-      <version>0.1.0-SNAPSHOT</version>
+      <version>0.2.0-SNAPSHOT</version>
     </parent>
     <artifactId>org.eclipse.triquetrum.update</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <packaging>eclipse-repository</packaging>
 </project>
