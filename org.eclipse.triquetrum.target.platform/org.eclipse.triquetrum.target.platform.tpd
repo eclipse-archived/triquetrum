@@ -4,6 +4,7 @@ target "Triq" with allEnvironments configurePhase
 // XXX: There is some duplicates, so some parts below are commented
 // out, not sure what the best resolution is
 include "org.eclipse.triquetrum.python.rpc.platform.tpd"
+include "org.eclipse.triquetrum.commands.xtext.platform.tpd"
 
 location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/" {
   org.slf4j.api.source [1.7.2,1.7.3)
