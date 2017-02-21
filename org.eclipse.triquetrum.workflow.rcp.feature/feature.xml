@@ -30,7 +30,7 @@
 
    <url>
       <discovery label="Orbit" url="http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/"/>
-      <discovery label="Eclipse Neon" url="http://download.eclipse.org/releases/neon/"/>
+      <discovery label="Eclipse Oxygen" url="http://download.eclipse.org/releases/oxygen/"/>
    </url>
 
    <requires>
