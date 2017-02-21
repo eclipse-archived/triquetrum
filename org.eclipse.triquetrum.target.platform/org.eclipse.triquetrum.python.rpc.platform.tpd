@@ -24,6 +24,6 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/S2016091616200
 	javax.servlet
 }
 
-location "http://download.eclipse.org/releases/neon/" {
+location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.equinox.core.feature.feature.group
 }

@@ -35,7 +35,7 @@ location "http://archive.eclipse.org/nebula/Q42015/release/" {
 	org.eclipse.nebula.visualization.feature.feature.group
 }
 
-location "http://download.eclipse.org/releases/neon/" {
+location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.ecf.core.feature.feature.group
 	org.eclipse.emf.validation.feature.group
 	org.eclipse.platform.source.feature.group
