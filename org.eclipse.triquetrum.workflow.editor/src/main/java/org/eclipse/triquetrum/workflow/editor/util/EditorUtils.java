@@ -33,7 +33,7 @@ import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.graphics.RGBA;
 import org.eclipse.swt.widgets.ColorDialog;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.editor.PortCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Linkable;
@@ -334,8 +334,7 @@ public class EditorUtils {
   }
 
   public static double[] getLocation(PictogramElement pe) {
-    GraphicsAlgorithm ga = pe.getGraphicsAlgorithm();
-    return new double[] { ga.getX(), ga.getY() };
+    return getLocation(pe.getGraphicsAlgorithm());
   }
 
   public static double[] getLocation(GraphicsAlgorithm ga) {
@@ -446,26 +445,27 @@ public class EditorUtils {
   }
 
   /**
-   * Returns a freshly created list of INPUT or OUTPUT port anchors for the given actor shape (or composite actor shape). The list can be manipulated/changed
-   * without risk of impacting the original actorShape definition (at least when the contained anchors properties are not touched!).
+   * Returns a freshly created list of the port anchors for the given actor shape (or composite actor shape) 
+   * that are in the given category. The list can be manipulated/changed without risk of impacting 
+   * the original actorShape definition (at least when the contained anchors properties are not touched!).
    *
    * @param actorShape
    * @param portIoType
-   *          BoCategories.Input or Output
+   *          PortCategory.Input or Output
    * @return
    */
-  public static List<Anchor> getContainedPorts(ContainerShape actorShape, BoCategory portIoType) {
+  public static List<Anchor> getContainedPorts(ContainerShape actorShape, PortCategory portIoType) {
     List<Anchor> portShapes = new LinkedList<>();
     for (Anchor anchor : actorShape.getAnchors()) {
       FixPointAnchor fpa = (FixPointAnchor) anchor;
-      BoCategory boCategory = BoCategory.retrieveFrom(anchor);
-      if (portIoType.equals(boCategory)) {
+      PortCategory portCategory = PortCategory.retrieveFrom(anchor);
+      if (portIoType.equals(portCategory)) {
         portShapes.add(fpa);
       }
     }
     return portShapes;
   }
-
+  
   /**
    *
    * @param source
