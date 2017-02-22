@@ -34,6 +34,7 @@ import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor;
 import org.eclipse.triquetrum.workflow.editor.util.FileService;
 import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
@@ -92,7 +93,7 @@ public class WizardUtils {
     return diagram;
   }
 
-  public static void openDiagramInEditor(Diagram diagram) throws PartInitException {
+  public static TriqDiagramEditor openDiagramInEditor(Diagram diagram) throws PartInitException {
     String editorID = TriqDiagramEditor.EDITOR_ID;
     String diagramTypeProviderId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagram.getDiagramTypeId());
     String namingConventionID = diagramTypeProviderId + ".editor"; //$NON-NLS-1$
@@ -105,7 +106,7 @@ public class WizardUtils {
     String providerId = GraphitiUi.getExtensionManager().getDiagramTypeProviderId(diagram.getDiagramTypeId());
     DiagramEditorInput editorInput = new DiagramEditorInput(EcoreUtil.getURI(diagram), providerId);
 
-    PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(editorInput, editorID);
+    return (TriqDiagramEditor) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().openEditor(editorInput, editorID);
   }
 
   /**
