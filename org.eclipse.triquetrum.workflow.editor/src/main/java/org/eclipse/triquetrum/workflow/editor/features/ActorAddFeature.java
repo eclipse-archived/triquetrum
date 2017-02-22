@@ -40,6 +40,8 @@ import org.eclipse.graphiti.util.ColorConstant;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.editor.Category;
+import org.eclipse.triquetrum.workflow.editor.PortCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Entity;
@@ -71,11 +73,13 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
-  protected void link(PictogramElement pe, Object businessObject, BoCategory category) {
+  protected void link(PictogramElement pe, Object businessObject, Category... categories) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
-    category.storeIn(pe);
+    for (Category category : categories) {
+      category.storeIn(pe);
+    }
     if (businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
     }
@@ -144,7 +148,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
           anchor.setLocation(createService.createPoint(15 + width, yOffsetForPorts + (pIndex++) * PORT_SIZE));
           anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-          link(anchor, p, BoCategory.Output);
+          link(anchor, p, BoCategory.Port, PortCategory.EAST);
 
           final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
           portShape.setForeground(manageColor(PORT_FOREGROUND));
@@ -167,7 +171,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
           FixPointAnchor anchor = peCreateService.createFixPointAnchor(containerShape);
           anchor.setUseAnchorLocationAsConnectionEndpoint(true);
           anchor.setReferencedGraphicsAlgorithm(invisibleRectangle);
-          link(anchor, p, BoCategory.Input);
+          link(anchor, p, BoCategory.Port, PortCategory.WEST);
 
           final Polygon portShape = gaService.createPlainPolygon(anchor, new int[] { 0, 0, PORT_SIZE, halfPortSize, 0, PORT_SIZE });
           portShape.setForeground(manageColor(PORT_FOREGROUND));

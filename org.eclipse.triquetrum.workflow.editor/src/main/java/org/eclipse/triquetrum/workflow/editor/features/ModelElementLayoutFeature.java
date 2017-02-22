@@ -28,6 +28,7 @@ import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.editor.PortCategory;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Entity;
 
@@ -139,11 +140,11 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     int outCnt = 1;
     for (int i = 0; i < anchors.size(); ++i) {
       FixPointAnchor fpa = (FixPointAnchor) anchors.get(i);
-      boCategory = BoCategory.retrieveFrom(fpa);
-      if (BoCategory.Output.equals(boCategory)) {
+      PortCategory portCategory = PortCategory.retrieveFrom(fpa);
+      if (PortCategory.EAST.equals(portCategory)) {
         fpa.setLocation(gaService.createPoint(xOffset + rectangleWidth, yStart +  yOffsetForOutputPorts*(outCnt++)));
         anythingChanged = true;
-      } else if (BoCategory.Input.equals(boCategory)) {
+      } else if (PortCategory.WEST.equals(portCategory)) {
         fpa.setLocation(gaService.createPoint(0, yStart + yOffsetForInputPorts*(inCnt++)));
         anythingChanged = true;
       }

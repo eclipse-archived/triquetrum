@@ -20,7 +20,7 @@ import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.util.IColorConstant;
-import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.editor.PortCategory;
 import org.eclipse.triquetrum.workflow.model.Port;
 
 /**
@@ -38,8 +38,8 @@ public class PortUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
-    return (BoCategory.Output.equals(boCategory) || BoCategory.Input.equals(boCategory));
+    PortCategory portCategory = PortCategory.retrieveFrom(context.getPictogramElement());
+    return (portCategory!=null);
   }
 
   @Override
@@ -50,16 +50,18 @@ public class PortUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Port && pictogramElement instanceof Anchor) {
       p = (Port) bo;
       Anchor anchor = (Anchor) pictogramElement;
-      BoCategory boCategory = BoCategory.retrieveFrom(anchor);
-      boolean portInputOutputChange = (BoCategory.Input.equals(boCategory) && !p.isInput()) || (BoCategory.Output.equals(boCategory) && !p.isOutput());
+      PortCategory anchorCategory = PortCategory.retrieveFrom(anchor);
+      PortCategory portCategory = PortCategory.retrieveFrom(p);
+      boolean portDirectionChange = portCategory != anchorCategory;
+      
       // a bit more complex : check port colour and compare it to multiport property
       GraphicsAlgorithm portGA = anchor.getGraphicsAlgorithm();
       IColorConstant expectedPortBackgroundColor = p.isMultiPort() ? ActorAddFeature.PORT_BACKGROUND_MULTIPORT : ActorAddFeature.PORT_BACKGROUND_SINGLEPORT;
       boolean portMultiPortChange = !portGA.getBackground().equals(manageColor(expectedPortBackgroundColor));
 
-      if (portInputOutputChange || portMultiPortChange) {
+      if (portDirectionChange || portMultiPortChange) {
         context.putProperty(PORT_CHANGED, p.getName());
-        context.putProperty(PORT_CHANGED_IO, Boolean.toString(portInputOutputChange));
+        context.putProperty(PORT_CHANGED_IO, Boolean.toString(portDirectionChange));
         context.putProperty(PORT_CHANGED_MULTI, Boolean.toString(portMultiPortChange));
         return Reason.createTrueReason("Port change");
       }
