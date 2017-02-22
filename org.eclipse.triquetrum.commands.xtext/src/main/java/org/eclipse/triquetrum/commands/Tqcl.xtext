@@ -1,0 +1,91 @@
+grammar org.eclipse.triquetrum.commands.Tqcl with org.eclipse.xtext.common.Terminals 
+
+generate tqcl "http://www.eclipse.org/triquetrum/commands/Tqcl"
+
+TriquetrumScript:
+	libraries+=Library*
+	commands+=Command*
+;
+
+CompositeCommand:
+	start = GoInto commands+=Command* (end = (GoOut|GoTop))
+;
+
+SimpleCommand returns Command:
+	(Insert|Connect|Set|Include)";"
+;
+
+Command returns Command:
+	SimpleCommand|CompositeCommand 
+;
+
+
+
+Include:
+	"include" filename=STRING ";"
+;
+
+Library:
+ 	"library" name=ID ";"	
+;
+
+
+Insert:
+	"insert" (category=Category)? entityClass=ENTITY_CLASS 'as' name=STRING ("with" parameters+=(Parameter) ("," parameters+=Parameter)*)? ;
+
+Set:
+	"set" param = Parameter
+;
+
+Connect:
+	"connect" from+=ConnectionPort(',' from+=ConnectionPort)* "to" to+=ConnectionPort(',' to+=ConnectionPort)*;
+
+ConnectionPort:
+	actor=[Insert] '.' port=NamedObj;
+
+GoInto returns Go:
+	"go" direction="into" actor = [Insert]	
+;
+
+
+GoOut returns Go:
+	"go" direction="out"
+;
+
+GoTop returns Go:
+	"go" direction="top"
+;
+
+enum Category:
+	actor | parameter | port | director;
+
+Parameter:
+	id=Parameter_id "=" value=STRING;
+
+Parameter_id:
+	PARAMETER_NAME|STRING
+;
+
+terminal PARAMETER_NAME:
+	 '$'('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*
+;
+
+NamedObj:
+	(ID | STRING)
+	;
+
+terminal ENTITY_CLASS:
+	('<'->'>')
+;
+
+
+//terminal fragment ESCAPED_CHAR:
+//    '\\' ('n'|'t'|'r'|'\\');
+    
+//terminal ENTITY_INSTANCE_NAME: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9'|ESCAPED_CHAR)*;
+    
+
+
+	
+
+	
