@@ -71,14 +71,12 @@ public interface TaskProcessingBroker {
   /**
    *
    * @param service
-   * @return <tt>true</tt> if the new service was successfully registered
    */
-  boolean registerService(TaskProcessingService service);
+  void registerService(TaskProcessingService service);
 
   /**
    *
    * @param service
-   * @return <tt>true</tt> if the service was registered and was successfully removed
    */
-  boolean removeService(TaskProcessingService service);
+  void removeService(TaskProcessingService service);
 }
