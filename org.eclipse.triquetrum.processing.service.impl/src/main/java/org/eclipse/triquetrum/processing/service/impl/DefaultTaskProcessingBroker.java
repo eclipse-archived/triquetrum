@@ -172,8 +172,8 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
    * remark that the services are registered typically via OSGi DS, and the register/remove methods are not expected to be invoked from code.
    */
   @Override
-  public boolean registerService(TaskProcessingService service) {
-    return internalRegisterService(service, Version.emptyVersion);
+  public void registerService(TaskProcessingService service) {
+    internalRegisterService(service, Version.emptyVersion);
   }
 
   public void registerServiceRef(ServiceReference<TaskProcessingService> svcRef) {
@@ -202,8 +202,8 @@ public class DefaultTaskProcessingBroker implements TaskProcessingBroker {
    * remark that the services are registered typically via OSGi DS, and the register/remove methods are not expected to be invoked from code.
    */
   @Override
-  public boolean removeService(TaskProcessingService service) {
-    return internalRemoveService(service, Version.emptyVersion);
+  public void removeService(TaskProcessingService service) {
+    internalRemoveService(service, Version.emptyVersion);
   }
 
   public void removeServiceRef(ServiceReference<TaskProcessingService> svcRef) {
