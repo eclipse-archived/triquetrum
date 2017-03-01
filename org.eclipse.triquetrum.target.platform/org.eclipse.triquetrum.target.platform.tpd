@@ -5,7 +5,7 @@ target "Triq" with allEnvironments configurePhase
 // out, not sure what the best resolution is
 include "org.eclipse.triquetrum.python.rpc.platform.tpd"
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/" {
+location "http://download.eclipse.org/tools/orbit/S-builds/S20170120205402/repository" {
   org.slf4j.api.source [1.7.2,1.7.3)
 	org.slf4j.impl.log4j12.source [1.7.2,1.7.3)
 	org.apache.commons.io.source
@@ -73,7 +73,7 @@ location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.graphiti.sdk.plus.feature.feature.group
 }
 
-location "http://download.eclipse.org/ecp/releases/releases_18/180/" {
+location "http://download.eclipse.org/ecp/nightly/p2/" {
 	org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group
 	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group
 }
