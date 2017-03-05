@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.triquetrum.python.feature"
       label="%featureName"
-      version="0.1.0.qualifier"
+      version="0.2.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.triquetrum.python.service">
 
@@ -29,8 +29,8 @@
    </license>
 
    <requires>
-      <import feature="org.eclipse.triquetrum.core.feature" version="0.1.0.qualifier"/>
-      <import feature="org.eclipse.triquetrum.ptolemy.feature" version="0.1.0.qualifier"/>
+      <import feature="org.eclipse.triquetrum.core.feature" version="0.2.0.qualifier"/>
+      <import feature="org.eclipse.triquetrum.ptolemy.feature" version="0.2.0.qualifier"/>
       <import plugin="org.slf4j.api"/>
    </requires>
 

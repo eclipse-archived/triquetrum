@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Triquetrum" uid="org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.1.0" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="0.1.0" useFeatures="true" includeLaunchers="true">
+<product name="Triquetrum" uid="org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.0.qualifier" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="0.2.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="eclipse_lg.png"/>
@@ -33,7 +33,6 @@
       </win>
    </launcher>
 
-
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
@@ -42,9 +41,9 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.triquetrum.rcp.feature" version="0.1.0.qualifier"/>
-      <feature id="org.eclipse.triquetrum.workflow.actor.plot.feature" version="0.1.0.qualifier"/>
-      <feature id="org.eclipse.triquetrum.python.feature" version="0.1.0.qualifier"/>
+      <feature id="org.eclipse.triquetrum.rcp.feature" version="0.2.0.qualifier"/>
+      <feature id="org.eclipse.triquetrum.workflow.actor.plot.feature" version="0.2.0.qualifier"/>
+      <feature id="org.eclipse.triquetrum.python.feature" version="0.2.0.qualifier"/>
       <feature id="org.eclipse.core.runtime.feature"/>
       <feature id="org.eclipse.ecf.core.feature"/>
       <feature id="org.eclipse.ecf.core.ssl.feature"/>
@@ -81,12 +80,7 @@
       <feature id="org.eclipse.pde"/>
       <feature id="org.eclipse.platform"/>
       <feature id="org.eclipse.rcp"/>
-      <feature id="org.eclipse.emf.ecp.e3.feature" version="1.8.0.20160216-1319"/>
-      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.8.0.20160216-1319"/>
-      <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.8.0.20160216-1319"/>
-      <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.8.0.20160216-1319"/>
       <feature id="org.eclipse.gmf.runtime.thirdparty"/>
-      <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature" version="1.8.0.20160216-1319"/>
       <feature id="org.eclipse.emf.ecp.view.treemasterdetail.feature"/>
       <feature id="org.eclipse.triquetrum.ptolemy.feature"/>
       <feature id="org.eclipse.emf.ecp.view.label.feature"/>
@@ -107,9 +101,32 @@
       <feature id="org.eclipse.emf.ecp.view.unset.feature"/>
       <feature id="org.eclipse.emf.ecp.view.horizontal.feature"/>
       <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.emf.mapping.ecore"/>
+      <feature id="org.eclipse.emf.codegen"/>
+      <feature id="org.eclipse.gmf"/>
+      <feature id="org.eclipse.emf"/>
+      <feature id="org.eclipse.draw2d"/>
+      <feature id="org.eclipse.emf.codegen.ui"/>
+      <feature id="org.eclipse.emf.codegen.ecore"/>
+      <feature id="org.eclipse.emf.converter"/>
+      <feature id="org.eclipse.emf.mapping.ui"/>
+      <feature id="org.eclipse.net4j.util.ui"/>
+      <feature id="org.eclipse.emf.mapping"/>
+      <feature id="org.eclipse.emf.codegen.ecore.ui"/>
+      <feature id="org.eclipse.gmf.runtime.notation"/>
+      <feature id="org.eclipse.emf.ecore.editor"/>
+      <feature id="org.eclipse.emf.mapping.ecore.editor"/>
+      <feature id="org.eclipse.equinox.core.feature"/>
+      <feature id="org.ptolemy.tycho.feature" version="1.0.0.201612021153"/>
+      <feature id="org.eclipse.emf.ecp.e3.feature" version="1.11.0.20161206-0805"/>
+      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.11.0.20161206-0805"/>
+      <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.11.0.20161206-0805"/>
+      <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.11.0.20161206-0805"/>
+      <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature" version="1.11.0.20161206-0805"/>
    </features>
 
    <configurations>
+      <plugin id="com.ibm.icu" autoStart="false" startLevel="0" />
       <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
       <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
@@ -137,6 +154,10 @@
    </configurations>
 
    <repositories>
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
    </repositories>
 
