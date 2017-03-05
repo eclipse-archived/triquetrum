@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.triquetrum.workflow.rcp.feature"
       label="%featureName"
-      version="0.1.0.qualifier"
+      version="0.2.0.qualifier"
       provider-name="%providerName"
       plugin="org.eclipse.triquetrum.workflow.editor">
 
@@ -30,13 +30,13 @@
 
    <url>
       <discovery label="Orbit" url="http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/"/>
-      <discovery label="Eclipse Neon" url="http://download.eclipse.org/releases/neon/"/>
+      <discovery label="Eclipse Oxygen" url="http://download.eclipse.org/releases/oxygen/"/>
    </url>
 
    <requires>
       <import feature="org.eclipse.rcp" version="4.5.1.v20150904-0015"/>
-      <import feature="org.eclipse.triquetrum.core.feature" version="0.1.0.qualifier"/>
-      <import feature="org.eclipse.triquetrum.workflow.core.feature" version="0.1.0.qualifier"/>
+      <import feature="org.eclipse.triquetrum.core.feature" version="0.2.0.qualifier"/>
+      <import feature="org.eclipse.triquetrum.workflow.core.feature" version="0.2.0.qualifier"/>
       <import feature="org.eclipse.graphiti.feature" version="0.13.0.v20160608-1043"/>
       <import feature="org.eclipse.gmf.runtime.thirdparty" version="1.10.0.201606071959"/>
       <import feature="org.eclipse.emf" version="2.12.0.v20160526-0356"/>
