@@ -31,6 +31,7 @@ import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
+import org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.slf4j.Logger;
@@ -117,7 +118,7 @@ public class CompositeActorAddFeature extends ActorAddFeature {
         final Shape shape = peCreateService.createShape(containerShape, false);
         final Image image = gaService.createImage(shape, iconResource);
         addedActor.setIconId(iconResource);
-        gaService.setLocationAndSize(image, ACTOR_ICON_X_OFFSET, ACTOR_ICON_Y_OFFSET, ACTOR_ICON_SIZE, ACTOR_ICON_SIZE);
+        gaService.setLocationAndSize(image, ActorShapes.ACTOR_ICON_X_MARGIN, ActorShapes.ACTOR_ICON_Y_MARGIN, ActorShapes.ACTOR_ICON_SIZE, ActorShapes.ACTOR_ICON_SIZE);
 
         // create link and wire it
         link(shape, addedActor, BoCategory.Actor);

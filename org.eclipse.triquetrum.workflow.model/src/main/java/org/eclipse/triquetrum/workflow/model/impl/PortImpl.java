@@ -462,10 +462,18 @@ public class PortImpl extends NamedObjImpl implements Port {
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
-   * @generated
+   * @generated NOT
    */
   public Direction getDirection() {
-    return direction;
+    if(direction!=null && Direction.DEFAULT!=direction) {
+      return direction;
+    } else if(isInput()) {
+      return Direction.WEST;
+    } else if(isOutput()) {
+      return Direction.EAST;
+    } else {
+      return direction;
+    }
   }
 
   /**
