@@ -59,8 +59,7 @@ public class OutlineContainerEditPart extends OutlineEditPart {
 
     CompositeActor actor = (CompositeActor) getModel();
     children.addAll(actor.getParameters());
-    children.addAll(actor.getInputPorts());
-    children.addAll(actor.getOutputPorts());
+    children.addAll(actor.getPorts());
     List entities = actor.getEntities();
     if (entities != null)
       children.addAll(entities);

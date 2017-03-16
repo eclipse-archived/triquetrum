@@ -10,7 +10,19 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toList;
+import static org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes.ACTOR_TEXT_WIDTH;
+import static org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes.ACTOR_TEXT_X_MARGIN;
+import static org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes.ACTOR_X_MARGIN;
+import static org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes.ACTOR_Y_MARGIN;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 
 import org.eclipse.graphiti.datatypes.IDimension;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -28,14 +40,14 @@ import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
+import org.eclipse.triquetrum.workflow.editor.util.PortAnchorPair;
+import org.eclipse.triquetrum.workflow.model.Direction;
 import org.eclipse.triquetrum.workflow.model.Entity;
+import org.eclipse.triquetrum.workflow.model.Port;
 
 public class ModelElementLayoutFeature extends AbstractLayoutFeature {
-
-  private static final int MIN_HEIGHT = 20;
-
-  private static final int MIN_WIDTH = 60;
 
   public ModelElementLayoutFeature(IFeatureProvider fp) {
     super(fp);
@@ -55,11 +67,27 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     GraphicsAlgorithm invisibleRectangle = containerShape.getGraphicsAlgorithm();
     GraphicsAlgorithm rectangle = invisibleRectangle.getGraphicsAlgorithmChildren().get(0);
 
-    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
-    boolean isActor = BoCategory.Actor.equals(boCategory);
     Entity relatedBO = (Entity) getBusinessObjectForPictogramElement(containerShape);
-    int nrInputs = relatedBO.getInputPorts().size();
-    int nrOutputs = relatedBO.getOutputPorts().size();
+
+    List<Port> ports = relatedBO.getPorts();
+    List<Anchor> anchors = containerShape.getAnchors();
+    List<PortAnchorPair> paList = new ArrayList<>();
+
+    anchors.forEach(anchor -> {
+      Object bo = getBusinessObjectForPictogramElement(anchor);
+      if (bo != null && bo instanceof Port) {
+        paList.add(new PortAnchorPair((Port) bo, anchor));
+      }
+    });
+    paList.sort((pa1, pa2) -> Integer.compare(ports.indexOf(getBusinessObjectForPictogramElement(pa1.anchor)),
+        ports.indexOf(getBusinessObjectForPictogramElement(pa2.anchor))));
+    Map<Direction, List<PortAnchorPair>> categorizedPorts = paList.stream()
+        .collect(groupingBy(PortAnchorPair::getPortDirection, mapping(Function.identity(), toList())));
+
+    int nrPortsWest = categorizedPorts.getOrDefault(Direction.WEST, Collections.emptyList()).size();
+    int nrPortsEast = categorizedPorts.getOrDefault(Direction.EAST, Collections.emptyList()).size();
+    int nrPortsNorth = categorizedPorts.getOrDefault(Direction.NORTH, Collections.emptyList()).size();
+    int nrPortsSouth = categorizedPorts.getOrDefault(Direction.SOUTH, Collections.emptyList()).size();
 
     boolean containsExtFigure = EditorUtils.containsExternallyDefinedFigure(containerShape);
 
@@ -67,33 +95,34 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     // this layout feature is the one based on determining size of externally defined figures.
     // and for those we don't set minimum sizes...
 
-    int minHeight = Math.max(MIN_HEIGHT, Math.max(MIN_HEIGHT + (nrInputs+1)*ActorAddFeature.PORT_SIZE, MIN_HEIGHT + (nrOutputs+1)*ActorAddFeature.PORT_SIZE));
+    int minHeight = ActorShapes.calculateMinimalHeight(nrPortsWest, nrPortsEast);
     // height of invisible rectangle
-    if (!containsExtFigure && invisibleRectangle.getHeight() < minHeight) {
+    if (!containsExtFigure && invisibleRectangle.getHeight() != minHeight) {
       invisibleRectangle.setHeight(minHeight);
       anythingChanged = true;
     }
 
-    // height of visible rectangle (same as invisible rectangle)
-    if (rectangle.getHeight() != invisibleRectangle.getHeight()) {
-      rectangle.setHeight(invisibleRectangle.getHeight());
+    int minWidth = ActorShapes.calculateMinimalWidth(nrPortsNorth, nrPortsSouth);
+    // width of invisible rectangle
+    if (!containsExtFigure && invisibleRectangle.getWidth() != minWidth) {
+      invisibleRectangle.setWidth(minWidth);
       anythingChanged = true;
     }
 
-    // width of invisible rectangle
-    if (!containsExtFigure && invisibleRectangle.getWidth() < MIN_WIDTH) {
-      invisibleRectangle.setWidth(MIN_WIDTH);
+    // height of visible rectangle (smaller than invisible rectangle)
+    int rectangleHeight = invisibleRectangle.getHeight() - 2 * ACTOR_Y_MARGIN;
+    if (rectangle.getHeight() != rectangleHeight) {
+      rectangle.setHeight(rectangleHeight);
       anythingChanged = true;
     }
 
     // width of visible rectangle (smaller than invisible rectangle)
-    int xOffset = isActor ? 15 : 0;
-    int rectangleWidth = invisibleRectangle.getWidth() - xOffset;
-    int rectangleHeight = invisibleRectangle.getHeight();
+    int rectangleWidth = invisibleRectangle.getWidth() - 2 * ACTOR_X_MARGIN;
     if (rectangle.getWidth() != rectangleWidth) {
       rectangle.setWidth(rectangleWidth);
       anythingChanged = true;
     }
+
     IGaService gaService = Graphiti.getGaService();
 
     if (!containsExtFigure) {
@@ -109,15 +138,14 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
         } else {
           IDimension size = gaService.calculateSize(ga);
           if (rectangleWidth != size.getWidth()) {
-            int shapeXOffset = isActor ? ActorAddFeature.ACTOR_X_OFFSET : 0;
             if (ga instanceof Polyline) {
               Polyline polyline = (Polyline) ga;
               Point secondPoint = polyline.getPoints().get(1);
-              Point newSecondPoint = gaService.createPoint(shapeXOffset + rectangleWidth, secondPoint.getY());
+              Point newSecondPoint = gaService.createPoint(ACTOR_X_MARGIN + rectangleWidth, secondPoint.getY());
               polyline.getPoints().set(1, newSecondPoint);
               anythingChanged = true;
             } else if (ga instanceof Text) {
-              gaService.setLocationAndSize(ga, shapeXOffset + 20, ga.getY(), rectangleWidth - 25, ga.getHeight());
+              gaService.setLocationAndSize(ga, ACTOR_TEXT_X_MARGIN, ga.getY(), ACTOR_TEXT_WIDTH, ga.getHeight());
             } else if (ga instanceof Image) {
               // remain unchanged
             } else {
@@ -129,26 +157,17 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
       }
     }
 
-    List<Anchor> anchors = containerShape.getAnchors();
-    int yStart = containsExtFigure ? 0 : MIN_HEIGHT;
-    int yOffsetForInputPorts = (rectangleHeight - yStart) / (1 + (nrInputs>0?nrInputs:1));
-    int yOffsetForOutputPorts = (rectangleHeight - yStart) / (1 + (nrOutputs>0?nrOutputs:1));
-    yOffsetForInputPorts = yOffsetForInputPorts > ActorAddFeature.PORT_SIZE ? yOffsetForInputPorts : ActorAddFeature.PORT_SIZE;
-    yOffsetForOutputPorts = yOffsetForOutputPorts > ActorAddFeature.PORT_SIZE ? yOffsetForOutputPorts : ActorAddFeature.PORT_SIZE;
-    int inCnt = 1;
-    int outCnt = 1;
-    for (int i = 0; i < anchors.size(); ++i) {
-      FixPointAnchor fpa = (FixPointAnchor) anchors.get(i);
-      boCategory = BoCategory.retrieveFrom(fpa);
-      if (BoCategory.Output.equals(boCategory)) {
-        fpa.setLocation(gaService.createPoint(xOffset + rectangleWidth, yStart +  yOffsetForOutputPorts*(outCnt++)));
-        anythingChanged = true;
-      } else if (BoCategory.Input.equals(boCategory)) {
-        fpa.setLocation(gaService.createPoint(0, yStart + yOffsetForInputPorts*(inCnt++)));
-        anythingChanged = true;
-      }
-    }
+    categorizedPorts.forEach((direction, pairs) -> updateForDirection(containerShape, direction, pairs));
 
     return anythingChanged;
   }
+
+  private void updateForDirection(ContainerShape containerShape, Direction direction, List<PortAnchorPair> pairList) {
+    int portCount = pairList.size();
+    for (int i = 0; i < portCount; ++i) {
+      FixPointAnchor fpa = (FixPointAnchor) pairList.get(i).anchor;
+      fpa.setLocation(ActorShapes.determineAnchorLocation(containerShape, direction, i, portCount));
+    }
+  }
+
 }

@@ -50,6 +50,7 @@ public class PortItemProvider extends NamedObjItemProvider {
       addInputPropertyDescriptor(object);
       addOutputPropertyDescriptor(object);
       addMultiPortPropertyDescriptor(object);
+      addDirectionPropertyDescriptor(object);
       addLinkedRelationsPropertyDescriptor(object);
       addInsideLinkedRelationsPropertyDescriptor(object);
       addOutsideLinkedRelationsPropertyDescriptor(object);
@@ -88,6 +89,17 @@ public class PortItemProvider extends NamedObjItemProvider {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Port_multiPort_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Port_multiPort_feature", "_UI_Port_type"),
         TriqPackage.Literals.PORT__MULTI_PORT, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Direction feature. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  protected void addDirectionPropertyDescriptor(Object object) {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory) adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Port_direction_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Port_direction_feature", "_UI_Port_type"),
+        TriqPackage.Literals.PORT__DIRECTION, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -160,6 +172,7 @@ public class PortItemProvider extends NamedObjItemProvider {
     case TriqPackage.PORT__INPUT:
     case TriqPackage.PORT__OUTPUT:
     case TriqPackage.PORT__MULTI_PORT:
+    case TriqPackage.PORT__DIRECTION:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

@@ -78,7 +78,6 @@ import org.eclipse.triquetrum.workflow.editor.features.ModelElementPasteFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
-import org.eclipse.triquetrum.workflow.editor.features.PortAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.VertexAddFeature;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
@@ -174,8 +173,6 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new ConnectionAddFeature(this);
     } else if (context.getNewObject() instanceof Vertex) {
       return new VertexAddFeature(this);
-    } else if (context.getNewObject() instanceof Port) {
-      return new PortAddFeature(this);
     } else if (context.getNewObject() instanceof Parameter) {
       return new ParameterAddFeature(this);
     } else if (context.getNewObject() instanceof Annotation) {

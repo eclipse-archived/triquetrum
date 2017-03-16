@@ -38,10 +38,7 @@ public class ActorDeleteFeature extends DefaultDeleteFeature {
     Actor actor = (Actor) bo;
     // TODO adapt when Triq supports relations between >2 ports
     // then we should handle deletion of individual links i.o directly deleting complete relations (cfr ptolemy)
-    for (Port p : actor.getInputPorts()) {
-      deleteLinkedRelations(p);
-    }
-    for (Port p : actor.getOutputPorts()) {
+    for (Port p : actor.getPorts()) {
       deleteLinkedRelations(p);
     }
     super.deleteBusinessObject(bo);
