@@ -6,7 +6,7 @@
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
     </domainModelReference>
   </children>
-  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_DbaT1OeoEea6NtatxyB-pg" name="Control wrappedType">
+  <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_DbaT1OeoEea6NtatxyB-pg" name="Control wrappedType" readonly="true">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_DbaT1eeoEea6NtatxyB-pg">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/wrappedType"/>
     </domainModelReference>
@@ -28,7 +28,7 @@
       </composite>
     </categorizations>
     <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Category" xmi:id="_o502EOeoEea6NtatxyB-pg" name="Ports">
-      <composite xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_fu9pAOeoEea6NtatxyB-pg" name="Ports">
+      <composite xsi:type="org.eclipse.emf.ecp.view.table.model:TableControl" xmi:id="_fu9pAOeoEea6NtatxyB-pg" name="Ports" detailEditing="WithDialog">
         <domainModelReference xsi:type="org.eclipse.emf.ecp.view.table.model:TableDomainModelReference" xmi:id="_fu9pAeeoEea6NtatxyB-pg">
           <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_hoIxIOeoEea6NtatxyB-pg">
             <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
@@ -41,6 +41,9 @@
           </columnDomainModelReferences>
           <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_hoIxJ-eoEea6NtatxyB-pg">
             <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/multiPort"/>
+          </columnDomainModelReferences>
+          <columnDomainModelReferences xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_zi1NgANyEeepkJB16JWj2w">
+            <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//Port/direction"/>
           </columnDomainModelReferences>
           <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_fu9pAueoEea6NtatxyB-pg">
             <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//Entity/ports"/>

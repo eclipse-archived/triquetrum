@@ -10,6 +10,9 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import static org.eclipse.triquetrum.workflow.editor.shapes.PortShapes.PORT_BACKGROUND_MULTIPORT;
+import static org.eclipse.triquetrum.workflow.editor.shapes.PortShapes.PORT_BACKGROUND_SINGLEPORT;
+
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IUpdateContext;
@@ -56,7 +59,7 @@ public class PortUpdateFeature extends AbstractUpdateFeature {
       
       // a bit more complex : check port colour and compare it to multiport property
       GraphicsAlgorithm portGA = anchor.getGraphicsAlgorithm();
-      IColorConstant expectedPortBackgroundColor = p.isMultiPort() ? ActorAddFeature.PORT_BACKGROUND_MULTIPORT : ActorAddFeature.PORT_BACKGROUND_SINGLEPORT;
+      IColorConstant expectedPortBackgroundColor = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
       boolean portMultiPortChange = !portGA.getBackground().equals(manageColor(expectedPortBackgroundColor));
 
       if (portDirectionChange || portMultiPortChange) {
@@ -87,7 +90,7 @@ public class PortUpdateFeature extends AbstractUpdateFeature {
       }
       boolean portMultiPortChange = Boolean.valueOf((String)context.getProperty(PORT_CHANGED_MULTI));
       if (portMultiPortChange) {
-        IColorConstant portColour = p.isMultiPort() ? ActorAddFeature.PORT_BACKGROUND_MULTIPORT : ActorAddFeature.PORT_BACKGROUND_SINGLEPORT;
+        IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
         portGA.setBackground(manageColor(portColour));
       }
     }
