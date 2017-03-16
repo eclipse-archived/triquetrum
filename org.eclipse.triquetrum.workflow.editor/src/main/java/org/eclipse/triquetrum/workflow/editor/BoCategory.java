@@ -26,10 +26,16 @@ import ptolemy.vergil.kernel.attributes.TextAttribute;
  * TODO analyse if this can move (partially) to the Triquetrum EMF model or should stay in the editor code.
  *
  */
-public enum BoCategory {
-  Actor(ptolemy.actor.Actor.class), CompositeActor(ptolemy.actor.CompositeActor.class), Director(ptolemy.actor.Director.class), Parameter(
-      ptolemy.data.expr.Parameter.class), Attribute(ptolemy.kernel.util.Attribute.class), Annotation(
-          TextAttribute.class), Relation(IORelation.class), Vertex(ptolemy.moml.Vertex.class), Port(IOPort.class), Input(IOPort.class), Output(IOPort.class);
+public enum BoCategory implements Category{
+  Actor(ptolemy.actor.Actor.class), 
+  CompositeActor(ptolemy.actor.CompositeActor.class), 
+  Director(ptolemy.actor.Director.class), 
+  Parameter(ptolemy.data.expr.Parameter.class), 
+  Attribute(ptolemy.kernel.util.Attribute.class), 
+  Annotation(TextAttribute.class), 
+  Relation(IORelation.class), 
+  Vertex(ptolemy.moml.Vertex.class), 
+  Port(IOPort.class);
 
   private final static Logger LOGGER = LoggerFactory.getLogger(BoCategory.class);
   private final static String BO_CATEGORY_PROPNAME = "__BO_CATEGORY";
@@ -90,6 +96,7 @@ public enum BoCategory {
    * 
    * @param pe
    */
+  @Override
   public void storeIn(PictogramElement pe) {
     Graphiti.getPeService().setPropertyValue(pe, BoCategory.BO_CATEGORY_PROPNAME, name());
   }

@@ -131,9 +131,7 @@ public class CompositeActorCollapseExpandFeature extends AbstractCustomFeature {
         shape.setVisible(visible);
       } else if (BoCategory.Parameter.equals(boCategory)) {
         shape.setVisible(visible);
-      } else if (BoCategory.Input.equals(boCategory)) {
-
-      } else if (BoCategory.Output.equals(boCategory)) {
+      } else if (BoCategory.Port.equals(boCategory)) {
 
       }
     }

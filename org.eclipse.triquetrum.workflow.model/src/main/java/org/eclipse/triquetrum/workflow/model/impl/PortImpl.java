@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
+import org.eclipse.triquetrum.workflow.model.Direction;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.Linkable;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -46,6 +47,7 @@ import ptolemy.kernel.util.IllegalActionException;
  * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isInput <em>Input</em>}</li>
  * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isOutput <em>Output</em>}</li>
  * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#isMultiPort <em>Multi Port</em>}</li>
+ * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#getDirection <em>Direction</em>}</li>
  * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#getLinkedRelations <em>Linked Relations</em>}</li>
  * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#getInsideLinkedRelations <em>Inside Linked Relations</em>}</li>
  * <li>{@link org.eclipse.triquetrum.workflow.model.impl.PortImpl#getOutsideLinkedRelations <em>Outside Linked Relations</em>}</li>
@@ -56,7 +58,7 @@ import ptolemy.kernel.util.IllegalActionException;
 public class PortImpl extends NamedObjImpl implements Port {
   /**
    * The default value of the '{@link #isInput() <em>Input</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isInput()
    * @generated
    * @ordered
@@ -65,7 +67,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isInput() <em>Input</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isInput()
    * @generated
    * @ordered
@@ -74,7 +76,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The default value of the '{@link #isOutput() <em>Output</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isOutput()
    * @generated
    * @ordered
@@ -83,7 +85,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isOutput() <em>Output</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isOutput()
    * @generated
    * @ordered
@@ -92,7 +94,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The default value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isMultiPort()
    * @generated
    * @ordered
@@ -101,7 +103,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * The cached value of the '{@link #isMultiPort() <em>Multi Port</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #isMultiPort()
    * @generated
    * @ordered
@@ -109,8 +111,34 @@ public class PortImpl extends NamedObjImpl implements Port {
   protected boolean multiPort = MULTI_PORT_EDEFAULT;
 
   /**
+   * The default value of the '{@link #getDirection() <em>Direction</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getDirection()
+   * @generated
+   * @ordered
+   */
+  protected static final Direction DIRECTION_EDEFAULT = Direction.DEFAULT;
+
+  /**
+   * The cached value of the '{@link #getDirection() <em>Direction</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @see #getDirection()
+   * @generated
+   * @ordered
+   */
+  protected Direction direction = DIRECTION_EDEFAULT;
+
+  /**
+   * This is true if the Direction attribute has been set. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   * @ordered
+   */
+  protected boolean directionESet;
+
+  /**
    * The cached value of the '{@link #getLinkedRelations() <em>Linked Relations</em>}' reference list. <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @see #getLinkedRelations()
    * @generated
    * @ordered
@@ -164,7 +192,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -174,7 +202,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -206,7 +234,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -372,7 +400,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -387,7 +415,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -401,7 +429,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -433,7 +461,61 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
+   * @generated NOT
+   */
+  public Direction getDirection() {
+    if(direction!=null && Direction.DEFAULT!=direction) {
+      return direction;
+    } else if(isInput()) {
+      return Direction.WEST;
+    } else if(isOutput()) {
+      return Direction.EAST;
+    } else {
+      return direction;
+    }
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void setDirection(Direction newDirection) {
+    Direction oldDirection = direction;
+    direction = newDirection == null ? DIRECTION_EDEFAULT : newDirection;
+    boolean oldDirectionESet = directionESet;
+    directionESet = true;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.PORT__DIRECTION, oldDirection, direction, !oldDirectionESet));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public void unsetDirection() {
+    Direction oldDirection = direction;
+    boolean oldDirectionESet = directionESet;
+    direction = DIRECTION_EDEFAULT;
+    directionESet = false;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.UNSET, TriqPackage.PORT__DIRECTION, oldDirection, DIRECTION_EDEFAULT, oldDirectionESet));
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
+   * @generated
+   */
+  public boolean isSetDirection() {
+    return directionESet;
+  }
+
+  /**
+   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * 
    * @generated
    */
   @Override
@@ -564,7 +646,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -576,6 +658,8 @@ public class PortImpl extends NamedObjImpl implements Port {
       return isOutput();
     case TriqPackage.PORT__MULTI_PORT:
       return isMultiPort();
+    case TriqPackage.PORT__DIRECTION:
+      return getDirection();
     case TriqPackage.PORT__LINKED_RELATIONS:
       return getLinkedRelations();
     case TriqPackage.PORT__INSIDE_LINKED_RELATIONS:
@@ -588,7 +672,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @SuppressWarnings("unchecked")
@@ -604,6 +688,9 @@ public class PortImpl extends NamedObjImpl implements Port {
     case TriqPackage.PORT__MULTI_PORT:
       setMultiPort((Boolean) newValue);
       return;
+    case TriqPackage.PORT__DIRECTION:
+      setDirection((Direction) newValue);
+      return;
     case TriqPackage.PORT__LINKED_RELATIONS:
       getLinkedRelations().clear();
       getLinkedRelations().addAll((Collection<? extends Relation>) newValue);
@@ -614,7 +701,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -629,6 +716,9 @@ public class PortImpl extends NamedObjImpl implements Port {
     case TriqPackage.PORT__MULTI_PORT:
       setMultiPort(MULTI_PORT_EDEFAULT);
       return;
+    case TriqPackage.PORT__DIRECTION:
+      unsetDirection();
+      return;
     case TriqPackage.PORT__LINKED_RELATIONS:
       getLinkedRelations().clear();
       return;
@@ -638,7 +728,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -650,6 +740,8 @@ public class PortImpl extends NamedObjImpl implements Port {
       return output != OUTPUT_EDEFAULT;
     case TriqPackage.PORT__MULTI_PORT:
       return multiPort != MULTI_PORT_EDEFAULT;
+    case TriqPackage.PORT__DIRECTION:
+      return isSetDirection();
     case TriqPackage.PORT__LINKED_RELATIONS:
       return linkedRelations != null && !linkedRelations.isEmpty();
     case TriqPackage.PORT__INSIDE_LINKED_RELATIONS:
@@ -662,7 +754,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -691,7 +783,7 @@ public class PortImpl extends NamedObjImpl implements Port {
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   *
+   * 
    * @generated
    */
   @Override
@@ -706,6 +798,11 @@ public class PortImpl extends NamedObjImpl implements Port {
     result.append(output);
     result.append(", multiPort: ");
     result.append(multiPort);
+    result.append(", direction: ");
+    if (directionESet)
+      result.append(direction);
+    else
+      result.append("<unset>");
     result.append(')');
     return result.toString();
   }

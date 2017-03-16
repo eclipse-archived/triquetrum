@@ -62,8 +62,7 @@ public class EntityItemProvider extends NamedObjItemProvider {
   public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
     if (childrenFeatures == null) {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(TriqPackage.Literals.ENTITY__INPUT_PORTS);
-      childrenFeatures.add(TriqPackage.Literals.ENTITY__OUTPUT_PORTS);
+      childrenFeatures.add(TriqPackage.Literals.ENTITY__PORTS);
     }
     return childrenFeatures;
   }
@@ -113,8 +112,7 @@ public class EntityItemProvider extends NamedObjItemProvider {
     updateChildren(notification);
 
     switch (notification.getFeatureID(Entity.class)) {
-    case TriqPackage.ENTITY__INPUT_PORTS:
-    case TriqPackage.ENTITY__OUTPUT_PORTS:
+    case TriqPackage.ENTITY__PORTS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
       return;
     }
@@ -131,27 +129,7 @@ public class EntityItemProvider extends NamedObjItemProvider {
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(TriqPackage.Literals.ENTITY__INPUT_PORTS, TriqFactory.eINSTANCE.createPort()));
-
-    newChildDescriptors.add(createChildParameter(TriqPackage.Literals.ENTITY__OUTPUT_PORTS, TriqFactory.eINSTANCE.createPort()));
-  }
-
-  /**
-   * This returns the label text for {@link org.eclipse.emf.edit.command.CreateChildCommand}. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
-   * @generated
-   */
-  @Override
-  public String getCreateChildText(Object owner, Object feature, Object child, Collection<?> selection) {
-    Object childFeature = feature;
-    Object childObject = child;
-
-    boolean qualify = childFeature == TriqPackage.Literals.ENTITY__INPUT_PORTS || childFeature == TriqPackage.Literals.ENTITY__OUTPUT_PORTS;
-
-    if (qualify) {
-      return getString("_UI_CreateChild_text2", new Object[] { getTypeText(childObject), getFeatureText(childFeature), getTypeText(owner) });
-    }
-    return super.getCreateChildText(owner, feature, child, selection);
+    newChildDescriptors.add(createChildParameter(TriqPackage.Literals.ENTITY__PORTS, TriqFactory.eINSTANCE.createPort()));
   }
 
 }

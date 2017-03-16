@@ -56,9 +56,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//NamedObj">
     <eOperations name="getParameters" upperBound="-1" eType="#//Parameter"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inputPorts" upperBound="-1"
-        eType="#//Port" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="outputPorts" upperBound="-1"
+    <eOperations name="getInputPorts" upperBound="-1" eType="#//Port"/>
+    <eOperations name="getOutputPorts" upperBound="-1" eType="#//Port"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ports" upperBound="-1"
         eType="#//Port" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CompositeEntity" eSuperTypes="#//Entity">
@@ -79,6 +79,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="output" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="multiPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="direction" eType="#//Direction"
+        defaultValueLiteral="DEFAULT" unsettable="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="linkedRelations" upperBound="-1"
         eType="#//Relation" eOpposite="#//Relation/linkedPorts"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="insideLinkedRelations"
@@ -117,4 +119,11 @@
     <eOperations name="buildWrappedLinks"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Visitor" instanceClassName="org.eclipse.triquetrum.workflow.model.util.Visitor"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="Direction">
+    <eLiterals name="NORTH" value="1"/>
+    <eLiterals name="SOUTH" value="5"/>
+    <eLiterals name="EAST" value="3"/>
+    <eLiterals name="WEST" value="7"/>
+    <eLiterals name="DEFAULT"/>
+  </eClassifiers>
 </ecore:EPackage>

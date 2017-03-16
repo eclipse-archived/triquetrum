@@ -85,7 +85,7 @@ public abstract class AbstractCustomModelElementShape extends RectangleFigure im
           try {
             GraphicsAlgorithm parentGA = ga.getParentGraphicsAlgorithm();
             ResizeShapeContext context = new ResizeShapeContext((Shape) parentGA.getPictogramElement());
-            context.setSize(width + 15, height);
+            context.setSize(width + 2*ActorShapes.ACTOR_X_MARGIN, height + 2*ActorShapes.ACTOR_Y_MARGIN);
             context.setX(parentGA.getX());
             context.setY(parentGA.getY());
             context.putProperty("forced", "true");

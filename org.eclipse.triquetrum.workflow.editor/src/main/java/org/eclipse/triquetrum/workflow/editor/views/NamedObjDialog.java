@@ -16,6 +16,7 @@ import org.eclipse.emf.ecp.ui.view.swt.ECPSWTViewRenderer;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -39,7 +40,7 @@ public class NamedObjDialog extends Dialog {
   protected Control createDialogArea(Composite parent) {
 
     final GridData parentData = new GridData(SWT.FILL, SWT.FILL, true, true);
-    parent.setLayout(new GridLayout(1, true));
+    parent.setLayout(new GridLayout());
     parent.setLayoutData(parentData);
 
     final ScrolledComposite wrapper = new ScrolledComposite(parent, SWT.H_SCROLL | SWT.V_SCROLL);
@@ -54,6 +55,7 @@ public class NamedObjDialog extends Dialog {
     final Composite emfFormsParent = new Composite(wrapper, SWT.NONE);
     wrapper.setContent(emfFormsParent);
     emfFormsParent.setLayout(new GridLayout());
+    emfFormsParent.setLayoutData(new GridData(500, 500));
 
     try {
       view = ECPSWTViewRenderer.INSTANCE.render(emfFormsParent, namedObj);
@@ -63,6 +65,11 @@ public class NamedObjDialog extends Dialog {
     wrapper.setMinSize(wrapper.computeSize(SWT.DEFAULT, SWT.DEFAULT));
 
     return parent;
+  }
+  
+  @Override
+  protected Point getInitialSize() {
+    return new Point(500, 500);
   }
 
   @Override

@@ -10,16 +10,20 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import static org.eclipse.triquetrum.workflow.editor.shapes.PortShapes.PORT_BACKGROUND_MULTIPORT;
+import static org.eclipse.triquetrum.workflow.editor.shapes.PortShapes.PORT_BACKGROUND_SINGLEPORT;
+
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.IReason;
 import org.eclipse.graphiti.features.context.IUpdateContext;
+import org.eclipse.graphiti.features.context.impl.UpdateContext;
 import org.eclipse.graphiti.features.impl.AbstractUpdateFeature;
 import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.util.IColorConstant;
-import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.editor.PortCategory;
 import org.eclipse.triquetrum.workflow.model.Port;
 
 /**
@@ -28,8 +32,7 @@ import org.eclipse.triquetrum.workflow.model.Port;
 public class PortUpdateFeature extends AbstractUpdateFeature {
 
   private static final String PORT_CHANGED_MULTI = "PORT_CHANGED_MULTI";
-// this is not yet allowed in Triq
-// private static final String PORT_CHANGED_IO = "PORT_CHANGED_IO";
+  private static final String PORT_CHANGED_IO = "PORT_CHANGED_IO";
   private static final String PORT_CHANGED = "PORT_CHANGED";
 
   public PortUpdateFeature(IFeatureProvider fp) {
@@ -38,8 +41,8 @@ public class PortUpdateFeature extends AbstractUpdateFeature {
 
   @Override
   public boolean canUpdate(IUpdateContext context) {
-    BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
-    return (BoCategory.Output.equals(boCategory) || BoCategory.Input.equals(boCategory));
+    PortCategory portCategory = PortCategory.retrieveFrom(context.getPictogramElement());
+    return (portCategory!=null);
   }
 
   @Override
@@ -50,16 +53,18 @@ public class PortUpdateFeature extends AbstractUpdateFeature {
     if (bo instanceof Port && pictogramElement instanceof Anchor) {
       p = (Port) bo;
       Anchor anchor = (Anchor) pictogramElement;
-//      BoCategory boCategory = BoCategory.retrieveFrom(anchor);
-//      boolean portInputOutputChange = (BoCategory.Input.equals(boCategory) && !p.isInput()) || (BoCategory.Output.equals(boCategory) && !p.isOutput());
+      PortCategory anchorCategory = PortCategory.retrieveFrom(anchor);
+      PortCategory portCategory = PortCategory.retrieveFrom(p);
+      boolean portDirectionChange = portCategory != anchorCategory;
+      
       // a bit more complex : check port colour and compare it to multiport property
       GraphicsAlgorithm portGA = anchor.getGraphicsAlgorithm();
-      IColorConstant expectedPortBackgroundColor = p.isMultiPort() ? ActorAddFeature.PORT_BACKGROUND_MULTIPORT : ActorAddFeature.PORT_BACKGROUND_SINGLEPORT;
+      IColorConstant expectedPortBackgroundColor = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
       boolean portMultiPortChange = !portGA.getBackground().equals(manageColor(expectedPortBackgroundColor));
 
-      if (/*portInputOutputChange ||*/ portMultiPortChange) {
+      if (portDirectionChange || portMultiPortChange) {
         context.putProperty(PORT_CHANGED, p.getName());
-//        context.putProperty(PORT_CHANGED_IO, Boolean.toString(portInputOutputChange));
+        context.putProperty(PORT_CHANGED_IO, Boolean.toString(portDirectionChange));
         context.putProperty(PORT_CHANGED_MULTI, Boolean.toString(portMultiPortChange));
         return Reason.createTrueReason("Port change");
       }
@@ -76,9 +81,16 @@ public class PortUpdateFeature extends AbstractUpdateFeature {
       Port p = (Port) bo;
       Anchor anchor = (Anchor) pictogramElement;
       GraphicsAlgorithm portGA = anchor.getGraphicsAlgorithm();
+      boolean portInputOutputChange = Boolean.valueOf((String)context.getProperty(PORT_CHANGED_IO));
+      if (portInputOutputChange) {
+        // TODO reposition port on the correct side of the actor
+        // this also impacts positioning of the other ports, so we'd better do this as an ActorUpdate...
+        PictogramElement actorPE = anchor.getParent();
+        getFeatureProvider().updateIfPossibleAndNeeded(new UpdateContext(actorPE));
+      }
       boolean portMultiPortChange = Boolean.valueOf((String)context.getProperty(PORT_CHANGED_MULTI));
       if (portMultiPortChange) {
-        IColorConstant portColour = p.isMultiPort() ? ActorAddFeature.PORT_BACKGROUND_MULTIPORT : ActorAddFeature.PORT_BACKGROUND_SINGLEPORT;
+        IColorConstant portColour = p.isMultiPort() ? PORT_BACKGROUND_MULTIPORT : PORT_BACKGROUND_SINGLEPORT;
         portGA.setBackground(manageColor(portColour));
       }
     }

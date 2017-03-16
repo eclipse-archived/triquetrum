@@ -182,12 +182,7 @@ public class ModelElementCreateFeature extends AbstractCreateFeature {
         model.getAttributes().add((Attribute) result);
       } else if (result instanceof Port) {
         Port p = (Port) result;
-        if (p.isInput()) {
-          model.getInputPorts().add(p);
-        }
-        if (p.isOutput()) {
-          model.getOutputPorts().add(p);
-        }
+        model.getPorts().add(p);
       }
 
       result.welcome(new PtObjectBuilderAndApplierVisitor(), true);
