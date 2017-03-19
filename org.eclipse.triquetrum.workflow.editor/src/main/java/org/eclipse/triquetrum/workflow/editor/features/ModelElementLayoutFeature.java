@@ -41,6 +41,7 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes;
+import org.eclipse.triquetrum.workflow.editor.shapes.PortShapes;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.editor.util.PortAnchorPair;
 import org.eclipse.triquetrum.workflow.model.Direction;
@@ -162,12 +163,19 @@ public class ModelElementLayoutFeature extends AbstractLayoutFeature {
     return anythingChanged;
   }
 
+  /**
+   * Relocates anchors and rotates port to match their current direction.
+   * @param containerShape
+   * @param direction
+   * @param pairList
+   */
   private void updateForDirection(ContainerShape containerShape, Direction direction, List<PortAnchorPair> pairList) {
     int portCount = pairList.size();
     for (int i = 0; i < portCount; ++i) {
       FixPointAnchor fpa = (FixPointAnchor) pairList.get(i).anchor;
+      Port p = pairList.get(i).port;
       fpa.setLocation(ActorShapes.determineAnchorLocation(containerShape, direction, i, portCount));
+      PortShapes.rotatePortShape(getDiagram(), fpa, direction, p);
     }
   }
-
 }
