@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2015, 2016 iSencia Belgium NV.
+ * Copyright (c) 2017 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -61,6 +61,14 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     super(fp);
   }
 
+  /**
+   * Extends Graphiti's default linking between a pictogram element and a business object,
+   * by also storing extra properties to facilitate determining changes between business model and graphical model.
+   * 
+   * @param pe
+   * @param businessObject
+   * @param categories
+   */
   protected void link(PictogramElement pe, Object businessObject, Category... categories) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
@@ -123,30 +131,26 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     gaService.setLocationAndSize(invisibleRectangle, xLocation, yLocation, width + 2*ACTOR_X_MARGIN, height + 2*ACTOR_Y_MARGIN);
 
     // SHAPES FOR PORTS; added both on default shapes and on custom/externally-defined icons (SVG, ptolemy icons)
-    List<Port> ports = addedActor.getPorts();
-    Map<Direction, List<Port>> categorizedPorts = ports.stream().collect(groupingBy(Port::getDirection, mapping(Function.identity(), toList())));
-    categorizedPorts.forEach((direction, pairs) -> updateForDirection(context, containerShape, direction, pairs));
+    Map<Direction, List<Port>> categorizedPorts = addedActor.getPorts().stream().collect(groupingBy(Port::getDirection, mapping(Function.identity(), toList())));
+    categorizedPorts.forEach((direction, ports) -> createAnchorsAndPortShapesForDirection(context, containerShape, direction, ports));
 
     layoutPictogramElement(containerShape);
 
     return containerShape;
   }
 
-  private void updateForDirection(IAddContext context, ContainerShape containerShape, Direction direction, List<Port> portList) {
-    Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
-    // The list should only contain pairs for which there are still ports on the actor.
-    // But there may still be new ports for which no anchor is present yet in the graphical model.
-    int portCount = portList.size();
-    for (int i = 0; i < portCount; ++i) {
-      Port p = portList.get(i);
-      Anchor anchor = PortShapes.createAnchor(getDiagram(), containerShape, direction, p, i, portCount);
-      link(anchor, p, BoCategory.Port, PortCategory.valueOf(direction));
-      if (anchorMap != null) {
-        anchorMap.put(p.getFullName(), anchor);
-      }
-    }
-  }
-
+  /**
+   * Builds the default actor shape, consisting of a rounded rectangle containing a small icon and the actor's name.
+   * <p>
+   * Used when no specific image/icon definition has been set for a given actor.
+   * </p>
+   * @param gaService
+   * @param invisibleRectangle
+   * @param containerShape
+   * @param addedActor
+   * @param iconResource
+   * @return
+   */
   protected GraphicsAlgorithm buildDefaultShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape, Entity addedActor,
       String iconResource) {
 
@@ -220,6 +224,16 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     return actorShapeGA;
   }
 
+  /**
+   * Builds the actor shape based on an external definition, e.g. in SVG or in Ptolemy icon moml files.
+   * 
+   * @param gaService
+   * @param invisibleRectangle
+   * @param containerShape
+   * @param iconType
+   * @param iconResource
+   * @return
+   */
   protected GraphicsAlgorithm buildExternallyDefinedShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape,
       String iconType, String iconResource) {
 
@@ -238,5 +252,28 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     }
     gaService.setLocationAndSize(extFigure, ACTOR_X_MARGIN, ACTOR_Y_MARGIN, 40, 40);
     return extFigure;
+  }
+
+  /**
+   * 
+   * @param context
+   * @param containerShape
+   * @param direction
+   * @param portList
+   */
+  private void createAnchorsAndPortShapesForDirection(IAddContext context, ContainerShape containerShape, Direction direction, List<Port> portList) {
+    Map<String, Anchor> anchorMap = (Map<String, Anchor>) context.getProperty(FeatureConstants.ANCHORMAP_NAME);
+    // The list should only contain pairs for which there are still ports on the actor.
+    // But there may still be new ports for which no anchor is present yet in the graphical model.
+    int portCount = portList.size();
+    for (int i = 0; i < portCount; ++i) {
+      Port p = portList.get(i);
+      Anchor anchor = PortShapes.createAnchor(containerShape, direction, p, i, portCount);
+      PortShapes.createPortShape(getDiagram(), anchor, direction, p);
+      link(anchor, p, BoCategory.Port, PortCategory.valueOf(direction));
+      if (anchorMap != null) {
+        anchorMap.put(p.getFullName(), anchor);
+      }
+    }
   }
 }
