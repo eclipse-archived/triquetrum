@@ -33,14 +33,12 @@ import org.eclipse.graphiti.features.impl.Reason;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
-import org.eclipse.graphiti.mm.pictograms.FixPointAnchor;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.Category;
 import org.eclipse.triquetrum.workflow.editor.PortCategory;
-import org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes;
 import org.eclipse.triquetrum.workflow.editor.shapes.PortShapes;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.editor.util.PortAnchorPair;
@@ -170,8 +168,39 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
       }
     }
     return result;
+  }  
+
+  /**
+   * Extends Graphiti's default linking between a pictogram element and a business object,
+   * by also storing extra properties to facilitate determining changes between business model and graphical model.
+   * 
+   * @param pe
+   * @param businessObject
+   * @param categories
+   */
+  protected void link(PictogramElement pe, Object businessObject, Category... categories) {
+    super.link(pe, businessObject);
+    // add property on the graphical model element, identifying the associated triq model element
+    // so we can easily distinguish and identify them later on for updates etc
+    for (Category category : categories) {
+      category.storeIn(pe);
+    }
+    if (businessObject instanceof NamedObj) {
+      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
+    }
+    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 
+  /**
+   * Compares the known graphical model elements like anchors & prt shapes with what is needed for the current ports in the given actor,
+   * and resolves the differences.
+   * <p>
+   * This can be about added/deleted ports, changes in port input/output settings, and port direction changes.
+   * </p>
+   * 
+   * @param containerShape
+   * @param actor
+   */
   private void updateAnchorsForPorts(ContainerShape containerShape, Entity actor) {
     // So now we need to adapt the graphical model :
     // - remove anchors for deleted ports
@@ -219,12 +248,18 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
         (pa1, pa2) -> Integer.compare(ports.indexOf(getBusinessObjectForPictogramElement(pa1.anchor)), ports.indexOf(getBusinessObjectForPictogramElement(pa2.anchor))));
     
     // Group anchors and ports depending on their category/direction and then update anchors for each direction
-    // TODO double check that ordering is not lost in this black-magic-oneliner 
     Map<Direction, List<PortAnchorPair>> categorizedPorts = paList.stream().collect(groupingBy(PortAnchorPair::getPortDirection, mapping(Function.identity(), toList())));
-    categorizedPorts.forEach((direction, pairs) -> updateForDirection(containerShape, direction, pairs));
+    categorizedPorts.forEach((direction, pairs) -> createNewAnchorsAndPortShapesForDirection(containerShape, direction, pairs));
   }
 
-  private void updateForDirection(ContainerShape containerShape, Direction direction, List<PortAnchorPair> pairList) {
+  /**
+   * Creates anchors and port shapes for added ports.
+   * 
+   * @param containerShape
+   * @param direction
+   * @param pairList
+   */
+  private void createNewAnchorsAndPortShapesForDirection(ContainerShape containerShape, Direction direction, List<PortAnchorPair> pairList) {
     // The list should only contain pairs for which there are still ports on the actor.
     // But there may still be new ports for which no anchor is present yet in the graphical model.
     int portCount = pairList.size();
@@ -232,25 +267,10 @@ public class ActorUpdateFeature extends AbstractUpdateFeature {
       Port p = pairList.get(i).port;
       Anchor anchor = pairList.get(i).anchor;
       if (anchor == null) {
-        anchor = PortShapes.createAnchor(getDiagram(), containerShape, direction, p, i, portCount);
+        anchor = PortShapes.createAnchor(containerShape, direction, p, i, portCount);
+        PortShapes.createPortShape(getDiagram(), anchor, direction, p);
         link(anchor, p, BoCategory.Port, PortCategory.valueOf(direction));
-      } else {
-        FixPointAnchor fpa = (FixPointAnchor) anchor;
-        fpa.setLocation(ActorShapes.determineAnchorLocation(containerShape, direction, i, portCount));
       }
     }
-  }
-
-  protected void link(PictogramElement pe, Object businessObject, Category... categories) {
-    super.link(pe, businessObject);
-    // add property on the graphical model element, identifying the associated triq model element
-    // so we can easily distinguish and identify them later on for updates etc
-    for (Category category : categories) {
-      category.storeIn(pe);
-    }
-    if (businessObject instanceof NamedObj) {
-      Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
-    }
-    Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
 }
