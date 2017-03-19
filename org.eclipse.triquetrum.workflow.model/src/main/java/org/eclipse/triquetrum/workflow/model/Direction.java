@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.Enumerator;
  */
 public enum Direction implements Enumerator {
   /**
-   * The '<em><b>NORTH</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>NORTH</b></em>' literal object. <!-- begin-user-doc -->Places the port on the top side of an actor.<!-- end-user-doc -->
    * 
    * @see #NORTH_VALUE
    * @generated
@@ -35,7 +35,7 @@ public enum Direction implements Enumerator {
   NORTH(1, "NORTH", "NORTH"),
 
   /**
-   * The '<em><b>SOUTH</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>SOUTH</b></em>' literal object. <!-- begin-user-doc -->Places the port on the bottom side of an actor.<!-- end-user-doc -->
    * 
    * @see #SOUTH_VALUE
    * @generated
@@ -44,7 +44,7 @@ public enum Direction implements Enumerator {
   SOUTH(5, "SOUTH", "SOUTH"),
 
   /**
-   * The '<em><b>EAST</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>EAST</b></em>' literal object. <!-- begin-user-doc -->Places the port on the right side of an actor.<!-- end-user-doc -->
    * 
    * @see #EAST_VALUE
    * @generated
@@ -53,7 +53,7 @@ public enum Direction implements Enumerator {
   EAST(3, "EAST", "EAST"),
 
   /**
-   * The '<em><b>WEST</b></em>' literal object. <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The '<em><b>WEST</b></em>' literal object. <!-- begin-user-doc -->Places the port on the left side of an actor.<!-- end-user-doc -->
    * 
    * @see #WEST_VALUE
    * @generated
