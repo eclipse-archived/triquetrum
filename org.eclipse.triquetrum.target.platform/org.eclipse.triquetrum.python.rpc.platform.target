@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Python-RPC" sequenceNumber="1487633058">
+<target name="Python-RPC" sequenceNumber="1489930792">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.apache.commons.lang" version="2.6.0.v201404270220"/>
-      <unit id="org.apache.commons.codec" version="1.6.0.v201305230611"/>
+      <unit id="org.apache.commons.codec" version="1.9.0.v20170208-1614"/>
       <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
       <unit id="org.apache.commons.httpclient" version="3.1.0.v201012070820"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
@@ -25,10 +25,10 @@
       <unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
       <unit id="javax.activation" version="1.1.0.v201211130549"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/"/>
+      <repository location="http://download.eclipse.org/tools/orbit/S-builds/S20170306214312/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.4.0.v20170123-1654"/>
+      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.4.0.v20170307-1429"/>
       <repository location="http://download.eclipse.org/releases/oxygen/"/>
     </location>
   </locations>
