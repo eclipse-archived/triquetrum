@@ -1,6 +1,6 @@
 target "Python-RPC" with source allEnvironments configurePhase
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/" {
+location "http://download.eclipse.org/tools/orbit/S-builds/S20170306214312/repository" {
 	org.apache.commons.lang
 	org.apache.commons.codec
 	org.apache.commons.logging
