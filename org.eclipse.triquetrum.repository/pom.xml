@@ -48,6 +48,11 @@
 						<goals>
 							<goal>archive-products</goal>
 						</goals>
+                                                <!-- We want to get the signing done before we archive, so we assign
+                                                     the archive-products goal to the pre-integration-test.
+                                                     See http://dev.eclipse.org/mhonarc/lists/cbi-dev/msg01777.html
+                                                     -->
+                                                <phase>pre-integration-test</phase>
 					</execution>
 				</executions>
 			</plugin>
