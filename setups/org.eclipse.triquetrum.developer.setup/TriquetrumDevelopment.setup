@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-     Copyright (c) 2017 iSencia Belgium NV.
-     All rights reserved. This program and the accompanying materials
-     are made available under the terms of the Eclipse Public License v1.0
-     which accompanies this distribution, and is available at
-     http://www.eclipse.org/legal/epl-v10.html
-
-     Contributors:
-        Erwin De Ley - initial API and implementation and/or initial documentation
- -->
 <setup:Project
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
@@ -146,6 +136,10 @@
   <setupTask
       xsi:type="setup.p2:P2Task">
     <requirement
+        name="org.eclipse.epp.package.rcp.feature.feature.group"/>
+    <requirement
+        name="epp.package.modeling"/>
+    <requirement
         name="org.eclipse.oomph.setup.sdk.feature.group"/>
     <requirement
         name="org.eclipse.oomph.preferences.feature.group"/>
@@ -154,9 +148,25 @@
     <requirement
         name="org.eclipse.mylyn.github.feature.feature.group"/>
     <requirement
+        name="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.ecp.sdk.feature.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.sdk.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.ecore.xcore.sdk.feature.group"/>
+    <requirement
         name="fr.obeo.releng.targetplatform-feature.feature.group"/>
     <repository
         url="http://mbarbero.github.io/fr.obeo.releng.targetplatform/p2/"/>
+    <repository
+        url="http://download.eclipse.org/technology/epp/packages/neon"/>
+    <repository
+        url="http://download.eclipse.org/releases/neon/201703231000"/>
+    <repository
+        url="http://download.eclipse.org/ecp/releases/releases_111/1110"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
