@@ -34,6 +34,9 @@ You do this by adding the `-s` flag when you make the commit(s), e.g.
 
 ### Setting up a Triquetrum development environment
 
+We are using Eclipse Neon as development IDE and using the latest Oxygen milestone as Triquetrum target platform.
+Pre-Neon versions may work as well as IDE, but may have limits to maintain e.g. EMF Forms viewmodels for Triquetrum.
+
 #### Using the Triquetrum development Oomph setup
 
 This approach allows you to start almost from scratch (with a JDK 1.8 and a Git client installed already), and to obtain a ready-for-use Triquetrum development environment including :
