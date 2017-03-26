@@ -19,9 +19,9 @@ If you don’t, you need to [register](https://dev.eclipse.org/site_login/create
 
   * Login into the [projects portal](https://projects.eclipse.org/), select “My Account”, and then the “Contributor License Agreement” tab.
 
-* Add your github username in your Eclipse Foundation account settings. Log in it to Eclipse and go to account settings.
+* Add your github username in your Eclipse Foundation account settings.
 
-* "Sign-off" your commits (NOTE! This is only necessary if contributing to the vertx-core project)
+* "Sign-off" your commits
 
 
 Every commit you make in your patch or pull request MUST be "signed off".
@@ -32,11 +32,31 @@ You do this by adding the `-s` flag when you make the commit(s), e.g.
 
 ## Making your changes
 
-### Fork the repository on GitHub
+### Setting up a Triquetrum development environment
+
+#### Using the Triquetrum development Oomph setup
+
+This approach allows you to start almost from scratch (with a JDK 1.8 and a Git client installed already), and to obtain a ready-for-use Triquetrum development environment including :
+* an OSGi / Eclipse RCP development environment
+* plugins to work with [EMF models](http://www.eclipse.org/modeling/emf/) and [EMF Forms](http://www.eclipse.org/ecp/emfforms/index.html) and with [target platform definitions](https://github.com/mbarbero/fr.obeo.releng.targetplatform/).
+* Java code formatting preferences as defined in our [Coding Style](https://wiki.eclipse.org/Triquetrum/Coding_Style)
+* A Mylyn task list linked to our GitHub issues
+
+This involves following steps :
+
+1. Download and start the [Eclipse Installer](http://www.eclipse.org/downloads/eclipse-packages/)
+2. Select your desired **Neon** Eclipse installation package (typically *Eclipse for RCP and RAP developers* but also *Eclipse Modeling tools* can be used) and click next
+3. Paste the [URL to the setup file](https://raw.githubusercontent.com/eclipse/triquetrum/master/setups/org.eclipse.triquetrum.developer.setup/TriquetrumDevelopment.setup) as a user project setup in your installer, under the Github projects section. (TODO : we need to add our setup to the standard list at Eclipse)
+4. Select the "Triquetrum development" setup and click next
+5. Check and adapt the setup variables for e.g. root installation folder, git clone location, github account info. Click next and let the installer do its thing to download the Eclipse RCP package and extra plugins and to start your new eclipse instance.
+6. When Eclipse is starting, you will see a progress indication at the bottom right for the startup tasks of the Oomph setup for Triquetrum. This will clone the Triquetrum repository, apply default Java code formatting preferences, set the target platform and prepare a Mylyn tasks-query on our Github issues.
+7. Wait some minutes (resolving and setting the target can take some time) and you're all set to start contributing to Triquetrum!
+
+#### Manual setup
 
 Use Eclipse to check out the repo.
 
-1. Install [Eclipse for RCP and RAP Developers](http://www.eclipse.org/downloads/).  Other versions may work.  These instructions were tested using Mars.1 January 2016 under Mac OS X.
+1. Install [Eclipse for RCP and RAP Developers](http://www.eclipse.org/downloads/).  Other versions may work.  These instructions were tested using Neon under Mac OS X and Windows 10.
 2. Start Eclipse. Create a new workspace.  You may need to close the Welcome tab by clicking on the X.
 3. Window -> Show View -> Other -> Git -> Git Repositories
 4. Click on "Clone a Git repository"
