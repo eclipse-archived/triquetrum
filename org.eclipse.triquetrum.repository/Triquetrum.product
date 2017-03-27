@@ -117,12 +117,12 @@
       <feature id="org.eclipse.emf.ecore.editor"/>
       <feature id="org.eclipse.emf.mapping.ecore.editor"/>
       <feature id="org.eclipse.equinox.core.feature"/>
-      <feature id="org.ptolemy.tycho.feature" version="1.0.0.201612021153"/>
-      <feature id="org.eclipse.emf.ecp.e3.feature" version="1.11.0.20161206-0805"/>
-      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.11.0.20161206-0805"/>
-      <feature id="org.eclipse.emf.ecp.view.template.feature" version="1.11.0.20161206-0805"/>
-      <feature id="org.eclipse.emf.ecp.viewmodel.feature" version="1.11.0.20161206-0805"/>
-      <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature" version="1.11.0.20161206-0805"/>
+      <feature id="org.ptolemy.tycho.feature"/>
+      <feature id="org.eclipse.emf.ecp.e3.feature"/>
+      <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.template.feature"/>
+      <feature id="org.eclipse.emf.ecp.viewmodel.feature"/>
+      <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature"/>
    </features>
 
    <configurations>
