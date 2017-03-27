@@ -47,11 +47,20 @@ public class PortShapes {
   // The coordinates start with the leftmost/topmost point and then continue clockwise.
   // The createPortShapePointsForDirection() method shifts the port in the right way to end up with a port shape that slightly crosses 
   // the actor's boundary on the side matching the port direction.
+  
+  // These are shapes for ports that are input OR output.
   public static final int[] LEFT_RIGHT_PORTSHAPE = new int[] { 0, 0, PORT_SIZE, HALF_PORT_SIZE, 0, PORT_SIZE };
   public static final int[] RIGHT_LEFT_PORTSHAPE = new int[] { 0, HALF_PORT_SIZE, PORT_SIZE, 0, PORT_SIZE, PORT_SIZE };
   public static final int[] TOP_DOWN_PORTSHAPE = new int[] { 0, 0, PORT_SIZE, 0, HALF_PORT_SIZE, PORT_SIZE };
   public static final int[] BOTTOM_UP_PORTSHAPE = new int[] { 0, PORT_SIZE, HALF_PORT_SIZE, 0, PORT_SIZE, PORT_SIZE };
-  
+
+  // These are shapes for ports that are both input AND output.
+  // As they are symmetrical along their direction, we only need 2 shapes to differentiate horizontal vs vertical.
+  public static final int[] HORIZONTAL_PORTSHAPE_IO = new int[] { 0, 0, HALF_PORT_SIZE, HALF_PORT_SIZE, PORT_SIZE, 0, 
+                                                                  PORT_SIZE, PORT_SIZE, HALF_PORT_SIZE, HALF_PORT_SIZE, 0, PORT_SIZE };
+  public static final int[] VERTICAL_PORTSHAPE_IO = new int[] { 0, 0, PORT_SIZE, 0, HALF_PORT_SIZE, HALF_PORT_SIZE, PORT_SIZE, PORT_SIZE,
+                                                                  0, PORT_SIZE, HALF_PORT_SIZE, HALF_PORT_SIZE, HALF_PORT_SIZE, PORT_SIZE };
+
   /**
    * Create an anchor at the right location on its container shape, on the side matching the direction,
    * relative location along that side matching its index in the total count of ports there,
@@ -69,7 +78,7 @@ public class PortShapes {
 
     FixPointAnchor anchor = createService.createFixPointAnchor(containerShape);
     anchor.setReferencedGraphicsAlgorithm(containerShape.getGraphicsAlgorithm());
-    anchor.setUseAnchorLocationAsConnectionEndpoint(p.isInput());
+//    anchor.setUseAnchorLocationAsConnectionEndpoint(p.isInput());
     anchor.setLocation(ActorShapes.determineAnchorLocation(containerShape, direction, i, portCount));
 
     return anchor;
@@ -134,16 +143,16 @@ public class PortShapes {
     List<Point> portShapePoints = Collections.emptyList();
     switch (direction) {
     case WEST:
-      portShapeCoordinates = p.isOutput() ? RIGHT_LEFT_PORTSHAPE : LEFT_RIGHT_PORTSHAPE;
+      portShapeCoordinates = p.isOutput() ? (p.isInput() ? VERTICAL_PORTSHAPE_IO : RIGHT_LEFT_PORTSHAPE) : LEFT_RIGHT_PORTSHAPE;
       break;
     case EAST:
-      portShapeCoordinates = p.isInput() ? RIGHT_LEFT_PORTSHAPE : LEFT_RIGHT_PORTSHAPE;
+      portShapeCoordinates = p.isInput() ? (p.isOutput() ? VERTICAL_PORTSHAPE_IO : RIGHT_LEFT_PORTSHAPE) : LEFT_RIGHT_PORTSHAPE;
       break;
     case NORTH:
-      portShapeCoordinates = p.isOutput() ? BOTTOM_UP_PORTSHAPE : TOP_DOWN_PORTSHAPE;
+      portShapeCoordinates = p.isOutput() ? (p.isInput() ? HORIZONTAL_PORTSHAPE_IO : BOTTOM_UP_PORTSHAPE) : TOP_DOWN_PORTSHAPE;
       break;
     case SOUTH:
-      portShapeCoordinates = p.isInput() ? BOTTOM_UP_PORTSHAPE : TOP_DOWN_PORTSHAPE;
+      portShapeCoordinates = p.isInput() ? (p.isOutput() ? HORIZONTAL_PORTSHAPE_IO : BOTTOM_UP_PORTSHAPE) : TOP_DOWN_PORTSHAPE;
       break;
     default:
       // if direction is not one of the known ones, pick a default  
