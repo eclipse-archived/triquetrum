@@ -73,7 +73,7 @@ location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.graphiti.sdk.plus.feature.feature.group
 }
 
-location "http://download.eclipse.org/ecp/nightly/p2/" {
+location "http://download.eclipse.org/ecp/releases/releases_112/" {
 	org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group
 	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group
 }
