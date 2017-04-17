@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Triq" sequenceNumber="1489930820">
+<target name="Triq" sequenceNumber="1492430807">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.slf4j.api.source" version="1.7.2.v20121108-1250"/>
@@ -81,12 +81,12 @@
       <repository location="http://download.eclipse.org/releases/oxygen/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group" version="1.11.0.20161206-0805"/>
-      <unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="1.11.0.20161206-0805"/>
-      <repository location="http://download.eclipse.org/ecp/nightly/p2/"/>
+      <unit id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group" version="1.12.0.20170323-1833"/>
+      <unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="1.12.0.20170323-1833"/>
+      <repository location="http://download.eclipse.org/ecp/releases/releases_112/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.swt.dummyfragments.feature.group" version="1.0.0.v20161122-0613"/>
+      <unit id="org.eclipse.swt.dummyfragments.feature.group" version="1.0.0.v20170228-0512"/>
       <repository location="http://eclipseguru.github.io/missing-swt-fragments/"/>
     </location>
   </locations>
