@@ -17,7 +17,10 @@ import java.util.List;
 
 import org.ptolemy.classloading.ClassLoadingStrategy;
 import org.ptolemy.commons.VersionSpecification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import ptolemy.data.expr.UndefinedConstantOrIdentifierException;
 import ptolemy.kernel.ComponentEntity;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.Entity;
@@ -25,6 +28,7 @@ import ptolemy.kernel.Port;
 import ptolemy.kernel.Relation;
 import ptolemy.kernel.util.Attribute;
 import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.Nameable;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.Singleton;
 import ptolemy.kernel.util.Workspace;
@@ -33,13 +37,83 @@ import ptolemy.moml.MoMLFilter;
 import ptolemy.moml.MoMLParser;
 
 /**
+ * This is a minimized copy of MomlParser and MomlVariableChecker code to support Ptolemy model element creation and copy/pasting, plus some miscellaneous
+ * utilities.
+ * <p>
  * TODO refactor MOMLParser, so Ptolemy objects can be created outside of "parsing". I.e. split out all "creation"-related code in a separate utilities class
  * that is then used by the MomlParser and other code (like Triq model editing via EMF).
- *
- * For now, this is a minimized copy of MomlParser code to get an initial code drop working with a subset of Ptolemy's features.
+ * </p>
  */
 public class PtolemyUtil {
+  private final static Logger LOGGER = LoggerFactory.getLogger(PtolemyUtil.class);
 
+  private final static ArrayList<MoMLFilter> importFilters = new ArrayList<>();
+
+  /**
+   * If the modelElement is not the model/toplevel itself, this returns the full name but without the prefix containing the model name surrounded by 2 '.'s. For
+   * example, and actor named <code>"Const"</code> in a submodel <code>"sub"</code> in a model <code>"HelloWorld"</code> has as full name
+   * <code>".HelloWorld.sub.Const"</code>. This method then returns <code>"sub.Const"</code>.
+   * <p>
+   * Remark that if the modelElement is the toplevel/model itself, the method returns the empty string "".
+   * </p>
+   * 
+   * @param modelElement
+   * @return the modelElement's full name without the prefix part with the toplevel/model name
+   */
+  public static String getFullNameWithoutToplevel(Nameable modelElement) {
+    Nameable toplevel = modelElement;
+    while (toplevel.getContainer() != null) {
+      toplevel = toplevel.getContainer();
+  }
+    if (toplevel != modelElement) {
+      return modelElement.getFullName().substring(toplevel.getName().length() + 2);
+    } else {
+      return "";
+    }
+  }
+
+  /**
+   * Find out if the exception is or contains an UndefinedConstantOrIdentifierException and if so return the name of the undefined element.
+   * <p>
+   * This is used during copy/paste to identify references to elements that are not in the copy stack and that should be automatically added to ensure that the
+   * paste operation includes everything that is needed to obtain a functional target model. See ModelElementPasteFeature in the editor implementation bundle.
+   * 
+   * @param exception
+   *          the (wrapped) exception that may contain info on an undefined model element.
+   * @return the name of the undefined element or null if no such root cause is present.
+   */
+  public static String _findUndefinedConstantOrIdentifier(IllegalActionException exception) {
+    UndefinedConstantOrIdentifierException idException = null;
+    if (exception instanceof UndefinedConstantOrIdentifierException) {
+      idException = (UndefinedConstantOrIdentifierException) exception;
+    } else {
+      Throwable cause = exception.getCause();
+      while (cause instanceof IllegalActionException) {
+        if (cause instanceof UndefinedConstantOrIdentifierException) {
+          idException = (UndefinedConstantOrIdentifierException) cause;
+          break;
+        }
+        cause = ((IllegalActionException) cause).getCause();
+      }
+    }
+
+    if (idException != null) {
+      // We have an exception that has the name of the missing element.
+      return idException.nodeName();
+    } else {
+      return null;
+    }
+  }
+
+  /**
+   * Creates a new attribute instance in the given container, of a type identified by the given class name, and with the given name.
+   * 
+   * @param container
+   * @param className
+   * @param attrName
+   * @return
+   * @throws Exception
+   */
   public static Attribute _createAttribute(NamedObj container, String className, String attrName) throws Exception {
     Attribute previous = container != null ? container.getAttribute(attrName) : null;
     Class<?> newClass = null;
@@ -89,6 +163,15 @@ public class PtolemyUtil {
     }
   }
 
+  /**
+   * Creates a new relation instance in the given container, of a type identified by the given class name, and with the given name.
+   * 
+   * @param container
+   * @param className
+   * @param relationName
+   * @return
+   * @throws Exception
+   */
   public static Relation _createRelation(CompositeEntity container, String className, String relationName) throws Exception {
     Relation previous = container != null ? container.getRelation(relationName) : null;
     Class<?> newClass = null;
@@ -151,7 +234,8 @@ public class PtolemyUtil {
   }
 
   /**
-   *
+   * /** Creates a new port instance in the given container, of a type identified by the given class name, and with the given name.
+   * 
    * @param container
    * @param className
    * @param portName
@@ -366,6 +450,36 @@ public class PtolemyUtil {
   }
 
   /**
+   * Load a class for model elements using the default ClassLoadingStrategy set in MoMLParser.
+   * 
+   * @param className
+   * @param versionSpec
+   * @return
+   * @throws ClassNotFoundException
+   */
+  public static Class<?> loadClass(String className, VersionSpecification versionSpec) throws ClassNotFoundException {
+    ClassLoadingStrategy defaultClassLoadingStrategy = MoMLParser.getDefaultClassLoadingStrategy();
+    try {
+      return defaultClassLoadingStrategy.loadJavaClass(className, versionSpec);
+    } catch (ClassNotFoundException e) {
+      LOGGER.warn("Did not find " + className + " " + versionSpec + " via " + defaultClassLoadingStrategy);
+      return PtolemyUtil.class.getClassLoader().loadClass(className);
+    }
+  }
+
+  /**
+   * 
+   * @return the filters needed to import a native Ptolemy II model in Triquetrum.
+   */
+  public static List<MoMLFilter> getImportFilters() {
+    if (importFilters.isEmpty()) {
+      importFilters.add(new SubstituteClassesForTriquetrum());
+      importFilters.add(new RemoveGraphicalClassesForTriquetrum());
+    }
+    return (List<MoMLFilter>) importFilters.clone();
+  }
+
+  /**
    * Mark the contents as being derived objects at a depth one greater than the depth argument, and then recursively mark their contents derived. This makes
    * them not export MoML, and prohibits name and container changes. Normally, the argument is an Entity, but this method will accept any NamedObj. This method
    * also adds all (deeply) contained instances of Settable to the _paramsToParse list, which ensures that they will be validated.
@@ -398,24 +512,4 @@ public class PtolemyUtil {
       throw new Exception(message);
     }
   }
-
-  public static Class<?> loadClass(String className, VersionSpecification versionSpec) throws ClassNotFoundException {
-    ClassLoadingStrategy defaultClassLoadingStrategy = MoMLParser.getDefaultClassLoadingStrategy();
-    try {
-      return defaultClassLoadingStrategy.loadJavaClass(className, versionSpec);
-    } catch (ClassNotFoundException e) {
-      System.out.println("Did not find " + className + " " + versionSpec + " via " + defaultClassLoadingStrategy);
-      return PtolemyUtil.class.getClassLoader().loadClass(className);
-    }
-  }
-
-  public static List<MoMLFilter> getImportFilters() {
-    if (importFilters.isEmpty()) {
-      importFilters.add(new SubstituteClassesForTriquetrum());
-      importFilters.add(new RemoveGraphicalClassesForTriquetrum());
-    }
-    return (List<MoMLFilter>) importFilters.clone();
-  }
-
-  private final static ArrayList<MoMLFilter> importFilters = new ArrayList<>();
 }
