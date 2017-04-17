@@ -275,4 +275,11 @@
         </propertySection>
       </propertySections>
    </extension>
+   <extension point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.eclipse.triquetrum.workflow.editor.preferences.ui.TriqPreferencePage"
+            id="org.eclipse.triquetrum.workflow.editor.preferences"
+            name="Triquetrum">
+      </page>
+    </extension>
 </plugin>
