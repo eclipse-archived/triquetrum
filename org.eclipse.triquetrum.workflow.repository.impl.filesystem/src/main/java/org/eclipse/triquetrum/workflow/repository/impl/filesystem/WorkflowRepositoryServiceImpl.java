@@ -61,11 +61,15 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
   private File rootFolder;
 
   public WorkflowRepositoryServiceImpl(String rootFolderPath) {
-    this(new File(rootFolderPath));
+    setRootFolder(new File(rootFolderPath));
   }
 
   public WorkflowRepositoryServiceImpl(File rootFolder) {
-    LOGGER.info("Creating FlowRepositoryService on folder {}", rootFolder);
+    setRootFolder(rootFolder);
+  }
+  
+  public void setRootFolder(File rootFolder) {
+    LOGGER.info("Pointing FlowRepositoryService to folder {}", rootFolder);
     this.rootFolder = rootFolder;
     if (!rootFolder.exists() && !rootFolder.mkdirs()) {
       throw new RuntimeException(new IOException(rootFolder.getPath() + " could not be created"));
