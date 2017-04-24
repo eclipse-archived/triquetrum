@@ -16,7 +16,7 @@
    <launcherArgs>
       <programArgsMac>-data /tmp
       </programArgsMac>
-      <vmArgs>-Dosgi.requiredJavaVersion=1.7 -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
+      <vmArgs>-Dosgi.requiredJavaVersion=1.8 -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -155,6 +155,26 @@
    </configurations>
 
    <repositories>
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
