@@ -55,6 +55,22 @@
                                                 <phase>pre-integration-test</phase>
 					</execution>
 				</executions>
+                          <configuration>
+                            <!-- See https://eclipse.org/tycho/sitedocs/tycho-p2/tycho-p2-director-plugin/archive-products-mojo.html -->
+                            <formats>
+                              <linux>tar.gz</linux>
+                            </formats>
+                            <products>
+                              <product>
+                                <!-- select product with ID product.id; the archives get the classifiers "<os>.<ws>.<arch>" -->
+                                <id>org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.0.qualifier</id>
+                                <rootFolder>triquetrum-0.2.0-SNAPSHOT</rootFolder>
+                              </product>
+                            </products>
+                          </configuration>
+
+
+
 			</plugin>
 		</plugins>
 	</build>
