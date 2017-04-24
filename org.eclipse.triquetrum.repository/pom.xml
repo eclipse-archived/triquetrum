@@ -81,7 +81,7 @@ Contributors: Erwin De Ley - initial API and implementation and/or initial docum
          Based on https://github.com/eclipse/ice/blob/master/org.eclipse.ice.parent/pom.xml
 
          To test on non-eclipse machine, use:
-         mvn clean install -Peclipse-sign -Dcbi.macsigner.continueOnFail=true
+         mvn clean install -Peclipse-sign -Dcbi.macsigner.continueOnFail=true -Dcbi.winsigner.continueOnFail=true
     -->
     <id>eclipse-sign</id>
     <build>
@@ -114,10 +114,10 @@ Contributors: Erwin De Ley - initial API and implementation and/or initial docum
               <phase>package</phase>
 	      <configuration>
                 <signFiles>
-                  <signFile>org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-${release_name}.qualifier/win32/win32/x86/eclipsec.exe</signFile>
-                  <signFile>org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-${release_name}.qualifier/win32/win32/x86/triquetrum.exe</signFile>
-                  <signFile>org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-${release_name}.qualifier/win32/win32/x86_64/eclipsec.exe</signFile>
-                  <signFile>./org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-${release_name}.qualifier/win32/win32/x86_64/triquetrum.exe</signFile>
+                  <signFile>org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.0-SNAPSHOT.qualifier/win32/win32/x86/eclipsec.exe</signFile>
+                  <signFile>org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.0-SNAPSHOT.qualifier/win32/win32/x86/triquetrum.exe</signFile>
+                  <signFile>org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.0-SNAPSHOT.qualifier/win32/win32/x86_64/eclipsec.exe</signFile>
+                  <signFile>./org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.0-SNAPSHOT.qualifier/win32/win32/x86_64/triquetrum.exe</signFile>
                 </signFiles>
 	      </configuration>
             </execution>
@@ -136,7 +136,7 @@ Contributors: Erwin De Ley - initial API and implementation and/or initial docum
               <phase>package</phase>
 	      <configuration>
                 <signFiles>
-                  <signFile>./org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-${release_name}.qualifier/macosx/cocoa/x86_64/Eclipse.app</signFile>
+                  <signFile>./org.eclipse.triquetrum.repository/target/products/org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.0-SNAPSHOT.qualifier/macosx/cocoa/x86_64/Eclipse.app</signFile>
                 </signFiles>
 	      </configuration>
             </execution>
