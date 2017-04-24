@@ -68,10 +68,8 @@ Contributors: Erwin De Ley - initial API and implementation and/or initial docum
           </product>
         </products>
       </configuration>
-
-
-
     </plugin>
+
   </plugins>
 </build>
 <profiles>
@@ -83,9 +81,9 @@ Contributors: Erwin De Ley - initial API and implementation and/or initial docum
          Based on https://github.com/eclipse/ice/blob/master/org.eclipse.ice.parent/pom.xml
 
          To test on non-eclipse machine, use:
-         mvn clean install -Peclipse-sign-apps -Dcbi.macsigner.continueOnFail=true
+         mvn clean install -Peclipse-sign -Dcbi.macsigner.continueOnFail=true
     -->
-    <id>eclipse-sign-apps</id>
+    <id>eclipse-sign</id>
     <build>
 
       <pluginManagement>
