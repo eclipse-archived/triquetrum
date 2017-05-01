@@ -43,7 +43,9 @@ import ptolemy.actor.CompositeActor;
  * <p>
  * Each flow is stored in a subdirectory with the flow's name. Within each flow's directory, separate subdirectories are maintained per version.
  * </p>
- *
+ * TODO analyse if we want to support hierarchy, i.e. deep folder structures.
+ * E.g. to support AOCs with fully-qualified class names like "ptolemy.actor.lib.Sinewave" etc.
+ * For the moment we assume these are mapped to single-level subfolders with a composite folder name.
  */
 public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService {
 
