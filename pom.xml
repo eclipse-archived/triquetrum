@@ -54,6 +54,7 @@
     <module>org.eclipse.triquetrum.processing.service.impl</module>
     <module>org.eclipse.triquetrum.validation.api</module>
     <module>org.eclipse.triquetrum.workflow.actor.ui</module>
+    <module>org.eclipse.triquetrum.workflow.aoc.repository</module>
     <module>org.eclipse.triquetrum.workflow.api</module>
     <module>org.eclipse.triquetrum.workflow.editor</module>
     <module>org.eclipse.triquetrum.workflow.editor.palette</module>
