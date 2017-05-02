@@ -367,13 +367,13 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   public void applyWrappedObject() {
     if (!isDeepComplete()) {
       setName(wrappedObject.getName());
-      setWrappedType(wrappedObject.getClass().getName());
+      setWrappedType(wrappedObject.getClassName());
       for (ptolemy.data.expr.Parameter parameter : wrappedObject.attributeList(ptolemy.data.expr.Parameter.class)) {
         // for the moment, only add FULLy user-visible parameters in the editor model
         if (Settable.FULL.equals(parameter.getVisibility())) {
           Parameter newParam = TriqFactory.eINSTANCE.createParameter();
           newParam.setName(parameter.getName());
-          newParam.setWrappedType(parameter.getClass().getName());
+          newParam.setWrappedType(parameter.getClassName());
           newParam.setExpression(parameter.getExpression());
           getAttributes().add(newParam);
         }
@@ -413,7 +413,7 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
    * @generated NOT
    */
   @Override
-  public void setWrappedObject(ptolemy.kernel.util.NamedObj newWrappedObject) {
+  public final void setWrappedObject(ptolemy.kernel.util.NamedObj newWrappedObject) {
     ptolemy.kernel.util.NamedObj oldWrappedObject = wrappedObject;
     wrappedObject = newWrappedObject;
     if (wrappedObject != null) {
