@@ -321,6 +321,7 @@ public class PtolemyUtil {
 
     ComponentEntity<?> previous = container != null ? container.getEntity(entityName) : null;
     Class<?> newClass = null;
+    Entity<?> newEntity = null;
 
     if (className != null) {
       // If we throw an error or exception be sure to save the original error message before we go off and try to fix the error.
@@ -329,7 +330,11 @@ public class PtolemyUtil {
       try {
         newClass = loadClass(className, versionSpec);
       } catch (Exception ex) {
-        throw new IllegalActionException(null, ex, "Cannot find class: " + className);
+        try {
+          newEntity = loadActorOrientedClass(className, versionSpec);
+        } catch (Exception e) {
+          throw new IllegalActionException(null, ex, "Cannot find class: " + className);
+        }
       }
     }
 
@@ -337,6 +342,7 @@ public class PtolemyUtil {
       if (newClass != null) {
         _checkClass(previous, newClass, "entity named \"" + entityName + "\" exists and is not an instance of " + className);
       }
+      // TODO should we add a duplicate check for AOCs as well?
       return previous;
     } else {
 
@@ -375,18 +381,28 @@ public class PtolemyUtil {
             }
           }
         }
-        Entity<?> newEntity = (Entity<?>) _createInstance(newClass, new Object[] { container, entityName });
+        if(newEntity == null) {
+          newEntity = (Entity<?>) _createInstance(newClass, container, entityName);
+        } else if(newEntity.isClassDefinition()) {
+          newEntity = (Entity<?>) newEntity.instantiate(container, entityName);
+          newEntity.setClassName(className);
+        } else {
+          newEntity.setName(entityName);
+        }
         newEntity.propagateExistence();
         return newEntity;
       } else {
         // Top-level entity. Instantiate in the workspace.
         // Note that there cannot possibly be any propagation here.
-        Object[] arguments = new Object[1];
-        arguments[0] = workSpace;
-
-        Entity<?> result = (Entity<?>) _createInstance(newClass, arguments);
-        result.setName(entityName);
-        return result;
+        if(newEntity == null) {
+          newEntity = (Entity<?>) _createInstance(newClass, workSpace);
+        } else if(newEntity.isClassDefinition()) {
+          newEntity = (Entity<?>) newEntity.instantiate(container, entityName);
+          newEntity.setClassName(className);
+        } else {
+          newEntity.setName(entityName);
+        }
+        return newEntity;
       }
     }
   }
@@ -405,7 +421,7 @@ public class PtolemyUtil {
    * @exception Exception
    *              If no matching constructor is found, or if invoking the constructor triggers an exception.
    */
-  public static NamedObj _createInstance(Class<?> newClass, Object[] arguments) throws Exception {
+  public static NamedObj _createInstance(Class<?> newClass, Object... arguments) throws Exception {
     Constructor<?>[] constructors = newClass.getConstructors();
 
     for (Constructor<?> constructor : constructors) {
@@ -464,6 +480,24 @@ public class PtolemyUtil {
     } catch (ClassNotFoundException e) {
       LOGGER.warn("Did not find " + className + " " + versionSpec + " via " + defaultClassLoadingStrategy);
       return PtolemyUtil.class.getClassLoader().loadClass(className);
+    }
+  }
+  
+  /**
+   * Load an actor oriented class for model elements using the default ClassLoadingStrategy set in MoMLParser.
+   * 
+   * @param className
+   * @param versionSpec
+   * @return
+   * @throws ClassNotFoundException
+   */
+  public static ComponentEntity<?> loadActorOrientedClass(String className, VersionSpecification versionSpec) throws ClassNotFoundException {
+    ClassLoadingStrategy defaultClassLoadingStrategy = MoMLParser.getDefaultClassLoadingStrategy();
+    try {
+      return defaultClassLoadingStrategy.loadActorOrientedClass(className, versionSpec);
+    } catch (ClassNotFoundException e) {
+      LOGGER.warn("Did not find " + className + " " + versionSpec + " via " + defaultClassLoadingStrategy);
+      throw e;
     }
   }
 

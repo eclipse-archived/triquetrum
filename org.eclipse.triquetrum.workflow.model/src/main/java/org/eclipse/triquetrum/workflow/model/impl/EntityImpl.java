@@ -199,7 +199,7 @@ public class EntityImpl extends NamedObjImpl implements Entity {
         if (port instanceof IOPort) {
           Port newPort = TriqFactory.eINSTANCE.createPort();
           newPort.setName(port.getName());
-          newPort.setWrappedType(port.getClass().getName());
+          newPort.setWrappedType(port.getClassName());
           newPort.setInput(((IOPort) port).isInput());
           newPort.setOutput(((IOPort) port).isOutput());
           newPort.setMultiPort(((IOPort) port).isMultiport());

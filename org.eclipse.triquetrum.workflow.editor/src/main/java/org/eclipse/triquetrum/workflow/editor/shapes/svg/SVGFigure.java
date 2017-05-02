@@ -15,7 +15,6 @@ package org.eclipse.triquetrum.workflow.editor.shapes.svg;
 
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.awt.image.WritableRaster;
 import java.io.IOException;
 import java.util.WeakHashMap;
 
@@ -25,12 +24,10 @@ import org.eclipse.draw2d.Figure;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Device;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
+import org.eclipse.triquetrum.workflow.editor.shapes.ShapeUtils;
 import org.w3c.dom.Document;
 
 public class SVGFigure extends Figure {
@@ -124,7 +121,7 @@ public class SVGFigure extends Figure {
       updateRenderingHints(graphics);
       BufferedImage awtImage = transcoder.getBufferedImage();
       if (awtImage != null) {
-        image = toSWT(Display.getCurrent(), awtImage);
+        image = ShapeUtils.toSWT(Display.getCurrent(), awtImage);
         graphics.drawImage(image, r.x, r.y);
       }
     } finally {
@@ -175,37 +172,6 @@ public class SVGFigure extends Figure {
         transcoder.contentChanged();
       }
     }
-  }
-
-  /**
-   * Converts an AWT based buffered image into an SWT <code>Image</code>. This will always return an <code>Image</code> that has 24 bit depth regardless of the
-   * type of AWT buffered image that is passed into the method.
-   *
-   * @param awtImage
-   *          the {@link java.awt.image.BufferedImage} to be converted to an <code>Image</code>
-   * @return an <code>Image</code> that represents the same image data as the AWT <code>BufferedImage</code> type.
-   */
-  private static org.eclipse.swt.graphics.Image toSWT(Device device, BufferedImage awtImage) {
-    // We can force bitdepth to be 24 bit because BufferedImage getRGB
-    // allows us to always retrieve 24 bit data regardless of source color depth.
-    PaletteData palette = new PaletteData(0xFF0000, 0xFF00, 0xFF);
-    ImageData swtImageData = new ImageData(awtImage.getWidth(), awtImage.getHeight(), 24, palette);
-    // Ensure scansize is aligned on 32 bit.
-    int scansize = (((awtImage.getWidth() * 3) + 3) * 4) / 4;
-    WritableRaster alphaRaster = awtImage.getAlphaRaster();
-    byte[] alphaBytes = new byte[awtImage.getWidth()];
-    for (int y = 0; y < awtImage.getHeight(); y++) {
-      int[] buff = awtImage.getRGB(0, y, awtImage.getWidth(), 1, null, 0, scansize);
-      swtImageData.setPixels(0, y, awtImage.getWidth(), buff, 0);
-      if (alphaRaster != null) {
-        int[] alpha = alphaRaster.getPixels(0, y, awtImage.getWidth(), 1, (int[]) null);
-        for (int i = 0; i < awtImage.getWidth(); i++) {
-          alphaBytes[i] = (byte) alpha[i];
-        }
-        swtImageData.setAlphas(0, y, awtImage.getWidth(), alphaBytes, 0);
-      }
-    }
-    return new org.eclipse.swt.graphics.Image(device, swtImageData);
   }
 
   /**
