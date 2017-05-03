@@ -19,7 +19,7 @@
         </property>
         <property name="scale" class="ptolemy.data.expr.Parameter" value="15.0">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-21.0, -15.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[8.0, 3.0]">
         </property>
     </property>
     <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={64, 388, 813, 510}, maximized=false}">
