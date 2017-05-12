@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Triquetrum Repository UI
+Bundle-SymbolicName: org.eclipse.triquetrum.workflow.repository.ui;singleton:=true
+Bundle-Version: 0.2.0.qualifier
+Bundle-Activator: org.eclipse.triquetrum.workflow.repository.ui.RepositoryPlugin
+Bundle-Vendor: Eclipse Triquetrum
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.triquetrum;version="0.1.0",
+ org.eclipse.triquetrum.workflow;version="0.2.0",
+ org.ptolemy.commons;version="11.0.0"
