@@ -197,6 +197,15 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
   }
 
   @Override
+  public ModelHandle activateModelRevision(ModelHandle handle) throws EntryNotFoundException {
+    try {
+      return writeMetaData(handle.getCode(), VERSION_ACTIVE, handle.getVersion().toString());
+    } catch (IOException e) {
+      throw new RuntimeException("Error writing activation data", e);
+    }
+  }
+
+  @Override
   public ModelHandle getActiveModel(String flowCode) throws EntryNotFoundException {
     File flowRootFolder = new File(rootFolder, flowCode);
     if (!flowRootFolder.isDirectory()) {
@@ -282,14 +291,10 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
   }
 
   @Override
-  public ModelHandle activateModelRevision(ModelHandle handle) throws EntryNotFoundException {
-    try {
-      return writeMetaData(handle.getCode(), VERSION_ACTIVE, handle.getVersion().toString());
-    } catch (IOException e) {
-      throw new RuntimeException("Error writing activation data", e);
-    }
+  public String toString() {
+    return rootFolder.toURI().toString();
   }
-
+  
   private ModelHandle readAndBuildModelHandle(String code, String version) {
     return readAndBuildModelHandle(code, new File(new File(rootFolder, code), version));
   }
