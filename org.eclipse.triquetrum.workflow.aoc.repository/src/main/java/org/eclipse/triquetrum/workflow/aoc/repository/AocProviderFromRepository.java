@@ -44,7 +44,7 @@ public class AocProviderFromRepository implements ActorOrientedClassProvider {
       if (repositoryService != null) {
         try {
           ModelHandle aocHandle = versionSpec != null ? repositoryService.getModelVersion(className, versionSpec)
-              : repositoryService.getMostRecentModel(className);
+              : repositoryService.getActiveModel(className);
           result = aocHandle.getModel();
           if (result.isClassDefinition()) {
             return result;
