@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="org.eclipse.triquetrum.workflow.repositoryregistry">
+   <implementation class="org.eclipse.triquetrum.workflow.WorkflowRepositoryRegistry"/>
+   <reference bind="addWorkflowRepository" cardinality="0..n" interface="org.eclipse.triquetrum.workflow.WorkflowRepositoryService" name="WorkflowRepositoryService" policy="dynamic" unbind="removeWorkflowRepository"/>
+</scr:component>
