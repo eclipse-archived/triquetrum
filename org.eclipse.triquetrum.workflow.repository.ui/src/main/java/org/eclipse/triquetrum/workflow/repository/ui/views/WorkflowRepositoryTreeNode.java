@@ -16,13 +16,17 @@ import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.triquetrum.workflow.WorkflowRepositoryService;
 
 class WorkflowRepositoryTreeNode extends TreeNode {
-
+  
   public WorkflowRepositoryTreeNode(WorkflowRepositoryService repoSvc) {
     super(repoSvc);
   }
 
   public WorkflowRepositoryService getValue() {
     return (WorkflowRepositoryService) super.getValue();
+  }
+  
+  public WorkflowRepositoryService getRepository() {
+    return getValue();
   }
 
   public ModelCodeTreeNode[] getChildren() {
@@ -38,7 +42,7 @@ class WorkflowRepositoryTreeNode extends TreeNode {
   public boolean hasChildren() {
     return getValue().getAllModelCodes().length > 0;
   }
-
+  
   public String toString() {
     return getValue().toString();
   }

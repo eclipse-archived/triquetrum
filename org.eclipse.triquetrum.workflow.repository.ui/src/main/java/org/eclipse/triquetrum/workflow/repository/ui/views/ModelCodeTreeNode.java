@@ -15,6 +15,7 @@ import java.util.Arrays;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.triquetrum.workflow.EntryNotFoundException;
 import org.eclipse.triquetrum.workflow.ModelHandle;
+import org.eclipse.triquetrum.workflow.WorkflowRepositoryService;
 
 class ModelCodeTreeNode extends TreeNode {
 
@@ -25,6 +26,14 @@ class ModelCodeTreeNode extends TreeNode {
 
   public String getValue() {
     return (String) super.getValue();
+  }
+  
+  public String getModelCode() {
+    return getValue();
+  }
+  
+  public WorkflowRepositoryService getRepository() {
+    return getParent().getValue();
   }
   
   @Override
