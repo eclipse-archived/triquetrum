@@ -24,7 +24,7 @@
       </category>
       <view
             name="Workflow Repositories"
-            icon="icons/sample.gif"
+            icon="icons/repositories.gif"
             category="org.eclipse.triquetrum.workflow.repository.ui"
             class="org.eclipse.triquetrum.workflow.repository.ui.views.WorkflowRepositoryView"
             id="org.eclipse.triquetrum.workflow.repository.ui.views.WorkflowRepositoryView">
