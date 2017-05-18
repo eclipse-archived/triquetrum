@@ -12,10 +12,9 @@ package org.eclipse.triquetrum.workflow.repository.ui.views;
 
 import java.util.Arrays;
 
-import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.triquetrum.workflow.WorkflowRepositoryService;
 
-class WorkflowRepositoryTreeNode extends TreeNode {
+class WorkflowRepositoryTreeNode extends AbstractTreeNode {
   
   public WorkflowRepositoryTreeNode(WorkflowRepositoryService repoSvc) {
     super(repoSvc);
@@ -27,6 +26,11 @@ class WorkflowRepositoryTreeNode extends TreeNode {
   
   public WorkflowRepositoryService getRepository() {
     return getValue();
+  }
+  
+  @Override
+  public AbstractTreeNode getParent() {
+    return null;
   }
 
   public ModelCodeTreeNode[] getChildren() {
