@@ -12,12 +12,11 @@ package org.eclipse.triquetrum.workflow.repository.ui.views;
 
 import java.util.Arrays;
 
-import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.triquetrum.workflow.EntryNotFoundException;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.eclipse.triquetrum.workflow.WorkflowRepositoryService;
 
-class ModelCodeTreeNode extends TreeNode {
+class ModelCodeTreeNode extends AbstractTreeNode {
 
   public ModelCodeTreeNode(WorkflowRepositoryTreeNode parent, String modelCode) {
     super(modelCode);

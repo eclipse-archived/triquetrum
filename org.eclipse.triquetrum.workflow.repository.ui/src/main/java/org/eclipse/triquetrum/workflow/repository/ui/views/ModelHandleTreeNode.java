@@ -11,14 +11,13 @@
 package org.eclipse.triquetrum.workflow.repository.ui.views;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.eclipse.triquetrum.workflow.WorkflowRepositoryService;
 import org.eclipse.ui.views.properties.IPropertyDescriptor;
 import org.eclipse.ui.views.properties.IPropertySource;
 import org.eclipse.ui.views.properties.PropertyDescriptor;
 
-class ModelHandleTreeNode extends TreeNode implements IAdaptable {
+class ModelHandleTreeNode extends AbstractTreeNode implements IAdaptable {
   
   private ModelHandlePropertySource propertySource = null;
   
