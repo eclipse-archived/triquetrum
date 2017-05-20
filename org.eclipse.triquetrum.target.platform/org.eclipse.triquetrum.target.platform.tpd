@@ -5,7 +5,7 @@ target "Triq" with allEnvironments configurePhase
 // out, not sure what the best resolution is
 include "org.eclipse.triquetrum.python.rpc.platform.tpd"
 
-location "http://download.eclipse.org/tools/orbit/S-builds/S20170306214312/repository" {
+location "http://download.eclipse.org/tools/orbit/S-builds/S20170516192513/repository" {
   org.slf4j.api.source [1.7.2,1.7.3)
 	org.slf4j.impl.log4j12.source [1.7.2,1.7.3)
 	org.apache.commons.io.source
@@ -31,7 +31,7 @@ location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0/" {
 	org.ptolemy.tycho.feature.feature.group lazy
 }
 
-location "http://archive.eclipse.org/nebula/Q42015/release/" {
+location "http://archive.eclipse.org/nebula/Q22016/release/" {
 	org.eclipse.nebula.visualization.feature.feature.group
 }
 
@@ -73,7 +73,7 @@ location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.graphiti.sdk.plus.feature.feature.group
 }
 
-location "http://download.eclipse.org/ecp/releases/releases_112/" {
+location "http://download.eclipse.org/ecp/releases/releases_113/" {
 	org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group
 	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group
 }
