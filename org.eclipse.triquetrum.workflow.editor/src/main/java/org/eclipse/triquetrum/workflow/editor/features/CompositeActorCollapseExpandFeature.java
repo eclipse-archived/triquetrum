@@ -24,6 +24,7 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.platform.IPlatformImageConstants;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
+import org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 
 public class CompositeActorCollapseExpandFeature extends AbstractCustomFeature {
@@ -68,9 +69,8 @@ public class CompositeActorCollapseExpandFeature extends AbstractCustomFeature {
     int width = pe.getGraphicsAlgorithm().getWidth();
     int height = pe.getGraphicsAlgorithm().getHeight();
 
-    int changeWidth = CompositeActorAddFeature.COMPOSITEACTOR_DEFAULT_WIDTH;
-    int changeHeight = CompositeActorAddFeature.COMPOSITEACTOR_DEFAULT_HEIGHT;
-
+    int changeWidth = ActorShapes.ACTOR_VISIBLE_WIDTH;
+    int changeHeight = ActorShapes.ACTOR_VISIBLE_HEIGHT;
 
     // show/hide all the children
     makeChildrenVisible(cs, cs, isCollapsed);
