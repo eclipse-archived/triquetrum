@@ -11,10 +11,14 @@
 package org.eclipse.triquetrum.workflow.repository.ui.views;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -64,6 +68,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.statushandlers.StatusManager;
+import org.osgi.service.event.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -136,6 +142,7 @@ public class WorkflowRepositoryView extends ViewPart {
               }
             }
             if (selObj instanceof ModelCodeTreeNode) {
+              manager.add(new AddToUserLibraryAction((ModelCodeTreeNode) selObj));
               manager.add(new DeleteAction((ModelCodeTreeNode) selObj));
             }
             manager.add(new Separator());
@@ -284,6 +291,119 @@ public class WorkflowRepositoryView extends ViewPart {
         e.printStackTrace();
       }
       viewer.refresh(selectedNode.getParent());
+    }
+  }
+
+  private class AddToUserLibraryAction extends Action {
+    private AbstractTreeNode selectedNode;
+
+    /**
+     * @param selectedNode
+     */
+    public AddToUserLibraryAction(AbstractTreeNode selectedNode) {
+      this.selectedNode = selectedNode;
+      setText("Add to user library");
+      setToolTipText("Adds a repository workflow model to the user library, in the editor palette.");
+      setImageDescriptor(RepositoryPlugin.getImageDescriptor("icons/import.gif"));
+    }
+
+    @Override
+    public void run() {
+      AddToUserLibraryDialog dialog = new AddToUserLibraryDialog(viewer.getControl().getShell(), selectedNode);
+      dialog.setBlockOnOpen(true);
+      dialog.open();
+      String modelName = dialog.modelName;
+      String modelClass = dialog.modelClass;
+      String elementType = "CompositeActor";
+
+      Map<String, String> properties = new HashMap<>();
+      properties.put("displayName", modelName);
+      properties.put("class", modelClass);
+      properties.put("type", elementType);
+
+      Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/add", properties);
+      try {
+        RepositoryPlugin.getDefault().getEventAdminService().postEvent(event);
+      } catch (NullPointerException e) {
+        StatusManager.getManager()
+        .handle(new Status(IStatus.ERROR, RepositoryPlugin.PLUGIN_ID,
+            "Event bus not available, impossible to trigger an addition event for the user library."),
+            StatusManager.BLOCK);
+      }
+    }
+  }
+
+  private class AddToUserLibraryDialog extends Dialog {
+    private AbstractTreeNode selectedNode;
+    private Text modelNameField;
+    private Text modelClassField;
+
+    String modelName;
+    String modelClass;
+
+    protected AddToUserLibraryDialog(Shell parentShell, AbstractTreeNode selectedNode) {
+      super(parentShell);
+      this.selectedNode = selectedNode;
+      setShellStyle(SWT.RESIZE | SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+      if (selectedNode instanceof ModelCodeTreeNode) {
+        modelName = ((ModelCodeTreeNode) selectedNode).getModelCode();
+        modelClass = ((ModelCodeTreeNode) selectedNode).getModelCode();
+      }
+    }
+
+    @Override
+    protected Point getInitialSize() {
+      return new Point(300, 200);
+    }
+
+    @Override
+    protected void configureShell(Shell shell) {
+      super.configureShell(shell);
+      shell.setText("Add to User Library");
+    }
+
+    // TODO add Ok disable/enable depending on text field contents
+    @Override
+    protected Control createDialogArea(Composite parent) {
+      Composite container = new Composite(parent, SWT.NULL);
+      final GridLayout gridLayout = new GridLayout();
+      gridLayout.numColumns = 2;
+      container.setLayout(gridLayout);
+      container.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL));
+      container.setFont(parent.getFont());
+
+      final Label modelNameBoxLabel = new Label(container, SWT.NONE);
+      final GridData modelCodeBoxLabelLayout = new GridData(GridData.HORIZONTAL_ALIGN_END);
+      modelNameBoxLabel.setLayoutData(modelCodeBoxLabelLayout);
+      modelNameBoxLabel.setText("Model name:");
+
+      modelNameField = new Text(container, SWT.BORDER);
+      modelNameField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      modelNameField.setText(modelName);
+
+      final Label modelClassBoxLabel = new Label(container, SWT.NONE);
+      final GridData modelClassBoxLabelLayout = new GridData(GridData.HORIZONTAL_ALIGN_END);
+      modelClassBoxLabel.setLayoutData(modelClassBoxLabelLayout);
+      modelClassBoxLabel.setText("Model class:");
+
+      modelClassField = new Text(container, SWT.BORDER);
+      modelClassField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+      modelClassField.setText(modelClass);
+      modelClassField.setEditable(false);
+
+      return container;
+    }
+
+    @Override
+    protected void buttonPressed(int buttonId) {
+      if (buttonId == IDialogConstants.OK_ID) {
+        modelName = modelNameField.getText().trim();
+        modelClass = modelClassField.getText().trim();
+      } else {
+        modelName = null;
+        modelClass = null;
+      }
+      super.buttonPressed(buttonId);
     }
   }
 
@@ -478,7 +598,7 @@ public class WorkflowRepositoryView extends ViewPart {
     private String selectModelCode(WorkflowRepositoryService repoSvc) {
       ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(), new LabelProvider());
       dialog.setTitle("Repository import location");
-      dialog.setMessage("Select a model code (* = any string, ? = any char):");
+      dialog.setMessage("Select the model's location in the repository (* = any string, ? = any char):");
       dialog.setElements(repoSvc.getAllModelCodes());
       dialog.open();
       return (String) dialog.getFirstResult();

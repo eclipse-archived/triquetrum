@@ -20,6 +20,14 @@
    		name="Palette Contribution"
    		schema="schema/org.eclipse.triquetrum.workflow.editor.paletteContribution.exsd"/>
 
+   <extension
+         point="org.eclipse.triquetrum.workflow.editor.paletteContribution">
+      <group
+            displayName="User Library"
+            provider="org.eclipse.triquetrum.workflow.editor.palette.UserLibraryPaletteEntryProvider">
+      </group>
+   </extension>
+
    <extension point="org.eclipse.graphiti.ui.diagramTypeProviders">
       <diagramTypeProvider
             class="org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider"
