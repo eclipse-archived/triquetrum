@@ -3,6 +3,8 @@ package org.eclipse.triquetrum.workflow.repository.ui;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+import org.osgi.service.event.EventAdmin;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -14,27 +16,26 @@ public class RepositoryPlugin extends AbstractUIPlugin {
 
 	// The shared instance
 	private static RepositoryPlugin plugin;
-	
+
+  private ServiceTracker<?, EventAdmin> eventAdminServiceTracker;
+
 	/**
 	 * The constructor
 	 */
 	public RepositoryPlugin() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
-	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		
+		eventAdminServiceTracker = new ServiceTracker<>(context, EventAdmin.class.getName(), null);
+		eventAdminServiceTracker.open();
+
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
-	 */
 	public void stop(BundleContext context) throws Exception {
+	  eventAdminServiceTracker.close();
 		plugin = null;
 		super.stop(context);
 	}
@@ -46,6 +47,10 @@ public class RepositoryPlugin extends AbstractUIPlugin {
 	 */
 	public static RepositoryPlugin getDefault() {
 		return plugin;
+	}
+	
+	public EventAdmin getEventAdminService() {
+	  return eventAdminServiceTracker.getService();
 	}
 
 	/**
