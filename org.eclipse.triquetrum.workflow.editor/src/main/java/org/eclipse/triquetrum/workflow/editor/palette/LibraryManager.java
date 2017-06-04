@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import ptolemy.actor.gui.Configuration;
 import ptolemy.data.expr.FileParameter;
+import ptolemy.kernel.ComponentEntity;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.Entity;
 import ptolemy.kernel.util.ChangeListener;
@@ -60,13 +61,15 @@ public class LibraryManager implements EventHandler {
 
   private final static Logger logger = LoggerFactory.getLogger(LibraryManager.class);
 
-  private final static String USER_LIBRARY_NAME = "UserLibrary";
+  private static final String ADD_EVENT_TOPIC = "org/eclipse/triquetrum/workflow/userlibrary/add";
+
+  public final static String USER_LIBRARY_NAME = "User Library";
   private final static String ACTOR_LIBRARY_NAME = "actor library";
   private final static int ACTORS_LIBRARY_PREFIX_LENGTH = (".configuration." + ACTOR_LIBRARY_NAME + ".").length();
   private final static String SOURCE_PATH_LIB_ATTR_NAME = "_sourcePath";
 
   private static LibraryManager instance;
-  
+
   private SortedMap<String, EntityLibrary> userLibraryMap = new TreeMap<String, EntityLibrary>();
   private Configuration configuration;
 
@@ -80,13 +83,13 @@ public class LibraryManager implements EventHandler {
       String userLibraryFilePath = new File(triqUserHome, "UserLibrary.xml").toURI().toString();
       actorLibrary.configure(null, userLibraryFilePath, null);
       actorLibrary.setClassDefinition(true);
-//      actorLibrary.instantiate(null, userLibrary.getName());
       refreshManagerCache(ptCfg);
       try {
-        new FileParameter(getUserLibrary(), "_sourcePath").setExpression(userLibraryFilePath);
-      } catch (Exception e) {
-        // TODO ignore as this would imply that the sourcePath is already present, which is fine.
-        e.printStackTrace();
+        FileParameter fp = new FileParameter(getUserLibrary(), "_sourcePath");
+        fp.setExpression(userLibraryFilePath);
+        fp.setPersistent(false);
+      } catch (NameDuplicationException e) {
+        // ignore as this would imply that the sourcePath is already present, which is fine.
       }
       instance = this;
     } catch (IllegalActionException | NameDuplicationException e) {
@@ -98,7 +101,7 @@ public class LibraryManager implements EventHandler {
   public static LibraryManager getDefaultInstance() {
     return instance;
   }
-  
+
   public EntityLibrary getUserLibrary() {
     return userLibraryMap.get(USER_LIBRARY_NAME);
   }
@@ -128,7 +131,7 @@ public class LibraryManager implements EventHandler {
     } else {
       userLibraryMap.clear();
     }
-    CompositeEntity topLibrary = (CompositeEntity) configuration.getEntity("actor library");
+    CompositeEntity topLibrary = (CompositeEntity) configuration.getEntity(ACTOR_LIBRARY_NAME);
     if (topLibrary != null) {
       EntityLibrary userLibrary = (EntityLibrary) topLibrary.getEntity(USER_LIBRARY_NAME);
       if (userLibrary != null) {
@@ -258,18 +261,17 @@ public class LibraryManager implements EventHandler {
     }
   }
 
-  public void saveEntityInDefaultUserLibrary(Entity entity) throws Exception {
+  public void saveEntityInDefaultUserLibrary(Entity<?> entity) throws Exception {
     EntityLibrary library = getUserLibrary();
     if (library == null) {
       StatusManager.getManager().handle(
-          new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Save In Library failed: " + "Could not find default user library."),
-          StatusManager.BLOCK);
+          new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Save In Library failed: " + "Could not find default user library."), StatusManager.BLOCK);
       return;
     }
     saveEntityInLibrary(library, entity);
   }
 
-  public void saveEntityInUserLibrary(String libraryName, Entity entity) throws Exception {
+  public void saveEntityInUserLibrary(String libraryName, Entity<?> entity) throws Exception {
     EntityLibrary library = (EntityLibrary) userLibraryMap.get(libraryName);
     if (library == null) {
       StatusManager.getManager().handle(
@@ -280,17 +282,17 @@ public class LibraryManager implements EventHandler {
     saveEntityInLibrary(library, entity);
   }
 
-  public void saveEntityInLibrary(EntityLibrary library, Entity entity) throws Exception {
+  public void saveEntityInLibrary(EntityLibrary library, Entity<?> entity) throws Exception {
     // Check whether there is already something existing in the
     // library with this name.
     if (library.getEntity(entity.getName()) != null) {
       throw new Exception("An object with name " + entity.getName() + " already exists in the library " + library.getName());
     }
 
-    Entity entityAsClass = (Entity) entity.clone(entity.workspace());
+    Entity<?> entityAsClass = (Entity<?>) entity.clone(entity.workspace());
     entityAsClass.setClassDefinition(true);
 
-    Entity instance = (Entity) entityAsClass.instantiate(library, entity.getName());
+    Entity<?> instance = (Entity<?>) entityAsClass.instantiate(library, entity.getName());
     instance.setClassName(entity.getClassName());
 
     StringWriter buffer = new StringWriter();
@@ -305,7 +307,7 @@ public class LibraryManager implements EventHandler {
     library.requestChange(request);
   }
 
-  public void deleteEntityFromLibrary(final EntityLibrary library, final Entity entity) {
+  public void deleteEntityFromLibrary(final EntityLibrary library, final Entity<?> entity) {
     // Check whether there is already something existing in the
     // library with this name.
     if (library.getEntity(entity.getName()) == null) {
@@ -377,18 +379,26 @@ public class LibraryManager implements EventHandler {
 
   @Override
   public void handleEvent(Event event) {
-    if ("org/eclipse/triquetrum/workflow/userlibrary/add".equals(event.getTopic())) {
-      // TODO create user library entry
-      System.out.println(event);
+    if (ADD_EVENT_TOPIC.equals(event.getTopic())) {
       String clazz = (String) event.getProperty("class");
       String name = (String) event.getProperty("displayName");
       try {
-        name = getUserLibrary().uniqueName(name);
-        Entity addedActor = PtolemyUtil._createEntity(null, clazz, null, name);
-        saveEntityInDefaultUserLibrary(addedActor);
+        // TODO check if we should not block adding a same class twice, i.o. checking mainly on the name.
+        ComponentEntity existingEntry = getUserLibrary().getEntity(name);
+        if (existingEntry != null) {
+          if (clazz.equals(existingEntry.getClassName())) {
+            StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " already in the User Library"), StatusManager.BLOCK);
+          } else {
+            StatusManager.getManager().handle(new Status(IStatus.WARNING, TriqEditorPlugin.getID(), name + " already in the User Library for another class."),
+                StatusManager.BLOCK);
+          }
+        } else {
+          Entity<?> addedActor = PtolemyUtil._createEntity(null, clazz, null, name);
+          saveEntityInDefaultUserLibrary(addedActor);
+        }
       } catch (Exception e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
+        StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to add " + name + " in the User Library", e),
+            StatusManager.BLOCK|StatusManager.LOG);
       }
     }
   }

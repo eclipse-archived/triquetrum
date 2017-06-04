@@ -53,17 +53,17 @@ public class AocProviderFromRepository implements ActorOrientedClassProvider {
             // TODO think about this a bit. Could Ptolemy/Triquetrum allow multiple models with a same code/className
             // loaded from different places? And that one could be a class and others not?
             // Or is this a dramatic error in the system configuration?
-            throw new ClassNotFoundException();
+            throw new ClassNotFoundException(className + " is not an actor oriented class definition.");
           }
         } catch (EntryNotFoundException e) {
-          throw new ClassNotFoundException();
+          throw new ClassNotFoundException(className);
         } catch (TriqException e) {
           LOGGER.error(ErrorCode.ERROR + " - Error parsing class model for " + className, e);
-          throw new ClassNotFoundException();
+          throw new ClassNotFoundException(className);
         }
       } else {
         LOGGER.warn(ErrorCode.WARN + " - WorkflowRepositoryService not initialized");
-        throw new ClassNotFoundException();
+        throw new ClassNotFoundException(className);
       }
     } finally {
       LOGGER.trace("getActorOrientedClass() - exit : aoc {} version {} : {}", className, versionSpec, result!=null ? "found " + result : "not found");

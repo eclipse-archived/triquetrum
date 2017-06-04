@@ -333,7 +333,7 @@ public class PtolemyUtil {
         try {
           newEntity = loadActorOrientedClass(className, versionSpec);
         } catch (Exception e) {
-          throw new IllegalActionException(null, ex, "Cannot find class: " + className);
+          throw new IllegalActionException(null, e, "Cannot find class: " + className);
         }
       }
     }
@@ -475,12 +475,7 @@ public class PtolemyUtil {
    */
   public static Class<?> loadClass(String className, VersionSpecification versionSpec) throws ClassNotFoundException {
     ClassLoadingStrategy defaultClassLoadingStrategy = MoMLParser.getDefaultClassLoadingStrategy();
-    try {
-      return defaultClassLoadingStrategy.loadJavaClass(className, versionSpec);
-    } catch (ClassNotFoundException e) {
-      LOGGER.warn("Did not find " + className + " " + versionSpec + " via " + defaultClassLoadingStrategy);
-      return PtolemyUtil.class.getClassLoader().loadClass(className);
-    }
+    return defaultClassLoadingStrategy.loadJavaClass(className, versionSpec);
   }
   
   /**
@@ -493,12 +488,7 @@ public class PtolemyUtil {
    */
   public static ComponentEntity<?> loadActorOrientedClass(String className, VersionSpecification versionSpec) throws ClassNotFoundException {
     ClassLoadingStrategy defaultClassLoadingStrategy = MoMLParser.getDefaultClassLoadingStrategy();
-    try {
-      return defaultClassLoadingStrategy.loadActorOrientedClass(className, versionSpec);
-    } catch (ClassNotFoundException e) {
-      LOGGER.warn("Did not find " + className + " " + versionSpec + " via " + defaultClassLoadingStrategy);
-      throw e;
-    }
+    return defaultClassLoadingStrategy.loadActorOrientedClass(className, versionSpec);
   }
 
   /**
