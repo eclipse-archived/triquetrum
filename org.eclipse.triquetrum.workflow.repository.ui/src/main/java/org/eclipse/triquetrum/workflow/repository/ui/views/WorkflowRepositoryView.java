@@ -83,11 +83,6 @@ import ptolemy.actor.CompositeActor;
  */
 
 public class WorkflowRepositoryView extends ViewPart {
-  /**
-   * The ID of the view as specified by the extension.
-   */
-  public static final String ID = "org.eclipse.triquetrum.workflow.repository.ui.views.WorkflowRepositoryView";
-
   private static final Logger LOGGER = LoggerFactory.getLogger(WorkflowRepositoryView.class);
 
   private TreeViewer viewer;
@@ -311,30 +306,31 @@ public class WorkflowRepositoryView extends ViewPart {
     public void run() {
       AddToUserLibraryDialog dialog = new AddToUserLibraryDialog(viewer.getControl().getShell(), selectedNode);
       dialog.setBlockOnOpen(true);
-      dialog.open();
-      String modelName = dialog.modelName;
-      String modelClass = dialog.modelClass;
-      String elementType = "CompositeActor";
+      int dialogReturnCode = dialog.open();
+      if (Dialog.OK == dialogReturnCode) {
+        String modelName = dialog.modelName;
+        String modelClass = dialog.modelClass;
+        String elementType = "CompositeActor";
 
-      Map<String, String> properties = new HashMap<>();
-      properties.put("displayName", modelName);
-      properties.put("class", modelClass);
-      properties.put("type", elementType);
+        Map<String, String> properties = new HashMap<>();
+        properties.put("displayName", modelName);
+        properties.put("class", modelClass);
+        properties.put("type", elementType);
 
-      Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/add", properties);
-      try {
-        RepositoryPlugin.getDefault().getEventAdminService().postEvent(event);
-      } catch (NullPointerException e) {
-        StatusManager.getManager()
-        .handle(new Status(IStatus.ERROR, RepositoryPlugin.PLUGIN_ID,
-            "Event bus not available, impossible to trigger an addition event for the user library."),
-            StatusManager.BLOCK);
+        Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/add", properties);
+        try {
+          RepositoryPlugin.getDefault().getEventAdminService().postEvent(event);
+        } catch (NullPointerException e) {
+          StatusManager.getManager().handle(
+              new Status(IStatus.ERROR, RepositoryPlugin.PLUGIN_ID, 
+                  "Event bus not available, impossible to trigger an addition event for the user library."),
+              StatusManager.BLOCK);
+        }
       }
     }
   }
 
   private class AddToUserLibraryDialog extends Dialog {
-    private AbstractTreeNode selectedNode;
     private Text modelNameField;
     private Text modelClassField;
 
@@ -343,11 +339,10 @@ public class WorkflowRepositoryView extends ViewPart {
 
     protected AddToUserLibraryDialog(Shell parentShell, AbstractTreeNode selectedNode) {
       super(parentShell);
-      this.selectedNode = selectedNode;
       setShellStyle(SWT.RESIZE | SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
       if (selectedNode instanceof ModelCodeTreeNode) {
-        modelName = ((ModelCodeTreeNode) selectedNode).getModelCode();
         modelClass = ((ModelCodeTreeNode) selectedNode).getModelCode();
+        modelName = modelClass.substring(modelClass.lastIndexOf('.') + 1);
       }
     }
 
