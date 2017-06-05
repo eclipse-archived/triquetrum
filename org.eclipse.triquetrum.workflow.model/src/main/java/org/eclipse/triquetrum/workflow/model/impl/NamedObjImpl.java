@@ -31,6 +31,8 @@ import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.TriqPackage;
 import org.eclipse.triquetrum.workflow.model.util.Visitor;
 
+import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.NameDuplicationException;
 import ptolemy.kernel.util.Settable;
 
 /**
@@ -187,6 +189,16 @@ public class NamedObjImpl extends MinimalEObjectImpl.Container implements NamedO
   public void setName(String newName) {
     String oldName = name;
     name = newName;
+    if (getWrappedObject() != null) {
+      ptolemy.kernel.util.NamedObj ptObject = getWrappedObject();
+      try {
+        ptObject.setName(newName);
+      } catch (IllegalActionException | NameDuplicationException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
+    }
+
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, TriqPackage.NAMED_OBJ__NAME, oldName, name));
   }
