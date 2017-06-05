@@ -46,21 +46,31 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
       return Reason.createFalseReason();
     } else {
       Object bo = getBusinessObjectForPictogramElement(pictogramElement);
-      boolean parameterChanged = false;
+      boolean parameterNameChanged = false;
+      boolean parameterValueChanged = false;
       Parameter p = null;
       if (bo instanceof Parameter && pictogramElement instanceof Shape) {
         p = (Parameter) bo;
         Shape shape = (Shape) pictogramElement;
         BoCategory boCategory = BoCategory.retrieveFrom(shape);
         if (BoCategory.Parameter.equals(boCategory)) {
-          // parameters can not change name, only the value can change
+          String boName = Graphiti.getPeService().getPropertyValue(shape, FeatureConstants.BO_NAME);
           String boValue = Graphiti.getPeService().getPropertyValue(shape, "__BO_VALUE");
-          parameterChanged = p.getExpression() != null && !p.getExpression().equals(boValue);
+          parameterValueChanged = (p.getExpression() != null && !p.getExpression().equals(boValue));
+          parameterNameChanged = (!p.getName().equals(boName));
         }
       }
-      if (parameterChanged) {
-        context.putProperty("PARAMETER_CHANGED", p.getName());
-        return Reason.createTrueReason("Parameter change");
+      if (parameterValueChanged || parameterNameChanged) {
+        StringBuilder diffResultBldr = new StringBuilder();
+        if(parameterNameChanged) {
+          diffResultBldr.append("Parameter name changed; ");
+          context.putProperty("PARAMETERNAME_CHANGED", "true");
+        }
+        if(parameterValueChanged) {
+          diffResultBldr.append("Parameter value changed; ");
+          context.putProperty("PARAMETERVALUE_CHANGED", "true");
+        }
+        return Reason.createTrueReason(diffResultBldr.toString());
       } else {
         return Reason.createFalseReason();
       }
@@ -97,6 +107,7 @@ public class ParameterUpdateFeature extends AbstractUpdateFeature {
           pVal = pVal != null ? pVal : "";
           text.setValue(pName + " : " + pVal);
           Graphiti.getPeService().setPropertyValue(shape, "__BO_VALUE", param.getExpression());
+          Graphiti.getPeService().setPropertyValue(shape, FeatureConstants.BO_NAME, param.getName());
           result = true;
         } else {
           // TODO report an error here?
