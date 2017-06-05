@@ -522,6 +522,10 @@ public class EditorUtils {
       }
       relationContainer.getRelations().add(relation);
       relation.welcome(new PtObjectBuilderAndApplierVisitor(), true);
+      // need to make sure that source and target ports have their Pt wrapped object in order as well,
+      // before doing all the linking.
+      source.welcome(new PtObjectBuilderAndApplierVisitor(), true);
+      target.welcome(new PtObjectBuilderAndApplierVisitor(), true);
       ((Linkable) source).link(relation);
       ((Linkable) target).link(relation);
     }
