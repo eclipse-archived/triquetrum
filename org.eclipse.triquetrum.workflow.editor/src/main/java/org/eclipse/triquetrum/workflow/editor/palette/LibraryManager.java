@@ -24,6 +24,7 @@ import java.util.TreeMap;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.triquetrum.ErrorCode;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -53,61 +54,49 @@ import ptolemy.moml.MoMLParser;
 /**
  * A class that groups all services related to maintaining/modifying/... the user actor library that is available in the IDE.
  * <p>
- * REMARK : current implementation assumes that a separate instance is created for separate threads that need to check/modify libraries (if this would ever
- * occur).
- * 
+ * Remark that this utility class is assumed to be used in a UI context.
+ * Errors are typically reported in error dialogs.
+ * </p>
  */
-public class LibraryManager implements EventHandler {
+class LibraryManager implements EventHandler {
 
-  private final static Logger logger = LoggerFactory.getLogger(LibraryManager.class);
-
+  private static final Logger logger = LoggerFactory.getLogger(LibraryManager.class);
   private static final String ADD_EVENT_TOPIC = "org/eclipse/triquetrum/workflow/userlibrary/add";
-
-  public final static String USER_LIBRARY_NAME = "User Library";
-  private final static String ACTOR_LIBRARY_NAME = "actor library";
-  private final static int ACTORS_LIBRARY_PREFIX_LENGTH = (".configuration." + ACTOR_LIBRARY_NAME + ".").length();
-  private final static String SOURCE_PATH_LIB_ATTR_NAME = "_sourcePath";
+  private static final String ACTOR_LIBRARY_NAME = "actor library";
+  private static final int ACTORS_LIBRARY_PREFIX_LENGTH = (".configuration." + ACTOR_LIBRARY_NAME + ".").length();
+  private static final String SOURCE_PATH_LIB_ATTR_NAME = "_sourcePath";
+  private static final String USER_LIBRARY_NAME = "User Library";
 
   private static LibraryManager instance;
 
   private SortedMap<String, EntityLibrary> userLibraryMap = new TreeMap<String, EntityLibrary>();
   private Configuration configuration;
 
-  public void activate() {
-    File userHome = new File(System.getProperty("user.home"));
-    File triqUserHome = new File(userHome, ".triquetrum");
-
-    try {
-      Configuration ptCfg = new Configuration(new Workspace());
-      EntityLibrary actorLibrary = new EntityLibrary(ptCfg, "actor library");
-      String userLibraryFilePath = new File(triqUserHome, "UserLibrary.xml").toURI().toString();
-      actorLibrary.configure(null, userLibraryFilePath, null);
-      actorLibrary.setClassDefinition(true);
-      refreshManagerCache(ptCfg);
-      try {
-        FileParameter fp = new FileParameter(getUserLibrary(), "_sourcePath");
-        fp.setExpression(userLibraryFilePath);
-        fp.setPersistent(false);
-      } catch (NameDuplicationException e) {
-        // ignore as this would imply that the sourcePath is already present, which is fine.
-      }
-      instance = this;
-    } catch (IllegalActionException | NameDuplicationException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+  // Implementation remark : we don't want to provide LibraryManager as a service or DS component (yet).
+  // There are some issues with startup order management : activating the library manager must only be done 
+  // when a repository service and aoc providers etc are already loaded, and this is tricky to express 
+  // as the library manager can not have direct dependencies to concrete instances of those neither.
+  // So we go for a singleton-like pattern here, controlled from the UserLibraryPaletteEntryProvider.
+  private LibraryManager() {
   }
 
-  public static LibraryManager getDefaultInstance() {
+  public static LibraryManager getActiveInstance() {
+    if (instance == null) {
+      new LibraryManager().activate();
+    }
     return instance;
   }
 
+  /**
+   * 
+   * @return the configured user library
+   */
   public EntityLibrary getUserLibrary() {
     return userLibraryMap.get(USER_LIBRARY_NAME);
   }
 
   /**
-   * UPdates the cached info
+   * Updates the cached info for all libraries managed here.
    * 
    * @param configuration
    */
@@ -122,40 +111,6 @@ public class LibraryManager implements EventHandler {
         }
       }
       this.configuration = configuration;
-    }
-  }
-
-  private void refreshUserLibraryMap(Configuration configuration) {
-    if (userLibraryMap == null) {
-      userLibraryMap = new TreeMap<String, EntityLibrary>();
-    } else {
-      userLibraryMap.clear();
-    }
-    CompositeEntity topLibrary = (CompositeEntity) configuration.getEntity(ACTOR_LIBRARY_NAME);
-    if (topLibrary != null) {
-      EntityLibrary userLibrary = (EntityLibrary) topLibrary.getEntity(USER_LIBRARY_NAME);
-      if (userLibrary != null) {
-        // during start-up the userlibrary may not yet be in the configuration...
-        userLibraryMap.put(USER_LIBRARY_NAME, userLibrary);
-        List<EntityLibrary> libraries = userLibrary.entityList(EntityLibrary.class);
-        CollectingMomlParsingErrorHandler errorHandler = new CollectingMomlParsingErrorHandler();
-
-        // no filter needed on sourcepath attr or whatever
-        // userlibrary sublibraries are maintained in the 1 single UserLibrary.xml file
-        List<EntityLibrary> deepLibraries = getDeepLibrariesWithAttributes(libraries, errorHandler);
-        for (EntityLibrary lib : deepLibraries) {
-          String name = lib.getFullName().substring(ACTORS_LIBRARY_PREFIX_LENGTH);
-          userLibraryMap.put(name, lib);
-        }
-
-        if (errorHandler.hasErrors()) {
-          MultiStatus status = new MultiStatus(TriqEditorPlugin.getID(), IStatus.ERROR, "Some Library entries could not be constructed.", null);
-          for (ErrorItem errorItem : errorHandler) {
-            status.add(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Error populating library " + userLibrary.getFullName(), errorItem.exception));
-          }
-          StatusManager.getManager().handle(status, StatusManager.BLOCK);
-        }
-      }
     }
   }
 
@@ -174,6 +129,13 @@ public class LibraryManager implements EventHandler {
     }
   }
 
+  /**
+   * Add a new sub library with the given folderName, in the given parent library.
+   * @param library
+   * @param folderName
+   * @throws NameDuplicationException
+   * @throws IllegalActionException
+   */
   public void addSubLibrary(final EntityLibrary library, String folderName) throws NameDuplicationException, IllegalActionException {
     EntityLibrary subLibrary = new EntityLibrary(library, folderName);
     StringWriter buffer = new StringWriter();
@@ -194,6 +156,12 @@ public class LibraryManager implements EventHandler {
 
   }
 
+  /**
+   * Modify the name of the given library.
+   * 
+   * @param library
+   * @param newName
+   */
   public void renameLibrary(final EntityLibrary library, String newName) {
     String oldName = library.getName();
     StringBuffer moml = new StringBuffer("<");
@@ -228,6 +196,11 @@ public class LibraryManager implements EventHandler {
     parent.requestChange(request);
   }
 
+  /**
+   * Saves the given library in the file location from where it was originally loaded.
+   * 
+   * @param library
+   */
   public void saveChangedEntityLibrary(EntityLibrary library) {
     FileWriter w = null;
     FileParameter libSourceFileParameter = (FileParameter) library.getAttribute(SOURCE_PATH_LIB_ATTR_NAME);
@@ -261,6 +234,12 @@ public class LibraryManager implements EventHandler {
     }
   }
 
+  /**
+   * Saves the given entity in the default user library.
+   * 
+   * @param entity
+   * @throws Exception
+   */
   public void saveEntityInDefaultUserLibrary(Entity<?> entity) throws Exception {
     EntityLibrary library = getUserLibrary();
     if (library == null) {
@@ -271,6 +250,13 @@ public class LibraryManager implements EventHandler {
     saveEntityInLibrary(library, entity);
   }
 
+  /**
+   * Saves the given entity in the library with the given name.
+   * 
+   * @param libraryName
+   * @param entity
+   * @throws Exception
+   */
   public void saveEntityInUserLibrary(String libraryName, Entity<?> entity) throws Exception {
     EntityLibrary library = (EntityLibrary) userLibraryMap.get(libraryName);
     if (library == null) {
@@ -282,6 +268,13 @@ public class LibraryManager implements EventHandler {
     saveEntityInLibrary(library, entity);
   }
 
+  /**
+   * Saves the given entity in the given library.
+   * 
+   * @param library
+   * @param entity
+   * @throws Exception
+   */
   public void saveEntityInLibrary(EntityLibrary library, Entity<?> entity) throws Exception {
     // Check whether there is already something existing in the
     // library with this name.
@@ -307,6 +300,12 @@ public class LibraryManager implements EventHandler {
     library.requestChange(request);
   }
 
+  /**
+   * Deletes the given entity from the given library.
+   * 
+   * @param library
+   * @param entity
+   */
   public void deleteEntityFromLibrary(final EntityLibrary library, final Entity<?> entity) {
     // Check whether there is already something existing in the
     // library with this name.
@@ -377,6 +376,10 @@ public class LibraryManager implements EventHandler {
     return deepLibraries;
   }
 
+  /**
+   * Reacts on an ADD_EVENT_TOPIC by reading from the event the specification of an entity to be added,
+   * and adds that one to the default user library.
+   */
   @Override
   public void handleEvent(Event event) {
     if (ADD_EVENT_TOPIC.equals(event.getTopic())) {
@@ -419,6 +422,69 @@ public class LibraryManager implements EventHandler {
     public void changeFailed(ChangeRequest change, Exception exception) {
       // TODO Auto-generated method stub
 
+    }
+  }
+  
+  private synchronized void activate() {
+    try {
+      File userHome = new File(System.getProperty("user.home"));
+      File triqUserHome = new File(userHome, ".triquetrum");
+
+      Configuration ptCfg = new Configuration(new Workspace());
+      EntityLibrary actorLibrary = new EntityLibrary(ptCfg, "actor library");
+      String userLibraryFilePath = new File(triqUserHome, "UserLibrary.xml").toURI().toString();
+      actorLibrary.configure(null, userLibraryFilePath, null);
+      actorLibrary.setClassDefinition(true);
+      refreshManagerCache(ptCfg);
+      try {
+        FileParameter fp = new FileParameter(getUserLibrary(), "_sourcePath");
+        fp.setExpression(userLibraryFilePath);
+        fp.setPersistent(false);
+      } catch (NameDuplicationException e) {
+        // ignore as this would imply that the sourcePath is already present, which is fine.
+      }
+      TriqEditorPlugin.getDefault().registerEventHandler(this, ADD_EVENT_TOPIC);
+      instance = this;
+    } catch (IllegalActionException | NameDuplicationException e) {
+      logger.warn(ErrorCode.WARN + " - Error activating the LibraryManager", e);
+    }
+  }
+
+  /**
+   * 
+   * @param configuration
+   */
+  private void refreshUserLibraryMap(Configuration configuration) {
+    if (userLibraryMap == null) {
+      userLibraryMap = new TreeMap<String, EntityLibrary>();
+    } else {
+      userLibraryMap.clear();
+    }
+    CompositeEntity topLibrary = (CompositeEntity) configuration.getEntity(ACTOR_LIBRARY_NAME);
+    if (topLibrary != null) {
+      EntityLibrary userLibrary = (EntityLibrary) topLibrary.getEntity(USER_LIBRARY_NAME);
+      if (userLibrary != null) {
+        // during start-up the userlibrary may not yet be in the configuration...
+        userLibraryMap.put(USER_LIBRARY_NAME, userLibrary);
+        List<EntityLibrary> libraries = userLibrary.entityList(EntityLibrary.class);
+        CollectingMomlParsingErrorHandler errorHandler = new CollectingMomlParsingErrorHandler();
+
+        // no filter needed on sourcepath attr or whatever
+        // userlibrary sublibraries are maintained in the 1 single UserLibrary.xml file
+        List<EntityLibrary> deepLibraries = getDeepLibrariesWithAttributes(libraries, errorHandler);
+        for (EntityLibrary lib : deepLibraries) {
+          String name = lib.getFullName().substring(ACTORS_LIBRARY_PREFIX_LENGTH);
+          userLibraryMap.put(name, lib);
+        }
+
+        if (errorHandler.hasErrors()) {
+          MultiStatus status = new MultiStatus(TriqEditorPlugin.getID(), IStatus.ERROR, "Some Library entries could not be constructed.", null);
+          for (ErrorItem errorItem : errorHandler) {
+            status.add(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Error populating library " + userLibrary.getFullName(), errorItem.exception));
+          }
+          StatusManager.getManager().handle(status, StatusManager.BLOCK);
+        }
+      }
     }
   }
 }

@@ -12,6 +12,8 @@ package org.eclipse.triquetrum.workflow.editor;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -27,6 +29,7 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.event.EventHandler;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
@@ -98,6 +101,12 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
   public void stop(BundleContext context) throws Exception {
     wfExecSvcTracker.close();
     super.stop(context);
+  }
+  
+  public void registerEventHandler(EventHandler handler, String topic) {
+    Dictionary<String, String> properties = new Hashtable<>();
+    properties.put("event.topics", topic);
+    context.registerService(EventHandler.class, handler, properties );
   }
 
   public static void log(int severity, String message, Throwable t) {
