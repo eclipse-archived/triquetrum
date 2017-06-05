@@ -68,6 +68,13 @@
     	        icon="icons/series.gif"
 	            type="Actor">
 	      </entry>
+        <entry
+              class="ptolemy.actor.lib.Sinewave"
+              displayName="Sinewave"
+              icon="icons/SinewaveIcon.xml"
+              iconType="ptolemy"
+              type="CompositeActor">
+        </entry>
         <group displayName="IO">
           <entry
                 class="ptolemy.actor.lib.io.CSVReader"

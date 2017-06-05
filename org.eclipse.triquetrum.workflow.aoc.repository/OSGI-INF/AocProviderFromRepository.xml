@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" enabled="true" immediate="false" name="org.eclipse.triquetrum.workflow.aoc.repository">
+   <implementation class="org.eclipse.triquetrum.workflow.aoc.repository.AocProviderFromRepository"/>
+   <reference bind="setRepositoryService" cardinality="1..1" interface="org.eclipse.triquetrum.workflow.WorkflowRepositoryService" name="repositoryService" policy="static"/>
+   <service>
+      <provide interface="org.ptolemy.classloading.ActorOrientedClassProvider"/>
+   </service>
+</scr:component>

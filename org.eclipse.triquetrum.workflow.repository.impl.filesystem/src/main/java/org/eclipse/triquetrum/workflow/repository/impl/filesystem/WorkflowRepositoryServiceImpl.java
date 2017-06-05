@@ -43,7 +43,9 @@ import ptolemy.actor.CompositeActor;
  * <p>
  * Each flow is stored in a subdirectory with the flow's name. Within each flow's directory, separate subdirectories are maintained per version.
  * </p>
- *
+ * TODO analyse if we want to support hierarchy, i.e. deep folder structures.
+ * E.g. to support AOCs with fully-qualified class names like "ptolemy.actor.lib.Sinewave" etc.
+ * For the moment we assume these are mapped to single-level subfolders with a composite folder name.
  */
 public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService {
 
@@ -67,7 +69,7 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
   public WorkflowRepositoryServiceImpl(File rootFolder) {
     setRootFolder(rootFolder);
   }
-  
+
   public void setRootFolder(File rootFolder) {
     LOGGER.info("Pointing FlowRepositoryService to folder {}", rootFolder);
     this.rootFolder = rootFolder;
@@ -79,13 +81,17 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
   }
 
   public void clearRepository() {
+    LOGGER.trace("clearRepository() - entry");
     try {
+      LOGGER.info("Clearing repository {}", rootFolder);
       FileUtils.deleteDirectory(rootFolder);
       if (!rootFolder.mkdirs()) {
         LOGGER.error(org.eclipse.triquetrum.ErrorCode.ERROR + " - Failed to recreate clean repository directory");
       }
     } catch (IOException e) {
       LOGGER.error(org.eclipse.triquetrum.ErrorCode.ERROR + " - Failed to clear repository directory", e);
+    } finally {
+      LOGGER.trace("clearRepository() - exit");
     }
   }
 
@@ -96,146 +102,204 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
 
   @Override
   public ModelHandle commit(String flowCode, CompositeActor flow) throws DuplicateEntryException {
-    File newFlowFolder = new File(rootFolder, flowCode);
-    if (newFlowFolder.exists()) {
-      throw new DuplicateEntryException(flowCode);
-    } else {
-      ModelHandle flowHandle = null;
-      VersionSpecification vSpec = new ThreeDigitVersionSpecification(1, 0, 0);
-      File versionFolder = new File(newFlowFolder, vSpec.toString());
-      if (!versionFolder.mkdirs()) {
-        throw new RuntimeException(new IOException("Error creating folder " + versionFolder));
-      }
-      File destinationFile = new File(versionFolder, flow.getName() + ".moml");
-      if ((!destinationFile.exists() || destinationFile.canWrite())) {
-        BufferedWriter outputWriter = null;
-        try {
-          outputWriter = new BufferedWriter(new FileWriterWithEncoding(destinationFile, StandardCharsets.UTF_8));
-          flow.exportMoML(outputWriter);
-          flowHandle = new ModelHandleImpl(flowCode, vSpec, destinationFile.toURI(), flow);
-          writeMetaData(flowCode, VERSION_ACTIVE, vSpec.toString());
-          writeMetaData(flowCode, VERSION_MOSTRECENT, vSpec.toString());
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        } catch (EntryNotFoundException e) {
-          // should not happen
-        } finally {
-          if (outputWriter != null) {
-            try {
-              outputWriter.flush();
-              outputWriter.close();
-            } catch (Exception e) {
-              // ignore
+    LOGGER.trace("commit() - entry : {} {}", flowCode, flow);
+    ModelHandle flowHandle = null;
+    try {
+      File newFlowFolder = new File(rootFolder, flowCode);
+      if (newFlowFolder.exists()) {
+        throw new DuplicateEntryException(flowCode);
+      } else {
+        VersionSpecification vSpec = new ThreeDigitVersionSpecification(1, 0, 0);
+        File versionFolder = new File(newFlowFolder, vSpec.toString());
+        if (!versionFolder.mkdirs()) {
+          throw new RuntimeException(new IOException("Error creating folder " + versionFolder));
+        }
+        File destinationFile = new File(versionFolder, flow.getName() + ".moml");
+        if ((!destinationFile.exists() || destinationFile.canWrite())) {
+          BufferedWriter outputWriter = null;
+          try {
+            outputWriter = new BufferedWriter(new FileWriterWithEncoding(destinationFile, StandardCharsets.UTF_8));
+            flow.exportMoML(outputWriter);
+            flowHandle = new ModelHandleImpl(flowCode, vSpec, destinationFile.toURI(), flow);
+            writeMetaData(flowCode, VERSION_ACTIVE, vSpec.toString());
+            writeMetaData(flowCode, VERSION_MOSTRECENT, vSpec.toString());
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          } catch (EntryNotFoundException e) {
+            // should not happen
+          } finally {
+            if (outputWriter != null) {
+              try {
+                outputWriter.flush();
+                outputWriter.close();
+              } catch (Exception e) {
+                // ignore
+              }
             }
           }
+          return flowHandle;
+        } else {
+          throw new RuntimeException(new IOException("File not writable " + destinationFile));
         }
-        return flowHandle;
-      } else {
-        throw new RuntimeException(new IOException("File not writable " + destinationFile));
       }
+    } finally {
+      LOGGER.trace("commit() - exit : {}", flowHandle);
     }
   }
 
   @Override
   public ModelHandle[] delete(String flowCode) throws EntryNotFoundException {
-    ModelHandle[] results = getAllModelRevisions(flowCode);
+    LOGGER.trace("delete() - entry : {}", flowCode);
     try {
-      FileUtils.deleteDirectory(new File(rootFolder, flowCode));
-    } catch (IOException e) {
-      LOGGER.error(org.eclipse.triquetrum.ErrorCode.ERROR + " - Failed to delete " + flowCode, e);
+      ModelHandle[] results = getAllModelRevisions(flowCode);
+      try {
+        FileUtils.deleteDirectory(new File(rootFolder, flowCode));
+      } catch (IOException e) {
+        LOGGER.error(org.eclipse.triquetrum.ErrorCode.ERROR + " - Failed to delete " + flowCode, e);
+      }
+      return results;
+    } finally {
+      LOGGER.trace("delete() - exit : {}", flowCode);
     }
-    return results;
   }
 
   @Override
   public ModelHandle update(ModelHandle handle, CompositeActor updatedFlow, boolean activate) throws EntryNotFoundException {
-    String flowCode = handle.getCode();
-    File flowRootFolder = new File(rootFolder, flowCode);
-    if (!flowRootFolder.isDirectory()) {
-      throw new EntryNotFoundException(ErrorCode.MODEL_SAVING_ERROR_FUNC, "Flow code unknown " + flowCode);
-    } else {
-      ModelHandle flowHandle = null;
-      ThreeDigitVersionSpecification vSpec = ((ThreeDigitVersionSpecification) handle.getVersion()).increaseMinor();
-      File versionFolder = new File(flowRootFolder, vSpec.toString());
-      while (versionFolder.exists()) {
-        vSpec = vSpec.increaseMinor();
-        versionFolder = new File(flowRootFolder, vSpec.toString());
-      }
-      if (!versionFolder.mkdirs()) {
-        throw new RuntimeException(new IOException("Error creating folder " + versionFolder));
-      }
-      File destinationFile = new File(versionFolder, updatedFlow.getName() + ".moml");
-      if ((!destinationFile.exists() || destinationFile.canWrite())) {
-        BufferedWriter outputWriter = null;
-        try {
-          outputWriter = new BufferedWriter(new FileWriterWithEncoding(destinationFile, StandardCharsets.UTF_8));
-          updatedFlow.exportMoML(outputWriter);
-          flowHandle = new ModelHandleImpl(flowCode, vSpec, destinationFile.toURI(), updatedFlow);
-          writeMetaData(flowCode, VERSION_MOSTRECENT, vSpec.toString());
-          if (activate) {
-            activateModelRevision(flowHandle);
-          }
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        } finally {
-          if (outputWriter != null) {
-            try {
-              outputWriter.flush();
-              outputWriter.close();
-            } catch (Exception e) {
-              // ignore
+    LOGGER.trace("update() - entry : {} updated flow : {} activate : {}", new Object[] { handle, updatedFlow, activate });
+    ModelHandle updatedHandle = null;
+    try {
+      String flowCode = handle.getCode();
+      File flowRootFolder = new File(rootFolder, flowCode);
+      if (!flowRootFolder.isDirectory()) {
+        throw new EntryNotFoundException(ErrorCode.MODEL_SAVING_ERROR_FUNC, "Flow code unknown " + flowCode);
+      } else {
+        ThreeDigitVersionSpecification vSpec = ((ThreeDigitVersionSpecification) handle.getVersion()).increaseMinor();
+        File versionFolder = new File(flowRootFolder, vSpec.toString());
+        while (versionFolder.exists()) {
+          vSpec = vSpec.increaseMinor();
+          versionFolder = new File(flowRootFolder, vSpec.toString());
+        }
+        if (!versionFolder.mkdirs()) {
+          throw new RuntimeException(new IOException("Error creating folder " + versionFolder));
+        }
+        File destinationFile = new File(versionFolder, updatedFlow.getName() + ".moml");
+        if ((!destinationFile.exists() || destinationFile.canWrite())) {
+          BufferedWriter outputWriter = null;
+          try {
+            outputWriter = new BufferedWriter(new FileWriterWithEncoding(destinationFile, StandardCharsets.UTF_8));
+            updatedFlow.exportMoML(outputWriter);
+            updatedHandle = new ModelHandleImpl(flowCode, vSpec, destinationFile.toURI(), updatedFlow);
+            writeMetaData(flowCode, VERSION_MOSTRECENT, vSpec.toString());
+            if (activate) {
+              activateModelRevision(updatedHandle);
+            }
+          } catch (IOException e) {
+            throw new RuntimeException(e);
+          } finally {
+            if (outputWriter != null) {
+              try {
+                outputWriter.flush();
+                outputWriter.close();
+              } catch (Exception e) {
+                // ignore
+              }
             }
           }
+          return updatedHandle;
+        } else {
+          throw new RuntimeException(new IOException("File not writable " + destinationFile));
         }
-        return flowHandle;
-      } else {
-        throw new RuntimeException(new IOException("File not writable " + destinationFile));
       }
+    } finally {
+      LOGGER.trace("update() - exit : {}", updatedHandle);
+    }
+  }
+
+  @Override
+  public ModelHandle activateModelRevision(ModelHandle handle) throws EntryNotFoundException {
+    LOGGER.trace("activateModelRevision() - entry : {}", handle);
+    try {
+      return writeMetaData(handle.getCode(), VERSION_ACTIVE, handle.getVersion().toString());
+    } catch (IOException e) {
+      throw new RuntimeException("Error writing activation data", e);
+    } finally {
+      LOGGER.trace("activateModelRevision() - exit : {}", handle);
+    }
+  }
+
+  @Override
+  public boolean isActiveModelRevision(ModelHandle handle) {
+    LOGGER.trace("isActiveModelRevision() - entry : {}", handle);
+    boolean result = false;
+    try {
+      if (handle != null) {
+        result = getActiveModel(handle.getCode()).equals(handle);
+      }
+      return result;
+    } catch (EntryNotFoundException e) {
+      return result;
+    } finally {
+      LOGGER.trace("isActiveModelRevision() - exit : {} : {}", handle, result);
     }
   }
 
   @Override
   public ModelHandle getActiveModel(String flowCode) throws EntryNotFoundException {
-    File flowRootFolder = new File(rootFolder, flowCode);
-    if (!flowRootFolder.isDirectory()) {
-      throw new EntryNotFoundException("Invalid flow code " + flowCode);
-    } else {
-      ModelHandle flow = null;
-      Properties metaData = readMetaData(flowCode);
-      String activeVersion = metaData.getProperty(VERSION_ACTIVE);
-      flow = readAndBuildModelHandle(flowRootFolder.getName(), activeVersion);
-      return flow;
+    LOGGER.trace("getActiveModel() - entry : {}", flowCode);
+    ModelHandle flow = null;
+    try {
+      File flowRootFolder = new File(rootFolder, flowCode);
+      if (!flowRootFolder.isDirectory()) {
+        throw new EntryNotFoundException("Invalid flow code " + flowCode);
+      } else {
+        Properties metaData = readMetaData(flowCode);
+        String activeVersion = metaData.getProperty(VERSION_ACTIVE);
+        flow = readAndBuildModelHandle(flowRootFolder.getName(), activeVersion);
+        return flow;
+      }
+    } finally {
+      LOGGER.trace("getActiveModel() - exit : {}", flow);
     }
   }
 
   @Override
   public ModelHandle getMostRecentModel(String flowCode) throws EntryNotFoundException {
-    File flowRootFolder = new File(rootFolder, flowCode);
-    if (!flowRootFolder.isDirectory()) {
-      throw new EntryNotFoundException("Invalid flow code " + flowCode);
-    } else {
-      ModelHandle flow = null;
-      Properties metaData = readMetaData(flowCode);
-      String mostRecentVersion = metaData.getProperty(VERSION_MOSTRECENT);
-      flow = readAndBuildModelHandle(flowRootFolder.getName(), new File(flowRootFolder, mostRecentVersion));
-      return flow;
+    LOGGER.trace("getMostRecentModel() - entry : {}", flowCode);
+    ModelHandle flow = null;
+    try {
+      File flowRootFolder = new File(rootFolder, flowCode);
+      if (!flowRootFolder.isDirectory()) {
+        throw new EntryNotFoundException("Invalid flow code " + flowCode);
+      } else {
+        Properties metaData = readMetaData(flowCode);
+        String mostRecentVersion = metaData.getProperty(VERSION_MOSTRECENT);
+        flow = readAndBuildModelHandle(flowRootFolder.getName(), new File(flowRootFolder, mostRecentVersion));
+        return flow;
+      }
+    } finally {
+      LOGGER.trace("getMostRecentModel() - exit : {}", flow);
     }
   }
 
   @Override
   public ModelHandle getModelVersion(String flowCode, VersionSpecification version) throws EntryNotFoundException {
-    File flowRootFolder = new File(rootFolder, flowCode);
-    if (!flowRootFolder.isDirectory()) {
-      throw new EntryNotFoundException("Invalid flow code " + flowCode);
-    } else {
-      ModelHandle flow = null;
-      String requestedVersion = version.toString();
-      flow = readAndBuildModelHandle(flowRootFolder.getName(), new File(flowRootFolder, requestedVersion));
-      if (flow == null) {
-        throw new EntryNotFoundException("Version " + requestedVersion + " not found for flow code " + flowCode);
+    LOGGER.trace("getModelVersion() - entry : {} - {}", flowCode, version);
+    ModelHandle flow = null;
+    try {
+      File flowRootFolder = new File(rootFolder, flowCode);
+      if (!flowRootFolder.isDirectory()) {
+        throw new EntryNotFoundException("Invalid flow code " + flowCode);
       } else {
-        return flow;
+        String requestedVersion = version.toString();
+        flow = readAndBuildModelHandle(flowRootFolder.getName(), new File(flowRootFolder, requestedVersion));
+        if (flow == null) {
+          throw new EntryNotFoundException("Version " + requestedVersion + " not found for flow code " + flowCode);
+        } else {
+          return flow;
+        }
       }
+    } finally {
+      LOGGER.trace("getModelVersion() - exit : {}", flow);
     }
   }
 
@@ -246,46 +310,57 @@ public class WorkflowRepositoryServiceImpl implements WorkflowRepositoryService 
 
   @Override
   public String[] getAllModelCodes() {
-    File[] subFolders = rootFolder.listFiles(new DirectoryFilter());
-    if (subFolders != null) {
-      String[] flowCodes = new String[subFolders.length];
-      for (int i = 0; i < subFolders.length; ++i) {
-        flowCodes[i] = subFolders[i].getName();
+    LOGGER.trace("getAllModelCodes() - entry");
+    String[] results = null;
+    try {
+      File[] subFolders = rootFolder.listFiles(new DirectoryFilter());
+      if (subFolders != null) {
+        String[] flowCodes = new String[subFolders.length];
+        for (int i = 0; i < subFolders.length; ++i) {
+          flowCodes[i] = subFolders[i].getName();
+        }
+        results = flowCodes;
+      } else {
+        results = new String[0];
       }
-      return flowCodes;
-    } else {
-      return new String[0];
+      return results;
+    } finally {
+      if (LOGGER.isTraceEnabled()) {
+        LOGGER.trace("getAllModelCodes() - exit : " + results);
+      }
     }
   }
 
   @Override
   public ModelHandle[] getAllModelRevisions(String flowCode) throws EntryNotFoundException {
-    File codeFolder = new File(rootFolder, flowCode);
-    if (!codeFolder.isDirectory()) {
-      throw new EntryNotFoundException("Invalid flow code " + flowCode);
-    } else {
-      ArrayList<ModelHandle> results = new ArrayList<>();
-      File[] versionFolders = codeFolder.listFiles(new DirectoryFilter());
-      // prophylactic null check to keep FindBugs happy
-      if (versionFolders != null) {
-        for (File versionFolder : versionFolders) {
-          ModelHandle fh = readAndBuildModelHandle(flowCode, versionFolder);
-          if (fh != null) {
-            results.add(fh);
+    LOGGER.trace("getAllModelRevisions() - entry : {}", flowCode);
+    ArrayList<ModelHandle> results = null;
+    try {
+      File codeFolder = new File(rootFolder, flowCode);
+      if (!codeFolder.isDirectory()) {
+        throw new EntryNotFoundException("Invalid flow code " + flowCode);
+      } else {
+        results = new ArrayList<>();
+        File[] versionFolders = codeFolder.listFiles(new DirectoryFilter());
+        // prophylactic null check to keep FindBugs happy
+        if (versionFolders != null) {
+          for (File versionFolder : versionFolders) {
+            ModelHandle fh = readAndBuildModelHandle(flowCode, versionFolder);
+            if (fh != null) {
+              results.add(fh);
+            }
           }
         }
+        return results.toArray(new ModelHandle[results.size()]);
       }
-      return results.toArray(new ModelHandle[results.size()]);
+    } finally {
+      LOGGER.trace("getAllModelRevisions() - exit : {} {}", flowCode, results);
     }
   }
 
   @Override
-  public ModelHandle activateModelRevision(ModelHandle handle) throws EntryNotFoundException {
-    try {
-      return writeMetaData(handle.getCode(), VERSION_ACTIVE, handle.getVersion().toString());
-    } catch (IOException e) {
-      throw new RuntimeException("Error writing activation data", e);
-    }
+  public String toString() {
+    return rootFolder.toURI().toString();
   }
 
   private ModelHandle readAndBuildModelHandle(String code, String version) {

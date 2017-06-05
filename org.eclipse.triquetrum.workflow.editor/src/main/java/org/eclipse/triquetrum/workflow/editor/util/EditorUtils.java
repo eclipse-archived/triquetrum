@@ -210,20 +210,34 @@ public class EditorUtils {
   }
 
   /**
+   * Find the selected diagram editor.
+   *
+   * @return the selected diagram editor
+   */
+  public static TriqDiagramEditor getSelectedDiagramEditor() {
+    TriqDiagramEditor result = null;
+    IWorkbenchPage page = EclipseUtils.getPage();
+    if (page != null) {
+      for (IEditorReference editorRef : page.getEditorReferences()) {
+        if (editorRef.getId().contains("triquetrum")) {
+          result = ((TriqDiagramEditor) editorRef.getEditor(true));
+          break;
+        }
+      }
+    }
+    return result;
+  }
+
+  /**
    * Find the diagram for the selected editor part.
    *
    * @return the diagram from the selected diagram editor
    */
   public static Diagram getSelectedDiagram() {
     Diagram result = null;
-    IWorkbenchPage page = EclipseUtils.getPage();
-    if (page != null) {
-      for (IEditorReference editorRef : page.getEditorReferences()) {
-        if (editorRef.getId().contains("triquetrum")) {
-          result = ((TriqDiagramEditor) editorRef.getEditor(true)).getDiagramTypeProvider().getDiagram();
-          break;
-        }
-      }
+    TriqDiagramEditor editor = getSelectedDiagramEditor();
+    if (editor != null) {
+      result = editor.getDiagramTypeProvider().getDiagram();
     }
     return result;
   }
