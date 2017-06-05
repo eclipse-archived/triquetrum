@@ -24,7 +24,6 @@ import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.tb.IToolBehaviorProvider;
-import org.eclipse.graphiti.ui.editor.DefaultPaletteBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.editor.IDiagramContainerUI;
 import org.eclipse.graphiti.ui.internal.config.IConfigurationProviderInternal;
@@ -46,8 +45,13 @@ public class TriqDiagramBehavior extends DiagramBehavior {
   }
 
   @Override
-  protected DefaultPaletteBehavior createPaletteBehaviour() {
+  protected TriqPaletteBehavior createPaletteBehaviour() {
     return new TriqPaletteBehavior(this);
+  }
+  
+  @Override
+  public TriqPaletteBehavior getPaletteBehavior() {
+    return (TriqPaletteBehavior) super.getPaletteBehavior();
   }
 
   /**

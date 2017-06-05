@@ -152,4 +152,12 @@ public interface WorkflowRepositoryService {
    * @throws EntryNotFoundException
    */
   ModelHandle activateModelRevision(ModelHandle handle) throws EntryNotFoundException;
+
+  /**
+   * Checks if the given ModelHandle corresponds to the active revision for that model code.
+   * 
+   * @param value
+   * @return
+   */
+  boolean isActiveModelRevision(ModelHandle value);
 }

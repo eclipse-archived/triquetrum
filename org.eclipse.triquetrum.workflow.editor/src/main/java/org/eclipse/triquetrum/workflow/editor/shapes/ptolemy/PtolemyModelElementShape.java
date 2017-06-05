@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ptolemy.vergil.icon.EditorIcon;
+import ptolemy.vergil.kernel.attributes.ImageAttribute;
 import ptolemy.vergil.kernel.attributes.LineAttribute;
 import ptolemy.vergil.kernel.attributes.RectangleAttribute;
 import ptolemy.vergil.kernel.attributes.TextAttribute;
@@ -40,6 +41,7 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
     drawingStrategies.put(RectangleAttribute.class, new RectangleDrawingStrategy());
     drawingStrategies.put(LineAttribute.class, new LineDrawingStrategy());
     drawingStrategies.put(TextAttribute.class, new TextDrawingStrategy());
+    drawingStrategies.put(ImageAttribute.class, new ImageDrawingStrategy());
   }
 
   private Rectangle ptShapeBounds;

@@ -10,10 +10,11 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.palette;
 
-import java.util.Collections;
-import java.util.Comparator;
 
 import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.*;
+
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.CoreException;
@@ -93,12 +94,21 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
     }
     switch (cfgElem.getName()) {
     case "entry": {
-      String clazz = cfgElem.getAttribute(CLASS);
-      ICreateFeature createFeature = getFeatureProvider().buildCreateFeature(parentGroupElem, cfgElem);
-      TriqPaletteRoot.DefaultCreationFactory cf = new TriqPaletteRoot.DefaultCreationFactory(createFeature, ICreateFeature.class);
-      CombinedTemplateCreationEntry pe = new CombinedTemplateCreationEntry(label, clazz, cf, cf, imgDescriptor, imgDescriptor);
-      pe.setToolClass(GFCreationTool.class);
-      parent.add(pe);
+      PaletteEntry existingPe = null;
+      for (Object pe : parent.getChildren()) {
+        if (pe instanceof PaletteEntry && ((PaletteEntry) pe).getLabel().equals(label)) {
+          existingPe = (PaletteEntry) pe;
+          break;
+        }
+      }
+      if (existingPe == null) {
+        String clazz = cfgElem.getAttribute(CLASS);
+        ICreateFeature createFeature = getFeatureProvider().buildCreateFeature(parentGroupElem, cfgElem);
+        TriqPaletteRoot.DefaultCreationFactory cf = new TriqPaletteRoot.DefaultCreationFactory(createFeature, ICreateFeature.class);
+        CombinedTemplateCreationEntry pe = new CombinedTemplateCreationEntry(label, clazz, cf, cf, imgDescriptor, imgDescriptor);
+        pe.setToolClass(GFCreationTool.class);
+        parent.add(pe);
+      }
       break;
     }
     case "group": {
@@ -106,7 +116,7 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
       // so a straightforward iteration to look for existing groups should not be an issue.
       PaletteTreeNode pg = null;
       for (Object pe : parent.getChildren()) {
-        if (pe instanceof PaletteTreeNode && ((PaletteTreeNode)pe).getLabel().equals(label)) {
+        if (pe instanceof PaletteTreeNode && ((PaletteTreeNode) pe).getLabel().equals(label)) {
           pg = (PaletteTreeNode) pe;
           // We're a bit limited to determine the real desired priority
           // when a group is used in different palette contributions
@@ -131,7 +141,7 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
       }
 
       String providerClazz = cfgElem.getAttribute(PROVIDER);
-      if(providerClazz!=null) {
+      if (providerClazz != null) {
         try {
           PaletteEntryProvider pep = (PaletteEntryProvider) cfgElem.createExecutableExtension(PROVIDER);
           for (IConfigurationElement child : pep.getPaletteEntries()) {
@@ -162,10 +172,10 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
   private static class PaletteEntryComparator implements Comparator<PaletteEntry> {
     @Override
     public int compare(PaletteEntry o1, PaletteEntry o2) {
-      if(o1 instanceof PaletteTreeNode) {
-        if(o2 instanceof PaletteTreeNode) {
-          int result = ((PaletteTreeNode)o1).getPriority().compareTo(((PaletteTreeNode)o2).getPriority());
-          if(result != 0) {
+      if (o1 instanceof PaletteTreeNode) {
+        if (o2 instanceof PaletteTreeNode) {
+          int result = ((PaletteTreeNode) o1).getPriority().compareTo(((PaletteTreeNode) o2).getPriority());
+          if (result != 0) {
             return result;
           }
         } else {

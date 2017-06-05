@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.features;
 
+import static org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes.*;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
@@ -24,14 +26,12 @@ import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.graphiti.services.ICreateService;
 import org.eclipse.graphiti.services.IGaService;
 import org.eclipse.graphiti.services.IPeCreateService;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
-import org.eclipse.triquetrum.workflow.editor.shapes.ActorShapes;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.slf4j.Logger;
@@ -44,9 +44,6 @@ public class CompositeActorAddFeature extends ActorAddFeature {
   public static final IColorConstant COMPACTOR_NAME_FOREGROUND = IColorConstant.BLACK;
   public static final IColorConstant COMPACTOR_FOREGROUND = IColorConstant.BLACK;
   public static final IColorConstant COMPACTOR_BACKGROUND = IColorConstant.LIGHT_LIGHT_GRAY;
-
-  public static final int COMPOSITEACTOR_DEFAULT_WIDTH = 120;
-  public static final int COMPOSITEACTOR_DEFAULT_HEIGHT = 60;
 
   public CompositeActorAddFeature(IFeatureProvider fp) {
     super(fp);
@@ -67,7 +64,6 @@ public class CompositeActorAddFeature extends ActorAddFeature {
     int yLocation = context.getY();
 
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
-    ICreateService createService = Graphiti.getCreateService();
     IGaService gaService = Graphiti.getGaService();
     ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
     link(containerShape, addedActor, BoCategory.CompositeActor);
@@ -102,15 +98,15 @@ public class CompositeActorAddFeature extends ActorAddFeature {
       String iconResource) {
 
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
-    int width = COMPOSITEACTOR_DEFAULT_WIDTH;
-    int height = COMPOSITEACTOR_DEFAULT_HEIGHT;
+    int width = ACTOR_VISIBLE_WIDTH;
+    int height = ACTOR_VISIBLE_HEIGHT;
 
     // create and set graphics algorithm
     RoundedRectangle actorShapeGA = gaService.createRoundedRectangle(invisibleRectangle, 5, 5);
-    actorShapeGA.setForeground(manageColor(COMPACTOR_FOREGROUND));
-    actorShapeGA.setBackground(manageColor(COMPACTOR_BACKGROUND));
+    actorShapeGA.setForeground(manageColor(ACTOR_FOREGROUND));
+    actorShapeGA.setBackground(manageColor(ACTOR_BACKGROUND));
     actorShapeGA.setLineWidth(2);
-    gaService.setLocationAndSize(actorShapeGA, 0, 0, width, height);
+    gaService.setLocationAndSize(actorShapeGA, ACTOR_X_MARGIN, ACTOR_Y_MARGIN, width, height);
 
     // add the actor's icon
     if (!StringUtils.isBlank(iconResource)) {
@@ -118,7 +114,7 @@ public class CompositeActorAddFeature extends ActorAddFeature {
         final Shape shape = peCreateService.createShape(containerShape, false);
         final Image image = gaService.createImage(shape, iconResource);
         addedActor.setIconId(iconResource);
-        gaService.setLocationAndSize(image, ActorShapes.ACTOR_ICON_X_MARGIN, ActorShapes.ACTOR_ICON_Y_MARGIN, ActorShapes.ACTOR_ICON_SIZE, ActorShapes.ACTOR_ICON_SIZE);
+        gaService.setLocationAndSize(image, ACTOR_ICON_X_MARGIN, ACTOR_ICON_Y_MARGIN, ACTOR_ICON_SIZE, ACTOR_ICON_SIZE);
 
         // create link and wire it
         link(shape, addedActor, BoCategory.Actor);
@@ -133,7 +129,7 @@ public class CompositeActorAddFeature extends ActorAddFeature {
       Shape shape = peCreateService.createShape(containerShape, false);
 
       // create and set graphics algorithm
-      Polyline polyline = gaService.createPolyline(shape, new int[] { 0, 20, 0 + width, 20 });
+      Polyline polyline = gaService.createPolyline(shape, ACTOR_TEXT_UNDERLINE_SHAPE);
       polyline.setForeground(manageColor(COMPACTOR_FOREGROUND));
       polyline.setLineWidth(2);
 
@@ -152,7 +148,7 @@ public class CompositeActorAddFeature extends ActorAddFeature {
       text.setHorizontalAlignment(Orientation.ALIGNMENT_CENTER);
       // vertical alignment has as default value "center"
       text.setFont(gaService.manageDefaultFont(getDiagram(), false, true));
-      gaService.setLocationAndSize(text, 0 + 20, 0, width - 25, 20);
+      gaService.setLocationAndSize(text, ACTOR_TEXT_X_MARGIN, ACTOR_Y_MARGIN, ACTOR_TEXT_WIDTH, ACTOR_TEXT_HEIGHT);
 
       // create link and wire it
       link(shape, addedActor, BoCategory.CompositeActor);
