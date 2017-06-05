@@ -107,7 +107,6 @@ Import-Package: org.apache.batik.bridge;version="1.6.0",
  ptolemy.vergil.icon;version="11.0.0",
  ptolemy.vergil.kernel.attributes;version="11.0.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin
-Service-Component: OSGI-INF/colorRendererService.xml,OSGI-INF/attributesRendererService.xml,
- OSGI-INF/LibraryManager.xml
+Service-Component: OSGI-INF/colorRendererService.xml,OSGI-INF/attributesRendererService.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.triquetrum.workflow.editor.palette.spi

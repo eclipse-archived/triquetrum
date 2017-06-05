@@ -29,22 +29,21 @@ import ptolemy.kernel.Entity;
 import ptolemy.moml.EntityLibrary;
 
 public class UserLibraryPaletteEntryProvider implements PaletteEntryProvider {
-  private static LibraryManager libraryManager;
 
   @Override
   public IConfigurationElement[] getPaletteEntries() {
-    if (libraryManager == null) {
-      libraryManager = LibraryManager.getDefaultInstance();
-    }
-    EntityLibrary userLibrary = libraryManager.getUserLibrary();
     List<IConfigurationElement> resultsList = new ArrayList<>();
-    for (Entity<?> actor : (List<Entity<?>>) userLibrary.entityList()) {
-      Map<String, String> attributes = new HashMap<>();
-      attributes.put(CLASS, actor.getClassName());
-      attributes.put(DISPLAY_NAME, actor.getDisplayName());
-      attributes.put(TYPE, (actor instanceof CompositeEntity) ? BoCategory.CompositeActor.name() : BoCategory.Actor.name());
-      PaletteConfigurationElement pce = new PaletteConfigurationElement("entry", "org.eclipse.triquetrum.workflow.editor", attributes);
-      resultsList.add(pce);
+    LibraryManager libraryManager = LibraryManager.getActiveInstance();
+    EntityLibrary userLibrary = libraryManager!=null ? libraryManager.getUserLibrary() : null;
+    if (userLibrary != null) {
+      for (Entity<?> actor : (List<Entity<?>>) userLibrary.entityList()) {
+        Map<String, String> attributes = new HashMap<>();
+        attributes.put(CLASS, actor.getClassName());
+        attributes.put(DISPLAY_NAME, actor.getDisplayName());
+        attributes.put(TYPE, (actor instanceof CompositeEntity) ? BoCategory.CompositeActor.name() : BoCategory.Actor.name());
+        PaletteConfigurationElement pce = new PaletteConfigurationElement("entry", "org.eclipse.triquetrum.workflow.editor", attributes);
+        resultsList.add(pce);
+      }
     }
     return resultsList.toArray(new IConfigurationElement[0]);
   }
