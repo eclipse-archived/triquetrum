@@ -30,4 +30,16 @@
 		<nature>org.eclipse.pde.PluginNature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>intro/images/TriquetrumDreistab_00-50px.jpg</name>
+			<type>1</type>
+			<location>/Users/cxh/git/triquetrum/org.eclipse.triquetrum.workflow.editor/intro/images/TriquetrumDreistab_00-50px.jpg</location>
+		</link>
+		<link>
+			<name>intro/images/TriquetrumScreenShot50.png</name>
+			<type>1</type>
+			<location>/Users/cxh/git/triquetrum/org.eclipse.triquetrum.workflow.editor/intro/images/TriquetrumScreenShot50.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>
