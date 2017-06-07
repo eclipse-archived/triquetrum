@@ -30,12 +30,4 @@
                org.eclipse.emf.edit.provider.IItemPropertySource"/>
    </extension>
    
-    <extension
-         point="org.eclipse.ui.intro.configExtension">
-      <configExtension
-            content="intro/intro.xml"
-            configId="org.eclipse.ui.intro.universalConfig">
-      </configExtension>
-   </extension>
-   
 </plugin>
