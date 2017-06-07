@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+  <extensionContent id="org.eclipse.triquetrum.workflow.model.edit"
+		    style="css/sample.css" name="Triquetrum Workflow Model Edit" path="overview/@">
+    <group style-id="content-group" id="workbench-group">
+      <link label="Triquetrum Workflow Model Edit" url="http://org.eclipse.ui.intro/showPage?id=myPageID"
+	    id="myLinkID">
+	<text>The o.e.triquetrum.workflow.model.edit Eclipse project has
+	item adapters </text>
+      </link>
+
+      <page id="myPageID" style="/intro/overview.css" style-id="page">
+	<title style-id="intro-header">What is Bioclipse</title>
+	<include path="overview/tutorials" />
+	<group id="page-content">
+	  <group id="content-header" label="What is Bioclipse"
+		 filteredFrom="swt">
+	  </group>
+	  <text style-id="page-title" id="page-title" filteredFrom="html">HEADER
+	  </text>
+	  <text style-id="page-description" id="page-description">
+	    CONTENT GOES HERE
+	  </text>
+	</group>
+      </page>
+    </group>
+  </extensionContent>
+</introContent>
