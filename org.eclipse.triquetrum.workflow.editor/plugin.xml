@@ -290,4 +290,11 @@
             name="Triquetrum">
       </page>
     </extension>
+    <!-- See https://wiki.eclipse.org/Triquetrum/Releng/Welcome_Pages -->
+    <extension point="org.eclipse.ui.intro.configExtension">
+      <configExtension
+            content="intro/overview.xml"
+            configId="org.eclipse.ui.intro.universalConfig">
+      </configExtension>
+   </extension>
 </plugin>
