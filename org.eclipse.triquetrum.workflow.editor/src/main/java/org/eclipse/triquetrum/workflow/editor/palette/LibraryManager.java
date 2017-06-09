@@ -432,8 +432,13 @@ class LibraryManager implements EventHandler {
 
       Configuration ptCfg = new Configuration(new Workspace());
       EntityLibrary actorLibrary = new EntityLibrary(ptCfg, "actor library");
-      String userLibraryFilePath = new File(triqUserHome, "UserLibrary.xml").toURI().toString();
-      actorLibrary.configure(null, userLibraryFilePath, null);
+      File userLibraryFile = new File(triqUserHome, "UserLibrary.xml");
+      String userLibraryFilePath = userLibraryFile.toURI().toString();
+      if(userLibraryFile.isFile()) {
+        actorLibrary.configure(null, userLibraryFilePath, null);
+      } else {
+        new EntityLibrary(actorLibrary, USER_LIBRARY_NAME);
+      }
       actorLibrary.setClassDefinition(true);
       refreshManagerCache(ptCfg);
       try {
