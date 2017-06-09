@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--  Based on https://github.com/bioclipse/bioclipse.core/blob/master/plugins/net.bioclipse.ui/intro/overview.xml
+      See https://wiki.eclipse.org/Triquetrum/Releng/Welcome_Pages
+ -->
+<introContent>
+	<extensionContent id="net.Triquetrum.intro.workbench"
+		style="css/intro.css" name="Triquetrum Workbench" path="overview/@">
+		<group style-id="content-group" id="workbench-group">
+			<link label="What is Triquetrum?"
+				url="http://org.eclipse.ui.intro/showPage?id=whatisTriquetrum" id="wbitem"
+				style-id="content-link">
+				<text>Eclipse Triquetrum delivers
+				an open platform for managing and executing
+				scientific workflows.
+				</text>
+			</link>
+			<link label="License" url="http://org.eclipse.ui.intro/showPage?id=licenses"
+				id="paraitem" style-id="content-link">
+				<text>The Triquetrum license.</text>
+			</link>
+		</group>
+	</extensionContent>
+
+	<page id="whatisTriquetrum" style="/intro/overview.css" style-id="page">
+		<title style-id="intro-header">What is Triquetrum</title>
+		<include path="overview/navigation-links" />
+		<group id="page-content">
+			<group id="content-header" label="What is Triquetrum?"
+				filteredFrom="swt">
+			</group>
+			<img src="images/TriquetrumScreenShot50.png" style-id="image-right" id="image-right" />
+
+			<text style-id="page-title" id="page-title" filteredFrom="html">What is
+				Triquetrum?
+			</text>
+			<text style-id="page-description" id="page-description">
+
+				Eclipse Triquetrum delivers
+				an open platform for managing and executing
+				scientific workflows. The
+				goal of Triquetrum is to support a wide
+				range of use cases, ranging
+				from automated processes based on
+				predefined models, to replaying
+				ad-hoc research workflows recorded
+				from a user's actions in a
+				scientific workbench UI. It will allow to
+				define and execute models
+				from personal pipelines with a few steps
+				to massive models with
+				thousands of elements.
+			</text>
+
+			<text style-id="page-description" id="page-description">
+				Besides delivering a generic workflow environment, Triquetrum also delivers
+				extensions with a focus on scientific software. There is no a-priori
+				limitation on target scientific domains, but the current interested
+				organizations are big research institutions in materials research
+				(synchrotrons), physics and engineering.
+			</text>
+
+		</group>
+	</page>
+
+	<page id="licenses" style="/intro/overview.css" style-id="page">
+		<title style-id="intro-header">License</title>
+		<include path="overview/navigation-links" />
+		<group id="page-content">
+			<group id="content-header" label="License" filteredFrom="swt">
+			</group>
+			<img src="images/TriquetrumDreistab_00-50px.jpg" style-id="image-right" id="image-right" />
+			<text style-id="page-title" id="page-title" filteredFrom="html">License
+			</text>
+			<text style-id="page-description" id="page-description">
+			
+				Triquetrum is licensed under the Eclipse Public License (EPL)
+				and contains plugins with other licenses, all of which are
+				compatibile with the EPL.
+
+			</text>
+			<link label="Link to EPL license" url="http://www.eclipse.org/legal/epl-v10.html"
+				class="link" id="weblink" style-id="content-link" />
+
+		</group>
+	</page>
+
+</introContent>

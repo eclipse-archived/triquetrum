@@ -11,5 +11,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.eclipse.triquetrum.workflow.model.provider
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.triquetrum.workflow.model;visibility:=reexport,
- org.eclipse.emf.edit;visibility:=reexport
+ org.eclipse.emf.edit;visibility:=reexport,
+ org.eclipse.ui.intro.universal
 Bundle-ActivationPolicy: lazy
