@@ -57,7 +57,6 @@ location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.ecf.filetransfer.feature.feature.group
 	org.eclipse.emf.sdk.feature.group
 	org.eclipse.gmf.source.feature.group
-	org.eclipse.gmf.tooling.runtime.source.feature.group
 	org.eclipse.graphiti.export.feature.feature.group
 	org.eclipse.graphiti.feature.tools.feature.group
 	org.eclipse.jdt.source.feature.group
@@ -67,7 +66,6 @@ location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.net4j.util.ui.feature.group
 	org.eclipse.equinox.p2.sdk.feature.group
 	org.eclipse.net4j.ui.feature.group
-	org.eclipse.gmf.tooling.runtime.feature.group
 	org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group
 	org.eclipse.gmf.runtime.notation.feature.group
 	org.eclipse.graphiti.sdk.plus.feature.feature.group
