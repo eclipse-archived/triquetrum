@@ -162,11 +162,11 @@
     <repository
         url="http://mbarbero.github.io/fr.obeo.releng.targetplatform/p2/"/>
     <repository
-        url="http://download.eclipse.org/technology/epp/packages/neon"/>
+        url="http://download.eclipse.org/technology/epp/packages/oxygen/RC2"/>
     <repository
-        url="http://download.eclipse.org/releases/neon/201703231000"/>
+        url="http://download.eclipse.org/releases/oxygen"/>
     <repository
-        url="http://download.eclipse.org/ecp/releases/releases_111/1110"/>
+        url="http://download.eclipse.org/ecp/releases/releases_113/1130_RC2"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -240,7 +240,7 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="eclipse.target.platform"
-        defaultValue="Neon"
+        defaultValue="Oxygen"
         storageURI="scope://Workspace"
         label=""/>
     <setupTask
