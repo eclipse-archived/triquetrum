@@ -40,6 +40,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider;
 import org.eclipse.triquetrum.workflow.editor.outline.tree.OutlinePartFactory;
+import org.eclipse.triquetrum.workflow.editor.outline.tree.TriqOutlineTreeViewer;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.actions.ActionFactory;
@@ -98,7 +99,7 @@ public class DiagramEditorOutlinePage extends ContentOutlinePage implements IPro
    * @since 0.9
    */
   public DiagramEditorOutlinePage(IDiagramContainerUI diagramEditor) {
-    super(new TreeViewer());
+    super(new TriqOutlineTreeViewer(diagramEditor));
     _graphicalViewer = diagramEditor.getGraphicalViewer();
     _actionRegistry = diagramEditor.getAdapter(ActionRegistry.class);
     _editDomain = diagramEditor.getEditDomain();

@@ -20,6 +20,7 @@ import org.eclipse.emf.common.ui.URIEditorInput;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
 import org.eclipse.gef.commands.CommandStack;
+import org.eclipse.gef.ui.parts.SelectionSynchronizer;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.ui.editor.DiagramBehavior;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
@@ -28,6 +29,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.triquetrum.workflow.editor.outline.DiagramEditorOutlinePage;
+import org.eclipse.triquetrum.workflow.editor.views.TriqSelectionSynchronizer;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.util.PtObjectBuilderVisitor;
 import org.eclipse.triquetrum.workflow.model.util.PtObjectLinkerVisitor;
@@ -41,6 +43,7 @@ import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 public class TriqDiagramEditor extends DiagramEditor {
   public final static String EDITOR_ID = "org.eclipse.triquetrum.workflow.editor.TriqDiagramEditor";
   public final static String DIAGRAM_FILE_EXTENSION = "tdml";
+  private SelectionSynchronizer synchronizer;
 
   @Override
   public void init(IEditorSite site, IEditorInput input) throws PartInitException {
@@ -178,4 +181,13 @@ public class TriqDiagramEditor extends DiagramEditor {
   public CommandStack getCommandStack() {
     return super.getCommandStack();
   }
+  
+  @Override
+  protected SelectionSynchronizer getSelectionSynchronizer() {
+    if (synchronizer == null) {
+      synchronizer = new TriqSelectionSynchronizer();
+    }
+    return synchronizer;
+  }
+
 }
