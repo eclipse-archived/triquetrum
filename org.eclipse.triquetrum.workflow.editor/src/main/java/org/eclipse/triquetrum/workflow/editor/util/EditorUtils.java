@@ -13,7 +13,6 @@ package org.eclipse.triquetrum.workflow.editor.util;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.PlatformGraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.styles.Color;
@@ -41,6 +40,7 @@ import org.eclipse.triquetrum.workflow.model.NamedObj;
 import org.eclipse.triquetrum.workflow.model.Relation;
 import org.eclipse.triquetrum.workflow.model.TriqFactory;
 import org.eclipse.triquetrum.workflow.model.util.PtObjectBuilderAndApplierVisitor;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -100,7 +100,7 @@ public class EditorUtils {
       Graphiti.getPeService().setPropertyValue(pe, "isCollapsed", "false");
       return new int[] { originalWidth, originalHeight };
     } else {
-      return new int[] {pe.getGraphicsAlgorithm().getWidth(), pe.getGraphicsAlgorithm().getHeight()};
+      return new int[] { pe.getGraphicsAlgorithm().getWidth(), pe.getGraphicsAlgorithm().getHeight() };
     }
   }
 
@@ -218,10 +218,15 @@ public class EditorUtils {
     TriqDiagramEditor result = null;
     IWorkbenchPage page = EclipseUtils.getPage();
     if (page != null) {
-      for (IEditorReference editorRef : page.getEditorReferences()) {
-        if (editorRef.getId().contains("triquetrum")) {
-          result = ((TriqDiagramEditor) editorRef.getEditor(true));
-          break;
+      IEditorPart activeEditor = page.getActiveEditor();
+      if (activeEditor instanceof TriqDiagramEditor) {
+        result = (TriqDiagramEditor) activeEditor;
+      } else {
+        for (IEditorReference editorRef : page.getEditorReferences()) {
+          if (editorRef.getId().contains("triquetrum")) {
+            result = ((TriqDiagramEditor) editorRef.getEditor(true));
+            break;
+          }
         }
       }
     }
@@ -278,14 +283,19 @@ public class EditorUtils {
    */
   public static NamedObj getModelObjectForSelection(Object editPart) {
     NamedObj result = null;
+    PictogramElement pe = (editPart instanceof PictogramElement) ? (PictogramElement) editPart : null;
     if (editPart instanceof GraphitiShapeEditPart) {
       GraphitiShapeEditPart shapeEditPart = (GraphitiShapeEditPart) editPart;
-      IFeatureProvider fp = shapeEditPart.getFeatureProvider();
-      Object bo = fp.getBusinessObjectForPictogramElement(shapeEditPart.getPictogramElement());
+      pe = shapeEditPart.getPictogramElement();
+    }
+
+    if (pe != null) {
+      Object bo = Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
       if (bo instanceof NamedObj) {
         result = (NamedObj) bo;
       }
     }
+
     return result;
   }
 
@@ -459,9 +469,8 @@ public class EditorUtils {
   }
 
   /**
-   * Returns a freshly created list of the port anchors for the given actor shape (or composite actor shape) 
-   * that are in the given category. The list can be manipulated/changed without risk of impacting 
-   * the original actorShape definition (at least when the contained anchors properties are not touched!).
+   * Returns a freshly created list of the port anchors for the given actor shape (or composite actor shape) that are in the given category. The list can be
+   * manipulated/changed without risk of impacting the original actorShape definition (at least when the contained anchors properties are not touched!).
    *
    * @param actorShape
    * @param portIoType
@@ -479,7 +488,7 @@ public class EditorUtils {
     }
     return portShapes;
   }
-  
+
   /**
    *
    * @param source
@@ -504,14 +513,15 @@ public class EditorUtils {
       relation = TriqFactory.eINSTANCE.createRelation();
       CompositeActor relationContainer = null;
       NamedObj potentialRelationContainer = source.getLowestCommonContainer(target);
-      if(potentialRelationContainer instanceof CompositeActor) {
+      if (potentialRelationContainer instanceof CompositeActor) {
         relationContainer = (CompositeActor) potentialRelationContainer;
       } else {
         // this should only happen when connecting an output port and an input port of the same atomic actor
         if (potentialRelationContainer.getContainer() instanceof CompositeActor) {
           relationContainer = (CompositeActor) potentialRelationContainer.getContainer();
         } else {
-          throw new IllegalActionException(source.getWrappedObject(), target.getWrappedObject(), "Unsupported source and target hierarchy for creating a relation");
+          throw new IllegalActionException(source.getWrappedObject(), target.getWrappedObject(),
+              "Unsupported source and target hierarchy for creating a relation");
         }
       }
 

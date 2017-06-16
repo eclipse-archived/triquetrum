@@ -20,14 +20,19 @@ import org.eclipse.graphiti.features.context.impl.CreateConnectionContext;
 import org.eclipse.graphiti.features.context.impl.CustomContext;
 import org.eclipse.graphiti.features.custom.ICustomFeature;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
+import org.eclipse.graphiti.mm.algorithms.styles.LineStyle;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.tb.ContextButtonEntry;
 import org.eclipse.graphiti.tb.DefaultToolBehaviorProvider;
 import org.eclipse.graphiti.tb.IContextButtonPadData;
+import org.eclipse.graphiti.tb.IShapeSelectionInfo;
+import org.eclipse.graphiti.tb.ShapeSelectionInfoImpl;
+import org.eclipse.graphiti.util.IColorConstant;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PauseFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ResumeFeature;
@@ -169,6 +174,14 @@ public class TriqToolBehaviorProvider extends DefaultToolBehaviorProvider {
     }
     return super.getSelectionBorder(pe);
   }
+  
+  public IShapeSelectionInfo getSelectionInfoForShape(Shape shape) {
+    IShapeSelectionInfo si = new ShapeSelectionInfoImpl();
+    si.setColor(IColorConstant.BLUE);
+    si.setLineStyle(LineStyle.DASH);
+    return si;
+  }
+
 
   @Override
   public boolean isShowFlyoutPalette() {
