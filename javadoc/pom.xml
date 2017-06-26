@@ -9,10 +9,7 @@
   </properties>
   
   <modelVersion>4.0.0</modelVersion>
-  <groupId>triquetrum</groupId>
-
-  <!-- Changed artifactId to org.eclipse.triquetrum.build -->
-  <!-- artifactId>triquetrum</artifactId -->
+  <groupId>org.eclipse.triquetrum</groupId>
   <artifactId>javadoc</artifactId>
 
   <version>0.2.0-SNAPSHOT</version>
@@ -21,73 +18,73 @@
   <dependencies>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.common</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.logging.dvp</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.processing.api</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.validation.api</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.actor.ui</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>    
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.api</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.editor</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.editor.palette</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
     
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.execution.impl</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.model</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.model.edit</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.model.editor</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
@@ -96,7 +93,7 @@
     <!-- Don't include org.eclipse.triquetrum.workflow.model.viewmodel, there are no .java files there -->
     
     <dependency>
-      <groupId>triquetrum</groupId>
+      <groupId>org.eclipse.triquetrum</groupId>
       <artifactId>org.eclipse.triquetrum.workflow.ui</artifactId>
       <version>0.2.0-SNAPSHOT</version>
     </dependency>
