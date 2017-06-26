@@ -18,7 +18,7 @@
   </properties>
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>triquetrum</groupId>
+  <groupId>org.eclipse.triquetrum</groupId>
   <version>0.2.0-SNAPSHOT</version>
 
   <!-- Changed artifactId to org.eclipse.triquetrum.build -->
@@ -45,46 +45,16 @@
     </pluginRepository>
   </pluginRepositories>
   <modules>
-    <module>org.eclipse.triquetrum.target.platform</module>
-    <module>org.eclipse.triquetrum.common</module>
-    <module>org.eclipse.triquetrum.logging.dvp</module>
-    <module>org.eclipse.triquetrum.processing.actor</module>
-    <module>org.eclipse.triquetrum.processing.api</module>
-    <module>org.eclipse.triquetrum.processing.model.impl</module>
-    <module>org.eclipse.triquetrum.processing.service.impl</module>
-    <module>org.eclipse.triquetrum.validation.api</module>
-    <module>org.eclipse.triquetrum.workflow.actor.ui</module>
-    <module>org.eclipse.triquetrum.workflow.aoc.repository</module>
-    <module>org.eclipse.triquetrum.workflow.api</module>
-    <module>org.eclipse.triquetrum.workflow.editor</module>
-    <module>org.eclipse.triquetrum.workflow.editor.palette</module>
-    <module>org.eclipse.triquetrum.workflow.execution.impl</module>
-    <module>org.eclipse.triquetrum.workflow.repository.impl.filesystem</module>
-    <module>org.eclipse.triquetrum.workflow.repository.impl.filesystem.ui</module>
-    <module>org.eclipse.triquetrum.workflow.repository.ui</module>
-    <module>org.eclipse.triquetrum.workflow.model</module>
-    <module>org.eclipse.triquetrum.workflow.model.edit</module>
-    <module>org.eclipse.triquetrum.workflow.model.editor</module>
-    <module>org.eclipse.triquetrum.workflow.model.viewmodel</module>
-    <module>org.eclipse.triquetrum.workflow.ui</module>
-    <module>org.eclipse.triquetrum.python.actor</module>
-    <module>org.eclipse.triquetrum.python.actor.palette</module>
-    <module>org.eclipse.triquetrum.python.service</module>
-    <module>org.eclipse.triquetrum.scisoft.analysis.rpc</module>
+    <module>releng/org.eclipse.triquetrum.target.platform</module>
+    <module>plugins</module>
     <!-- Don't include the javadoc module, see 
 	 https://bugs.eclipse.org/bugs/show_bug.cgi?id=492412 
     -->
     <!-- <module>javadoc</module> -->
-    <module>org.eclipse.triquetrum.thirdparty.feature</module>
-    <module>org.eclipse.triquetrum.ptolemy.feature</module>
-    <module>org.eclipse.triquetrum.core.feature</module>
-    <module>org.eclipse.triquetrum.workflow.core.feature</module>
-    <module>org.eclipse.triquetrum.python.feature</module>
-    <module>org.eclipse.triquetrum.workflow.rcp.feature</module>
-    <module>org.eclipse.triquetrum.rcp.feature</module>
+    <module>features</module>
     <module>examples</module>
-    <module>org.eclipse.triquetrum.repository</module>
-    <module>org.eclipse.triquetrum.update</module>
+    <module>releng/org.eclipse.triquetrum.repository</module>
+	<module>releng/org.eclipse.triquetrum.update</module>
   </modules>
 
   <build>
@@ -180,7 +150,7 @@
 	  </environments>
 	  <target>
 	    <artifact>
-	      <groupId>triquetrum</groupId>
+	      <groupId>org.eclipse.triquetrum</groupId>
 	      <artifactId>org.eclipse.triquetrum.target.platform</artifactId>
 	      <version>${project.version}</version>
 	    </artifact>
