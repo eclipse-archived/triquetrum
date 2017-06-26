@@ -40,7 +40,6 @@
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
 
-
    <plugins>
    </plugins>
 
@@ -143,8 +142,10 @@
       <plugin id="org.eclipse.triquetrum.python.actor" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.actor.plot" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.actor.ui" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.aoc.repository" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.editor" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.execution.impl" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.triquetrum.workflow.repository.impl.filesystem" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.triquetrum.workflow.ui" autoStart="true" startLevel="0" />
       <plugin id="org.eclipse.update.configurator" autoStart="true" startLevel="3" />
       <plugin id="org.ptolemy.commons" autoStart="true" startLevel="0" />
