@@ -16,15 +16,17 @@
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.eclipse.triquetrum.examples</artifactId>
+	<artifactId>org.eclipse.triquetrum.features</artifactId>
 	<packaging>pom</packaging>
 	
   <modules>
-    <module>org.eclipse.triquetrum.processing.service.impl.example</module>
-    <module>org.eclipse.triquetrum.python.service.example</module>
-    <module>org.eclipse.triquetrum.workflow.actor.plot</module>
-    <module>org.eclipse.triquetrum.workflow.actor.plot.palette</module>
-    <module>org.eclipse.triquetrum.workflow.actor.plot.feature</module>
+    <module>org.eclipse.triquetrum.core.feature</module>
+    <module>org.eclipse.triquetrum.ptolemy.feature</module>
+    <module>org.eclipse.triquetrum.python.feature</module>
+    <module>org.eclipse.triquetrum.rcp.feature</module>
+    <module>org.eclipse.triquetrum.thirdparty.feature</module>
+    <module>org.eclipse.triquetrum.workflow.core.feature</module>
+    <module>org.eclipse.triquetrum.workflow.rcp.feature</module>
   </modules>
 	
 </project>

@@ -11,20 +11,26 @@
 
 	<parent>
 		<groupId>org.eclipse.triquetrum</groupId>
-		<artifactId>org.eclipse.triquetrum.build</artifactId>
+		<artifactId>org.eclipse.triquetrum.plugins</artifactId>
 		<version>0.2.0-SNAPSHOT</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>org.eclipse.triquetrum.examples</artifactId>
+	<groupId>org.eclipse.triquetrum.plugins</groupId>
+	<artifactId>editor</artifactId>
 	<packaging>pom</packaging>
 	
   <modules>
-    <module>org.eclipse.triquetrum.processing.service.impl.example</module>
-    <module>org.eclipse.triquetrum.python.service.example</module>
-    <module>org.eclipse.triquetrum.workflow.actor.plot</module>
-    <module>org.eclipse.triquetrum.workflow.actor.plot.palette</module>
-    <module>org.eclipse.triquetrum.workflow.actor.plot.feature</module>
+    <module>org.eclipse.triquetrum.workflow.actor.ui</module>
+    <module>org.eclipse.triquetrum.workflow.editor</module>
+    <module>org.eclipse.triquetrum.workflow.editor.palette</module>
+    <module>org.eclipse.triquetrum.workflow.model</module>
+    <module>org.eclipse.triquetrum.workflow.model.edit</module>
+    <module>org.eclipse.triquetrum.workflow.model.editor</module>
+    <module>org.eclipse.triquetrum.workflow.model.viewmodel</module>
+    <module>org.eclipse.triquetrum.workflow.repository.impl.filesystem.ui</module>
+    <module>org.eclipse.triquetrum.workflow.repository.ui</module>
+    <module>org.eclipse.triquetrum.workflow.ui</module>
   </modules>
 	
 </project>
