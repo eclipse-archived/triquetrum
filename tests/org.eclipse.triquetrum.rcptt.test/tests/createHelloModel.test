@@ -1,0 +1,123 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: createConnectedHelloModel
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _fjq48Fj8EeelRaB1ByN9rA
+Runtime-Version: 2.3.0.201706232317
+Save-Time: 6/25/17 6:19 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-eclipse-window | get-object | invoke setLocation 100 100
+get-eclipse-window | get-object | invoke setSize 800 800
+
+get-view "Project Explorer" | get-tree | get-menu -path "New/Project..." | click
+with [get-window "New Project"] {
+  get-tree | select "General/Project"
+  get-button "Next >" | click
+  get-editbox -after [get-label "Project name:"] | set-text test
+  get-button Finish | click
+}
+get-view "Project Explorer" | get-tree | select test | get-menu -path "New/Other..." | click
+with [get-window New] {
+  get-tree | select "Workflows/Triquetrum workflow model"
+  get-button "Next >" | click
+}
+with [get-window "New Diagram"] {
+  get-combo -after [get-label "Diagram Type"] | select "Triquetrum workflow"
+  get-button "Next >" | click
+  get-editbox -after [get-label "Diagram Name"] | set-text hello
+  get-button Finish | click
+}
+
+
+
+with [get-editor hello] {
+  with [get-tree] {
+    select "Directors/SDF director"
+    get-item -path "Directors/SDF director" | drag-start 16 5
+  }
+  with [get-diagram -index 1 | get-edit-part -name hello] {
+    drag-enter 394 108 -detail move
+    drag-over 102 40 -detail copy
+    drag-exit
+    drag-accept 102 40 -detail copy
+  }
+  get-tree | drag-set-data
+  get-diagram -index 1 | get-edit-part -name hello | drop 102 40 -detail copy
+  get-tree | drag-end -detail move
+  get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text "SDF director" | mouse-move 28 25 -height 60 
+    -width 100
+  with [get-tree] {
+    select "Sources/Constant"
+    get-item -path "Sources/Constant" | drag-start 17 8
+  }
+  with [get-diagram -index 1 | get-edit-part -name hello] {
+    drag-enter 426 162 -detail move
+    drag-over 75 178 -detail copy
+    drag-exit
+    drag-accept 75 178 -detail copy
+  }
+  get-tree | drag-set-data
+  get-diagram -index 1 | get-edit-part -name hello | drop 75 178 -detail copy
+  get-editbox -index 1 | set-focus
+  get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text Constant | activate-direct-edit
+  get-tree | drag-end -detail move
+  get-diagram -index 1 | commit-direct-edit
+}
+with [get-editor hello] {
+  with [get-tree] {
+    select "Sinks/Visualization/Display"
+    get-item -path "Sinks/Visualization/Display" | drag-start 23 11
+  }
+  with [get-diagram -index 1 | get-edit-part -name hello] {
+    drag-enter 434 256 -detail move
+    drag-over 330 285 -detail copy
+    drag-exit
+    drag-accept 330 285 -detail copy
+  }
+  get-tree | drag-set-data
+  get-diagram -index 1 | get-edit-part -name hello | drop 330 285 -detail copy
+  get-editbox -index 1 | set-focus
+  get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text Display | activate-direct-edit
+  get-tree | drag-end -detail move
+  with [get-diagram -index 1] {
+    mouse-move 196 337 button1 -height 386 -width 455
+    mouse-press 196 337 button1 -height 386 -width 455
+    commit-direct-edit
+    mouse-release 196 337 button1 524288 -height 386 -width 455
+    mouse-hover 168 222 -height 386 -width 455
+    with [get-edit-part -name hello | get-edit-part -text Constant | get-edit-part -className AdvancedAnchorEditPart] {
+      mouse-hover 10 6 -height 13 -width 13
+      mouse-move 10 6 button1 -height 13 -width 13
+      mouse-press 10 6 button1 -height 13 -width 13
+      mouse-move 12 6 -mask 524288 -height 13 -width 13
+    }
+    mouse-drag 176 226 -mask 524288 -height 386 -width 455
+    with [get-edit-part -name hello | get-edit-part -text Display | get-edit-part -className AdvancedAnchorEditPart] {
+      mouse-drag 7 6 button1 524288 -height 13 -width 13
+      mouse-release 7 6 button1 524288 -height 13 -width 13
+      mouse-hover 7 6 -height 13 -width 13
+    }
+    mouse-move 275 328 button1 -height 386 -width 455
+    mouse-press 275 328 button1 -height 386 -width 455
+    mouse-release 275 328 button1 524288 -height 386 -width 455
+    mouse-hover 272 328 -height 386 -width 455
+    key-type "M1+s"
+  }
+}
+with [get-editor hello | get-diagram -index 1 | get-edit-part -name hello] {
+  with [get-edit-part -text Display | get-edit-part -className AdvancedAnchorEditPart | get-target-connection -path 0] {
+    get-property "start.link.businessObjects.Port[0].name" | equals output | verify-true
+    get-property "end.link.businessObjects.Port[0].name" | equals input | verify-true
+  }
+  get-edit-part -text Constant | get-figure -path 3 | get-property text | equals Constant | verify-true
+  get-edit-part -text Display | get-figure -path 3 | get-property text | equals Display | verify-true
+  get-edit-part -text "SDF director" | get-figure -path 3 | get-property text | equals "SDF director" | verify-true
+}
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--

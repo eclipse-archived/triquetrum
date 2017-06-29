@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:al="http://eclipse.org/graphiti/mm/algorithms" xmlns:org.eclipse.triquetrum.workflow="http://www.eclipse.org/triquetrum" xmlns:pi="http://eclipse.org/graphiti/mm/pictograms">
+  <pi:Diagram visible="true" gridUnit="10" diagramTypeId="Triquetrum workflow" name="hello" snapToGrid="true" pictogramLinks="/0/@link /0/@children.0/@link /0/@children.0/@children.2/@link /0/@children.1/@link /0/@children.1/@children.0/@link /0/@children.1/@children.1/@link /0/@children.1/@children.2/@link /0/@children.1/@anchors.0/@link /0/@children.1/@anchors.1/@link /0/@children.2/@link /0/@children.2/@children.0/@link /0/@children.2/@children.1/@link /0/@children.2/@children.2/@link /0/@children.2/@anchors.0/@link /0/@connections.0/@link" version="0.14.0">
+    <graphicsAlgorithm xsi:type="al:Rectangle" background="/0/@colors.1" foreground="/0/@colors.0" lineWidth="1" transparency="0.0" width="1000" height="1000"/>
+    <link businessObjects="/1"/>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <properties key="__BO_CATEGORY" value="Director"/>
+      <properties key="__BO_NAME" value="SDF director"/>
+      <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.DirectorImpl"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="100" height="60" x="120" y="60">
+        <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" background="/0/@colors.3" foreground="/0/@colors.2" lineWidth="2" transparency="0.0" width="100" height="60" cornerHeight="5" cornerWidth="5"/>
+      </graphicsAlgorithm>
+      <link businessObjects="/1/@director"/>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="16" height="16" x="3" y="3" id="icons/director.gif" stretchH="false" stretchV="false" proportional="false"/>
+      </children>
+      <children visible="true">
+        <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0">
+          <points y="20"/>
+          <points x="100" y="20"/>
+        </graphicsAlgorithm>
+      </children>
+      <children visible="true">
+        <properties key="__BO_CATEGORY" value="Director"/>
+        <properties key="__BO_NAME" value="SDF director"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.DirectorImpl"/>
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.4" lineWidth="1" filled="false" transparency="0.0" width="75" height="20" x="20" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="SDF director"/>
+        <link businessObjects="/1/@director"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <properties key="__BO_CATEGORY" value="Actor"/>
+      <properties key="__BO_NAME" value="Constant"/>
+      <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.ActorImpl"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="120" height="80" x="140" y="180">
+        <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" background="/0/@colors.5" foreground="/0/@colors.2" lineWidth="2" transparency="0.0" width="100" height="60" x="10" y="10" cornerHeight="5" cornerWidth="5"/>
+      </graphicsAlgorithm>
+      <link businessObjects="/1/@entities.0"/>
+      <anchors xsi:type="pi:FixPointAnchor" visible="true" active="true" outgoingConnections="/0/@connections.0" referencedGraphicsAlgorithm="/0/@children.1/@graphicsAlgorithm">
+        <properties key="__BO_CATEGORY" value="Port"/>
+        <properties key="__PORT_CATEGORY" value="EAST"/>
+        <properties key="__BO_NAME" value="output"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.PortImpl"/>
+        <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.4" foreground="/0/@colors.4" lineWidth="1" lineStyle="UNSPECIFIED" width="12" height="12">
+          <points x="-4" y="-6"/>
+          <points x="8"/>
+          <points x="-4" y="6"/>
+        </graphicsAlgorithm>
+        <link businessObjects="/1/@entities.0/@ports.0"/>
+        <location x="110" y="40"/>
+      </anchors>
+      <anchors xsi:type="pi:FixPointAnchor" visible="true" active="true" referencedGraphicsAlgorithm="/0/@children.1/@graphicsAlgorithm">
+        <properties key="__BO_CATEGORY" value="Port"/>
+        <properties key="__PORT_CATEGORY" value="WEST"/>
+        <properties key="__BO_NAME" value="trigger"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.PortImpl"/>
+        <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.1" foreground="/0/@colors.4" lineWidth="1" lineStyle="UNSPECIFIED" width="12" height="12">
+          <points x="-8" y="-6"/>
+          <points x="4"/>
+          <points x="-8" y="6"/>
+        </graphicsAlgorithm>
+        <link businessObjects="/1/@entities.0/@ports.1"/>
+        <location x="10" y="40"/>
+      </anchors>
+      <children visible="true">
+        <properties key="__BO_CATEGORY" value="Actor"/>
+        <properties key="__BO_NAME" value="Constant"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.ActorImpl"/>
+        <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="16" height="16" x="15" y="13" id="icons/value_field.gif" stretchH="false" stretchV="false" proportional="false"/>
+        <link businessObjects="/1/@entities.0"/>
+      </children>
+      <children visible="true">
+        <properties key="__BO_CATEGORY" value="Actor"/>
+        <properties key="__BO_NAME" value="Constant"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.ActorImpl"/>
+        <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0">
+          <points x="10" y="30"/>
+          <points x="110" y="30"/>
+        </graphicsAlgorithm>
+        <link businessObjects="/1/@entities.0"/>
+      </children>
+      <children visible="true">
+        <properties key="__BO_CATEGORY" value="Actor"/>
+        <properties key="__BO_NAME" value="Constant"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.ActorImpl"/>
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.4" lineWidth="1" filled="false" transparency="0.0" width="75" height="20" x="33" y="10" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Constant"/>
+        <link businessObjects="/1/@entities.0"/>
+      </children>
+    </children>
+    <children xsi:type="pi:ContainerShape" visible="true" active="true">
+      <properties key="__BO_CATEGORY" value="Actor"/>
+      <properties key="__BO_NAME" value="Display"/>
+      <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.ActorImpl"/>
+      <graphicsAlgorithm xsi:type="al:Rectangle" lineWidth="1" filled="false" lineVisible="false" transparency="0.0" width="120" height="80" x="430" y="210">
+        <graphicsAlgorithmChildren xsi:type="al:RoundedRectangle" background="/0/@colors.5" foreground="/0/@colors.2" lineWidth="2" transparency="0.0" width="100" height="60" x="10" y="10" cornerHeight="5" cornerWidth="5"/>
+      </graphicsAlgorithm>
+      <link businessObjects="/1/@entities.1"/>
+      <anchors xsi:type="pi:FixPointAnchor" visible="true" active="true" incomingConnections="/0/@connections.0" referencedGraphicsAlgorithm="/0/@children.2/@graphicsAlgorithm">
+        <properties key="__BO_CATEGORY" value="Port"/>
+        <properties key="__PORT_CATEGORY" value="WEST"/>
+        <properties key="__BO_NAME" value="input"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.PortImpl"/>
+        <graphicsAlgorithm xsi:type="al:Polygon" background="/0/@colors.1" foreground="/0/@colors.4" lineWidth="1" lineStyle="UNSPECIFIED" width="12" height="12">
+          <points x="-8" y="-6"/>
+          <points x="4"/>
+          <points x="-8" y="6"/>
+        </graphicsAlgorithm>
+        <link businessObjects="/1/@entities.1/@ports.0"/>
+        <location x="10" y="40"/>
+      </anchors>
+      <children visible="true">
+        <properties key="__BO_CATEGORY" value="Actor"/>
+        <properties key="__BO_NAME" value="Display"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.ActorImpl"/>
+        <graphicsAlgorithm xsi:type="al:Image" lineWidth="1" transparency="0.0" width="16" height="16" x="15" y="13" id="icons/display.gif" stretchH="false" stretchV="false" proportional="false"/>
+        <link businessObjects="/1/@entities.1"/>
+      </children>
+      <children visible="true">
+        <properties key="__BO_CATEGORY" value="Actor"/>
+        <properties key="__BO_NAME" value="Display"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.ActorImpl"/>
+        <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0">
+          <points x="10" y="30"/>
+          <points x="110" y="30"/>
+        </graphicsAlgorithm>
+        <link businessObjects="/1/@entities.1"/>
+      </children>
+      <children visible="true">
+        <properties key="__BO_CATEGORY" value="Actor"/>
+        <properties key="__BO_NAME" value="Display"/>
+        <properties key="__BO_CLASS" value="org.eclipse.triquetrum.workflow.model.impl.ActorImpl"/>
+        <graphicsAlgorithm xsi:type="al:Text" foreground="/0/@colors.4" lineWidth="1" filled="false" transparency="0.0" width="75" height="20" x="33" y="10" font="/0/@fonts.0" horizontalAlignment="ALIGNMENT_CENTER" value="Display"/>
+        <link businessObjects="/1/@entities.1"/>
+      </children>
+    </children>
+    <connections xsi:type="pi:FreeFormConnection" visible="true" active="true" start="/0/@children.1/@anchors.0" end="/0/@children.2/@anchors.0">
+      <graphicsAlgorithm xsi:type="al:Polyline" foreground="/0/@colors.2" lineWidth="2" filled="false" transparency="0.0"/>
+      <link businessObjects="/1/@relations.0"/>
+    </connections>
+    <colors red="227" green="238" blue="249"/>
+    <colors red="255" green="255" blue="255"/>
+    <colors red="98" green="131" blue="167"/>
+    <colors red="255" green="153" blue="51"/>
+    <colors/>
+    <colors red="187" green="218" blue="247"/>
+    <fonts name="Arial" size="8" bold="true"/>
+  </pi:Diagram>
+  <org.eclipse.triquetrum.workflow:CompositeActor name="hello" wrappedType="ptolemy.actor.TypedCompositeActor">
+    <entities xsi:type="org.eclipse.triquetrum.workflow:Actor" name="Constant" wrappedType="ptolemy.actor.lib.Const" deepComplete="true" iconId="icons/value_field.gif">
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="value" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="1"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="firingCountLimit" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="NONE"/>
+      <ports name="output" wrappedType="ptolemy.actor.TypedIOPort" deepComplete="true" output="true" linkedRelations="/1/@relations.0">
+        <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="defaultValue" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression=""/>
+      </ports>
+      <ports name="trigger" wrappedType="ptolemy.actor.TypedIOPort" deepComplete="true" input="true" multiPort="true">
+        <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="defaultValue" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression=""/>
+        <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="_showName" wrappedType="ptolemy.data.expr.SingletonParameter" deepComplete="true" expression="true"/>
+      </ports>
+    </entities>
+    <entities xsi:type="org.eclipse.triquetrum.workflow:Actor" name="Display" wrappedType="ptolemy.actor.lib.gui.Display" deepComplete="true" iconId="icons/display.gif">
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="rowsDisplayed" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="10"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="columnsDisplayed" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="40"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="suppressBlankLines" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="false"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="title" wrappedType="ptolemy.data.expr.StringParameter" deepComplete="true" expression=""/>
+      <ports name="input" wrappedType="ptolemy.actor.TypedIOPort" deepComplete="true" input="true" multiPort="true" linkedRelations="/1/@relations.0">
+        <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="defaultValue" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression=""/>
+      </ports>
+    </entities>
+    <relations name="_R" wrappedType="ptolemy.actor.TypedIORelation" deepComplete="true">
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="width" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="Auto"/>
+    </relations>
+    <director name="SDF director" wrappedType="ptolemy.domains.sdf.kernel.SDFDirector" deepComplete="true">
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="iterations" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="AUTO"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="vectorizationFactor" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="1"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="allowDisconnectedGraphs" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="false"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="allowRateChanges" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="false"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="constrainBufferSizes" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="true"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="period" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="0.0"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="synchronizeToRealTime" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression="false"/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="startTime" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression=""/>
+      <attributes xsi:type="org.eclipse.triquetrum.workflow:Parameter" name="stopTime" wrappedType="ptolemy.data.expr.Parameter" deepComplete="true" expression=""/>
+    </director>
+  </org.eclipse.triquetrum.workflow:CompositeActor>
+</xmi:XMI>

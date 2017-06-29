@@ -1,0 +1,25 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Element-Name: BasicTests
+Element-Type: testsuite
+Element-Version: 2.0
+Id: _-9JLUFj-EeelRaB1ByN9rA
+Runtime-Version: 2.3.0.201706232317
+Save-Time: 6/25/17 6:53 PM
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8
+Content-Type: text/testcase
+Entry-Name: testcase-items
+
+_fjq48Fj8EeelRaB1ByN9rA	// kind: 'test' name: 'createHelloModel' path: 'tests/createHelloModel.test'
+_7k-AUFjXEeelRaB1ByN9rA	// kind: 'test' name: 'createEmptyModel' path: 'tests/createEmptyModel.test'
+_7SXGMFj_EeelRaB1ByN9rA	// kind: 'test' name: 'runHelloModel' path: 'tests/runHelloModel.test'
+_-f48oFnEEeelRaB1ByN9rA	// kind: 'test' name: 'addInputPortToActor' path: 'tests/addInputPortToActor.test'
+_PqtUwFnDEeelRaB1ByN9rA	// kind: 'test' name: 'addParameterToModel' path: 'tests/addParameterToModel.test'
+_RWGDEFnEEeelRaB1ByN9rA	// kind: 'test' name: 'renameActor' path: 'tests/renameActor.test'
+_hC2hwFnCEeelRaB1ByN9rA	// kind: 'test' name: 'renameActorWithDirectEdit' path: 'tests/renameActorWithDirectEdit.test'
+_d7JfEFnEEeelRaB1ByN9rA	// kind: 'test' name: 'renameDirector' path: 'tests/renameDirector.test'
+_wDNikFnCEeelRaB1ByN9rA	// kind: 'test' name: 'renameDirectorWithDirectEdit' path: 'tests/renameDirectorWithDirectEdit.test'
+_yX1bIFnDEeelRaB1ByN9rA	// kind: 'test' name: 'renameParameter' path: 'tests/renameParameter.test'
+
+------=_testcase-items-62c497da-4241-31f4-811a-6b453a3ecff8--
