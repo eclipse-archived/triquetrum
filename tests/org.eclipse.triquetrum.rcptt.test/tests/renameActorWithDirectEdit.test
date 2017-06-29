@@ -1,0 +1,38 @@
+--- RCPTT testcase ---
+Format-Version: 1.0
+Contexts: _H1blMFkAEeelRaB1ByN9rA
+Element-Name: renameActorWithDirectEdit
+Element-Type: testcase
+Element-Version: 3.0
+External-Reference: 
+Id: _hC2hwFnCEeelRaB1ByN9rA
+Runtime-Version: 2.3.0.201706232317
+Save-Time: 6/25/17 7:02 PM
+Testcase-Type: ecl
+
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
+Content-Type: text/ecl
+Entry-Name: .content
+
+get-view "Project Explorer" | get-tree | select "test/workflows/hello.tdml" | double-click
+
+with [get-editor hello] {
+  with [get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text Constant] {
+    mouse-move 68 17 button1 -height 80 -width 120
+    mouse-press 68 17 button1 -height 80 -width 120
+    mouse-release 68 17 button1 524288 -height 80 -width 120
+    mouse-hover 68 17 -height 80 -width 120
+    mouse-press 68 17 button1 -height 80 -width 120
+    mouse-release 68 17 button1 524288 -height 80 -width 120
+    mouse-hover 68 17 -height 80 -width 120
+    activate-direct-edit
+  }
+  with [get-editbox -index 1] {
+    set-text ChangedConstant
+    key-type Enter
+  }
+  get-diagram -index 1 | commit-direct-edit
+}
+get-editor hello | get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text ChangedConstant | get-figure 
+  -path 3 | get-property text | equals ChangedConstant | verify-true
+------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
