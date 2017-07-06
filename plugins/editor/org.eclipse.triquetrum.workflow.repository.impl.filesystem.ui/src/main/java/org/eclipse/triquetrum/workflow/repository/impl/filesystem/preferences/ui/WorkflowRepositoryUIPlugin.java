@@ -37,7 +37,8 @@ public class WorkflowRepositoryUIPlugin extends AbstractUIPlugin {
   public void start(BundleContext context) throws Exception {
     super.start(context);
     // cfr https://www.eclipse.org/forums/index.php/t/105270/
-    // for some reason, after having moved the prefs UI stuff out of the main editor bundle, 
+    // For some reason, after having moved the prefs UI stuff out of the main editor bundle,
+    // the initializer does not get invoked automatically.
     new WorkflowRepositoryPreferenceInitializer().initializeDefaultPreferences();
   }
 

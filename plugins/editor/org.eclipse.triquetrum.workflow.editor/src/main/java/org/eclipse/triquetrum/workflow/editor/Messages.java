@@ -35,6 +35,12 @@ public class Messages extends NLS {
   public static String FileService_ErrorMessageCause;
   public static String FileService_ErrorMessageStart;
   public static String FileService_ErrorMessageUri;
+  public static String DeleteFeature_1_xfld;
+  public static String DeleteFeature_2_xmsg;
+  public static String DeleteFeature_3_xmsg;
+  public static String DeleteFeature_4_xmsg;
+  public static String DeleteFeature_5_xfld;
+  public static String DeleteFeature_6_xtgl;
 
   static {
     // initialize resource bundle
