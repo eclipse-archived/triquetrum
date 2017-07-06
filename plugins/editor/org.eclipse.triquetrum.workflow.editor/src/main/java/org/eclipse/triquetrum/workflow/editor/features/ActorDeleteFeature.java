@@ -15,13 +15,12 @@ import java.util.HashSet;
 
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDeleteContext;
-import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Port;
 import org.eclipse.triquetrum.workflow.model.Relation;
 
-public class ActorDeleteFeature extends DefaultDeleteFeature {
+public class ActorDeleteFeature extends TriqDefaultDeleteFeature {
 
   public ActorDeleteFeature(IFeatureProvider fp) {
     super(fp);
