@@ -289,7 +289,21 @@
             id="org.eclipse.triquetrum.workflow.editor.preferences"
             name="Triquetrum">
       </page>
-    </extension>
+   </extension>
+   <extension point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.triquetrum.workflow.editor.preferences"
+            class="org.eclipse.triquetrum.workflow.editor.preferences.ui.WorkflowEditorPreferencePage"
+            id="org.eclipse.triquetrum.workflow.editor.preferences"
+            name="Workflow editor">
+      </page>
+   </extension>
+   <extension point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.eclipse.triquetrum.workflow.editor.preferences.ui.WorkflowEditorPreferenceInitializer">
+      </initializer>
+   </extension>
+    
     <!-- See https://wiki.eclipse.org/Triquetrum/Releng/Welcome_Pages -->
     <extension point="org.eclipse.ui.intro.configExtension">
       <configExtension

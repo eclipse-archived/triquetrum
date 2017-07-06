@@ -79,6 +79,7 @@ import org.eclipse.triquetrum.workflow.editor.features.ModelElementResizeFeature
 import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortUpdateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.TriqDefaultDeleteFeature;
 import org.eclipse.triquetrum.workflow.editor.features.VertexAddFeature;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Actor;
@@ -230,7 +231,7 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     } else if (pe instanceof Connection) {
       return new ConnectionDeleteFeature(this);
     }
-    return super.getDeleteFeature(context);
+    return new TriqDefaultDeleteFeature(this);
   }
 
   @Override

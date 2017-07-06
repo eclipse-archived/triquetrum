@@ -8,12 +8,13 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.repository.impl.filesystem.preferences.ui;
+package org.eclipse.triquetrum.workflow.editor.preferences.ui;
 
-import static org.eclipse.triquetrum.workflow.repository.impl.filesystem.WorkflowRepositoryPreferencesSupplier.REPOSITORY_LOCATION_PREFNAME;
+import static org.eclipse.triquetrum.workflow.editor.features.TriqDefaultDeleteFeature.DELETE_CONFIRMATION_PREFNAME;
 
-import org.eclipse.jface.preference.DirectoryFieldEditor;
+import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
@@ -23,21 +24,21 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
  * Currently we only support a plain file-based repository. This page allows to configure the location of the repository root folder.
  * </p>
  */
-public class WorkflowRepositoryPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class WorkflowEditorPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
-  public WorkflowRepositoryPreferencePage() {
+  public WorkflowEditorPreferencePage() {
     super(GRID);
   }
 
   @Override
   public void init(IWorkbench workbench) {
-    setPreferenceStore(WorkflowRepositoryUIPlugin.getDefault().getPreferenceStore());
-    setDescription("Configure the location of the workflow repository\n\n");
+    setPreferenceStore(TriqEditorPlugin.getDefault().getPreferenceStore());
+    setDescription("Configure the workflow editor\n\n");
   }
 
   @Override
   protected void createFieldEditors() {
-    addField(new DirectoryFieldEditor(REPOSITORY_LOCATION_PREFNAME, "&Repository location:", getFieldEditorParent()));
+    addField(new BooleanFieldEditor(DELETE_CONFIRMATION_PREFNAME, "Deleting model elements requires confirmation", getFieldEditorParent()));
   }
 
 }
