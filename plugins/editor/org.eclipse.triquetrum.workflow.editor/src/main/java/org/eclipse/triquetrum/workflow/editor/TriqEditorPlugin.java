@@ -29,6 +29,7 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.event.EventAdmin;
 import org.osgi.service.event.EventHandler;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -125,6 +126,12 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
   public ReportService getReportService() {
     final BundleContext bundleContext = getBundle().getBundleContext();
     final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
+    return bundleContext.getService(serviceReference);
+  }
+  
+  public EventAdmin getEventAdminService() {
+    final BundleContext bundleContext = getBundle().getBundleContext();
+    final ServiceReference<EventAdmin> serviceReference = bundleContext.getServiceReference(EventAdmin.class);
     return bundleContext.getService(serviceReference);
   }
 
