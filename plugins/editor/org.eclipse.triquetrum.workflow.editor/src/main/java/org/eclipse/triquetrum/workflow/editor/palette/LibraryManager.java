@@ -61,7 +61,9 @@ import ptolemy.moml.MoMLParser;
 class LibraryManager implements EventHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(LibraryManager.class);
+  private static final String EVENT_TOPIC_PATTERN = "org/eclipse/triquetrum/workflow/userlibrary/*";
   private static final String ADD_EVENT_TOPIC = "org/eclipse/triquetrum/workflow/userlibrary/add";
+  private static final String DELETE_EVENT_TOPIC = "org/eclipse/triquetrum/workflow/userlibrary/delete";
   private static final String ACTOR_LIBRARY_NAME = "actor library";
   private static final int ACTORS_LIBRARY_PREFIX_LENGTH = (".configuration." + ACTOR_LIBRARY_NAME + ".").length();
   private static final String SOURCE_PATH_LIB_ATTR_NAME = "_sourcePath";
@@ -301,6 +303,22 @@ class LibraryManager implements EventHandler {
   }
 
   /**
+   * Deletes the given entity from the default user library.
+   * 
+   * @param entity
+   * @throws Exception
+   */
+  public void deleteEntityFromDefaultUserLibrary(Entity<?> entity) throws Exception {
+    EntityLibrary library = getUserLibrary();
+    if (library == null) {
+      StatusManager.getManager().handle(
+          new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Delete from Library failed: " + "Could not find default user library."), StatusManager.BLOCK);
+      return;
+    }
+    deleteEntityFromLibrary(library, entity);
+  }
+
+  /**
    * Deletes the given entity from the given library.
    * 
    * @param library
@@ -404,6 +422,24 @@ class LibraryManager implements EventHandler {
             StatusManager.BLOCK|StatusManager.LOG);
       }
     }
+    if (DELETE_EVENT_TOPIC.equals(event.getTopic())) {
+      String clazz = (String) event.getProperty("class");
+      String name = (String) event.getProperty("displayName");
+      try {
+        ComponentEntity existingEntry = getUserLibrary().getEntity(name);
+        if (existingEntry == null) {
+          if (clazz.equals(existingEntry.getClassName())) {
+            StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " not in the User Library"), StatusManager.BLOCK);
+          }
+        } else {
+          Entity<?> addedActor = PtolemyUtil._createEntity(null, clazz, null, name);
+          deleteEntityFromDefaultUserLibrary(addedActor);
+        }
+      } catch (Exception e) {
+        StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to add " + name + " in the User Library", e),
+            StatusManager.BLOCK|StatusManager.LOG);
+      }
+    }
   }
 
   public static class EntityLibraryChangedListener implements ChangeListener {
@@ -448,7 +484,7 @@ class LibraryManager implements EventHandler {
       } catch (NameDuplicationException e) {
         // ignore as this would imply that the sourcePath is already present, which is fine.
       }
-      TriqEditorPlugin.getDefault().registerEventHandler(this, ADD_EVENT_TOPIC);
+      TriqEditorPlugin.getDefault().registerEventHandler(this, EVENT_TOPIC_PATTERN);
       instance = this;
     } catch (IllegalActionException | NameDuplicationException e) {
       logger.warn(ErrorCode.WARN + " - Error activating the LibraryManager", e);

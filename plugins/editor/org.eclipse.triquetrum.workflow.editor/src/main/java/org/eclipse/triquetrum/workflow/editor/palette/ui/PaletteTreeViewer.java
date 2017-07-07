@@ -12,8 +12,12 @@ package org.eclipse.triquetrum.workflow.editor.palette.ui;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.GridData;
 import org.eclipse.draw2d.geometry.Point;
@@ -21,10 +25,18 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.TreeEditPart;
 import org.eclipse.gef.editparts.RootTreeEditPart;
+import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -35,14 +47,21 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
+import org.eclipse.triquetrum.workflow.editor.palette.PaletteTreeNode;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
+import org.eclipse.ui.statushandlers.StatusManager;
+import org.osgi.service.event.Event;
 
 /**
- * Try to merge features of {@link TreeViewer} into the {@link PaletteViewer} and use a {@link FilteredTree} with that as well.
+ * Try to merge features of {@link TreeViewer} into the {@link PaletteViewer} and use a {@link FilteredTree} with that
+ * as well.
  *
  */
 public class PaletteTreeViewer extends PaletteViewer {
@@ -81,9 +100,11 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * Creates the default tree and sets it as the control. The default styles will show scrollbars as needed, and allows for multiple selection.
+   * Creates the default tree and sets it as the control. The default styles will show scrollbars as needed, and allows
+   * for multiple selection.
    * <p>
-   * Doesn't use the default createControl method name, as that one is made final in the ScrollingGraphicalViewer base class...
+   * Doesn't use the default createControl method name, as that one is made final in the ScrollingGraphicalViewer base
+   * class...
    * </p>
    *
    * @param parent
@@ -144,7 +165,8 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * "Hooks up" a Control, i.e. sets it as the control for the RootTreeEditPart, adds necessary listener for proper operation, etc.
+   * "Hooks up" a Control, i.e. sets it as the control for the RootTreeEditPart, adds necessary listener for proper
+   * operation, etc.
    */
   @Override
   protected void hookControl() {
@@ -176,6 +198,40 @@ public class PaletteTreeViewer extends PaletteViewer {
     } catch (ClassCastException e) {
       // to catch the wrong cast to graphical widget etc in the super-classes
     }
+
+    hookContextMenu();
+  }
+
+  /**
+   * Hooks a context menu manager to a selected tree node and adds the relevant actions for the selected node type.
+   */
+  private void hookContextMenu() {
+    MenuManager menuMgr = new MenuManager("#PopupMenu");
+    menuMgr.setRemoveAllWhenShown(true);
+    menuMgr.addMenuListener(new IMenuListener() {
+      public void menuAboutToShow(IMenuManager manager) {
+        ISelection selection = getSelection();
+        if (selection instanceof IStructuredSelection) {
+          IStructuredSelection treeSelection = (IStructuredSelection) selection;
+          if (treeSelection.size() == 1) {
+            Object selObj = treeSelection.getFirstElement();
+            if (selObj instanceof PaletteEntryEditPart) {
+              PaletteEntryEditPart sel = (PaletteEntryEditPart) selObj;
+              if (sel.getParent() != null && (sel.getParent() instanceof PaletteTreeNodeEditPart)) {
+                if ("User Library".equals(((PaletteTreeNode) sel.getParent().getModel()).getLabel())) {
+                  manager.add(new DeleteAction((PaletteEntryEditPart) selObj));
+                }
+              }
+            }
+            manager.add(new Separator());
+            manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+          }
+        }
+      }
+    });
+    Menu menu = menuMgr.createContextMenu(getTreeControl());
+    getTreeControl().setMenu(menu);
+    // getSite().registerContextMenu(menuMgr, viewer);
   }
 
   /**
@@ -193,7 +249,8 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * Creates or disposes a DragSource as needed, and sets the supported transfer types. Clients should not need to call or override this method.
+   * Creates or disposes a DragSource as needed, and sets the supported transfer types. Clients should not need to call or
+   * override this method.
    */
   @Override
   protected void refreshDragSourceAdapter() {
@@ -209,7 +266,8 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * Creates or disposes a DropTarget as needed, and sets the supported transfer types. Clients should not need to call or override this method.
+   * Creates or disposes a DropTarget as needed, and sets the supported transfer types. Clients should not need to call or
+   * override this method.
    */
   @Override
   protected void refreshDropTargetAdapter() {
@@ -244,8 +302,9 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * Unhooks a control so that it can be reset. This method deactivates the contents, removes the Control as being the Control of the RootTreeEditPart, etc. It
-   * does not remove the listeners because it is causing errors, although that would be a desirable outcome.
+   * Unhooks a control so that it can be reset. This method deactivates the contents, removes the Control as being the
+   * Control of the RootTreeEditPart, etc. It does not remove the listeners because it is causing errors, although that
+   * would be a desirable outcome.
    */
   @Override
   protected void unhookControl() {
@@ -255,5 +314,42 @@ public class PaletteTreeViewer extends PaletteViewer {
     // Ideally, you would want to remove the listeners here
     TreeEditPart tep = (TreeEditPart) getRootEditPart();
     tep.setWidget(null);
+  }
+
+  private class DeleteAction extends Action {
+    private PaletteEntryEditPart selectedNode;
+
+    /**
+     * @param selectedNode
+     */
+    public DeleteAction(PaletteEntryEditPart selectedNode) {
+      this.selectedNode = selectedNode;
+      setText("Delete");
+      setToolTipText("Deletes the selected element");
+      // setImageDescriptor(TriqEditorPlugin.getImageDescriptor("icons/delete.gif"));
+    }
+
+    @Override
+    public void run() {
+      PaletteEntry entry = (PaletteEntry) selectedNode.getModel();
+      String modelName = entry.getLabel();
+      String modelClass = entry.getDescription();
+      String elementType = "CompositeActor";
+
+      Map<String, String> properties = new HashMap<>();
+      properties.put("displayName", modelName);
+      properties.put("class", modelClass);
+      properties.put("type", elementType);
+
+      Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/delete", properties);
+      try {
+        TriqEditorPlugin.getDefault().getEventAdminService().postEvent(event);
+      } catch (NullPointerException e) {
+        StatusManager.getManager().handle(
+            new Status(IStatus.ERROR, TriqEditorPlugin.getID(), 
+                "Event bus not available, impossible to trigger a delete event for the user library."),
+            StatusManager.BLOCK);
+      }
+    }
   }
 }
