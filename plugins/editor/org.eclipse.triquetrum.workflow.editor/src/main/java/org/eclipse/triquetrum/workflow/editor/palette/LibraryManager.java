@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.core.runtime.Status;
@@ -95,6 +96,14 @@ class LibraryManager implements EventHandler {
    */
   public EntityLibrary getUserLibrary() {
     return userLibraryMap.get(USER_LIBRARY_NAME);
+  }
+
+  /**
+   * 
+   * @return the configured user library with the given name
+   */
+  public EntityLibrary getUserLibrary(String libraryName) {
+    return userLibraryMap.get(libraryName);
   }
 
   /**
@@ -237,40 +246,6 @@ class LibraryManager implements EventHandler {
   }
 
   /**
-   * Saves the given entity in the default user library.
-   * 
-   * @param entity
-   * @throws Exception
-   */
-  public void saveEntityInDefaultUserLibrary(Entity<?> entity) throws Exception {
-    EntityLibrary library = getUserLibrary();
-    if (library == null) {
-      StatusManager.getManager().handle(
-          new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Save In Library failed: " + "Could not find default user library."), StatusManager.BLOCK);
-      return;
-    }
-    saveEntityInLibrary(library, entity);
-  }
-
-  /**
-   * Saves the given entity in the library with the given name.
-   * 
-   * @param libraryName
-   * @param entity
-   * @throws Exception
-   */
-  public void saveEntityInUserLibrary(String libraryName, Entity<?> entity) throws Exception {
-    EntityLibrary library = (EntityLibrary) userLibraryMap.get(libraryName);
-    if (library == null) {
-      StatusManager.getManager().handle(
-          new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Save In Library failed: " + "Could not find library with name \"" + libraryName + "\"."),
-          StatusManager.BLOCK);
-      return;
-    }
-    saveEntityInLibrary(library, entity);
-  }
-
-  /**
    * Saves the given entity in the given library.
    * 
    * @param library
@@ -300,22 +275,6 @@ class LibraryManager implements EventHandler {
     ChangeRequest request = new MoMLChangeRequest(instance, library, buffer.toString());
     request.addChangeListener(new EntityLibraryChangedListener(this));
     library.requestChange(request);
-  }
-
-  /**
-   * Deletes the given entity from the default user library.
-   * 
-   * @param entity
-   * @throws Exception
-   */
-  public void deleteEntityFromDefaultUserLibrary(Entity<?> entity) throws Exception {
-    EntityLibrary library = getUserLibrary();
-    if (library == null) {
-      StatusManager.getManager().handle(
-          new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Delete from Library failed: " + "Could not find default user library."), StatusManager.BLOCK);
-      return;
-    }
-    deleteEntityFromLibrary(library, entity);
   }
 
   /**
@@ -400,22 +359,22 @@ class LibraryManager implements EventHandler {
    */
   @Override
   public void handleEvent(Event event) {
+    String clazz = (String) event.getProperty("class");
+    String name = (String) event.getProperty("displayName");
+    String libraryName = (String) event.getProperty("libraryName");
+    EntityLibrary library = StringUtils.isBlank(libraryName) ? getUserLibrary() : getUserLibrary(libraryName);
+    ComponentEntity existingEntry = library.getEntity(name);
     if (ADD_EVENT_TOPIC.equals(event.getTopic())) {
-      String clazz = (String) event.getProperty("class");
-      String name = (String) event.getProperty("displayName");
       try {
         // TODO check if we should not block adding a same class twice, i.o. checking mainly on the name.
-        ComponentEntity existingEntry = getUserLibrary().getEntity(name);
         if (existingEntry != null) {
-          if (clazz.equals(existingEntry.getClassName())) {
-            StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " already in the User Library"), StatusManager.BLOCK);
-          } else {
-            StatusManager.getManager().handle(new Status(IStatus.WARNING, TriqEditorPlugin.getID(), name + " already in the User Library for another class."),
-                StatusManager.BLOCK);
-          }
-        } else {
+          StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " already in the User Library"), StatusManager.BLOCK);
+        } else if (!StringUtils.isBlank(clazz)){
           Entity<?> addedActor = PtolemyUtil._createEntity(null, clazz, null, name);
-          saveEntityInDefaultUserLibrary(addedActor);
+          saveEntityInLibrary(library, addedActor);
+        } else {
+          // it's about a new subfolder in the UserLibrary structure
+          addSubLibrary(library, name);
         }
       } catch (Exception e) {
         StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to add " + name + " in the User Library", e),
@@ -423,20 +382,16 @@ class LibraryManager implements EventHandler {
       }
     }
     if (DELETE_EVENT_TOPIC.equals(event.getTopic())) {
-      String clazz = (String) event.getProperty("class");
-      String name = (String) event.getProperty("displayName");
       try {
-        ComponentEntity existingEntry = getUserLibrary().getEntity(name);
         if (existingEntry == null) {
           if (clazz.equals(existingEntry.getClassName())) {
             StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " not in the User Library"), StatusManager.BLOCK);
           }
         } else {
-          Entity<?> addedActor = PtolemyUtil._createEntity(null, clazz, null, name);
-          deleteEntityFromDefaultUserLibrary(addedActor);
+          deleteEntityFromLibrary(library, existingEntry);
         }
       } catch (Exception e) {
-        StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to add " + name + " in the User Library", e),
+        StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to delete " + name + " from the User Library", e),
             StatusManager.BLOCK|StatusManager.LOG);
       }
     }

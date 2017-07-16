@@ -34,14 +34,20 @@ public class UserLibraryPaletteEntryProvider implements PaletteEntryProvider {
   public IConfigurationElement[] getPaletteEntries() {
     List<IConfigurationElement> resultsList = new ArrayList<>();
     LibraryManager libraryManager = LibraryManager.getActiveInstance();
-    EntityLibrary userLibrary = libraryManager!=null ? libraryManager.getUserLibrary() : null;
+    EntityLibrary userLibrary = libraryManager != null ? libraryManager.getUserLibrary() : null;
     if (userLibrary != null) {
-      for (Entity<?> actor : (List<Entity<?>>) userLibrary.entityList()) {
+      for (Entity<?> entity : (List<Entity<?>>) userLibrary.entityList()) {
         Map<String, String> attributes = new HashMap<>();
-        attributes.put(CLASS, actor.getClassName());
-        attributes.put(DISPLAY_NAME, actor.getDisplayName());
-        attributes.put(TYPE, (actor instanceof CompositeEntity) ? BoCategory.CompositeActor.name() : BoCategory.Actor.name());
-        PaletteConfigurationElement pce = new PaletteConfigurationElement("entry", "org.eclipse.triquetrum.workflow.editor", attributes);
+        String pceType = "entry";
+        if (entity instanceof EntityLibrary) {
+          attributes.put(DISPLAY_NAME, entity.getDisplayName());
+          pceType = "group";
+        } else {
+          attributes.put(CLASS, entity.getClassName());
+          attributes.put(DISPLAY_NAME, entity.getDisplayName());
+          attributes.put(TYPE, (entity instanceof CompositeEntity) ? BoCategory.CompositeActor.name() : BoCategory.Actor.name());
+        }
+        PaletteConfigurationElement pce = new PaletteConfigurationElement(pceType, "org.eclipse.triquetrum.workflow.editor", attributes);
         resultsList.add(pce);
       }
     }

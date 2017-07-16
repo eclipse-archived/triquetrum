@@ -59,7 +59,12 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
 
   @Override
   protected PaletteRoot createPaletteRoot() {
-    TriqPaletteRoot result = new TriqPaletteRoot(getDiagramTypeProvider());
+    TriqPaletteRoot palette = new TriqPaletteRoot(getDiagramTypeProvider());
+    fillPalette(palette);
+    return palette;
+  }
+
+  private void fillPalette(TriqPaletteRoot result) {
     IExtensionPoint extPoint = Platform.getExtensionRegistry().getExtensionPoint(PALETTE_CONTRIBUTION_EXTENSION_ID);
     IExtension[] extensions = extPoint.getExtensions();
     for (IExtension ext : extensions) {
@@ -68,7 +73,6 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
         handlePaletteEntry(result, null, cfgElem);
       }
     }
-    return result;
   }
 
   @SuppressWarnings("unchecked")

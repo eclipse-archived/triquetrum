@@ -25,6 +25,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.TreeEditPart;
 import org.eclipse.gef.editparts.RootTreeEditPart;
+import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.PaletteViewer;
@@ -35,6 +36,8 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -45,9 +48,13 @@ import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
@@ -96,7 +103,7 @@ public class PaletteTreeViewer extends PaletteViewer {
   @Override
   public void setPaletteRoot(PaletteRoot root) {
     super.setPaletteRoot(root);
-    ((FilteredTree) getControl()).getViewer().setInput(getRootEditPart().getContents().getChildren());
+    ((FilteredTree) getControl()).getViewer().setInput(getRootEditPart().getContents());
   }
 
   /**
@@ -115,15 +122,19 @@ public class PaletteTreeViewer extends PaletteViewer {
     PatternFilter filter = new PatternFilter();
     FilteredTree tree = new FilteredTree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL, filter, true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-    tree.getViewer().setContentProvider(new PaletteTreeProvider());
+    tree.getViewer().setContentProvider(new PaletteTreeProvider(tree.getViewer()));
     tree.getViewer().setLabelProvider(new PaletteLabelProvider(this));
     setControl(tree);
     return tree;
   }
 
   protected Tree getTreeControl() {
+    return getTreeViewer().getTree();
+  }
+
+  protected org.eclipse.jface.viewers.TreeViewer getTreeViewer() {
     final FilteredTree filteredTree = (FilteredTree) getControl();
-    return filteredTree.getViewer().getTree();
+    return filteredTree.getViewer();
   }
 
   /**
@@ -215,11 +226,16 @@ public class PaletteTreeViewer extends PaletteViewer {
           IStructuredSelection treeSelection = (IStructuredSelection) selection;
           if (treeSelection.size() == 1) {
             Object selObj = treeSelection.getFirstElement();
-            if (selObj instanceof PaletteEntryEditPart) {
+            if (selObj instanceof PaletteTreeNodeEditPart) {
+              PaletteTreeNodeEditPart sel = (PaletteTreeNodeEditPart) selObj;
+              if ("User Library".equals(((PaletteTreeNode) sel.getModel()).getLabel())) {
+                manager.add(new AddFolderAction(sel));
+              }
+            } else if (selObj instanceof PaletteEntryEditPart) {
               PaletteEntryEditPart sel = (PaletteEntryEditPart) selObj;
               if (sel.getParent() != null && (sel.getParent() instanceof PaletteTreeNodeEditPart)) {
                 if ("User Library".equals(((PaletteTreeNode) sel.getParent().getModel()).getLabel())) {
-                  manager.add(new DeleteAction((PaletteEntryEditPart) selObj));
+                  manager.add(new DeleteAction(sel));
                 }
               }
             }
@@ -316,6 +332,47 @@ public class PaletteTreeViewer extends PaletteViewer {
     tep.setWidget(null);
   }
 
+  private class AddFolderAction extends Action {
+    private PaletteTreeNodeEditPart selectedNode;
+
+    /**
+     * @param selectedNode
+     */
+    public AddFolderAction(PaletteTreeNodeEditPart selectedNode) {
+      this.selectedNode = selectedNode;
+      setText("Create folder");
+      setToolTipText("Creates a new subfolder in the user library");
+      // setImageDescriptor(TriqEditorPlugin.getImageDescriptor("icons/delete.gif"));
+    }
+
+    @Override
+    public void run() {
+      PaletteTreeNode entry = (PaletteTreeNode) selectedNode.getModel();
+      String libraryName = entry.getLabel();
+
+      AddFolderToUserLibraryDialog dialog = new AddFolderToUserLibraryDialog(getTreeControl().getShell());
+      dialog.setBlockOnOpen(true);
+      int dialogReturnCode = dialog.open();
+      if (Dialog.OK == dialogReturnCode) {
+        Map<String, String> properties = new HashMap<>();
+        String folderName = dialog.folderName;
+        properties.put("displayName", folderName);
+        properties.put("libraryName", libraryName);
+
+        Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/add", properties);
+        try {
+          TriqEditorPlugin.getDefault().getEventAdminService().sendEvent(event);
+          PaletteTreeNode folderTreeNode = new PaletteTreeNode(folderName);
+          selectedNode.addChild(folderTreeNode);
+          entry.add(folderTreeNode);
+        } catch (NullPointerException e) {
+          StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(),
+              "Event bus not available, impossible to trigger a folder addition event for the user library."), StatusManager.BLOCK);
+        }
+      }
+    }
+  }
+
   private class DeleteAction extends Action {
     private PaletteEntryEditPart selectedNode;
 
@@ -343,13 +400,79 @@ public class PaletteTreeViewer extends PaletteViewer {
 
       Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/delete", properties);
       try {
-        TriqEditorPlugin.getDefault().getEventAdminService().postEvent(event);
+        TriqEditorPlugin.getDefault().getEventAdminService().sendEvent(event);
+        // The palette's model consists of 2 layers : palette entry editparts that have palette entries as model.
+        // And way down there's still the Ptolemy UserLibrary as well.
+        // Getting all models synchronized via listeners would be the cleanest, but couldn't get it to work.
+        // (org.eclipse.gef.editparts.AbstractEditPart.refreshChildren() always caused errors in reorderChild()
+        // because of a null parent somewhere. Too complex for me to understand...)
+        // So we do all the deletes ourselves in here...
+        ((PaletteTreeNodeEditPart)selectedNode.getParent()).removeChild(selectedNode);
+        PaletteContainer container = entry.getParent();
+        if(container!=null) {
+          container.remove(entry);
+        }
       } catch (NullPointerException e) {
         StatusManager.getManager().handle(
-            new Status(IStatus.ERROR, TriqEditorPlugin.getID(), 
-                "Event bus not available, impossible to trigger a delete event for the user library."),
+            new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Event bus not available, impossible to trigger a delete event for the user library."),
             StatusManager.BLOCK);
       }
     }
   }
+
+    private static class AddFolderToUserLibraryDialog extends Dialog {
+      private Text folderNameField;
+
+      String folderName = "new";
+
+      protected AddFolderToUserLibraryDialog(Shell parentShell) {
+        super(parentShell);
+        setShellStyle(SWT.RESIZE | SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+      }
+
+      @Override
+      protected org.eclipse.swt.graphics.Point getInitialSize() {
+        return new org.eclipse.swt.graphics.Point(300, 120);
+      }
+
+      @Override
+      protected void configureShell(Shell shell) {
+        super.configureShell(shell);
+        shell.setText("Add folder to User Library");
+      }
+
+      // TODO add Ok disable/enable depending on text field contents
+      @Override
+      protected Control createDialogArea(Composite parent) {
+        Composite container = new Composite(parent, SWT.NULL);
+        final GridLayout gridLayout = new GridLayout();
+        gridLayout.numColumns = 2;
+        container.setLayout(gridLayout);
+        container.setLayoutData(
+            new org.eclipse.swt.layout.GridData(org.eclipse.swt.layout.GridData.HORIZONTAL_ALIGN_FILL | org.eclipse.swt.layout.GridData.GRAB_HORIZONTAL));
+        container.setFont(parent.getFont());
+
+        final Label folderNameBoxLabel = new Label(container, SWT.NONE);
+        final org.eclipse.swt.layout.GridData folderNameBoxLabelLayout = new org.eclipse.swt.layout.GridData(
+            org.eclipse.swt.layout.GridData.HORIZONTAL_ALIGN_END);
+        folderNameBoxLabel.setLayoutData(folderNameBoxLabelLayout);
+        folderNameBoxLabel.setText("Folder name:");
+
+        folderNameField = new Text(container, SWT.BORDER);
+        folderNameField.setLayoutData(new org.eclipse.swt.layout.GridData(org.eclipse.swt.layout.GridData.FILL_HORIZONTAL));
+        folderNameField.setText(folderName);
+
+        return container;
+      }
+
+      @Override
+      protected void buttonPressed(int buttonId) {
+        if (buttonId == IDialogConstants.OK_ID) {
+          folderName = folderNameField.getText().trim();
+        } else {
+          folderName = null;
+        }
+        super.buttonPressed(buttonId);
+      }
+    }
 }
