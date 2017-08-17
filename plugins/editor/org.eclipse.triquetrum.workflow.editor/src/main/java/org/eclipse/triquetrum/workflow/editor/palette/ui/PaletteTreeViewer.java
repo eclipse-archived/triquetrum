@@ -37,7 +37,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -48,17 +47,14 @@ import org.eclipse.swt.dnd.DropTarget;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
+import org.eclipse.triquetrum.workflow.editor.palette.LibraryManager;
 import org.eclipse.triquetrum.workflow.editor.palette.PaletteTreeNode;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.dialogs.FilteredTree;
@@ -228,13 +224,22 @@ public class PaletteTreeViewer extends PaletteViewer {
             Object selObj = treeSelection.getFirstElement();
             if (selObj instanceof PaletteTreeNodeEditPart) {
               PaletteTreeNodeEditPart sel = (PaletteTreeNodeEditPart) selObj;
-              if ("User Library".equals(((PaletteTreeNode) sel.getModel()).getLabel())) {
-                manager.add(new AddFolderAction(sel));
+              Object selModel = sel.getModel();
+              if ((selModel instanceof PaletteTreeNode)) {
+                PaletteTreeNode ptn = (PaletteTreeNode) selModel;
+                if (PaletteEntry.PERMISSION_LIMITED_MODIFICATION <= ptn.getUserModificationPermission()) {
+                  manager.add(new AddFolderAction(sel));
+                  if (PaletteEntry.PERMISSION_FULL_MODIFICATION == ptn.getUserModificationPermission()) {
+                    manager.add(new DeleteAction(sel));
+                  }
+                }
               }
             } else if (selObj instanceof PaletteEntryEditPart) {
               PaletteEntryEditPart sel = (PaletteEntryEditPart) selObj;
-              if (sel.getParent() != null && (sel.getParent() instanceof PaletteTreeNodeEditPart)) {
-                if ("User Library".equals(((PaletteTreeNode) sel.getParent().getModel()).getLabel())) {
+              Object selModel = sel.getModel();
+              if ((selModel instanceof PaletteEntry)) {
+                PaletteEntry pe = (PaletteEntry) selModel;
+                if(PaletteEntry.PERMISSION_FULL_MODIFICATION == pe.getUserModificationPermission()) {
                   manager.add(new DeleteAction(sel));
                 }
               }
@@ -331,7 +336,7 @@ public class PaletteTreeViewer extends PaletteViewer {
     TreeEditPart tep = (TreeEditPart) getRootEditPart();
     tep.setWidget(null);
   }
-
+  
   private class AddFolderAction extends Action {
     private PaletteTreeNodeEditPart selectedNode;
 
@@ -342,7 +347,7 @@ public class PaletteTreeViewer extends PaletteViewer {
       this.selectedNode = selectedNode;
       setText("Create folder");
       setToolTipText("Creates a new subfolder in the user library");
-      // setImageDescriptor(TriqEditorPlugin.getImageDescriptor("icons/delete.gif"));
+      setImageDescriptor(TriqEditorPlugin.getImageDescriptor("icons/node_new.gif"));
     }
 
     @Override
@@ -359,10 +364,14 @@ public class PaletteTreeViewer extends PaletteViewer {
         properties.put("displayName", folderName);
         properties.put("libraryName", libraryName);
 
-        Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/add", properties);
+        Event event = new Event(LibraryManager.ADD_EVENT_TOPIC, properties);
         try {
+          // Sending events is nice to decouple UI handling from the underlying library management,
+          // but we don't get any indication about success/failure.
+          // So we may need to replace this by direct method calls.
           TriqEditorPlugin.getDefault().getEventAdminService().sendEvent(event);
           PaletteTreeNode folderTreeNode = new PaletteTreeNode(folderName);
+          folderTreeNode.setUserModificationPermission(PaletteEntry.PERMISSION_FULL_MODIFICATION);
           selectedNode.addChild(folderTreeNode);
           entry.add(folderTreeNode);
         } catch (NullPointerException e) {
@@ -383,7 +392,7 @@ public class PaletteTreeViewer extends PaletteViewer {
       this.selectedNode = selectedNode;
       setText("Delete");
       setToolTipText("Deletes the selected element");
-      // setImageDescriptor(TriqEditorPlugin.getImageDescriptor("icons/delete.gif"));
+      setImageDescriptor(TriqEditorPlugin.getImageDescriptor("icons/node_delete.gif"));
     }
 
     @Override
@@ -397,9 +406,14 @@ public class PaletteTreeViewer extends PaletteViewer {
       properties.put("displayName", modelName);
       properties.put("class", modelClass);
       properties.put("type", elementType);
-
-      Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/delete", properties);
+      String parentTreePath = selectedNode.getParentTreePath('.');
+      properties.put("libraryName", parentTreePath);
+      
+      Event event = new Event(LibraryManager.DELETE_EVENT_TOPIC, properties);
       try {
+        // Sending events is nice to decouple UI handling from the underlying library management,
+        // but we don't get any indication about success/failure.
+        // So we may need to replace this by direct method calls.
         TriqEditorPlugin.getDefault().getEventAdminService().sendEvent(event);
         // The palette's model consists of 2 layers : palette entry editparts that have palette entries as model.
         // And way down there's still the Ptolemy UserLibrary as well.
@@ -419,60 +433,4 @@ public class PaletteTreeViewer extends PaletteViewer {
       }
     }
   }
-
-    private static class AddFolderToUserLibraryDialog extends Dialog {
-      private Text folderNameField;
-
-      String folderName = "new";
-
-      protected AddFolderToUserLibraryDialog(Shell parentShell) {
-        super(parentShell);
-        setShellStyle(SWT.RESIZE | SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-      }
-
-      @Override
-      protected org.eclipse.swt.graphics.Point getInitialSize() {
-        return new org.eclipse.swt.graphics.Point(300, 120);
-      }
-
-      @Override
-      protected void configureShell(Shell shell) {
-        super.configureShell(shell);
-        shell.setText("Add folder to User Library");
-      }
-
-      // TODO add Ok disable/enable depending on text field contents
-      @Override
-      protected Control createDialogArea(Composite parent) {
-        Composite container = new Composite(parent, SWT.NULL);
-        final GridLayout gridLayout = new GridLayout();
-        gridLayout.numColumns = 2;
-        container.setLayout(gridLayout);
-        container.setLayoutData(
-            new org.eclipse.swt.layout.GridData(org.eclipse.swt.layout.GridData.HORIZONTAL_ALIGN_FILL | org.eclipse.swt.layout.GridData.GRAB_HORIZONTAL));
-        container.setFont(parent.getFont());
-
-        final Label folderNameBoxLabel = new Label(container, SWT.NONE);
-        final org.eclipse.swt.layout.GridData folderNameBoxLabelLayout = new org.eclipse.swt.layout.GridData(
-            org.eclipse.swt.layout.GridData.HORIZONTAL_ALIGN_END);
-        folderNameBoxLabel.setLayoutData(folderNameBoxLabelLayout);
-        folderNameBoxLabel.setText("Folder name:");
-
-        folderNameField = new Text(container, SWT.BORDER);
-        folderNameField.setLayoutData(new org.eclipse.swt.layout.GridData(org.eclipse.swt.layout.GridData.FILL_HORIZONTAL));
-        folderNameField.setText(folderName);
-
-        return container;
-      }
-
-      @Override
-      protected void buttonPressed(int buttonId) {
-        if (buttonId == IDialogConstants.OK_ID) {
-          folderName = folderNameField.getText().trim();
-        } else {
-          folderName = null;
-        }
-        super.buttonPressed(buttonId);
-      }
-    }
 }

@@ -53,22 +53,22 @@ import ptolemy.moml.MoMLChangeRequest;
 import ptolemy.moml.MoMLParser;
 
 /**
- * A class that groups all services related to maintaining/modifying/... the user actor library that is available in the IDE.
+ * A class that groups all services related to maintaining/modifying/... the user actor library that is available in the
+ * IDE.
  * <p>
- * Remark that this utility class is assumed to be used in a UI context.
- * Errors are typically reported in error dialogs.
+ * Remark that this utility class is assumed to be used in a UI context. Errors are typically reported in error dialogs.
  * </p>
  */
-class LibraryManager implements EventHandler {
+public class LibraryManager implements EventHandler {
 
   private static final Logger logger = LoggerFactory.getLogger(LibraryManager.class);
   private static final String EVENT_TOPIC_PATTERN = "org/eclipse/triquetrum/workflow/userlibrary/*";
-  private static final String ADD_EVENT_TOPIC = "org/eclipse/triquetrum/workflow/userlibrary/add";
-  private static final String DELETE_EVENT_TOPIC = "org/eclipse/triquetrum/workflow/userlibrary/delete";
-  private static final String ACTOR_LIBRARY_NAME = "actor library";
+  public static final String ADD_EVENT_TOPIC = "org/eclipse/triquetrum/workflow/userlibrary/add";
+  public static final String DELETE_EVENT_TOPIC = "org/eclipse/triquetrum/workflow/userlibrary/delete";
+  public static final String ACTOR_LIBRARY_NAME = "actor library";
   private static final int ACTORS_LIBRARY_PREFIX_LENGTH = (".configuration." + ACTOR_LIBRARY_NAME + ".").length();
   private static final String SOURCE_PATH_LIB_ATTR_NAME = "_sourcePath";
-  private static final String USER_LIBRARY_NAME = "User Library";
+  public static final String USER_LIBRARY_NAME = "User Library";
 
   private static LibraryManager instance;
 
@@ -76,8 +76,8 @@ class LibraryManager implements EventHandler {
   private Configuration configuration;
 
   // Implementation remark : we don't want to provide LibraryManager as a service or DS component (yet).
-  // There are some issues with startup order management : activating the library manager must only be done 
-  // when a repository service and aoc providers etc are already loaded, and this is tricky to express 
+  // There are some issues with startup order management : activating the library manager must only be done
+  // when a repository service and aoc providers etc are already loaded, and this is tricky to express
   // as the library manager can not have direct dependencies to concrete instances of those neither.
   // So we go for a singleton-like pattern here, controlled from the UserLibraryPaletteEntryProvider.
   private LibraryManager() {
@@ -142,6 +142,7 @@ class LibraryManager implements EventHandler {
 
   /**
    * Add a new sub library with the given folderName, in the given parent library.
+   * 
    * @param library
    * @param folderName
    * @throws NameDuplicationException
@@ -164,7 +165,7 @@ class LibraryManager implements EventHandler {
     };
     request.addChangeListener(new EntityLibraryChangedListener(this));
     library.requestChange(request);
-
+    refreshUserLibraryMap(configuration);
   }
 
   /**
@@ -354,45 +355,57 @@ class LibraryManager implements EventHandler {
   }
 
   /**
-   * Reacts on an ADD_EVENT_TOPIC by reading from the event the specification of an entity to be added,
-   * and adds that one to the default user library.
+   * Reacts on an ADD_EVENT_TOPIC by reading from the event the specification of an entity to be added, and adds that one
+   * to the default user library.
    */
   @Override
   public void handleEvent(Event event) {
     String clazz = (String) event.getProperty("class");
     String name = (String) event.getProperty("displayName");
     String libraryName = (String) event.getProperty("libraryName");
-    EntityLibrary library = StringUtils.isBlank(libraryName) ? getUserLibrary() : getUserLibrary(libraryName);
-    ComponentEntity existingEntry = library.getEntity(name);
-    if (ADD_EVENT_TOPIC.equals(event.getTopic())) {
-      try {
-        // TODO check if we should not block adding a same class twice, i.o. checking mainly on the name.
-        if (existingEntry != null) {
-          StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " already in the User Library"), StatusManager.BLOCK);
-        } else if (!StringUtils.isBlank(clazz)){
-          Entity<?> addedActor = PtolemyUtil._createEntity(null, clazz, null, name);
-          saveEntityInLibrary(library, addedActor);
-        } else {
-          // it's about a new subfolder in the UserLibrary structure
-          addSubLibrary(library, name);
-        }
-      } catch (Exception e) {
-        StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to add " + name + " in the User Library", e),
-            StatusManager.BLOCK|StatusManager.LOG);
-      }
+    boolean isLibraryGiven = !StringUtils.isBlank(libraryName);
+    EntityLibrary library = isLibraryGiven ? getUserLibrary(libraryName) : getUserLibrary();
+    if (library == null && isLibraryGiven && libraryName.indexOf(USER_LIBRARY_NAME)==1) {
+      // chop the possible leading User Library name
+      libraryName = libraryName.substring(USER_LIBRARY_NAME.length()+2);
+      library = getUserLibrary(libraryName);
     }
-    if (DELETE_EVENT_TOPIC.equals(event.getTopic())) {
-      try {
-        if (existingEntry == null) {
-          if (clazz.equals(existingEntry.getClassName())) {
-            StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " not in the User Library"), StatusManager.BLOCK);
+    if (library == null) {
+      logger.warn("No User Library found for event " + event);
+      StatusManager.getManager().handle(
+          new Status(IStatus.ERROR, TriqEditorPlugin.getID(),
+              "No User Library found for " + event.getTopic() + " on " + name + (isLibraryGiven ? " with library " + libraryName : "")),
+          StatusManager.BLOCK | StatusManager.LOG);
+    } else {
+      ComponentEntity existingEntry = library.getEntity(name);
+      if (ADD_EVENT_TOPIC.equals(event.getTopic())) {
+        try {
+          // TODO check if we should not block adding a same class twice, i.o. checking mainly on the name.
+          if (existingEntry != null) {
+            StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " already in the User Library"), StatusManager.BLOCK);
+          } else if (!StringUtils.isBlank(clazz)) {
+            Entity<?> addedActor = PtolemyUtil._createEntity(null, clazz, null, name);
+            saveEntityInLibrary(library, addedActor);
+          } else {
+            // it's about a new subfolder in the UserLibrary structure
+            addSubLibrary(library, name);
           }
-        } else {
-          deleteEntityFromLibrary(library, existingEntry);
+        } catch (Exception e) {
+          StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to add " + name + " in the User Library", e),
+              StatusManager.BLOCK | StatusManager.LOG);
         }
-      } catch (Exception e) {
-        StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to delete " + name + " from the User Library", e),
-            StatusManager.BLOCK|StatusManager.LOG);
+      }
+      if (DELETE_EVENT_TOPIC.equals(event.getTopic())) {
+        try {
+          if (existingEntry == null) {
+            StatusManager.getManager().handle(new Status(IStatus.INFO, TriqEditorPlugin.getID(), name + " not in the User Library"), StatusManager.BLOCK);
+          } else {
+            deleteEntityFromLibrary(library, existingEntry);
+          }
+        } catch (Exception e) {
+          StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Failed to delete " + name + " from the User Library", e),
+              StatusManager.BLOCK | StatusManager.LOG);
+        }
       }
     }
   }
@@ -415,7 +428,7 @@ class LibraryManager implements EventHandler {
 
     }
   }
-  
+
   private synchronized void activate() {
     try {
       File userHome = new File(System.getProperty("user.home"));
@@ -425,7 +438,7 @@ class LibraryManager implements EventHandler {
       EntityLibrary actorLibrary = new EntityLibrary(ptCfg, "actor library");
       File userLibraryFile = new File(triqUserHome, "UserLibrary.xml");
       String userLibraryFilePath = userLibraryFile.toURI().toString();
-      if(userLibraryFile.isFile()) {
+      if (userLibraryFile.isFile()) {
         actorLibrary.configure(null, userLibraryFilePath, null);
       } else {
         new EntityLibrary(actorLibrary, USER_LIBRARY_NAME);
