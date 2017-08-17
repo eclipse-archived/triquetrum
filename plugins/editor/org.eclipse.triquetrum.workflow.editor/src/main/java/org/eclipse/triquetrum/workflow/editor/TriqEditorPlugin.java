@@ -18,6 +18,7 @@ import java.util.Hashtable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
@@ -117,6 +118,17 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
 
   public static void logError(String message, Throwable t) {
     log(IStatus.ERROR, message, t);
+  }
+
+  /**
+   * Returns an image descriptor for the image file at the given
+   * plug-in relative path
+   *
+   * @param path the path
+   * @return the image descriptor
+   */
+  public static ImageDescriptor getImageDescriptor(String path) {
+    return imageDescriptorFromPlugin(getID(), path);
   }
 
   public WorkflowExecutionService getWorkflowExecutionService() {

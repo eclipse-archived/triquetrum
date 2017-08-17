@@ -55,6 +55,7 @@ public class PaletteTreeNodeEditPart extends PaletteEntryEditPart {
       children = new ArrayList(2);
     }
     children.add(newChild);
+    newChild.setParent(this);
     return newChild;
   }
   
