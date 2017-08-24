@@ -14,6 +14,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartFactory;
 import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.gef.palette.PaletteEntry;
+import org.eclipse.triquetrum.workflow.editor.palette.UserLibraryTreeNode;
 
 public class PaletteTreeEditPartFactory implements EditPartFactory {
 
@@ -22,10 +23,19 @@ public class PaletteTreeEditPartFactory implements EditPartFactory {
    */
   @Override
   public EditPart createEditPart(EditPart parentEditPart, Object model) {
-    if (model instanceof PaletteContainer)
-      return new PaletteTreeNodeEditPart((PaletteContainer) model);
-    if (model instanceof PaletteEntry)
+    if (model instanceof UserLibraryTreeNode) {
+      return new UserLibraryTreeNodeEditPart((PaletteContainer) model);
+    }
+    if (model instanceof PaletteContainer) {
+      if (parentEditPart instanceof UserLibraryTreeNodeEditPart) {
+        return new UserLibraryTreeNodeEditPart((PaletteContainer) model);
+      } else {
+        return new PaletteTreeNodeEditPart((PaletteContainer) model);
+      }
+    }
+    if (model instanceof PaletteEntry) {
       return new PaletteEntryEditPart((PaletteEntry) model);
+    }
     return null;
   }
 

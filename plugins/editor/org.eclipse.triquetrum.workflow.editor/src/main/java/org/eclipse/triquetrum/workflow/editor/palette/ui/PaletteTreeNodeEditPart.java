@@ -51,11 +51,7 @@ public class PaletteTreeNodeEditPart extends PaletteEntryEditPart {
   
   public EditPart addChild(Object model) {
     EditPart newChild = super.createChild(model);
-    if (children == null) {
-      children = new ArrayList(2);
-    }
-    children.add(newChild);
-    newChild.setParent(this);
+    addChild(newChild, -1);
     return newChild;
   }
   

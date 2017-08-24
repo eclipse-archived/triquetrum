@@ -116,11 +116,12 @@ public class PaletteTreeViewer extends PaletteViewer {
    */
   public Control createTreeControl(Composite parent) {
     PatternFilter filter = new PatternFilter();
-    FilteredTree tree = new FilteredTree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL, filter, true);
+    FilteredTree tree = new PaletteFilteredTree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL, filter, true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     tree.getViewer().setContentProvider(new PaletteTreeProvider(tree.getViewer()));
     tree.getViewer().setLabelProvider(new PaletteLabelProvider(this));
     setControl(tree);
+    addDropTargetListener(new UserLibraryTransferDropListener(this));
     return tree;
   }
 
@@ -239,7 +240,7 @@ public class PaletteTreeViewer extends PaletteViewer {
               Object selModel = sel.getModel();
               if ((selModel instanceof PaletteEntry)) {
                 PaletteEntry pe = (PaletteEntry) selModel;
-                if(PaletteEntry.PERMISSION_FULL_MODIFICATION == pe.getUserModificationPermission()) {
+                if (PaletteEntry.PERMISSION_FULL_MODIFICATION == pe.getUserModificationPermission()) {
                   manager.add(new DeleteAction(sel));
                 }
               }
@@ -336,7 +337,33 @@ public class PaletteTreeViewer extends PaletteViewer {
     TreeEditPart tep = (TreeEditPart) getRootEditPart();
     tep.setWidget(null);
   }
-  
+
+  // This is a hacky way to override the standard FilteredTree's viewer, whose inputChanged() implementation erases all Tree items 
+  // that had already been created during the construction of this palette's editpart hierarchy.
+  // Which in turn causes the palette's TreeItems in there to be disposed.
+  // We've lost the FilteredTree.NotifyingViewer cache clearing, as we can not simply inherit or move that logic in here,
+  // because the org.eclipse.ui.dialogs.PatternFilter methods used in there are package-protected and can not be invoked from here...
+  // So the full implementation would also need to copy PatternFilter etc. (we may do that in the future?)
+  private static class PaletteFilteredTree extends FilteredTree {
+    public PaletteFilteredTree(Composite parent, int treeStyle, PatternFilter filter, boolean useNewLook) {
+      super(parent, treeStyle, filter, useNewLook);
+    }
+    
+    @Override
+    protected org.eclipse.jface.viewers.TreeViewer doCreateTreeViewer(Composite parent, int style) {
+      return new PaletteJFaceTreeViewer(parent, style);
+    }
+
+    class PaletteJFaceTreeViewer extends org.eclipse.jface.viewers.TreeViewer {
+      public PaletteJFaceTreeViewer(Composite parent, int style) {
+        super(parent, style);
+      }
+
+      protected void inputChanged(Object input, Object oldInput) {
+      }
+    }
+  }
+
   private class AddFolderAction extends Action {
     private PaletteTreeNodeEditPart selectedNode;
 
@@ -353,7 +380,7 @@ public class PaletteTreeViewer extends PaletteViewer {
     @Override
     public void run() {
       PaletteTreeNode entry = (PaletteTreeNode) selectedNode.getModel();
-      String libraryName = entry.getLabel();
+      String libraryName = selectedNode.getFullTreePath('.');
 
       AddFolderToUserLibraryDialog dialog = new AddFolderToUserLibraryDialog(getTreeControl().getShell());
       dialog.setBlockOnOpen(true);
@@ -408,7 +435,7 @@ public class PaletteTreeViewer extends PaletteViewer {
       properties.put("type", elementType);
       String parentTreePath = selectedNode.getParentTreePath('.');
       properties.put("libraryName", parentTreePath);
-      
+
       Event event = new Event(LibraryManager.DELETE_EVENT_TOPIC, properties);
       try {
         // Sending events is nice to decouple UI handling from the underlying library management,
@@ -421,11 +448,12 @@ public class PaletteTreeViewer extends PaletteViewer {
         // (org.eclipse.gef.editparts.AbstractEditPart.refreshChildren() always caused errors in reorderChild()
         // because of a null parent somewhere. Too complex for me to understand...)
         // So we do all the deletes ourselves in here...
-        ((PaletteTreeNodeEditPart)selectedNode.getParent()).removeChild(selectedNode);
+        ((PaletteTreeNodeEditPart) selectedNode.getParent()).removeChild(selectedNode);
         PaletteContainer container = entry.getParent();
-        if(container!=null) {
+        if (container != null) {
           container.remove(entry);
         }
+        getTreeViewer().refresh(selectedNode.getParent());
       } catch (NullPointerException e) {
         StatusManager.getManager().handle(
             new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Event bus not available, impossible to trigger a delete event for the user library."),

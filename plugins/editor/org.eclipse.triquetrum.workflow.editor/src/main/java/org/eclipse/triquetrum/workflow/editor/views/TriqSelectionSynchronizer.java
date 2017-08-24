@@ -48,7 +48,7 @@ public class TriqSelectionSynchronizer extends SelectionSynchronizer {
         // even when the user clicks on an actor port or parameter in the outline tree view.
         // So we move up the containment tree a bit, until we reach the right level.
         modelElement = (NamedObj) selectedBO;
-        while (modelElement.getContainer() != modelElement.topLevel()) {
+        while (modelElement != null && (modelElement.getContainer() != modelElement.topLevel())) {
           modelElement = modelElement.getContainer();
         }
       }

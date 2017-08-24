@@ -35,20 +35,35 @@ public class PaletteEntryEditPart extends AbstractTreeEditPart {
   public PaletteEntryEditPart(PaletteEntry model) {
     super(model);
   }
-  
+
   /**
-   * Returns the parent path in the palette tree, where this entry can be found.
-   * I.e. it returns the complete parent structure, but excludes the name/text/label of this entry itself.
+   * Returns the full path in the palette tree, where this entry can be found, 
+   * including the name/text/label of this entry itself.
    * 
-   * @param separator (optional) separator char. Default is '/'
-   * @return the hierarchical path in the palette tree, excluding the edit part's text/label.
+   * @param separator
+   *          (optional) separator char. Default is '/'
+   * @return the hierarchical path in the palette tree, including the edit part's own text/label.
+   */
+  public String getFullTreePath(Character separator) {
+    StringBuilder path = new StringBuilder(getParentTreePath(separator));
+    path.append((separator != null ? separator : '/') + getText());
+    return path.toString();
+  }
+
+  /**
+   * Returns the parent path in the palette tree, where this entry can be found. I.e. it returns the complete parent
+   * structure, but excludes the name/text/label of this entry itself.
+   * 
+   * @param separator
+   *          (optional) separator char. Default is '/'
+   * @return the hierarchical path in the palette tree, excluding the edit part's own text/label.
    */
   public String getParentTreePath(Character separator) {
     StringBuilder path = new StringBuilder();
     EditPart parent = getParent();
-    while(parent instanceof PaletteEntryEditPart) {
-      String parentLabel = ((PaletteEntryEditPart)parent).getText();
-      if(parentLabel!=null) {
+    while (parent instanceof PaletteEntryEditPart) {
+      String parentLabel = ((PaletteEntryEditPart) parent).getText();
+      if (parentLabel != null) {
         path.insert(0, (separator != null ? separator : '/') + parentLabel);
       }
       parent = parent.getParent();
@@ -72,11 +87,11 @@ public class PaletteEntryEditPart extends AbstractTreeEditPart {
       return GraphitiUi.getImageService().getImageForId(TriqDiagramTypeProvider.ID, getDefaultImageID());
     }
   }
-  
+
   @Override
   protected void removeChildVisual(EditPart childEditPart) {
     TreeEditPart treeEditPart = (TreeEditPart) childEditPart;
-    if(treeEditPart.getWidget()!=null) {
+    if (treeEditPart.getWidget() != null) {
       treeEditPart.getWidget().dispose();
       treeEditPart.setWidget(null);
     }

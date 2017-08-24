@@ -16,27 +16,32 @@ import org.eclipse.gef.palette.PaletteEntry;
 /**
  * A node that contains a user library in the palette.
  */
-public class PaletteUserLibraryNode extends PaletteTreeNode {
+public class UserLibraryTreeNode extends PaletteTreeNode {
 
-  public PaletteUserLibraryNode(String label) {
+  public UserLibraryTreeNode(String label) {
     super(label);
     setUserModificationPermission(PaletteEntry.PERMISSION_LIMITED_MODIFICATION);
   }
 
   /**
-   * checks if the given palette entry is a (deep) child of this user library node.
+   * checks if the given entry is a PaletteEntry and is a (deep) child of this user library node.
    * 
    * @param entry
    * @return true if the given entry is in this user library subtree
    */
-  public boolean isMember(PaletteEntry entry) {
-    boolean result = false;
-    PaletteContainer parent = entry.getParent();
-    while(!result && parent!=null) {
-      result = (this==parent);
-      parent = parent.getParent();
+  public boolean isMember(Object entry) {
+    if (!(entry instanceof PaletteEntry)) {
+      return false;
+    } else {
+      PaletteEntry pe = (PaletteEntry) entry;
+      boolean result = false;
+      PaletteContainer parent = pe.getParent();
+      while (!result && parent != null) {
+        result = (this == parent);
+        parent = parent.getParent();
+      }
+      return result;
     }
-    return result;
   }
 
   @Override

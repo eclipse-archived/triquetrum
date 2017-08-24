@@ -11,18 +11,13 @@
 package org.eclipse.triquetrum.workflow.repository.ui.views;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -35,6 +30,10 @@ import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TreeDragSourceEffect;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -46,6 +45,7 @@ import org.eclipse.triquetrum.workflow.EntryNotFoundException;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.eclipse.triquetrum.workflow.WorkflowRepositoryRegistry;
 import org.eclipse.triquetrum.workflow.WorkflowRepositoryService;
+import org.eclipse.triquetrum.workflow.rcp.ModelHandleTransfer;
 import org.eclipse.triquetrum.workflow.repository.ui.RepositoryPlugin;
 import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
 import org.eclipse.ui.ISharedImages;
@@ -53,8 +53,6 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.ui.statushandlers.StatusManager;
-import org.osgi.service.event.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,6 +81,7 @@ public class WorkflowRepositoryView extends ViewPart {
     viewer.setContentProvider(new ViewContentProvider());
     viewer.setLabelProvider(new ViewLabelProvider(viewer));
     viewer.setInput(getViewSite());
+    viewer.addDragSupport(DND.DROP_COPY, new Transfer[] { ModelHandleTransfer.getInstance() }, new AocDragSourceListener(viewer));
 
     getSite().setSelectionProvider(viewer);
 
@@ -122,7 +121,6 @@ public class WorkflowRepositoryView extends ViewPart {
               }
             }
             if (selObj instanceof ModelCodeTreeNode) {
-              manager.add(new AddToUserLibraryAction((ModelCodeTreeNode) selObj));
               manager.add(new DeleteAction((ModelCodeTreeNode) selObj));
             }
             manager.add(new Separator());
@@ -274,49 +272,6 @@ public class WorkflowRepositoryView extends ViewPart {
     }
   }
 
-  private class AddToUserLibraryAction extends Action {
-    private AbstractTreeNode selectedNode;
-
-    /**
-     * @param selectedNode
-     */
-    public AddToUserLibraryAction(AbstractTreeNode selectedNode) {
-      this.selectedNode = selectedNode;
-      setText("Add to user library");
-      setToolTipText("Adds a repository workflow model to the user library, in the editor palette.");
-      setImageDescriptor(RepositoryPlugin.getImageDescriptor("icons/import.gif"));
-    }
-
-    @Override
-    public void run() {
-      AddToUserLibraryDialog dialog = new AddToUserLibraryDialog(viewer.getControl().getShell(), selectedNode);
-      dialog.setBlockOnOpen(true);
-      int dialogReturnCode = dialog.open();
-      if (Dialog.OK == dialogReturnCode) {
-        String modelName = dialog.modelName;
-        String modelClass = dialog.modelClass;
-        String libraryName = dialog.libraryName;
-        String elementType = "CompositeActor";
-
-        Map<String, String> properties = new HashMap<>();
-        properties.put("displayName", modelName);
-        properties.put("class", modelClass);
-        properties.put("type", elementType);
-        properties.put("libraryName", libraryName);
-
-        Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/add", properties);
-        try {
-          RepositoryPlugin.getDefault().getEventAdminService().postEvent(event);
-        } catch (NullPointerException e) {
-          StatusManager.getManager().handle(
-              new Status(IStatus.ERROR, RepositoryPlugin.PLUGIN_ID, 
-                  "Event bus not available, impossible to trigger an addition event for the user library."),
-              StatusManager.BLOCK);
-        }
-      }
-    }
-  }
-
   private class DeleteAction extends Action {
     private ModelCodeTreeNode selectedNode;
 
@@ -342,6 +297,55 @@ public class WorkflowRepositoryView extends ViewPart {
           LOGGER.error(ErrorCode.ERROR + " - Inconsistent repository tree, selected model no longer found in its repository :" + selectedNode.getValue(), e);
         }
       }
+    }
+  }
+
+  private static class AocDragSourceListener extends TreeDragSourceEffect {
+    private TreeViewer viewer;
+
+    public AocDragSourceListener(TreeViewer treeViewer) {
+      super(treeViewer.getTree());
+      this.viewer = treeViewer;
+    }
+
+    @Override
+    public void dragStart(DragSourceEvent event) {
+      ModelHandle handle = getModelHandle();
+      if (handle == null) {
+        event.doit = false;
+      }
+      ModelHandleTransfer.getInstance().setModelHandle(handle);
+    }
+
+    @Override
+    public void dragSetData(DragSourceEvent event) {
+      event.data = getModelHandle();
+    }
+
+    @Override
+    public void dragFinished(DragSourceEvent event) {
+      super.dragFinished(event);
+      ModelHandleTransfer.getInstance().setModelHandle(null);
+    }
+
+    private ModelHandle getModelHandle() {
+      ModelHandle handle = null;
+      ISelection selection = viewer.getSelection();
+      if (selection instanceof TreeSelection) {
+        TreeSelection treeSelection = (TreeSelection) selection;
+        if (treeSelection.size() == 1) {
+          Object selObj = treeSelection.getFirstElement();
+          if(selObj instanceof ModelCodeTreeNode) {
+            ModelCodeTreeNode modelCodeNode = (ModelCodeTreeNode)selObj;
+            try {
+              handle = modelCodeNode.getActiveModelHandle();
+            } catch (EntryNotFoundException e) {
+              // ignore and just interpret as non-drag-able...
+            }
+          }
+        }
+      }
+      return handle;
     }
   }
 }

@@ -155,7 +155,7 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
           }
         }
         if (pg == null) {
-          pg = (LibraryManager.USER_LIBRARY_NAME.equals(label)) ? new PaletteUserLibraryNode(LibraryManager.USER_LIBRARY_NAME) : new PaletteTreeNode(label);
+          pg = (LibraryManager.USER_LIBRARY_NAME.equals(label)) ? new UserLibraryTreeNode(LibraryManager.USER_LIBRARY_NAME) : new PaletteTreeNode(label);
           pg.setSmallIcon(imgDescriptor);
           pg.setPriority(priority);
           parent.add(pg);
