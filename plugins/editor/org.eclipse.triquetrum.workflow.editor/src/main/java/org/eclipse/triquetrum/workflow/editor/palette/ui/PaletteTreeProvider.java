@@ -10,13 +10,11 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.palette.ui;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPartListener;
 import org.eclipse.gef.palette.PaletteContainer;
-import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
@@ -29,9 +27,18 @@ public class PaletteTreeProvider implements ITreeContentProvider {
 
   private TreeViewer viewer;
   private PaletteTreeNodeEditPart root;
-  private PropertyChangeListener modelListener = new PropertyChangeListener() {
-    public void propertyChange(PropertyChangeEvent evt) {
-      handlePropertyChanged(evt);
+  private EditPartListener modelListener = new EditPartListener.Stub() {
+    @Override
+    public void childAdded(EditPart child, int index) {
+      traverseModel(child, true);
+      viewer.refresh(child.getParent());
+    }
+    @Override
+    public void removingChild(EditPart child, int index) {
+      traverseModel(child, false);
+      // this doesn't work here, as the method is called BEFORE the child has been removed,
+      // so the refresh doesn't see that yet...
+//      viewer.refresh(child.getParent());
     }
   };
 
@@ -42,7 +49,7 @@ public class PaletteTreeProvider implements ITreeContentProvider {
   @Override
   public void dispose() {
     if (root != null) {
-      traverseModel((PaletteEntry) root.getModel(), false);
+      traverseModel(root, false);
     }
   }
 
@@ -88,47 +95,23 @@ public class PaletteTreeProvider implements ITreeContentProvider {
   @Override
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
     if (root != null)
-      traverseModel((PaletteEntry) root.getModel(), false);
+      traverseModel(root, false);
     if (newInput != null) {
       root = (PaletteTreeNodeEditPart) newInput;
-      traverseModel((PaletteEntry) root.getModel(), true);
+      traverseModel(root, true);
     }
   }
 
-  /**
-   * This method is invoked whenever there is any change in the model. It updates the viewer with the changes that were
-   * made to the model. Sub-classes may override this method to change or extend its functionality.
-   * 
-   * @param evt
-   *          The {@link PropertyChangeEvent} that was fired from the model
-   */
-  protected void handlePropertyChanged(PropertyChangeEvent evt) {
-    PaletteEntry entry = ((PaletteEntry) evt.getSource());
-    String property = evt.getPropertyName();
-    if (property.equals(PaletteEntry.PROPERTY_LABEL) || property.equals(PaletteEntry.PROPERTY_SMALL_ICON)) {
-      viewer.update(entry, null);
-    } else if (property.equals(PaletteEntry.PROPERTY_VISIBLE)) {
-      viewer.refresh(entry);
-    } else if (property.equals(PaletteContainer.PROPERTY_CHILDREN)) {
-      viewer.refresh();
-      List<PaletteEntry> oldChildren = (List<PaletteEntry>) evt.getOldValue();
-      for (PaletteEntry child : oldChildren) {
-        traverseModel(child, false);
-      }
-      traverseModel(entry, true);
-    }
-  }
-
-  private void traverseModel(PaletteEntry entry, boolean isHook) {
+  private void traverseModel(EditPart entry, boolean isHook) {
     if (isHook) {
-      entry.addPropertyChangeListener(modelListener);
+      entry.addEditPartListener(modelListener);
     } else {
-      entry.removePropertyChangeListener(modelListener);
+      entry.removeEditPartListener(modelListener);
     }
     Object[] children = getChildren(entry);
     if (children != null) {
       for (int i = 0; i < children.length; i++) {
-        traverseModel((PaletteEntry) children[i], isHook);
+        traverseModel((EditPart) children[i], isHook);
       }
     }
   }

@@ -31,6 +31,10 @@ class ModelCodeTreeNode extends AbstractTreeNode {
     return getValue();
   }
   
+  public ModelHandle getActiveModelHandle() throws EntryNotFoundException {
+    return getRepository().getActiveModel(getModelCode());
+  }
+  
   public WorkflowRepositoryService getRepository() {
     return getParent().getValue();
   }

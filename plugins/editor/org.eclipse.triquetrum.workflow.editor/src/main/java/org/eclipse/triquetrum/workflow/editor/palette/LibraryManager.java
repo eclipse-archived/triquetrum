@@ -365,10 +365,15 @@ public class LibraryManager implements EventHandler {
     String libraryName = (String) event.getProperty("libraryName");
     boolean isLibraryGiven = !StringUtils.isBlank(libraryName);
     EntityLibrary library = isLibraryGiven ? getUserLibrary(libraryName) : getUserLibrary();
-    if (library == null && isLibraryGiven && libraryName.indexOf(USER_LIBRARY_NAME)==1) {
-      // chop the possible leading User Library name
-      libraryName = libraryName.substring(USER_LIBRARY_NAME.length()+2);
-      library = getUserLibrary(libraryName);
+    if (library == null && isLibraryGiven && libraryName.indexOf(USER_LIBRARY_NAME) == 1) {
+      if (libraryName.length() > (USER_LIBRARY_NAME.length() + 2)) {
+        // chop the possible leading User Library name
+        libraryName = libraryName.substring(USER_LIBRARY_NAME.length() + 2);
+        library = getUserLibrary(libraryName);
+      } else {
+        // libraryName is the User Library itself
+        library = getUserLibrary();
+      }
     }
     if (library == null) {
       logger.warn("No User Library found for event " + event);

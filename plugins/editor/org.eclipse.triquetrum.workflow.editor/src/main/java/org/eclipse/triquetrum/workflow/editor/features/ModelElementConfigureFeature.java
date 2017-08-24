@@ -20,9 +20,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.triquetrum.workflow.editor.BoCategory;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqFeatureProvider;
-import org.eclipse.triquetrum.workflow.editor.util.EclipseUtils;
 import org.eclipse.triquetrum.workflow.editor.views.NamedObjDialog;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.rcp.EclipseUtils;
 
 public class ModelElementConfigureFeature extends AbstractCustomFeature {
 

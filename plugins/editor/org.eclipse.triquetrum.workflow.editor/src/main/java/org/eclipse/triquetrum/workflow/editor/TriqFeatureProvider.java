@@ -110,8 +110,9 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public static final String PALETTE_CONTRIBUTION_EXTENSION_ID = "org.eclipse.triquetrum.workflow.editor.paletteContribution";
 
   /**
-   * This map maintains the registered palette contributions for groups. For the moment we only support 1 level, i.e. no tree/hierarchy yet. This map is
-   * consulted during the execution of org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider.getPalette()
+   * This map maintains the registered palette contributions for groups. For the moment we only support 1 level, i.e. no
+   * tree/hierarchy yet. This map is consulted during the execution of
+   * org.eclipse.triquetrum.workflow.editor.TriqToolBehaviorProvider.getPalette()
    */
   private Map<String, IConfigurationElement> rootgroupsByName = new HashMap<>();
 
@@ -264,11 +265,8 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
     String group = parentGroupElem != null ? parentGroupElem.getAttribute(DISPLAY_NAME) : null;
     String label = cfgElem.getAttribute(DISPLAY_NAME);
     String clazz = cfgElem.getAttribute(CLASS);
-
     String iconResource = cfgElem.getAttribute(ICON);
-    iconResource = !StringUtils.isBlank(iconResource) ? iconResource : DEFAULT_ACTOR_IMG;
     String iconType = cfgElem.getAttribute(ICON_TYPE);
-    iconType = StringUtils.isBlank(iconType) ? ICONTYPE_IMG : iconType;
 
     String categoryTypeStr = cfgElem.getAttribute(TYPE);
     try {
@@ -283,35 +281,47 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
           properties.put(name, value);
         }
       }
-      switch (iconType) {
-      case ICONTYPE_SVG:
-      case ICONTYPE_PTOLEMY:
-        try {
-          iconResource = URI.createPlatformPluginURI(cfgElem.getContributor().getName() + "/" + iconResource, true).toString();
-          mecf = new ModelElementCreateFeature(this, group, category, label, clazz, iconResource, iconType, properties);
-        } catch (Exception e) {
-          LOGGER.error("Error adding feature from palette for " + label, e);
-        }
-        break;
-      case ICONTYPE_IMG:
-      default:
-        // Images are managed by an ImageProvider in Graphiti
-        // By default it's not possible to add extra images from outside the ImageProvider implementation itself,
-        // e.g. as needed to allow extra image uploads by additional bundles, via extension points etc.
-
-        // option 1 to register extra images from palette extensions
-        // not an ideal hack, as we need to replicate Graphiti's ad-hoc internal image key construction
-        // (cfr. org.eclipse.graphiti.ui.internal.services.impl.ImageService.createImageDescriptorForId(String, String))
-        // ImageDescriptor imageDescriptor = TriqEditorPlugin.imageDescriptorFromPlugin(cfgElem.getContributor().getName(), iconResource);
-        // GraphitiUIPlugin.getDefault().getImageRegistry().put(makeKey(TriqDiagramTypeProvider.ID,iconResource), imageDescriptor);
-
-        // option 2 : cfr suggestion in https://bugs.eclipse.org/bugs/show_bug.cgi?id=366452#c8
-        mecf = new ModelElementCreateFeature(this, group, category, label, clazz, iconResource, iconType, properties);
-        ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(cfgElem.getContributor().getName(), iconResource,
-            iconResource);
-      }
+      mecf = buildCreateFeature(cfgElem.getContributor().getName(), group, label, clazz, iconResource, iconType, category, properties);
     } catch (Exception e1) {
       LOGGER.error("Error adding feature from palette for " + label, e1);
+    }
+    return mecf;
+  }
+
+  public ModelElementCreateFeature buildCreateFeature(String contributorName, String group, String label, String clazz, String iconResource, String iconType,
+      BoCategory category, Map<String, String> properties) {
+    
+    ModelElementCreateFeature mecf = null;
+    iconResource = !StringUtils.isBlank(iconResource) ? iconResource : DEFAULT_ACTOR_IMG;
+    iconType = StringUtils.isBlank(iconType) ? ICONTYPE_IMG : iconType;
+
+    switch (iconType) {
+    case ICONTYPE_SVG:
+    case ICONTYPE_PTOLEMY:
+      try {
+        iconResource = URI.createPlatformPluginURI(contributorName + "/" + iconResource, true).toString();
+        mecf = new ModelElementCreateFeature(this, group, category, label, clazz, iconResource, iconType, properties);
+      } catch (Exception e) {
+        LOGGER.error("Error adding feature from palette for " + label, e);
+      }
+      break;
+    case ICONTYPE_IMG:
+    default:
+      // Images are managed by an ImageProvider in Graphiti
+      // By default it's not possible to add extra images from outside the ImageProvider implementation itself,
+      // e.g. as needed to allow extra image uploads by additional bundles, via extension points etc.
+
+      // option 1 to register extra images from palette extensions
+      // not an ideal hack, as we need to replicate Graphiti's ad-hoc internal image key construction
+      // (cfr. org.eclipse.graphiti.ui.internal.services.impl.ImageService.createImageDescriptorForId(String, String))
+      // ImageDescriptor imageDescriptor = TriqEditorPlugin.imageDescriptorFromPlugin(cfgElem.getContributor().getName(),
+      // iconResource);
+      // GraphitiUIPlugin.getDefault().getImageRegistry().put(makeKey(TriqDiagramTypeProvider.ID,iconResource),
+      // imageDescriptor);
+
+      // option 2 : cfr suggestion in https://bugs.eclipse.org/bugs/show_bug.cgi?id=366452#c8
+      mecf = new ModelElementCreateFeature(this, group, category, label, clazz, iconResource, iconType, properties);
+      ((TriqDiagramTypeProvider) getDiagramTypeProvider()).getImageProvider().myAddImageFilePath(contributorName, iconResource, iconResource);
     }
     return mecf;
   }

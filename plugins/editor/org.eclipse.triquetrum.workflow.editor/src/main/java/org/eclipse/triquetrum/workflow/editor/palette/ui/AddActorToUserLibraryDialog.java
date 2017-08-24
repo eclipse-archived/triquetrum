@@ -8,7 +8,7 @@
  * Contributors:
  *    Erwin De Ley - initial API and implementation and/or initial documentation
  *******************************************************************************/
-package org.eclipse.triquetrum.workflow.repository.ui.views;
+package org.eclipse.triquetrum.workflow.editor.palette.ui;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -21,24 +21,25 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.triquetrum.workflow.ModelHandle;
 
-class AddToUserLibraryDialog extends Dialog {
+/**
+ * This dialog is shown when an actor is drag-n-dropped in a user library,
+ * to allow to define basis properties like the actor's name in the library.
+ *
+ */
+class AddActorToUserLibraryDialog extends Dialog {
   private Text modelNameField;
   private Text modelClassField;
-  private Text libraryNameField;
 
   String modelName;
   String modelClass;
-  String libraryName;
 
-  protected AddToUserLibraryDialog(Shell parentShell, AbstractTreeNode selectedNode) {
+  protected AddActorToUserLibraryDialog(Shell parentShell, ModelHandle selectedNode) {
     super(parentShell);
     setShellStyle(SWT.RESIZE | SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-    libraryName="";
-    if (selectedNode instanceof ModelCodeTreeNode) {
-      modelClass = ((ModelCodeTreeNode) selectedNode).getModelCode();
-      modelName = modelClass.substring(modelClass.lastIndexOf('.') + 1);
-    }
+    modelClass = selectedNode.getCode();
+    modelName = modelClass.substring(modelClass.lastIndexOf('.') + 1);
   }
 
   @Override
@@ -81,15 +82,6 @@ class AddToUserLibraryDialog extends Dialog {
     modelClassField.setText(modelClass);
     modelClassField.setEditable(false);
 
-    final Label libraryNameBoxLabel = new Label(container, SWT.NONE);
-    final GridData libraryNameBoxLabelLayout = new GridData(GridData.HORIZONTAL_ALIGN_END);
-    libraryNameBoxLabel.setLayoutData(libraryNameBoxLabelLayout);
-    libraryNameBoxLabel.setText("User Library location:");
-
-    libraryNameField = new Text(container, SWT.BORDER);
-    libraryNameField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-    libraryNameField.setText(libraryName);
-
     return container;
   }
 
@@ -98,11 +90,9 @@ class AddToUserLibraryDialog extends Dialog {
     if (buttonId == IDialogConstants.OK_ID) {
       modelName = modelNameField.getText().trim();
       modelClass = modelClassField.getText().trim();
-      libraryName = libraryNameField.getText().trim();
     } else {
       modelName = null;
       modelClass = null;
-      libraryName = null;
     }
     super.buttonPressed(buttonId);
   }
