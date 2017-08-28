@@ -1,0 +1,7 @@
+<svg>
+<rect x="-30" y="-20" width="60" height="40" style="fill:white"/>
+<polyline points="0,20 0,0"/>
+<polyline points="-30,-0 -10,0 10,-7"/>
+<polyline points="10,0 30,0"/>
+</svg>
+
