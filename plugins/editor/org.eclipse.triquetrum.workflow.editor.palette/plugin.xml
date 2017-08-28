@@ -12,6 +12,7 @@ Erwin De Ley - initial API and implementation and/or initial documentation
 Christopher Brooks - population
 
 See ptolemy/configs/basicActorLibrary.xml
+See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
 -->
 
 <plugin>
@@ -62,8 +63,9 @@ See ptolemy/configs/basicActorLibrary.xml
       <group displayName="Generic Sources" priority="800">
         <entry
             class="ptolemy.actor.lib.Const"
-            displayName="Constant"
-            icon="icons/value_field.gif"
+            displayName="Const"
+            icon="icons/ConstIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -77,19 +79,22 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.CurrentDate"
             displayName="CurrentDate"
-            icon="icons/actor.gif"
+            icon="icons/CurrentDateIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.CurrentMicrostep"
             displayName="CurrentMicrostep"
-            icon="icons/actor.gif"
+            icon="icons/CurrentMicrostepIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.CurrentTime"
             displayName="CurrentTime"
-            icon="icons/actor.gif"
+            icon="icons/CurrentTimeIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -101,13 +106,15 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.MicrostepDelay"
             displayName="MicrostepDelay"
-            icon="icons/actor.gif"
+            icon="icons/MicrostepDelayIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.PoissonClock"
             displayName="PoissonClock"
-            icon="icons/actor.gif"
+            icon="icons/PoissonClockIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
       </group>
@@ -121,13 +128,15 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.Pulse"
             displayName="Pulse"
-            icon="icons/actor.gif"
+            icon="icons/PulseIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Sequence"
             displayName="Sequence"
-            icon="icons/series.gif"
+            icon="icons/SequenceIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
@@ -144,7 +153,8 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.Discard"
             displayName="Discard"
-            icon="icons/trash.gif"
+            icon="icons/DiscardIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
@@ -171,109 +181,127 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.ArrayAccumulate"
           displayName="ArrayAccumulate"
-          icon="icons/actor.gif"
+          icon="icons/ArrayAccumulateIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayAppend"
           displayName="ArrayAppend"
-          icon="icons/actor.gif"
+          icon="icons/ArrayArappendIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayAverage"
           displayName="ArrayAverage"
-          icon="icons/actor.gif"
+          icon="icons/ArrayAverageIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayContains"
           displayName="ArrayContains"
-          icon="icons/actor.gif"
+          icon="icons/ArrayContainsIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayElement"
           displayName="ArrayElement"
-          icon="icons/actor.gif"
+          icon="icons/ArrayElementIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayElementAsMatrix"
           displayName="ArrayElementAsMatrix"
-          icon="icons/actor.gif"
+          icon="icons/ArrayElementAsMatrixIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayExtract"
           displayName="ArrayExtract"
-          icon="icons/actor.gif"
+          icon="icons/ArrayExtractIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayLength"
           displayName="ArrayLength"
-          icon="icons/actor.gif"
+          icon="icons/ArrayLengthIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayLevelCrossing"
           displayName="ArrayLevelCrossing"
-          icon="icons/actor.gif"
+          icon="icons/ArrayLevelCrossingIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayMaximum"
           displayName="ArrayMaximum"
-          icon="icons/actor.gif"
+          icon="icons/ArrayMaximumIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayMinimum"
           displayName="ArrayMinimum"
-          icon="icons/actor.gif"
+          icon="icons/ArrayMinimumIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayPeakSearch"
           displayName="ArrayPeakSearch"
-          icon="icons/actor.gif"
+          icon="icons/ArrayPeakSearchIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayRemoveElement"
           displayName="ArrayRemoveElement"
-          icon="icons/actor.gif"
+          icon="icons/ArrayRemoveElementIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArraySort"
           displayName="ArraySort"
-          icon="icons/actor.gif"
+          icon="icons/ArraySortIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArraySum"
           displayName="ArraySum"
-          icon="icons/actor.gif"
+          icon="icons/ArraySumIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayToElements"
           displayName="ArrayToElements"
-          icon="icons/actor.gif"
+          icon="icons/ArrayToElementsIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayToMatrix"
           displayName="ArrayToMatrix"
-          icon="icons/actor.gif"
+          icon="icons/ArrayToMatrixIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.ArrayUpdate"
           displayName="ArrayUpdate"
-          icon="icons/actor.gif"
+          icon="icons/ArrayUpdateIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
@@ -299,31 +327,36 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.conversions.CartesianToComplex"
           displayName="CartesianToComplex"
-          icon="icons/actor.gif"
+          icon="icons/CartesianToComplexIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.conversions.CartesianToPolar"
           displayName="CartesianToPolar"
-          icon="icons/actor.gif"
+          icon="icons/CartesianToPolarIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.conversions.ComplexToCartesian"
           displayName="ComplexToCartesian"
-          icon="icons/actor.gif"
+          icon="icons/ComplexToCartesianIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.conversions.ComplexToPolar"
           displayName="ComplexToPolar"
-          icon="icons/actor.gif"
+          icon="icons/ComplexToPolarIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.conversions.Converter"
           displayName="Converter"
-          icon="icons/actor.gif"
+          icon="icons/ConverterIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
@@ -372,7 +405,8 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.conversions.IntArrayToString"
           displayName="IntArrayToString"
-          icon="icons/actor.gif"
+          icon="icons/IntArrayToStringIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
@@ -384,19 +418,22 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.conversions.PolarToCartesian"
           displayName="PolarToCartesian"
-          icon="icons/actor.gif"
+          icon="icons/PolarToCartesianIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.conversions.PolarToComplex"
           displayName="PolarToComplex"
-          icon="icons/actor.gif"
+          icon="icons/PolarToComplexIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.conversions.Round"
           displayName="Round"
-          icon="icons/actor.gif"
+          icon="icons/RoundIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
@@ -432,7 +469,8 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.conversions.StringToIntArray"
           displayName="StringToIntArray"
-          icon="icons/actor.gif"
+          icon="icons/StringToIntArrayIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
@@ -464,7 +502,8 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.Dictionary"
           displayName="Dictionary"
-          icon="icons/actor.gif"
+          icon="icons/DictionaryIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
     </group>
@@ -473,31 +512,36 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.BusAssembler"
             displayName="BusAssembler"
-            icon="icons/actor.gif"
+            icon="icons/BusAssemblerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.BusDisassembler"
             displayName="BusDisassembler"
-            icon="icons/actor.gif"
+            icon="icons/BusDisassemblerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Commutator"
             displayName="Commutator"
-            icon="icons/actor.gif"
+            icon="icons/CommutatorIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Distributor"
             displayName="Distributor"
-            icon="icons/actor.gif"
+            icon="icons/DistributorIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Multiplexor"
             displayName="Multiplexor"
-            icon="icons/actor.gif"
+            icon="icons/MultiplexorIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
@@ -509,31 +553,36 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.RecordAssembler"
             displayName="RecordAssembler"
-            icon="icons/actor.gif"
+            icon="icons/RecordAssemblerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.RecordDisassembler"
             displayName="RecordDisassembler"
-            icon="icons/actor.gif"
+            icon="icons/RecordDisassemblerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.RecordUpdater"
             displayName="RecordUpdater"
-            icon="icons/actor.gif"
+            icon="icons/RecordUpdaterIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Sampler"
             displayName="Sampler"
-            icon="icons/actor.gif"
+            icon="icons/SamplerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Select"
             displayName="Select"
-            icon="icons/actor.gif"
+            icon="icons/SelectIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
@@ -545,19 +594,22 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.Switch"
             displayName="Switch"
-            icon="icons/actor.gif"
+            icon="icons/SwitchIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Synchronizer"
             displayName="Synchronizer"
-            icon="icons/actor.gif"
+            icon="icons/SynchronizerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.UnionDisassembler"
             displayName="UnionDisassembler"
-            icon="icons/actor.gif"
+            icon="icons/UnionDisassemblerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -569,13 +621,15 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.VectorAssembler"
             displayName="VectorAssembler"
-            icon="icons/actor.gif"
+            icon="icons/VectorAssemblerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.VectorDisassembler"
             displayName="VectorDisassembler"
-            icon="icons/actor.gif"
+            icon="icons/VectorDisassemblerIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
       </group>
@@ -583,31 +637,36 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.BooleanMultiplexor"
             displayName="BooleanMultiplexor"
-            icon="icons/actor.gif"
+            icon="icons/BooleanMultiplexorIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.BooleanSelect"
             displayName="BooleanSelect"
-            icon="icons/actor.gif"
+            icon="icons/BooleanSelectIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.BooleanSwitch"
             displayName="BooleanSwitch"
-            icon="icons/actor.gif"
+            icon="icons/BooleanSwitchIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.ConfigurationSelect"
             displayName="ConfigurationSelect"
-            icon="icons/actor.gif"
+            icon="icons/ConfigurationSelectIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.ConfigurationSwitch"
             displayName="ConfigurationSwitch"
-            icon="icons/actor.gif"
+            icon="icons/ConfigurationSwitchIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
       </group>
@@ -615,13 +674,15 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.Default"
             displayName="Default"
-            icon="icons/actor.gif"
+            icon="icons/DefaultIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Sequencer"
             displayName="Sequencer"
-            icon="icons/actor.gif"
+            icon="icons/SequencerIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
       </group>
@@ -641,13 +702,15 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.Pause"
             displayName="Pause"
-            icon="icons/actor.gif"
+            icon="icons/PauseIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
             class="ptolemy.actor.lib.Stop"
             displayName="Stop"
-            icon="icons/actor.gif"
+            icon="icons/StopIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -668,37 +731,43 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.io.CSVReader"
           displayName="CSVReader"
-          icon="icons/actor.gif"
+          icon="icons/CSVReaderIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.io.CSVWriter"
           displayName="CSVWriter"
-          icon="icons/actor.gif"
+          icon="icons/CSVWriterIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.io.DirectoryListing"
           displayName="DirectoryListing"
-          icon="icons/actor.gif"
+          icon="icons/DirectoryListingIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.io.FileReader"
           displayName="FileReader"
-          icon="icons/actor.gif"
+          icon="icons/FileReaderIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.io.LineReader"
           displayName="LineReader"
-          icon="icons/actor.gif"
+          icon="icons/LineReaderIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.io.LineWriter"
           displayName="LineWriter"
-          icon="icons/actor.gif"
+          icon="icons/LineWriterIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
     </group>
@@ -712,31 +781,36 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.logic.Equals"
           displayName="Equals"
-          icon="icons/actor.gif"
+          icon="icons/EqualsIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.logic.IsPresent"
           displayName="IsPresent"
-          icon="icons/actor.gif"
+          icon="icons/IsPresentIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.logic.LogicGate"
           displayName="LogicGate"
-          icon="icons/actor.gif"
+          icon="icons/LogicGateIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.logic.LogicalNot"
           displayName="LogicalNot"
-          icon="icons/actor.gif"
+          icon="icons/LogicalNotIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.logic.TrueGate"
           displayName="TrueGate"
-          icon="icons/actor.gif"
+          icon="icons/TrueGateIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
     </group>
@@ -744,37 +818,43 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.AbsoluteValue"
           displayName="AbsoluteValue"
-          icon="icons/actor.gif"
+          icon="icons/AbsoluteValueIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Accumulator"
           displayName="Accumulator"
-          icon="icons/actor.gif"
+          icon="icons/AccumulatorIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.AddSubtract"
           displayName="AddSubtract"
-          icon="icons/actor.gif"
+          icon="icons/AddSubtractIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Average"
           displayName="Average"
-          icon="icons/actor.gif"
+          icon="icons/AverageIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Counter"
           displayName="Counter"
-          icon="icons/actor.gif"
+          icon="icons/CounterIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Differential"
           displayName="Differential"
-          icon="icons/actor.gif"
+          icon="icons/DifferentialIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
@@ -786,31 +866,36 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.Limiter"
           displayName="Limiter"
-          icon="icons/actor.gif"
+          icon="icons/LimiterIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.LookupTable"
           displayName="LookupTable"
-          icon="icons/actor.gif"
+          icon="icons/LookupTableIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Maximum"
           displayName="Maximum"
-          icon="icons/actor.gif"
+          icon="icons/MaximumIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Minimum"
           displayName="Minimum"
-          icon="icons/actor.gif"
+          icon="icons/MinimumIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.MovingAverage"
           displayName="MovingAverage"
-          icon="icons/actor.gif"
+          icon="icons/MovingAverageIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
@@ -822,43 +907,50 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.Quantizer"
           displayName="Quantizer"
-          icon="icons/actor.gif"
+          icon="icons/QuantizerIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Remainder"
           displayName="Remainder"
-          icon="icons/actor.gif"
+          icon="icons/RemainderIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.RunningMaximum"
           displayName="RunningMaximum"
-          icon="icons/actor.gif"
+          icon="icons/RunningMaximumIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.RunningMinimum"
           displayName="RunningMinimum"
-          icon="icons/actor.gif"
+          icon="icons/RunningMinimumIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Scale"
           displayName="Scale"
-          icon="icons/actor.gif"
+          icon="icons/ScaleIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.TrigFunction"
           displayName="TrigFunction"
-          icon="icons/actor.gif"
+          icon="icons/TrigFunctionIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.UnaryMathFunction"
           displayName="UnaryMathFunction"
-          icon="icons/actor.gif"
+          icon="icons/UnaryMathFunctionIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
     </group>
@@ -872,7 +964,8 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.MatrixToArray"
           displayName="MatrixToArray"
-          icon="icons/actor.gif"
+          icon="icons/MatrixToArrayIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
@@ -892,43 +985,50 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.Bernoulli"
           displayName="Bernoulli"
-          icon="icons/actor.gif"
+          icon="icons/BernoulliIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.DiscreteRandomSource"
           displayName="DiscreteRandomSource"
-          icon="icons/actor.gif"
+          icon="icons/DiscreteRandomSourceIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Gaussian"
           displayName="Gaussian"
-          icon="icons/actor.gif"
+          icon="icons/GaussianIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.RandomInteger"
           displayName="RandomInteger"
-          icon="icons/actor.gif"
+          icon="icons/RandomIntegerIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Rician"
           displayName="Rician"
-          icon="icons/actor.gif"
+          icon="icons/RicianIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Triangular"
           displayName="Triangular"
-          icon="icons/actor.gif"
+          icon="icons/TriangularIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.Uniform"
           displayName="Uniform"
-          icon="icons/actor.gif"
+          icon="icons/UniformIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
     </group>
@@ -966,7 +1066,8 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.WallClockTime"
           displayName="WallClockTime"
-          icon="icons/actor.gif"
+          icon="icons/WallClockTimeIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
     </group>
@@ -981,7 +1082,8 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.IIR"
             displayName="IIR"
-            icon="icons/actor.gif"
+            icon="icons/IIRIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
@@ -993,7 +1095,8 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.LinearDifferenceEquationSystem"
             displayName="LinearDifferenceEquationSystem"
-            icon="icons/actor.gif"
+            icon="icons/LinearDifferenceEquationSystemIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -1007,7 +1110,8 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.DB"
             displayName="DB"
-            icon="icons/actor.gif"
+            icon="icons/DBIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
         <entry
@@ -1027,7 +1131,8 @@ See ptolemy/configs/basicActorLibrary.xml
         <entry
             class="ptolemy.actor.lib.ComputeHistogram"
             displayName="ComputeHistogram"
-            icon="icons/actor.gif"
+            icon="icons/ComputeHistogramIcon.xml"
+            iconType="ptolemy"
             type="Actor">
         </entry>
       </group>
@@ -1036,37 +1141,43 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.string.StringCompare"
           displayName="StringCompare"
-          icon="icons/actor.gif"
+          icon="icons/StringCompareIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.string.StringFunction"
           displayName="StringFunction"
-          icon="icons/actor.gif"
+          icon="icons/StringFunctionIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.string.StringIndexOf"
           displayName="StringIndexOf"
-          icon="icons/actor.gif"
+          icon="icons/StringIndexOfIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.string.StringLength"
           displayName="StringLength"
-          icon="icons/actor.gif"
+          icon="icons/StringLengthIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.string.StringMatches"
           displayName="StringMatches"
-          icon="icons/actor.gif"
+          icon="icons/StringMatchesIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.string.StringReplace"
           displayName="StringReplace"
-          icon="icons/actor.gif"
+          icon="icons/StringReplaceIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
@@ -1078,13 +1189,15 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.string.StringSplit"
           displayName="StringSplit"
-          icon="icons/actor.gif"
+          icon="icons/StringSplitIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
       <entry
           class="ptolemy.actor.lib.string.StringSubstring"
           displayName="StringSubstring"
-          icon="icons/actor.gif"
+          icon="icons/StringSubstringIcon.xml"
+          iconType="ptolemy"
           type="Actor">
       </entry>
     </group>
@@ -1112,7 +1225,8 @@ See ptolemy/configs/basicActorLibrary.xml
       <entry
           class="ptolemy.actor.lib.TestExceptionAttribute"
           displayName="TestExceptionAttribute"
-          icon="icons/test.gif"
+          icon="icons/TestExceptionAttributeIcon.svg"
+          iconType="svg"
           type="Attribute">
       </entry>
       <entry
