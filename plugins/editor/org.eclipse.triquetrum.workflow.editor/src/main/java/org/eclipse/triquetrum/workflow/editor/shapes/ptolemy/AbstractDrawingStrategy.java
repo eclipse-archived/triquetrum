@@ -15,7 +15,10 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 
+import ptolemy.actor.gui.ColorAttribute;
 import ptolemy.kernel.util.Location;
 import ptolemy.vergil.kernel.attributes.VisibleAttribute;
 
@@ -31,6 +34,15 @@ public abstract class AbstractDrawingStrategy<A extends VisibleAttribute> implem
     int x1 = (int) location.getLocation()[0];
     int y1 = (int) location.getLocation()[1];
     return new Point(x1, y1);
+  }
+
+  protected final Color getSwtColor(ColorAttribute colorAttribute, ResourceManager resourceManager) {
+    java.awt.Color color = colorAttribute != null ? colorAttribute.asColor() : null;
+    Color rgb = null;
+    if (color != null) {
+      rgb = resourceManager.createColor(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
+    }
+    return rgb;
   }
 
   protected abstract Dimension getDimension(A visibleAttribute, Graphics graphics, ResourceManager resourceManager);
