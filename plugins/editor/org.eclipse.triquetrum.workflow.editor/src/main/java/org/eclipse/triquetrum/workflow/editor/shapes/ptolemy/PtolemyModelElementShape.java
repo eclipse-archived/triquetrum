@@ -19,6 +19,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.graphiti.platform.ga.IRendererContext;
 import org.eclipse.jface.resource.ResourceManager;
+import org.eclipse.swt.SWT;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramBehavior;
 import org.eclipse.triquetrum.workflow.editor.shapes.AbstractCustomModelElementShape;
 import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
@@ -70,6 +71,8 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
       int height = ptShapeBounds.height;
 
       Rectangle bnds = getBounds();
+      graphics.setAntialias(SWT.ON);
+      graphics.setTextAntialias(SWT.ON);
       graphics.drawRectangle(bnds.x, bnds.y, width, height);
       graphics.translate(getLocation());
       graphics.translate(ptShapeBounds.getTopLeft().getNegated().getTranslated(1, 1));
