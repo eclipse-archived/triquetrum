@@ -13,4 +13,4 @@ Import-Package: org.eclipse.triquetrum;version="0.1.0",
  ptolemy.kernel;version="11.0.0"
 Service-Component: OSGI-INF/AocProviderFromRepository.xml
 Bundle-ActivationPolicy: lazy
-Bundle-Vendor: Eclipse Triquetrum
+Bundle-Vendor: iSencia Belgium NV
