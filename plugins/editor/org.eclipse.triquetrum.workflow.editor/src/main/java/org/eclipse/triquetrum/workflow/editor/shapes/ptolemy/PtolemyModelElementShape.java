@@ -27,22 +27,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ptolemy.vergil.icon.EditorIcon;
+import ptolemy.vergil.kernel.attributes.ArrowAttribute;
+import ptolemy.vergil.kernel.attributes.EllipseAttribute;
 import ptolemy.vergil.kernel.attributes.ImageAttribute;
 import ptolemy.vergil.kernel.attributes.LineAttribute;
 import ptolemy.vergil.kernel.attributes.RectangleAttribute;
+import ptolemy.vergil.kernel.attributes.ResizablePolygonAttribute;
 import ptolemy.vergil.kernel.attributes.TextAttribute;
 import ptolemy.vergil.kernel.attributes.VisibleAttribute;
 
 public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
   private final static Logger LOGGER = LoggerFactory.getLogger(PtolemyModelElementShape.class);
 
+  // Remark that the Map should have keys and values that, for each entry individually, have equal VisibleAttribute implementation classes as generic types.
+  // But I've found no way to express this using Java generics and it's not worth the trouble to write/use custom Maps for this. 
   private static Map<Class<? extends VisibleAttribute>, DrawingStrategy<? extends VisibleAttribute>> drawingStrategies = new HashMap<>();
 
   static {
-    drawingStrategies.put(RectangleAttribute.class, new RectangleDrawingStrategy());
-    drawingStrategies.put(LineAttribute.class, new LineDrawingStrategy());
-    drawingStrategies.put(TextAttribute.class, new TextDrawingStrategy());
+    drawingStrategies.put(ArrowAttribute.class, new ArrowDrawingStrategy());
+    drawingStrategies.put(EllipseAttribute.class, new EllipseDrawingStrategy());
     drawingStrategies.put(ImageAttribute.class, new ImageDrawingStrategy());
+    drawingStrategies.put(LineAttribute.class, new LineDrawingStrategy());
+    drawingStrategies.put(RectangleAttribute.class, new RectangleDrawingStrategy());
+    drawingStrategies.put(ResizablePolygonAttribute.class, new ResizablePolygonDrawingStrategy());
+    drawingStrategies.put(TextAttribute.class, new TextDrawingStrategy());
   }
 
   private Rectangle ptShapeBounds;

@@ -22,55 +22,50 @@ import org.slf4j.LoggerFactory;
 import ptolemy.data.BooleanToken;
 import ptolemy.data.DoubleToken;
 import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.vergil.kernel.attributes.RectangleAttribute;
+import ptolemy.vergil.kernel.attributes.EllipseAttribute;
 
-public class RectangleDrawingStrategy extends AbstractDrawingStrategy<RectangleAttribute> {
-  private final static Logger LOGGER = LoggerFactory.getLogger(RectangleDrawingStrategy.class);
+public class EllipseDrawingStrategy extends AbstractDrawingStrategy<EllipseAttribute> {
+  private final static Logger LOGGER = LoggerFactory.getLogger(EllipseDrawingStrategy.class);
 
   @Override
-  public void draw(RectangleAttribute rectangleAttr, Graphics graphics, ResourceManager resourceManager) {
+  public void draw(EllipseAttribute ellipseAttr, Graphics graphics, ResourceManager resourceManager) {
     Color fgColor = graphics.getBackgroundColor();
 
     try {
-      Point tlp = getTopLeftLocation(rectangleAttr, graphics);
-      Dimension dim = getDimension(rectangleAttr, graphics, resourceManager);
+      Point tlp = getTopLeftLocation(ellipseAttr, graphics);
+      Dimension dim = getDimension(ellipseAttr, graphics, resourceManager);
       
-      int rounding = (int) ((DoubleToken) rectangleAttr.rounding.getToken()).doubleValue();
-      double lineWidth = ((DoubleToken) rectangleAttr.lineWidth.getToken()).doubleValue();
-      Color rgb = getSwtColor(rectangleAttr.lineColor, resourceManager);
+      double lineWidth = ((DoubleToken) ellipseAttr.lineWidth.getToken()).doubleValue();
+      Color rgb = getSwtColor(ellipseAttr.lineColor, resourceManager);
       if (rgb != null) {
         graphics.setBackgroundColor(rgb);
       }
 
       Rectangle rectWithBorder = new Rectangle(tlp.x, tlp.y, dim.width(), dim.height());
       Rectangle rect = new Rectangle(rectWithBorder).shrink(lineWidth, lineWidth);
-      if (rounding > 0) {
-        graphics.fillRoundRectangle(rectWithBorder, rounding, rounding);
-      } else {
-        graphics.fillRectangle(rectWithBorder);
-      }
+      graphics.fillOval(rectWithBorder);
 
-      rgb = getSwtColor(rectangleAttr.fillColor, resourceManager);
+      rgb = getSwtColor(ellipseAttr.fillColor, resourceManager);
       if (rgb != null) {
         graphics.setBackgroundColor(rgb);
       } else {
         graphics.setBackgroundColor(fgColor);
       }
-      graphics.fillRectangle(rect);
+      graphics.fillOval(rect);
     } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for " + rectangleAttr.getFullName(), e);
+      LOGGER.error("Error reading dimensions for " + ellipseAttr.getFullName(), e);
     }
     graphics.setBackgroundColor(fgColor);
   }
 
-  // take into account the "centered" attribute : when true, use the location as center of the rectangle i.o. as the tlp
+  // take into account the "centered" attribute : when true, use the location as center of the ellipse i.o. as the tlp
   @Override
-  protected Point getTopLeftLocation(RectangleAttribute rectangleAttr, Graphics graphics) {
-    Point tlp = super.getTopLeftLocation(rectangleAttr, graphics);
+  protected Point getTopLeftLocation(EllipseAttribute ellipseAttr, Graphics graphics) {
+    Point tlp = super.getTopLeftLocation(ellipseAttr, graphics);
     try {
-      boolean centered = ((BooleanToken) rectangleAttr.centered.getToken()).booleanValue();
+      boolean centered = ((BooleanToken) ellipseAttr.centered.getToken()).booleanValue();
       if (centered) {
-        Dimension dim = getDimension(rectangleAttr, graphics, null);
+        Dimension dim = getDimension(ellipseAttr, graphics, null);
         tlp = tlp.translate(-dim.width() / 2.0, -dim.height() / 2.0);
       }
     } catch (IllegalActionException e) {
@@ -80,14 +75,14 @@ public class RectangleDrawingStrategy extends AbstractDrawingStrategy<RectangleA
   }
 
   @Override
-  protected Dimension getDimension(RectangleAttribute rectangleAttr, Graphics graphics, ResourceManager resourceManager) {
+  protected Dimension getDimension(EllipseAttribute ellipseAttr, Graphics graphics, ResourceManager resourceManager) {
     try {
-      int width = (int) ((DoubleToken) rectangleAttr.width.getToken()).doubleValue();
-      int height = (int) ((DoubleToken) rectangleAttr.height.getToken()).doubleValue();
-      int lineWidth = (int) ((DoubleToken) rectangleAttr.lineWidth.getToken()).doubleValue();
+      int width = (int) ((DoubleToken) ellipseAttr.width.getToken()).doubleValue();
+      int height = (int) ((DoubleToken) ellipseAttr.height.getToken()).doubleValue();
+      int lineWidth = (int) ((DoubleToken) ellipseAttr.lineWidth.getToken()).doubleValue();
       return new Dimension(width+lineWidth, height+lineWidth);
     } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for " + rectangleAttr.getFullName(), e);
+      LOGGER.error("Error reading dimensions for " + ellipseAttr.getFullName(), e);
       return new Dimension(0, 0);
     }
   }

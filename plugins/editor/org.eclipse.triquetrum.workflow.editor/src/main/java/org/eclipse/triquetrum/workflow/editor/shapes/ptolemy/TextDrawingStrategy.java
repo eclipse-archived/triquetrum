@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.shapes.ptolemy;
 
+import org.eclipse.draw2d.FigureUtilities;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
@@ -19,6 +20,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontMetrics;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.RGB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,13 +70,7 @@ public class TextDrawingStrategy extends AbstractDrawingStrategy<TextAttribute> 
       boolean bold = ((BooleanToken) textAttr.bold.getToken()).booleanValue();
       int style = SWT.NORMAL | (italic ? SWT.ITALIC : SWT.NORMAL) | (bold ? SWT.BOLD : SWT.NORMAL);
       Font f = resourceManager.createFont(FontDescriptor.createFrom(fontFamily, fontSize, style));
-      Font oldFont = graphics.getFont();
-      graphics.setFont(f);
-      FontMetrics fm = graphics.getFontMetrics();
-      final int width = text.length() * fm.getAverageCharWidth();
-      final int height = fm.getHeight();
-      graphics.setFont(oldFont);
-      return new Dimension(width, height);
+      return FigureUtilities.getTextExtents(text, f);
     } catch (IllegalActionException e) {
       LOGGER.error("Error reading dimensions for " + textAttr.getFullName(), e);
       return new Dimension(0, 0);
