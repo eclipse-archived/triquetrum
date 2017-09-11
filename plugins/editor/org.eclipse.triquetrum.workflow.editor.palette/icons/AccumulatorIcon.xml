@@ -23,7 +23,7 @@
     <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{0.0, 0.0}">
     </property>
     <property name="image" class="ptolemy.vergil.kernel.attributes.ImageAttribute">
-        <property name="source" class="ptolemy.data.expr.FileParameter" value="$CLASSPATH/ptolemy/actor/lib/AccumulatorIcon.png">
+        <property name="source" class="ptolemy.data.expr.FileParameter" value="platform:/plugin/org.eclipse.triquetrum.workflow.editor.palette/icons/AccumulatorIcon.png">
         </property>
         <property name="scale" class="ptolemy.data.expr.Parameter" value="60.0">
         </property>

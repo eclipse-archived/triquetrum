@@ -15,7 +15,7 @@
         </property>
     </property>
     <property name="image" class="ptolemy.vergil.kernel.attributes.ImageAttribute">
-        <property name="source" class="ptolemy.data.expr.FileParameter" value="$CLASSPATH/ptolemy/actor/lib/Sinewave.gif">
+        <property name="source" class="ptolemy.data.expr.FileParameter" value="platform:/plugin/org.eclipse.triquetrum.workflow.editor.palette/icons/Sinewave.gif">
         </property>
         <property name="scale" class="ptolemy.data.expr.Parameter" value="15.0">
         </property>
