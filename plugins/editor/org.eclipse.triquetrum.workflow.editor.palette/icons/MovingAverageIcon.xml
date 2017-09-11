@@ -49,19 +49,19 @@
         </property>
     </property>
     <property name="Annotation" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="12">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="10">
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
+        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="PT Serif">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="1">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-28.0, -16.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-28.0, -19.0]">
         </property>
     </property>
     <property name="line5" class="ptolemy.vergil.kernel.attributes.LineAttribute">
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-26.0, 0.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-28.0, 0.0]">
         </property>
         <property name="lineWidth" class="ptolemy.data.expr.Parameter" value="0.5">
         </property>
@@ -71,43 +71,43 @@
         </property>
     </property>
     <property name="Annotation2" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="12">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="10">
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
+        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="PT Serif">
         </property>
         <property name="italic" class="ptolemy.data.expr.Parameter" value="true">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="N">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-31.0, 1.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-29.0, 0.0]">
         </property>
     </property>
     <property name="Annotation3" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="9">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="7">
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
+        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="PT Serif">
         </property>
-        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="=">
+        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="i = 0">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-14.0, 8.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-15.0, 8.0]">
         </property>
     </property>
     <property name="Annotation4" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="9">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="7">
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
+        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="PT Serif">
         </property>
         <property name="italic" class="ptolemy.data.expr.Parameter" value="true">
         </property>
-        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="N - ">
+        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="N - 1">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-18.0, -20.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-16.0, -21.0]">
         </property>
     </property>
     <property name="Annotation5" class="ptolemy.vergil.kernel.attributes.TextAttribute">
@@ -115,41 +115,27 @@
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
+        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="PT Serif">
         </property>
         <property name="italic" class="ptolemy.data.expr.Parameter" value="true">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="x">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[0.0, -8.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[3.0, -12.0]">
         </property>
     </property>
     <property name="Annotation6" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="9">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="7">
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
+        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="PT Serif">
         </property>
         <property name="italic" class="ptolemy.data.expr.Parameter" value="true">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="n-i">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[7.0, -4.0]">
-        </property>
-    </property>
-    <property name="Annotation7" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="9">
-        </property>
-        <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
-        </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
-        </property>
-        <property name="italic" class="ptolemy.data.expr.Parameter" value="true">
-        </property>
-        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="i">
-        </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-19.0, 6.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[10.0, -2.0]">
         </property>
     </property>
     <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={114, 450, 913, 588}, maximized=false}">
@@ -159,29 +145,5 @@
     <property name="_vergilZoomFactor" class="ptolemy.data.expr.ExpertParameter" value="4.0">
     </property>
     <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{0.0, 0.0}">
-    </property>
-    <property name="Annotation9" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="9">
-        </property>
-        <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
-        </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
-        </property>
-        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="0">
-        </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-8.0, 6.0]">
-        </property>
-    </property>
-    <property name="Annotation8" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="9">
-        </property>
-        <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
-        </property>
-        <property name="fontFamily" class="ptolemy.data.expr.StringParameter" value="Serif">
-        </property>
-        <property name="text" class="ptolemy.kernel.util.StringAttribute" value="1">
-        </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-6.0, -20.0]">
-        </property>
     </property>
 </property>

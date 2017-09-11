@@ -31,7 +31,7 @@
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="|{...}|">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.RelativeLocation" value="[-16.0, -11.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-16.0, -11.0]">
         </property>
     </property>
 </property>
