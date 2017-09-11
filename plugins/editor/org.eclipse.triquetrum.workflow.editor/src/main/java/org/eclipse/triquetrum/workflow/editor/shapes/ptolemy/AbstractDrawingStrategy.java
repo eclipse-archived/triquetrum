@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2016 iSencia Belgium NV.
+ * Copyright (c) 2017 iSencia Belgium NV.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,7 +13,9 @@ package org.eclipse.triquetrum.workflow.editor.shapes.ptolemy;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.draw2d.geometry.Transform;
 import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
@@ -43,6 +45,14 @@ public abstract class AbstractDrawingStrategy<A extends VisibleAttribute> implem
       rgb = resourceManager.createColor(new RGB(color.getRed(), color.getGreen(), color.getBlue()));
     }
     return rgb;
+  }
+
+  protected PointList getTransformedPolygon(Transform trf, PointList pointList) {
+    PointList result = new PointList(pointList.size());
+    for (int i=0; i<pointList.size(); ++i ) {
+      result.addPoint(trf.getTransformed(pointList.getPoint(i)));
+    }
+    return result;
   }
 
   protected abstract Dimension getDimension(A visibleAttribute, Graphics graphics, ResourceManager resourceManager);
