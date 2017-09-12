@@ -41,7 +41,7 @@
         </property>
     </property>
     <property name="line" class="ptolemy.vergil.kernel.attributes.LineAttribute">
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-15.0, -3.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-15.0, -2.0]">
         </property>
         <property name="x" class="ptolemy.data.expr.Parameter" value="0.0">
         </property>

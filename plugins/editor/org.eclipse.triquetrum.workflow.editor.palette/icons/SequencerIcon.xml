@@ -15,11 +15,11 @@
         </property>
     </property>
     <property name="Annotation" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="12">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="9">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="1&#10;3&#10;2">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-26.0, -21.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-20.0, -21.0]">
         </property>
     </property>
     <property name="Arrow" class="ptolemy.vergil.kernel.attributes.ArrowAttribute">
@@ -33,11 +33,11 @@
         </property>
     </property>
     <property name="Annotation2" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="12">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="9">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="1&#10;2&#10;3">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[14.0, -21.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[16.0, -21.0]">
         </property>
     </property>
     <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={391, 22, 1025, 1020}, maximized=false}">

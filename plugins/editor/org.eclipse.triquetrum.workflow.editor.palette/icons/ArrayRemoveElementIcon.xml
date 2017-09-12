@@ -17,13 +17,13 @@
         </property>
     </property>
     <property name="Annotation" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="12">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="10">
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="{...a...a...}">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.RelativeLocation" value="[-33.0, -10.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-28.0, -7.0]">
         </property>
     </property>
     <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={72, 346, 716, 634}, maximized=false}">
@@ -37,6 +37,8 @@
     <property name="line" class="ptolemy.vergil.kernel.attributes.LineAttribute">
         <property name="_location" class="ptolemy.kernel.util.Location" value="[-14.0, -5.0]">
         </property>
+        <property name="lineWidth" class="ptolemy.data.expr.Parameter" value="2.0">
+        </property>
         <property name="lineColor" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
         </property>
         <property name="x" class="ptolemy.data.expr.Parameter" value="10.0">
@@ -46,6 +48,8 @@
     </property>
     <property name="line2" class="ptolemy.vergil.kernel.attributes.LineAttribute">
         <property name="_location" class="ptolemy.kernel.util.Location" value="[-5.0, -5.0]">
+        </property>
+        <property name="lineWidth" class="ptolemy.data.expr.Parameter" value="2.0">
         </property>
         <property name="lineColor" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
         </property>
@@ -57,6 +61,8 @@
     <property name="line3" class="ptolemy.vergil.kernel.attributes.LineAttribute">
         <property name="_location" class="ptolemy.kernel.util.Location" value="[14.0, -5.0]">
         </property>
+        <property name="lineWidth" class="ptolemy.data.expr.Parameter" value="2.0">
+        </property>
         <property name="lineColor" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
         </property>
         <property name="x" class="ptolemy.data.expr.Parameter" value="-10.0">
@@ -66,6 +72,8 @@
     </property>
     <property name="line4" class="ptolemy.vergil.kernel.attributes.LineAttribute">
         <property name="_location" class="ptolemy.kernel.util.Location" value="[4.0, -5.0]">
+        </property>
+        <property name="lineWidth" class="ptolemy.data.expr.Parameter" value="2.0">
         </property>
         <property name="lineColor" class="ptolemy.actor.gui.ColorAttribute" value="{1.0, 0.0, 0.0, 1.0}">
         </property>

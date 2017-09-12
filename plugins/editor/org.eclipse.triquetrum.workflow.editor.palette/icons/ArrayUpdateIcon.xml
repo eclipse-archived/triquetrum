@@ -17,13 +17,13 @@
         </property>
     </property>
     <property name="Annotation" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="12">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="10">
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="{... x ...}">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.RelativeLocation" value="[-28.0, -19.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-22.0, -19.0]">
         </property>
     </property>
     <property name="_windowProperties" class="ptolemy.actor.gui.WindowPropertiesAttribute" value="{bounds={153, 110, 695, 460}, maximized=false}">
@@ -47,13 +47,13 @@
         </property>
     </property>
     <property name="Annotation2" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="12">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="10">
         </property>
         <property name="textColor" class="ptolemy.actor.gui.ColorAttribute" value="{0.0,0.0,0.0,1.0}">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="{... y ...}">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.RelativeLocation" value="[-28.0, 3.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-22.0, 3.0]">
         </property>
     </property>
 </property>
