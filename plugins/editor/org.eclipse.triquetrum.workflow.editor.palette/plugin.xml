@@ -308,9 +308,10 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
           type="Actor">
       </entry>
       <entry
-          class="ptolemy.actor.lib.ElementsArray"
+          class="ptolemy.actor.lib.ElementsToArray"
           displayName="ElementsToArray"
-          icon="icons/actor.gif"
+          icon="icons/ElementsToArrayIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
     </group>
@@ -975,7 +976,7 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
           type="Actor">
       </entry>
       <entry
-          class="ptolemy.actor.lib.MatrixViewer"
+          class="ptolemy.actor.lib.gui.MatrixViewer"
           displayName="MatrixViewer"
           icon="icons/actor.gif"
           type="Actor">

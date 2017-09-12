@@ -153,17 +153,17 @@
         </property>
         <property name="lineWidth" class="ptolemy.data.expr.Parameter" value="0.5">
         </property>
-        <property name="x" class="ptolemy.data.expr.Parameter" value="8.0">
+        <property name="x" class="ptolemy.data.expr.Parameter" value="9.0">
         </property>
         <property name="y" class="ptolemy.data.expr.Parameter" value="0.0">
         </property>
     </property>
     <property name="line6" class="ptolemy.vergil.kernel.attributes.LineAttribute">
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-11.0, -12.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-12.0, -12.0]">
         </property>
         <property name="lineWidth" class="ptolemy.data.expr.Parameter" value="0.5">
         </property>
-        <property name="x" class="ptolemy.data.expr.Parameter" value="8.0">
+        <property name="x" class="ptolemy.data.expr.Parameter" value="9.0">
         </property>
         <property name="y" class="ptolemy.data.expr.Parameter" value="0.0">
         </property>

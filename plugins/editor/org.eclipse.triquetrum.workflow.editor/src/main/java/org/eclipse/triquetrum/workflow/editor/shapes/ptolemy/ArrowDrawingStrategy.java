@@ -45,7 +45,7 @@ public class ArrowDrawingStrategy extends AbstractDrawingStrategy<ArrowAttribute
       int width = (int) ((DoubleToken) arrowAttr.arrowWidth.getToken()).doubleValue();
       int length = (int) ((DoubleToken) arrowAttr.arrowLength.getToken()).doubleValue();
       int halfWidth = width/2;
-      Point tlp = getTopLeftLocation(arrowAttr, graphics);
+      Point tlp = getTopLeftLocation(arrowAttr);
       Transform transform = new Transform();
       transform.setRotation(Math.atan2(y, x));
       PointList pList = new PointList();
@@ -67,7 +67,7 @@ public class ArrowDrawingStrategy extends AbstractDrawingStrategy<ArrowAttribute
   }
 
   @Override
-  protected Dimension getDimension(ArrowAttribute arrowAttr, Graphics graphics, ResourceManager resourceManager) {
+  protected Dimension getDimension(ArrowAttribute arrowAttr, ResourceManager resourceManager) {
     try {
       int length = (int) ((DoubleToken) arrowAttr.arrowLength.getToken()).doubleValue();
       int width = (int) ((DoubleToken) arrowAttr.arrowWidth.getToken()).doubleValue();
