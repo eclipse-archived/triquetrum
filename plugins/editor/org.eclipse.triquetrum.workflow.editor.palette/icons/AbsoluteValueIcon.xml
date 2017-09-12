@@ -25,11 +25,11 @@
     <property name="_vergilCenter" class="ptolemy.data.expr.ExpertParameter" value="{0.0, 0.0}">
     </property>
     <property name="Annotation" class="ptolemy.vergil.kernel.attributes.TextAttribute">
-        <property name="textSize" class="ptolemy.data.expr.Parameter" value="28">
+        <property name="textSize" class="ptolemy.data.expr.Parameter" value="20">
         </property>
         <property name="text" class="ptolemy.kernel.util.StringAttribute" value="|x|">
         </property>
-        <property name="_location" class="ptolemy.kernel.util.Location" value="[-18.0, -17.0]">
+        <property name="_location" class="ptolemy.kernel.util.Location" value="[-18.0, -18.0]">
         </property>
     </property>
 </property>

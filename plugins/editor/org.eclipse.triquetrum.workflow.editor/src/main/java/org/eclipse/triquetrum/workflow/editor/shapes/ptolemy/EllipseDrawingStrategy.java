@@ -15,12 +15,10 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ptolemy.data.DoubleToken;
-import ptolemy.kernel.util.IllegalActionException;
-import ptolemy.vergil.kernel.attributes.RectangleAttribute;
+import ptolemy.vergil.kernel.attributes.EllipseAttribute;
 
-public class RectangleDrawingStrategy extends FilledShapeDrawingStrategy<RectangleAttribute> {
-  private final static Logger LOGGER = LoggerFactory.getLogger(RectangleDrawingStrategy.class);
+public class EllipseDrawingStrategy extends FilledShapeDrawingStrategy<EllipseAttribute> {
+  private final static Logger LOGGER = LoggerFactory.getLogger(EllipseDrawingStrategy.class);
 
   @Override
   protected Logger getLogger() {
@@ -28,17 +26,13 @@ public class RectangleDrawingStrategy extends FilledShapeDrawingStrategy<Rectang
   }
 
   @Override
-  public void doFillShape(RectangleAttribute rectangleAttr, Graphics graphics, Rectangle bounds) {
-    graphics.fillRectangle(bounds);
+  public void doFillShape(EllipseAttribute ellipseAttr, Graphics graphics, Rectangle bounds) {
+    // minor adjustment to fix pixel errors between fill and border
+    graphics.fillOval(bounds.x(), bounds.y(), bounds.width() + 1, bounds.height() +1);
   }
 
   @Override
-  public void doDrawBorder(RectangleAttribute rectangleAttr, Graphics graphics, Rectangle bounds) throws IllegalActionException {
-    int rounding = (int) ((DoubleToken) rectangleAttr.rounding.getToken()).doubleValue();
-    if (rounding > 0) {
-      graphics.drawRoundRectangle(bounds, rounding, rounding);
-    } else {
-      graphics.drawRectangle(bounds);
-    }
+  public void doDrawBorder(EllipseAttribute ellipseAttr, Graphics graphics, Rectangle bounds) {
+    graphics.drawOval(bounds);
   }
 }

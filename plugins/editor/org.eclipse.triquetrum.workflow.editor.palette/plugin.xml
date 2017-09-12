@@ -24,7 +24,6 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
       <entry
           class="ptolemy.vergil.kernel.attributes.TextAttribute"
           displayName="Annotation"
-          icon="icons/value_field.gif"
           type="Annotation">
       </entry>
       <entry
@@ -71,11 +70,12 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
         <entry
             class="ptolemy.actor.lib.StringConst"
             displayName="StringConstant"
-            icon="icons/value_field.gif"
+            icon="icons/StringConstIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
       </group>
-      <group displayName="Timed Sources" priority="800">
+      <group displayName="Timed Sources" priority="600">
         <entry
             class="ptolemy.actor.lib.CurrentDate"
             displayName="CurrentDate"
@@ -100,7 +100,8 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
         <entry
             class="ptolemy.actor.lib.DiscreteClock"
             displayName="DiscreteClock"
-            icon="icons/actor.gif"
+            icon="icons/DiscreteClockIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -118,11 +119,12 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
             type="Actor">
         </entry>
       </group>
-      <group displayName="Timed Sources" priority="800">
+      <group displayName="Sequence Sources" priority="400">
         <entry
             class="ptolemy.actor.lib.Ramp"
             displayName="Ramp"
-            icon="icons/series.gif"
+            icon="icons/RampIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -160,7 +162,8 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
         <entry
             class="ptolemy.actor.lib.gui.Display"
             displayName="Display"
-            icon="icons/display.gif"
+            icon="icons/DisplayIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -188,7 +191,7 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
       <entry
           class="ptolemy.actor.lib.ArrayAppend"
           displayName="ArrayAppend"
-          icon="icons/ArrayArappendIcon.xml"
+          icon="icons/ArrayAppendIcon.xml"
           iconType="ptolemy"
           type="Actor">
       </entry>
@@ -305,9 +308,10 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
           type="Actor">
       </entry>
       <entry
-          class="ptolemy.actor.lib.ElementsArray"
+          class="ptolemy.actor.lib.ElementsToArray"
           displayName="ElementsToArray"
-          icon="icons/actor.gif"
+          icon="icons/ElementsToArrayIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
     </group>
@@ -615,7 +619,8 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
         <entry
             class="ptolemy.actor.lib.UnionMerge"
             displayName="UnionMerge"
-            icon="icons/actor.gif"
+            icon="icons/UnionMergeIcon.svg"
+            iconType="svg"
             type="Actor">
         </entry>
         <entry
@@ -775,7 +780,8 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
       <entry
           class="ptolemy.actor.lib.logic.Comparator"
           displayName="Comparator"
-          icon="icons/actor.gif"
+          icon="icons/ComparatorIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
@@ -958,7 +964,8 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
       <entry
           class="ptolemy.actor.lib.ArrayToMatrix"
           displayName="ArrayToMatrix"
-          icon="icons/actor.gif"
+          icon="icons/ArrayToMatrixIcon.svg"
+          iconType="svg"
           type="Actor">
       </entry>
       <entry
@@ -969,7 +976,7 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
           type="Actor">
       </entry>
       <entry
-          class="ptolemy.actor.lib.MatrixViewer"
+          class="ptolemy.actor.lib.gui.MatrixViewer"
           displayName="MatrixViewer"
           icon="icons/actor.gif"
           type="Actor">
@@ -1055,7 +1062,7 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
           class="ptolemy.actor.lib.SynchronizeToRealTime"
           displayName="SynchronizeToRealTime"
           icon="icons/actor.gif"
-          type="Actor">
+          type="Parameter">
       </entry>
       <entry
           class="ptolemy.actor.lib.VariableSleep"
@@ -1127,7 +1134,7 @@ See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
             type="Actor">
         </entry>
       </group>
-      <group displayName="Spectrum" priority="300">
+      <group displayName="Statistical" priority="300">
         <entry
             class="ptolemy.actor.lib.ComputeHistogram"
             displayName="ComputeHistogram"
