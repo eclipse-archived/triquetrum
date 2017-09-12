@@ -14,103 +14,93 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
-import org.eclipse.jface.resource.ResourceManager;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.draw2d.geometry.Transform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ptolemy.data.ArrayToken;
-import ptolemy.data.BooleanToken;
 import ptolemy.data.DoubleToken;
 import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.vergil.kernel.attributes.ResizablePolygonAttribute;
 
-public class ResizablePolygonDrawingStrategy extends AbstractDrawingStrategy<ResizablePolygonAttribute> {
+public class ResizablePolygonDrawingStrategy extends FilledShapeDrawingStrategy<ResizablePolygonAttribute> {
   private final static Logger LOGGER = LoggerFactory.getLogger(ResizablePolygonDrawingStrategy.class);
 
   @Override
-  public void draw(ResizablePolygonAttribute polygonAttr, Graphics graphics, ResourceManager resourceManager) {
-    Color fgColor = graphics.getForegroundColor();
-    Color bgColor = graphics.getBackgroundColor();
-    Color lineColor = getSwtColor(polygonAttr.lineColor, resourceManager);
-    if (lineColor!=null) {
-      graphics.setForegroundColor(lineColor);
-    }
-    Color fillColor = getSwtColor(polygonAttr.fillColor, resourceManager);
-    if (fillColor != null) {
-      graphics.setBackgroundColor(fillColor);
-    } else {
-      graphics.setBackgroundColor(fgColor);
-    }
-
-    try {
-      float lineWidth = (float) ((DoubleToken) polygonAttr.lineWidth.getToken()).doubleValue();
-      graphics.setLineWidthFloat(lineWidth);
-
-      Point tlp = getTopLeftLocation(polygonAttr, graphics);
-      Dimension dim = getDimension(polygonAttr, graphics, resourceManager);
-      
-      ArrayToken vertices = (ArrayToken) polygonAttr.vertices.getToken();
-      PointList pList = new PointList();
-      for (int j = 0; j < vertices.length() / 2; j++) {
-        pList.addPoint((int)((DoubleToken) vertices.getElement(2 * j)).doubleValue()
-                      ,(int)((DoubleToken) vertices.getElement(2 * j + 1)).doubleValue());
-      }
-      
-      Dimension rawDim = getRawDimension(pList);
-      
-      // Ptolemy scales x and y potentially differently, depending on the ratios
-      // of dim width & height and rawDim width & height respectively.
-      // But let's try to keep the aspect ratio here by scaling with only 1 common factor for x & y...
-      double scaleWidth = dim.width / rawDim.width;
-      double scaleHeight = dim.height / rawDim.height;
-      pList.performScale(Math.min(scaleWidth, scaleHeight));
-      // alternatively, if we want to scale differently along x & y :
-//      Transform transform = new Transform();
-//      transform.setScale(scaleWidth, scaleHeight);
-//      pList = getTransformedPolygon(transform, pList);
-      pList.translate(tlp);
-      graphics.fillPolygon(pList);
-      graphics.drawPolygon(pList);
-    } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for " + polygonAttr.getFullName(), e);
-    }
-    graphics.setForegroundColor(fgColor);
-    graphics.setBackgroundColor(bgColor);
+  protected Logger getLogger() {
+    return LOGGER;
   }
 
-  // take into account the "centered" attribute : when true, use the location as center of the polygon i.o. as the tlp
+  // There's lots of duplicate logic in fill && draw border.
+  // Maybe we need to pass a drawing context around so we can do calculations once, store them in it
+  // and in that way pass results around between the consecutive method calls...
   @Override
-  protected Point getTopLeftLocation(ResizablePolygonAttribute polygonAttr, Graphics graphics) {
-    Point tlp = super.getTopLeftLocation(polygonAttr, graphics);
-    try {
-      boolean centered = ((BooleanToken) polygonAttr.centered.getToken()).booleanValue();
-      if (centered) {
-        Dimension dim = getDimension(polygonAttr, graphics, null);
-        tlp = tlp.translate(-dim.width() / 2.0, -dim.height() / 2.0);
-      }
-    } catch (IllegalActionException e) {
-      // ignore and let's just try to assume it's not centered
-    }
-    return tlp;
+  public void doFillShape(ResizablePolygonAttribute polygonAttr, Graphics graphics, Rectangle bounds) throws IllegalActionException {
+    PointList pList = getPolygonPoints(polygonAttr);
+    
+    Dimension dim = bounds.getSize();
+    Point tlp = bounds.getTopLeft();
+    Dimension rawDim = getRawBounds(pList).getSize();
+    
+    // Ptolemy scales x and y potentially differently, depending on the ratios
+    // of dim width & height and rawDim width & height respectively.
+    double scaleWidth = dim.preciseWidth() / rawDim.preciseWidth();
+    double scaleHeight = dim.preciseHeight() / rawDim.preciseHeight();
+    Transform transform = new Transform();
+    transform.setScale(scaleWidth, scaleHeight);
+    pList = getTransformedPolygon(transform, pList);
+    pList.translate(tlp);
+    graphics.fillPolygon(pList);
   }
 
   @Override
-  protected Dimension getDimension(ResizablePolygonAttribute polygonAttr, Graphics graphics, ResourceManager resourceManager) {
-    try {
-      int width = (int) ((DoubleToken) polygonAttr.width.getToken()).doubleValue();
-      int height = (int) ((DoubleToken) polygonAttr.height.getToken()).doubleValue();
-      int lineWidth = (int) ((DoubleToken) polygonAttr.lineWidth.getToken()).doubleValue();
-      return new Dimension(width+lineWidth, height+lineWidth);
-    } catch (IllegalActionException e) {
-      LOGGER.error("Error reading dimensions for " + polygonAttr.getFullName(), e);
-      return new Dimension(0, 0);
+  public void doDrawBorder(ResizablePolygonAttribute polygonAttr, Graphics graphics, Rectangle bounds) throws IllegalActionException {
+    PointList pList = getPolygonPoints(polygonAttr);
+    
+    Dimension dim = bounds.getSize();
+    Point tlp = bounds.getTopLeft();
+    Dimension rawDim = getRawBounds(pList).getSize();
+    
+    // Ptolemy scales x and y potentially differently, depending on the ratios
+    // of dim width & height and rawDim width & height respectively.
+    double scaleWidth = dim.preciseWidth() / rawDim.preciseWidth();
+    double scaleHeight = dim.preciseHeight() / rawDim.preciseHeight();
+    Transform transform = new Transform();
+    transform.setScale(scaleWidth, scaleHeight);
+    pList = getTransformedPolygon(transform, pList);
+    pList.translate(tlp);
+    graphics.drawPolygon(pList);
+  }
+
+  private PointList getPolygonPoints(ResizablePolygonAttribute polygonAttr) throws IllegalActionException {
+    PointList pList = new PointList();
+    ArrayToken vertices = (ArrayToken) polygonAttr.vertices.getToken();
+    for (int j = 0; j < vertices.length() / 2; j++) {
+      pList.addPoint((int)((DoubleToken) vertices.getElement(2 * j)).doubleValue()
+                    ,(int)((DoubleToken) vertices.getElement(2 * j + 1)).doubleValue());
     }
+    return pList;
+  }
+
+  @Override
+  protected Point getCenteringTranslation(ResizablePolygonAttribute polygonAttr) throws IllegalActionException {
+    Dimension dim = getDimension(polygonAttr, null);
+    // PtII has polygons where the points reach past the normal Top Left Point as set by the location attribute.
+    // So we need to determine the sense of the translation for centering based on the raw center location 
+    // relative to the expected TLP as defined by the location attribute.
+    Rectangle rawBounds = getRawBounds(getPolygonPoints(polygonAttr));
+    Dimension rawDim = rawBounds.getSize();
+    double scaleWidth = dim.preciseWidth() / rawDim.preciseWidth();
+    double scaleHeight = dim.preciseHeight() / rawDim.preciseHeight();
+
+    Point rawCenter = rawBounds.getCenter();
+    return new Point((int)-Math.rint(scaleWidth * rawCenter.preciseX()), (int)-Math.rint(scaleHeight * rawCenter.preciseY()));
   }
   
-  private Dimension getRawDimension(PointList pointList) {
-    Point tlp = new Point(0, 0);
-    Point brp = new Point(0, 0);
+  private Rectangle getRawBounds(PointList pointList) {
+    Point tlp = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+    Point brp = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
     for (int i=0; i<pointList.size(); ++i ) {
       Point p = pointList.getPoint(i);
       tlp.x = Math.min(tlp.x, p.x);
@@ -118,6 +108,6 @@ public class ResizablePolygonDrawingStrategy extends AbstractDrawingStrategy<Res
       brp.x = Math.max(brp.x, p.x);
       brp.y = Math.max(brp.y, p.y);
     }
-    return new Dimension(brp.x - tlp.x, brp.y - tlp.y);
+    return new Rectangle(tlp, brp);
   }
 }

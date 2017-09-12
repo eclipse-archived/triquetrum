@@ -19,8 +19,6 @@ import org.eclipse.jface.resource.ResourceManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontMetrics;
-import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.RGB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +50,7 @@ public class TextDrawingStrategy extends AbstractDrawingStrategy<TextAttribute> 
       Font f = resourceManager.createFont(FontDescriptor.createFrom(fontFamily, fontSize, style));
       graphics.setFont(f);
 
-      Point tlp = getTopLeftLocation(textAttr, graphics);
+      Point tlp = getTopLeftLocation(textAttr);
       graphics.drawText(text, tlp);
     } catch (IllegalActionException e) {
       LOGGER.error("Error reading properties for " + textAttr.getFullName(), e);
@@ -61,7 +59,7 @@ public class TextDrawingStrategy extends AbstractDrawingStrategy<TextAttribute> 
   }
 
   @Override
-  protected Dimension getDimension(TextAttribute textAttr, Graphics graphics, ResourceManager resourceManager) {
+  protected Dimension getDimension(TextAttribute textAttr, ResourceManager resourceManager) {
     try {
       String text = textAttr.text.getExpression();
       int fontSize = ((IntToken) textAttr.textSize.getToken()).intValue();

@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ptolemy.vergil.icon.EditorIcon;
+import ptolemy.vergil.kernel.attributes.ArcAttribute;
 import ptolemy.vergil.kernel.attributes.ArrowAttribute;
 import ptolemy.vergil.kernel.attributes.EllipseAttribute;
 import ptolemy.vergil.kernel.attributes.ImageAttribute;
@@ -36,6 +37,14 @@ import ptolemy.vergil.kernel.attributes.ResizablePolygonAttribute;
 import ptolemy.vergil.kernel.attributes.TextAttribute;
 import ptolemy.vergil.kernel.attributes.VisibleAttribute;
 
+/**
+ * Custom shape rendering for Ptolemy II's MoML icon definitions, using assemblies of VisibleAttributes.
+ * <p>
+ * The actual drawing logic is delegated to DrawingStrategy implementations, matching the different possible specializations
+ * of VisibleAttribute.
+ * </p>
+ *
+ */
 public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
   private final static Logger LOGGER = LoggerFactory.getLogger(PtolemyModelElementShape.class);
 
@@ -44,6 +53,7 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
   private static Map<Class<? extends VisibleAttribute>, DrawingStrategy<? extends VisibleAttribute>> drawingStrategies = new HashMap<>();
 
   static {
+    drawingStrategies.put(ArcAttribute.class, new ArcDrawingStrategy());
     drawingStrategies.put(ArrowAttribute.class, new ArrowDrawingStrategy());
     drawingStrategies.put(EllipseAttribute.class, new EllipseDrawingStrategy());
     drawingStrategies.put(ImageAttribute.class, new ImageDrawingStrategy());
@@ -114,12 +124,12 @@ public class PtolemyModelElementShape extends AbstractCustomModelElementShape {
 
   private Rectangle determineExtremeBounds(EditorIcon iconDef, Graphics graphics) {
     LOGGER.trace("Ptolemy determineExtremeBounds - entry - for {}", iconDef.getName());
-    Point tlp = new Point(0, 0);
-    Point brp = new Point(0, 0);
+    Point tlp = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
+    Point brp = new Point(Integer.MIN_VALUE, Integer.MIN_VALUE);
     for (VisibleAttribute a : iconDef.attributeList(VisibleAttribute.class)) {
       DrawingStrategy drawingStrategy = drawingStrategies.get(a.getClass());
       if (drawingStrategy != null) {
-        Rectangle aBounds = drawingStrategy.getBounds(a, graphics, resourceManager);
+        Rectangle aBounds = drawingStrategy.getBounds(a, resourceManager);
         LOGGER.debug("Bounds for {} : {}", a, aBounds);
         tlp.x = Math.min(tlp.x, aBounds.x);
         tlp.y = Math.min(tlp.y, aBounds.y);

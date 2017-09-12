@@ -3,7 +3,7 @@
     "http://ptolemy.eecs.berkeley.edu/xml/dtd/MoML_1.dtd">
 <property name="RandomIntegerIcon" class="ptolemy.vergil.icon.EditorIcon">
     <property name="image2" class="ptolemy.vergil.kernel.attributes.ImageAttribute">
-        <property name="source" class="ptolemy.data.expr.FileParameter" value="$CLASSPATH/ptolemy/actor/lib/Dice.gif">
+        <property name="source" class="ptolemy.data.expr.FileParameter" value="platform:/plugin/org.eclipse.triquetrum.workflow.editor.palette/icons/Dice.gif">
         </property>
         <property name="scale" class="ptolemy.data.expr.Parameter" value="10.0">
         </property>
