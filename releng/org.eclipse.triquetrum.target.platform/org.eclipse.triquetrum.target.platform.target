@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="Triq" sequenceNumber="1504906526">
+<?pde version="3.8"?><target name="Triq" sequenceNumber="1504906527">
 <locations>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.core.runtime.feature.feature.group" version="1.2.0.v20170518-1049"/>
@@ -78,7 +78,7 @@
 <repository location="http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository"/>
 </location>
 <location includeAllPlatforms="true" includeConfigurePhase="true" includeMode="slicer" includeSource="false" type="InstallableUnit">
-<unit id="org.ptolemy.tycho.feature.feature.group" version="11.1.0.201709082145"/>
+<unit id="org.ptolemy.tycho.feature.feature.group" version="11.1.0.201709150038"/>
 <repository location="http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-2/"/>
 </location>
 </locations>
