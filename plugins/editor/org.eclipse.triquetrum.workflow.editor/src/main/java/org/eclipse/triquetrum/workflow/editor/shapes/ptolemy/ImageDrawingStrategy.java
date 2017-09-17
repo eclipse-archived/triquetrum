@@ -32,7 +32,7 @@ public class ImageDrawingStrategy extends AbstractDrawingStrategy<ImageAttribute
   public void draw(ImageAttribute imageAttr, Graphics graphics, ResourceManager resourceManager) {
     try {
       Image img = resourceManager.createImage(buildImageDescriptor(imageAttr));
-      Point tlp = getTopLeftLocation(imageAttr, graphics);
+      Point tlp = getTopLeftLocation(imageAttr);
       graphics.drawImage(img, tlp);
     } catch (IllegalActionException e) {
       LOGGER.error("Error reading image for " + imageAttr.getFullName(), e);
@@ -40,7 +40,7 @@ public class ImageDrawingStrategy extends AbstractDrawingStrategy<ImageAttribute
   }
 
   @Override
-  protected Dimension getDimension(ImageAttribute imageAttr, Graphics graphics, ResourceManager resourceManager) {
+  protected Dimension getDimension(ImageAttribute imageAttr, ResourceManager resourceManager) {
     try {
       Image img = resourceManager.createImage(buildImageDescriptor(imageAttr));
       return new Dimension(img.getBounds().width, img.getBounds().height);

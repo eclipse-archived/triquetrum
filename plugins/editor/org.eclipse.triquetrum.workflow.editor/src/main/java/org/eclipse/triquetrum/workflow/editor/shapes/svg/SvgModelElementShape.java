@@ -23,6 +23,7 @@ import org.apache.batik.util.XMLResourceDescriptor;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.graphiti.platform.ga.IRendererContext;
+import org.eclipse.swt.SWT;
 import org.eclipse.triquetrum.workflow.editor.shapes.AbstractCustomModelElementShape;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +66,9 @@ public class SvgModelElementShape extends AbstractCustomModelElementShape {
       figure.setURI(getIconURI());
       figure.setBounds(this.getBounds());
       // }
+      graphics.setAntialias(SWT.ON);
+      graphics.setTextAntialias(SWT.ON);
+
       figure.paint(graphics);
     } catch (IOException e) {
       LOGGER.error("Error drawing SVG shape " + getIconURI(), e);
@@ -74,17 +78,17 @@ public class SvgModelElementShape extends AbstractCustomModelElementShape {
 
   @Override
   protected void outlineShape(Graphics graphics) {
-    float lineInset = Math.max(1.0f, getLineWidthFloat()) / 2.0f;
-    int inset1 = (int) Math.floor(lineInset);
-    int inset2 = (int) Math.ceil(lineInset);
-
-    Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
-    r.x += inset1;
-    r.y += inset1;
-    r.width -= inset1 + inset2;
-    r.height -= inset1 + inset2;
-
-    graphics.drawRectangle(r);
+//    float lineInset = Math.max(1.0f, getLineWidthFloat()) / 2.0f;
+//    int inset1 = (int) Math.floor(lineInset);
+//    int inset2 = (int) Math.ceil(lineInset);
+//
+//    Rectangle r = Rectangle.SINGLETON.setBounds(getBounds());
+//    r.x += inset1;
+//    r.y += inset1;
+//    r.width -= inset1 + inset2;
+//    r.height -= inset1 + inset2;
+//
+//    graphics.drawRectangle(r);
   }
 
   /**
@@ -105,8 +109,13 @@ public class SvgModelElementShape extends AbstractCustomModelElementShape {
     context.setDynamic(true);
     GVTBuilder builder = new GVTBuilder();
     GraphicsNode root = builder.build(context, doc);
-    int height = (int) root.getGeometryBounds().getHeight();
-    int width = (int) root.getGeometryBounds().getWidth();
+    // Add 1 pixel for height and width as it seems batik's size calculation 
+    // for svg shapes that have negative and positive coordinates
+    // forgets about the pixel needed for 0.
+    // E.g. polygons going from x=-15 to x=15 return 30 as width.
+    // And the result is that lines at x=15 are not drawn/shown in the resulting image :-(
+    int height = (int) root.getGeometryBounds().getHeight()+1;
+    int width = (int) root.getGeometryBounds().getWidth()+1;
     int minX = (int) root.getGeometryBounds().getMinX();
     int minY = (int) root.getGeometryBounds().getMinY();
 

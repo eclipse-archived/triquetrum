@@ -37,6 +37,7 @@ import org.eclipse.triquetrum.workflow.model.util.PtolemyUtil;
 
 import ptolemy.actor.IOPort;
 import ptolemy.kernel.util.IllegalActionException;
+import ptolemy.kernel.util.StringAttribute;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Port</b></em>'. <!-- end-user-doc -->
@@ -58,6 +59,8 @@ import ptolemy.kernel.util.IllegalActionException;
  * @generated
  */
 public class PortImpl extends NamedObjImpl implements Port {
+  private static final String PT_DIRECTION_ATTRNAME = "_cardinal";
+
   /**
    * The default value of the '{@link #isInput() <em>Input</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
    * 
@@ -629,13 +632,23 @@ public class PortImpl extends NamedObjImpl implements Port {
       getWrappedObject().setInput(isInput());
       getWrappedObject().setOutput(isOutput());
       getWrappedObject().setMultiport(isMultiPort());
+      // At first instantiation, buildWrappedObject() is invoked BEFORE applyWrappedObject() and this would overwrite the PtII actor direction!
+      // I think we need to split buildWrappedObject in (1) simple construction and (2) property setting and need to be able to just do 
+      // construction at initial instance creation.
+//      if(!Direction.DEFAULT.equals(getDirection())) {
+//        StringAttribute directionAttr = (StringAttribute) getWrappedObject().getAttribute(PT_DIRECTION_ATTRNAME, StringAttribute.class);
+//        if(directionAttr == null) {
+//          directionAttr = new StringAttribute(getWrappedObject(), PT_DIRECTION_ATTRNAME);
+//        }
+//        directionAttr.setExpression(getDirection().getName());
+//      }
     } catch (Exception e) {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
 
-  /**
+  /**`
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    *
    * @generated NOT
@@ -660,6 +673,16 @@ public class PortImpl extends NamedObjImpl implements Port {
       setInput(port.isInput());
       setOutput(port.isOutput());
       setMultiPort(port.isMultiport());
+      try {
+        StringAttribute directionAttr = (StringAttribute) port.getAttribute(PT_DIRECTION_ATTRNAME, StringAttribute.class);
+        if(directionAttr!=null) {
+          String directionName = directionAttr.getValueAsString();
+          setDirection(Direction.getByName(directionName));
+        }
+      } catch (IllegalActionException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      }
     }
   }
 
