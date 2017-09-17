@@ -56,10 +56,13 @@ import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.ui.features.DefaultFeatureProvider;
 import org.eclipse.triquetrum.workflow.editor.features.ActorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorDeleteFeature;
+import org.eclipse.triquetrum.workflow.editor.features.ActorLayoutFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ActorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationResizeFeature;
 import org.eclipse.triquetrum.workflow.editor.features.AnnotationUpdateFeature;
+import org.eclipse.triquetrum.workflow.editor.features.AttributeAddFeature;
+import org.eclipse.triquetrum.workflow.editor.features.AttributeLayoutFeature;
 import org.eclipse.triquetrum.workflow.editor.features.CompositeActorAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.CompositeActorCollapseExpandFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ConnectionAddFeature;
@@ -72,11 +75,9 @@ import org.eclipse.triquetrum.workflow.editor.features.DirectorUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementConfigureFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCopyFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementCreateFeature;
-import org.eclipse.triquetrum.workflow.editor.features.ModelElementLayoutFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementNameDirectEditFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementPasteFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ModelElementResizeFeature;
-import org.eclipse.triquetrum.workflow.editor.features.ParameterAddFeature;
 import org.eclipse.triquetrum.workflow.editor.features.ParameterUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.PortUpdateFeature;
 import org.eclipse.triquetrum.workflow.editor.features.TriqDefaultDeleteFeature;
@@ -84,6 +85,7 @@ import org.eclipse.triquetrum.workflow.editor.features.VertexAddFeature;
 import org.eclipse.triquetrum.workflow.editor.util.EditorUtils;
 import org.eclipse.triquetrum.workflow.model.Actor;
 import org.eclipse.triquetrum.workflow.model.Annotation;
+import org.eclipse.triquetrum.workflow.model.Attribute;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.Director;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
@@ -130,7 +132,9 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
   public ILayoutFeature getLayoutFeature(ILayoutContext context) {
     BoCategory boCategory = BoCategory.retrieveFrom(context.getPictogramElement());
     if (BoCategory.CompositeActor.equals(boCategory) || BoCategory.Actor.equals(boCategory)) {
-      return new ModelElementLayoutFeature(this);
+      return new ActorLayoutFeature(this);
+    } else if (BoCategory.Attribute.equals(boCategory) || BoCategory.Attribute.equals(boCategory)) {
+      return new AttributeLayoutFeature(this);
     }
     return super.getLayoutFeature(context);
   }
@@ -174,11 +178,11 @@ public class TriqFeatureProvider extends DefaultFeatureProvider {
       return new ConnectionAddFeature(this);
     } else if (context.getNewObject() instanceof Vertex) {
       return new VertexAddFeature(this);
-    } else if (context.getNewObject() instanceof Parameter) {
-      return new ParameterAddFeature(this);
     } else if (context.getNewObject() instanceof Annotation) {
       return new AnnotationAddFeature(this);
-    }
+    } else if (context.getNewObject() instanceof Attribute) {
+      return new AttributeAddFeature(this);
+    } 
     return super.getAddFeature(context);
   }
 
