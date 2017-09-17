@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
@@ -30,6 +31,8 @@ import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.platform.ga.IGraphicsAlgorithmRenderer;
 import org.eclipse.graphiti.platform.ga.IRendererContext;
+import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.triquetrum.workflow.model.Entity;
 
 public abstract class AbstractCustomModelElementShape extends RectangleFigure implements IGraphicsAlgorithmRenderer {
 
@@ -84,8 +87,14 @@ public abstract class AbstractCustomModelElementShape extends RectangleFigure im
         protected void doExecute() {
           try {
             GraphicsAlgorithm parentGA = ga.getParentGraphicsAlgorithm();
-            ResizeShapeContext context = new ResizeShapeContext((Shape) parentGA.getPictogramElement());
-            context.setSize(width + 2*ActorShapes.ACTOR_X_MARGIN, height + 2*ActorShapes.ACTOR_Y_MARGIN);
+            Shape pe = (Shape) parentGA.getPictogramElement();
+            EObject bo = Graphiti.getLinkService().getBusinessObjectForLinkedPictogramElement(pe);
+            ResizeShapeContext context = new ResizeShapeContext(pe);
+            if (bo instanceof Entity) {
+              context.setSize(width + 2*ActorShapes.ACTOR_X_MARGIN, height + 2*ActorShapes.ACTOR_Y_MARGIN);
+            } else {
+              context.setSize(width, height);
+            }
             context.setX(parentGA.getX());
             context.setY(parentGA.getY());
             context.putProperty("forced", "true");

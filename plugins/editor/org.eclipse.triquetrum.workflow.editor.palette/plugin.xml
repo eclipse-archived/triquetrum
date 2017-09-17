@@ -1,166 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <!--
-     Copyright (c) 2015, 2016 iSencia Belgium NV.
-     All rights reserved. This program and the accompanying materials
-     are made available under the terms of the Eclipse Public License v1.0
-     which accompanies this distribution, and is available at
-     http://www.eclipse.org/legal/epl-v10.html
+Copyright (c) 2015, 2016 iSencia Belgium NV.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
 
-     Contributors:
-        Erwin De Ley - initial API and implementation and/or initial documentation
- -->
+Contributors:
+Erwin De Ley - initial API and implementation and/or initial documentation
+Christopher Brooks - population
+
+See ptolemy/configs/basicActorLibrary.xml
+See https://wiki.eclipse.org/Triquetrum/Extending_Triquetrum
+-->
 
 <plugin>
-   <extension
-         name="Default Triquetrum palette definition"
-         point="org.eclipse.triquetrum.workflow.editor.paletteContribution">
+  <extension
+      name="Default Triquetrum palette definition"
+      point="org.eclipse.triquetrum.workflow.editor.paletteContribution">
 
-      <group displayName="Utilities" priority="1000">
-	      <entry
-	            class="ptolemy.vergil.kernel.attributes.TextAttribute"
-	            displayName="Annotation"
-	            icon="icons/value_field.gif"
-	            type="Annotation">
-	      </entry>
-        <entry
-              class="ptolemy.data.expr.Parameter"
-              displayName="Parameter"
-              icon="icons/value_field.gif"
-              type="Parameter">
-        </entry>
-        <entry
-              class="ptolemy.data.expr.StringParameter"
-              displayName="StringParameter"
-              icon="icons/value_field.gif"
-              type="Parameter">
-        </entry>
-        <entry
-              class="ptolemy.moml.Vertex"
-              displayName="Vertex"
-              type="Vertex">
-        </entry>
-      </group>
-      <group displayName="Directors" priority="900">
-        <entry
-              class="ptolemy.domains.sdf.kernel.SDFDirector"
-              displayName="SDF director"
-              icon="icons/director.gif"
-              type="Director">
-        </entry>
-        <entry
-              class="ptolemy.domains.pn.kernel.PNDirector"
-              displayName="PN director"
-              icon="icons/director.gif"
-              type="Director">
-        </entry>
-      </group>
-      <group displayName="Sources" priority="800">
-	      <entry
-	            class="ptolemy.actor.lib.Const"
-	            displayName="Constant"
-    	        icon="icons/value_field.gif"
-	            type="Actor">
-	      </entry>
-	      <entry
-	            class="ptolemy.actor.lib.Ramp"
-	            displayName="Ramp"
-    	        icon="icons/series.gif"
-	            type="Actor">
-	      </entry>
-        <entry
-              class="ptolemy.actor.lib.Sinewave"
-              displayName="Sinewave"
-              icon="icons/SinewaveIcon.xml"
-              iconType="ptolemy"
-              type="CompositeActor">
-        </entry>
-        <group displayName="IO">
-          <entry
-                class="ptolemy.actor.lib.io.CSVReader"
-                displayName="CSVReader"
-                icon="icons/CSVReaderIcon.svg"
-                iconType="svg"
-                type="Actor">
-          </entry>
-        </group>
-      </group>
-      <group displayName="Sinks" priority="700">
-        <group displayName="Visualization" icon="icons/display.gif">
-          <entry
-                class="ptolemy.actor.lib.gui.Display"
-                displayName="Display"
-                icon="icons/display.gif"
-                type="Actor">
-          </entry>
-        </group>
-	      <entry
-	            class="ptolemy.actor.lib.Discard"
-	            displayName="Discard"
-	            icon="icons/trash.gif"
-	            type="Actor">
-	      </entry>
-      </group>
-      <group displayName="Submodels" icon="icons/composite.gif">
-	      <entry
-	            class="ptolemy.actor.TypedCompositeActor"
-	            displayName="CompositeActor"
-	            icon="icons/composite.gif"
-	            type="CompositeActor">
-	      </entry>
-      </group>
-      <group displayName="Test" icon="icons/test.gif">
-	      <entry
-	            class="ptolemy.actor.lib.Test"
-	            displayName="Test"
-    	        icon="icons/test.gif"
-	            type="Actor">
-	      </entry>
-	      <entry
-	            class="ptolemy.actor.lib.NonStrictTest"
-	            displayName="NonStrictTest"
-    	        icon="icons/test.gif"
-	            type="Actor">
-	      </entry>
-      </group>
-      <group displayName="Flow control" priority="500">
-        <entry
-              class="ptolemy.actor.lib.RecordDisassembler"
-              displayName="RecordDisassembler"
-              icon="icons/RecordDisassemblerIcon.svg"
-              iconType="svg"
-              type="Actor">
-        </entry>
-      </group>
-      <group displayName="Transformation" priority="300">
-        <entry
-             class="org.eclipse.triquetrum.processing.actor.TaskBasedActor"
-             displayName="TaskBasedActor"
-             type="Actor">
-        </entry>
-	      <entry
-             class="ptolemy.actor.lib.AddSubtract"
-             displayName="AddSubtract"
-             icon="icons/AddSubtractIcon.svg"
-             iconType="svg"
-             type="Actor">
-	      </entry>
-	      <entry
-	            class="ptolemy.actor.lib.TrigFunction"
-	            displayName="TrigFunction"
-    	        icon="icons/actor.gif"
-	            type="Actor">
-	      </entry>
-
-        <entry
-              class="ptolemy.actor.lib.MovingAverage"
-              displayName="MovingAverage"
-              icon="icons/MovingAverageIcon.xml"
-              iconType="ptolemy"
-              type="Actor">
-        </entry>
-      </group>
-   </extension>
+    <group displayName="Utilities" priority="1000">
+      <entry
+          class="ptolemy.vergil.kernel.attributes.TextAttribute"
+          displayName="Annotation"
+          type="Annotation">
+      </entry>
+      <entry
+          class="ptolemy.data.expr.Parameter"
+          displayName="Parameter"
+          icon="icons/value_field.gif"
+          type="Parameter">
+      </entry>
+      <entry
+          class="ptolemy.data.expr.StringParameter"
+          displayName="StringParameter"
+          icon="icons/value_field.gif"
+          type="Parameter">
+      </entry>
+      <entry
+          class="ptolemy.moml.Vertex"
+          displayName="Vertex"
+          type="Vertex">
+      </entry>
+    </group>
+    <group displayName="Directors" priority="900">
+      <entry
+          class="ptolemy.domains.sdf.kernel.SDFDirector"
+          displayName="SDF director"
+          icon="icons/director.gif"
+          type="Director">
+      </entry>
+      <entry
+          class="ptolemy.domains.pn.kernel.PNDirector"
+          displayName="PN director"
+          icon="icons/director.gif"
+          type="Director">
+      </entry>
+    </group>
+    <group displayName="Submodels" icon="icons/composite.gif">
+      <entry
+          class="ptolemy.actor.TypedCompositeActor"
+          displayName="CompositeActor"
+          icon="icons/composite.gif"
+          type="CompositeActor">
+      </entry>
+    </group>
+    <group displayName="Transformation" priority="300">
+      <entry
+          class="org.eclipse.triquetrum.processing.actor.TaskBasedActor"
+          displayName="TaskBasedActor"
+          type="Actor">
+      </entry>
+    </group>
+  </extension>
 
 </plugin>
 

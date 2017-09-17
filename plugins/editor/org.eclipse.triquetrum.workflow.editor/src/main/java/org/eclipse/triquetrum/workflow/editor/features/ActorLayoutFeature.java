@@ -48,9 +48,9 @@ import org.eclipse.triquetrum.workflow.model.Direction;
 import org.eclipse.triquetrum.workflow.model.Entity;
 import org.eclipse.triquetrum.workflow.model.Port;
 
-public class ModelElementLayoutFeature extends AbstractLayoutFeature {
+public class ActorLayoutFeature extends AbstractLayoutFeature {
 
-  public ModelElementLayoutFeature(IFeatureProvider fp) {
+  public ActorLayoutFeature(IFeatureProvider fp) {
     super(fp);
   }
 

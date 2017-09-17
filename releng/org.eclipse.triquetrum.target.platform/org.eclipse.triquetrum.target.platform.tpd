@@ -27,7 +27,7 @@ location "http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repos
 //	org.eclipse.triquetrum.ptolemy.feature.feature.group lazy
 //}
 
-location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0/" {
+location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-2/" {
 	org.ptolemy.tycho.feature.feature.group lazy
 }
 
@@ -74,10 +74,4 @@ location "http://download.eclipse.org/releases/oxygen/" {
 location "http://download.eclipse.org/ecp/releases/releases_113/" {
 	org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group
 	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group
-}
-
-// Add swt dummy fragments so that we can build installers for multiple platforms.
-// See https://bugs.eclipse.org/bugs/show_bug.cgi?id=491951#c35
-location "http://eclipseguru.github.io/missing-swt-fragments/" {
-	org.eclipse.swt.dummyfragments.feature.group
 }
