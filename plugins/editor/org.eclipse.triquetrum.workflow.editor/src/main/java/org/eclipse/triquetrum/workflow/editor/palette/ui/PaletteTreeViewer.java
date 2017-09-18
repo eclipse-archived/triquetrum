@@ -12,8 +12,12 @@ package org.eclipse.triquetrum.workflow.editor.palette.ui;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.GridData;
 import org.eclipse.draw2d.geometry.Point;
@@ -21,10 +25,20 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gef.TreeEditPart;
 import org.eclipse.gef.editparts.RootTreeEditPart;
+import org.eclipse.gef.palette.PaletteContainer;
+import org.eclipse.gef.palette.PaletteEntry;
 import org.eclipse.gef.palette.PaletteRoot;
 import org.eclipse.gef.ui.palette.PaletteViewer;
 import org.eclipse.gef.ui.parts.GraphicalViewerKeyHandler;
 import org.eclipse.gef.ui.parts.TreeViewer;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.DND;
@@ -35,14 +49,22 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.swt.widgets.Widget;
+import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
+import org.eclipse.triquetrum.workflow.editor.palette.LibraryManager;
+import org.eclipse.triquetrum.workflow.editor.palette.PaletteTreeNode;
+import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
+import org.eclipse.ui.statushandlers.StatusManager;
+import org.osgi.service.event.Event;
 
 /**
- * Try to merge features of {@link TreeViewer} into the {@link PaletteViewer} and use a {@link FilteredTree} with that as well.
+ * Try to merge features of {@link TreeViewer} into the {@link PaletteViewer} and use a {@link FilteredTree} with that
+ * as well.
  *
  */
 public class PaletteTreeViewer extends PaletteViewer {
@@ -77,13 +99,15 @@ public class PaletteTreeViewer extends PaletteViewer {
   @Override
   public void setPaletteRoot(PaletteRoot root) {
     super.setPaletteRoot(root);
-    ((FilteredTree) getControl()).getViewer().setInput(getRootEditPart().getContents().getChildren());
+    ((FilteredTree) getControl()).getViewer().setInput(getRootEditPart().getContents());
   }
 
   /**
-   * Creates the default tree and sets it as the control. The default styles will show scrollbars as needed, and allows for multiple selection.
+   * Creates the default tree and sets it as the control. The default styles will show scrollbars as needed, and allows
+   * for multiple selection.
    * <p>
-   * Doesn't use the default createControl method name, as that one is made final in the ScrollingGraphicalViewer base class...
+   * Doesn't use the default createControl method name, as that one is made final in the ScrollingGraphicalViewer base
+   * class...
    * </p>
    *
    * @param parent
@@ -92,17 +116,22 @@ public class PaletteTreeViewer extends PaletteViewer {
    */
   public Control createTreeControl(Composite parent) {
     PatternFilter filter = new PatternFilter();
-    FilteredTree tree = new FilteredTree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL, filter, true);
+    FilteredTree tree = new PaletteFilteredTree(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL, filter, true);
     tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-    tree.getViewer().setContentProvider(new PaletteTreeProvider());
+    tree.getViewer().setContentProvider(new PaletteTreeProvider(tree.getViewer()));
     tree.getViewer().setLabelProvider(new PaletteLabelProvider(this));
     setControl(tree);
+    addDropTargetListener(new UserLibraryTransferDropListener(this));
     return tree;
   }
 
   protected Tree getTreeControl() {
+    return getTreeViewer().getTree();
+  }
+
+  protected org.eclipse.jface.viewers.TreeViewer getTreeViewer() {
     final FilteredTree filteredTree = (FilteredTree) getControl();
-    return filteredTree.getViewer().getTree();
+    return filteredTree.getViewer();
   }
 
   /**
@@ -144,7 +173,8 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * "Hooks up" a Control, i.e. sets it as the control for the RootTreeEditPart, adds necessary listener for proper operation, etc.
+   * "Hooks up" a Control, i.e. sets it as the control for the RootTreeEditPart, adds necessary listener for proper
+   * operation, etc.
    */
   @Override
   protected void hookControl() {
@@ -176,6 +206,54 @@ public class PaletteTreeViewer extends PaletteViewer {
     } catch (ClassCastException e) {
       // to catch the wrong cast to graphical widget etc in the super-classes
     }
+
+    hookContextMenu();
+  }
+
+  /**
+   * Hooks a context menu manager to a selected tree node and adds the relevant actions for the selected node type.
+   */
+  private void hookContextMenu() {
+    MenuManager menuMgr = new MenuManager("#PopupMenu");
+    menuMgr.setRemoveAllWhenShown(true);
+    menuMgr.addMenuListener(new IMenuListener() {
+      public void menuAboutToShow(IMenuManager manager) {
+        ISelection selection = getSelection();
+        if (selection instanceof IStructuredSelection) {
+          IStructuredSelection treeSelection = (IStructuredSelection) selection;
+          if (treeSelection.size() == 1) {
+            Object selObj = treeSelection.getFirstElement();
+            if (selObj instanceof PaletteTreeNodeEditPart) {
+              PaletteTreeNodeEditPart sel = (PaletteTreeNodeEditPart) selObj;
+              Object selModel = sel.getModel();
+              if ((selModel instanceof PaletteTreeNode)) {
+                PaletteTreeNode ptn = (PaletteTreeNode) selModel;
+                if (PaletteEntry.PERMISSION_LIMITED_MODIFICATION <= ptn.getUserModificationPermission()) {
+                  manager.add(new AddFolderAction(sel));
+                  if (PaletteEntry.PERMISSION_FULL_MODIFICATION == ptn.getUserModificationPermission()) {
+                    manager.add(new DeleteAction(sel));
+                  }
+                }
+              }
+            } else if (selObj instanceof PaletteEntryEditPart) {
+              PaletteEntryEditPart sel = (PaletteEntryEditPart) selObj;
+              Object selModel = sel.getModel();
+              if ((selModel instanceof PaletteEntry)) {
+                PaletteEntry pe = (PaletteEntry) selModel;
+                if (PaletteEntry.PERMISSION_FULL_MODIFICATION == pe.getUserModificationPermission()) {
+                  manager.add(new DeleteAction(sel));
+                }
+              }
+            }
+            manager.add(new Separator());
+            manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+          }
+        }
+      }
+    });
+    Menu menu = menuMgr.createContextMenu(getTreeControl());
+    getTreeControl().setMenu(menu);
+    // getSite().registerContextMenu(menuMgr, viewer);
   }
 
   /**
@@ -193,7 +271,8 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * Creates or disposes a DragSource as needed, and sets the supported transfer types. Clients should not need to call or override this method.
+   * Creates or disposes a DragSource as needed, and sets the supported transfer types. Clients should not need to call or
+   * override this method.
    */
   @Override
   protected void refreshDragSourceAdapter() {
@@ -209,7 +288,8 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * Creates or disposes a DropTarget as needed, and sets the supported transfer types. Clients should not need to call or override this method.
+   * Creates or disposes a DropTarget as needed, and sets the supported transfer types. Clients should not need to call or
+   * override this method.
    */
   @Override
   protected void refreshDropTargetAdapter() {
@@ -244,8 +324,9 @@ public class PaletteTreeViewer extends PaletteViewer {
   }
 
   /**
-   * Unhooks a control so that it can be reset. This method deactivates the contents, removes the Control as being the Control of the RootTreeEditPart, etc. It
-   * does not remove the listeners because it is causing errors, although that would be a desirable outcome.
+   * Unhooks a control so that it can be reset. This method deactivates the contents, removes the Control as being the
+   * Control of the RootTreeEditPart, etc. It does not remove the listeners because it is causing errors, although that
+   * would be a desirable outcome.
    */
   @Override
   protected void unhookControl() {
@@ -255,5 +336,129 @@ public class PaletteTreeViewer extends PaletteViewer {
     // Ideally, you would want to remove the listeners here
     TreeEditPart tep = (TreeEditPart) getRootEditPart();
     tep.setWidget(null);
+  }
+
+  // This is a hacky way to override the standard FilteredTree's viewer, whose inputChanged() implementation erases all Tree items 
+  // that had already been created during the construction of this palette's editpart hierarchy.
+  // Which in turn causes the palette's TreeItems in there to be disposed.
+  // We've lost the FilteredTree.NotifyingViewer cache clearing, as we can not simply inherit or move that logic in here,
+  // because the org.eclipse.ui.dialogs.PatternFilter methods used in there are package-protected and can not be invoked from here...
+  // So the full implementation would also need to copy PatternFilter etc. (we may do that in the future?)
+  private static class PaletteFilteredTree extends FilteredTree {
+    public PaletteFilteredTree(Composite parent, int treeStyle, PatternFilter filter, boolean useNewLook) {
+      super(parent, treeStyle, filter, useNewLook);
+    }
+    
+    @Override
+    protected org.eclipse.jface.viewers.TreeViewer doCreateTreeViewer(Composite parent, int style) {
+      return new PaletteJFaceTreeViewer(parent, style);
+    }
+
+    class PaletteJFaceTreeViewer extends org.eclipse.jface.viewers.TreeViewer {
+      public PaletteJFaceTreeViewer(Composite parent, int style) {
+        super(parent, style);
+      }
+
+      protected void inputChanged(Object input, Object oldInput) {
+      }
+    }
+  }
+
+  private class AddFolderAction extends Action {
+    private PaletteTreeNodeEditPart selectedNode;
+
+    /**
+     * @param selectedNode
+     */
+    public AddFolderAction(PaletteTreeNodeEditPart selectedNode) {
+      this.selectedNode = selectedNode;
+      setText("Create folder");
+      setToolTipText("Creates a new subfolder in the user library");
+      setImageDescriptor(TriqEditorPlugin.getImageDescriptor("icons/node_new.gif"));
+    }
+
+    @Override
+    public void run() {
+      PaletteTreeNode entry = (PaletteTreeNode) selectedNode.getModel();
+      String libraryName = selectedNode.getFullTreePath('.');
+
+      AddFolderToUserLibraryDialog dialog = new AddFolderToUserLibraryDialog(getTreeControl().getShell());
+      dialog.setBlockOnOpen(true);
+      int dialogReturnCode = dialog.open();
+      if (Dialog.OK == dialogReturnCode) {
+        Map<String, String> properties = new HashMap<>();
+        String folderName = dialog.folderName;
+        properties.put("displayName", folderName);
+        properties.put("libraryName", libraryName);
+
+        Event event = new Event(LibraryManager.ADD_EVENT_TOPIC, properties);
+        try {
+          // Sending events is nice to decouple UI handling from the underlying library management,
+          // but we don't get any indication about success/failure.
+          // So we may need to replace this by direct method calls.
+          TriqEditorPlugin.getDefault().getEventAdminService().sendEvent(event);
+          PaletteTreeNode folderTreeNode = new PaletteTreeNode(folderName);
+          folderTreeNode.setUserModificationPermission(PaletteEntry.PERMISSION_FULL_MODIFICATION);
+          selectedNode.addChild(folderTreeNode);
+          entry.add(folderTreeNode);
+        } catch (NullPointerException e) {
+          StatusManager.getManager().handle(new Status(IStatus.ERROR, TriqEditorPlugin.getID(),
+              "Event bus not available, impossible to trigger a folder addition event for the user library."), StatusManager.BLOCK);
+        }
+      }
+    }
+  }
+
+  private class DeleteAction extends Action {
+    private PaletteEntryEditPart selectedNode;
+
+    /**
+     * @param selectedNode
+     */
+    public DeleteAction(PaletteEntryEditPart selectedNode) {
+      this.selectedNode = selectedNode;
+      setText("Delete");
+      setToolTipText("Deletes the selected element");
+      setImageDescriptor(TriqEditorPlugin.getImageDescriptor("icons/node_delete.gif"));
+    }
+
+    @Override
+    public void run() {
+      PaletteEntry entry = (PaletteEntry) selectedNode.getModel();
+      String modelName = entry.getLabel();
+      String modelClass = entry.getDescription();
+      String elementType = "CompositeActor";
+
+      Map<String, String> properties = new HashMap<>();
+      properties.put("displayName", modelName);
+      properties.put("class", modelClass);
+      properties.put("type", elementType);
+      String parentTreePath = selectedNode.getParentTreePath('.');
+      properties.put("libraryName", parentTreePath);
+
+      Event event = new Event(LibraryManager.DELETE_EVENT_TOPIC, properties);
+      try {
+        // Sending events is nice to decouple UI handling from the underlying library management,
+        // but we don't get any indication about success/failure.
+        // So we may need to replace this by direct method calls.
+        TriqEditorPlugin.getDefault().getEventAdminService().sendEvent(event);
+        // The palette's model consists of 2 layers : palette entry editparts that have palette entries as model.
+        // And way down there's still the Ptolemy UserLibrary as well.
+        // Getting all models synchronized via listeners would be the cleanest, but couldn't get it to work.
+        // (org.eclipse.gef.editparts.AbstractEditPart.refreshChildren() always caused errors in reorderChild()
+        // because of a null parent somewhere. Too complex for me to understand...)
+        // So we do all the deletes ourselves in here...
+        ((PaletteTreeNodeEditPart) selectedNode.getParent()).removeChild(selectedNode);
+        PaletteContainer container = entry.getParent();
+        if (container != null) {
+          container.remove(entry);
+        }
+        getTreeViewer().refresh(selectedNode.getParent());
+      } catch (NullPointerException e) {
+        StatusManager.getManager().handle(
+            new Status(IStatus.ERROR, TriqEditorPlugin.getID(), "Event bus not available, impossible to trigger a delete event for the user library."),
+            StatusManager.BLOCK);
+      }
+    }
   }
 }

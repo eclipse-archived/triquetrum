@@ -11,21 +11,13 @@
 package org.eclipse.triquetrum.workflow.repository.ui.views;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
@@ -38,38 +30,29 @@ import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.dnd.DND;
+import org.eclipse.swt.dnd.DragSourceEvent;
+import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.TreeDragSourceEffect;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.triquetrum.ErrorCode;
 import org.eclipse.triquetrum.workflow.DuplicateEntryException;
 import org.eclipse.triquetrum.workflow.EntryNotFoundException;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.eclipse.triquetrum.workflow.WorkflowRepositoryRegistry;
 import org.eclipse.triquetrum.workflow.WorkflowRepositoryService;
+import org.eclipse.triquetrum.workflow.rcp.ModelHandleTransfer;
 import org.eclipse.triquetrum.workflow.repository.ui.RepositoryPlugin;
 import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.dialogs.ElementListSelectionDialog;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.ui.statushandlers.StatusManager;
-import org.osgi.service.event.Event;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,6 +81,7 @@ public class WorkflowRepositoryView extends ViewPart {
     viewer.setContentProvider(new ViewContentProvider());
     viewer.setLabelProvider(new ViewLabelProvider(viewer));
     viewer.setInput(getViewSite());
+    viewer.addDragSupport(DND.DROP_COPY, new Transfer[] { ModelHandleTransfer.getInstance() }, new AocDragSourceListener(viewer));
 
     getSite().setSelectionProvider(viewer);
 
@@ -137,7 +121,6 @@ public class WorkflowRepositoryView extends ViewPart {
               }
             }
             if (selObj instanceof ModelCodeTreeNode) {
-              manager.add(new AddToUserLibraryAction((ModelCodeTreeNode) selObj));
               manager.add(new DeleteAction((ModelCodeTreeNode) selObj));
             }
             manager.add(new Separator());
@@ -289,119 +272,6 @@ public class WorkflowRepositoryView extends ViewPart {
     }
   }
 
-  private class AddToUserLibraryAction extends Action {
-    private AbstractTreeNode selectedNode;
-
-    /**
-     * @param selectedNode
-     */
-    public AddToUserLibraryAction(AbstractTreeNode selectedNode) {
-      this.selectedNode = selectedNode;
-      setText("Add to user library");
-      setToolTipText("Adds a repository workflow model to the user library, in the editor palette.");
-      setImageDescriptor(RepositoryPlugin.getImageDescriptor("icons/import.gif"));
-    }
-
-    @Override
-    public void run() {
-      AddToUserLibraryDialog dialog = new AddToUserLibraryDialog(viewer.getControl().getShell(), selectedNode);
-      dialog.setBlockOnOpen(true);
-      int dialogReturnCode = dialog.open();
-      if (Dialog.OK == dialogReturnCode) {
-        String modelName = dialog.modelName;
-        String modelClass = dialog.modelClass;
-        String elementType = "CompositeActor";
-
-        Map<String, String> properties = new HashMap<>();
-        properties.put("displayName", modelName);
-        properties.put("class", modelClass);
-        properties.put("type", elementType);
-
-        Event event = new Event("org/eclipse/triquetrum/workflow/userlibrary/add", properties);
-        try {
-          RepositoryPlugin.getDefault().getEventAdminService().postEvent(event);
-        } catch (NullPointerException e) {
-          StatusManager.getManager().handle(
-              new Status(IStatus.ERROR, RepositoryPlugin.PLUGIN_ID, 
-                  "Event bus not available, impossible to trigger an addition event for the user library."),
-              StatusManager.BLOCK);
-        }
-      }
-    }
-  }
-
-  private class AddToUserLibraryDialog extends Dialog {
-    private Text modelNameField;
-    private Text modelClassField;
-
-    String modelName;
-    String modelClass;
-
-    protected AddToUserLibraryDialog(Shell parentShell, AbstractTreeNode selectedNode) {
-      super(parentShell);
-      setShellStyle(SWT.RESIZE | SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-      if (selectedNode instanceof ModelCodeTreeNode) {
-        modelClass = ((ModelCodeTreeNode) selectedNode).getModelCode();
-        modelName = modelClass.substring(modelClass.lastIndexOf('.') + 1);
-      }
-    }
-
-    @Override
-    protected Point getInitialSize() {
-      return new Point(300, 200);
-    }
-
-    @Override
-    protected void configureShell(Shell shell) {
-      super.configureShell(shell);
-      shell.setText("Add to User Library");
-    }
-
-    // TODO add Ok disable/enable depending on text field contents
-    @Override
-    protected Control createDialogArea(Composite parent) {
-      Composite container = new Composite(parent, SWT.NULL);
-      final GridLayout gridLayout = new GridLayout();
-      gridLayout.numColumns = 2;
-      container.setLayout(gridLayout);
-      container.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL));
-      container.setFont(parent.getFont());
-
-      final Label modelNameBoxLabel = new Label(container, SWT.NONE);
-      final GridData modelCodeBoxLabelLayout = new GridData(GridData.HORIZONTAL_ALIGN_END);
-      modelNameBoxLabel.setLayoutData(modelCodeBoxLabelLayout);
-      modelNameBoxLabel.setText("Model name:");
-
-      modelNameField = new Text(container, SWT.BORDER);
-      modelNameField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-      modelNameField.setText(modelName);
-
-      final Label modelClassBoxLabel = new Label(container, SWT.NONE);
-      final GridData modelClassBoxLabelLayout = new GridData(GridData.HORIZONTAL_ALIGN_END);
-      modelClassBoxLabel.setLayoutData(modelClassBoxLabelLayout);
-      modelClassBoxLabel.setText("Model class:");
-
-      modelClassField = new Text(container, SWT.BORDER);
-      modelClassField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-      modelClassField.setText(modelClass);
-      modelClassField.setEditable(false);
-
-      return container;
-    }
-
-    @Override
-    protected void buttonPressed(int buttonId) {
-      if (buttonId == IDialogConstants.OK_ID) {
-        modelName = modelNameField.getText().trim();
-        modelClass = modelClassField.getText().trim();
-      } else {
-        modelName = null;
-        modelClass = null;
-      }
-      super.buttonPressed(buttonId);
-    }
-  }
-
   private class DeleteAction extends Action {
     private ModelCodeTreeNode selectedNode;
 
@@ -430,173 +300,52 @@ public class WorkflowRepositoryView extends ViewPart {
     }
   }
 
-  private class ImportDialog extends Dialog {
-    private Text momlPathField;
-    private AbstractTreeNode selectedNode;
-    private Text modelCodeField;
+  private static class AocDragSourceListener extends TreeDragSourceEffect {
+    private TreeViewer viewer;
 
-    private String momlPath;
-    private String modelCode;
+    public AocDragSourceListener(TreeViewer treeViewer) {
+      super(treeViewer.getTree());
+      this.viewer = treeViewer;
+    }
 
-    protected ImportDialog(Shell parentShell, AbstractTreeNode selectedNode) {
-      super(parentShell);
-      this.selectedNode = selectedNode;
-      setShellStyle(SWT.RESIZE | SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-      if (selectedNode instanceof ModelCodeTreeNode) {
-        modelCode = ((ModelCodeTreeNode) selectedNode).getModelCode();
+    @Override
+    public void dragStart(DragSourceEvent event) {
+      ModelHandle handle = getModelHandle();
+      if (handle == null) {
+        event.doit = false;
       }
+      ModelHandleTransfer.getInstance().setModelHandle(handle);
     }
 
     @Override
-    protected Point getInitialSize() {
-      return new Point(300, 200);
+    public void dragSetData(DragSourceEvent event) {
+      event.data = getModelHandle();
     }
 
     @Override
-    protected void configureShell(Shell shell) {
-      super.configureShell(shell);
-      shell.setText("Import a new model");
+    public void dragFinished(DragSourceEvent event) {
+      super.dragFinished(event);
+      ModelHandleTransfer.getInstance().setModelHandle(null);
     }
 
-    // TODO add Ok disable/enable depending on text field contents
-    @Override
-    protected Control createDialogArea(Composite parent) {
-      Composite container = new Composite(parent, SWT.NULL);
-      final GridLayout gridLayout = new GridLayout();
-      gridLayout.numColumns = 3;
-      container.setLayout(gridLayout);
-      container.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL | GridData.GRAB_HORIZONTAL));
-      container.setFont(parent.getFont());
-
-      final Label momlPathLabel = new Label(container, SWT.NONE);
-      final GridData momlPathLabelLayout = new GridData();
-      momlPathLabelLayout.horizontalSpan = 3;
-      momlPathLabel.setLayoutData(momlPathLabelLayout);
-      momlPathLabel.setText("Select the Model file to import");
-
-      final Label momlPathBoxLabel = new Label(container, SWT.NONE);
-      final GridData momlPathBoxLabelLayout = new GridData(GridData.HORIZONTAL_ALIGN_END);
-      momlPathBoxLabel.setLayoutData(momlPathBoxLabelLayout);
-      momlPathBoxLabel.setText("Model file:");
-
-      momlPathField = new Text(container, SWT.BORDER);
-      momlPathField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-      final Button browseButton = new Button(container, SWT.NONE);
-      browseButton.addSelectionListener(new SelectionAdapter() {
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-          IPath path = browse(getAbsoluteMomlPath());
-          if (path == null)
-            return;
-          IPath rootLoc = ResourcesPlugin.getWorkspace().getRoot().getLocation();
-          if (rootLoc.isPrefixOf(path))
-            path = path.setDevice(null).removeFirstSegments(rootLoc.segmentCount());
-          momlPathField.setText(path.toString());
-          if (modelCodeField != null && modelCodeField.getText().isEmpty()) {
-            String defaultCode = path.removeFileExtension().lastSegment();
-            modelCodeField.setText(defaultCode);
+    private ModelHandle getModelHandle() {
+      ModelHandle handle = null;
+      ISelection selection = viewer.getSelection();
+      if (selection instanceof TreeSelection) {
+        TreeSelection treeSelection = (TreeSelection) selection;
+        if (treeSelection.size() == 1) {
+          Object selObj = treeSelection.getFirstElement();
+          if(selObj instanceof ModelCodeTreeNode) {
+            ModelCodeTreeNode modelCodeNode = (ModelCodeTreeNode)selObj;
+            try {
+              handle = modelCodeNode.getActiveModelHandle();
+            } catch (EntryNotFoundException e) {
+              // ignore and just interpret as non-drag-able...
+            }
           }
         }
-      });
-      browseButton.setText("Browse...");
-
-      if (selectedNode instanceof WorkflowRepositoryTreeNode) {
-        // No specific asset code selected yet, so the user must be able to select an existing one
-        // or create a new one.
-        WorkflowRepositoryService repoSvc = ((WorkflowRepositoryTreeNode) selectedNode).getRepository();
-        final Label modelCodeBoxLabel = new Label(container, SWT.NONE);
-        final GridData modelCodeBoxLabelLayout = new GridData(GridData.HORIZONTAL_ALIGN_END);
-        modelCodeBoxLabel.setLayoutData(modelCodeBoxLabelLayout);
-        modelCodeBoxLabel.setText("Model name:");
-
-        modelCodeField = new Text(container, SWT.BORDER);
-        modelCodeField.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-        final Button selectButton = new Button(container, SWT.NONE);
-        selectButton.addSelectionListener(new SelectionAdapter() {
-          @Override
-          public void widgetSelected(SelectionEvent e) {
-            String modelCode = selectModelCode(repoSvc);
-            if (modelCode == null)
-              return;
-            modelCodeField.setText(modelCode.toString());
-          }
-        });
-        selectButton.setText("Select...");
       }
-      return container;
-    }
-
-    @Override
-    protected void buttonPressed(int buttonId) {
-      if (buttonId == IDialogConstants.OK_ID) {
-        momlPath = momlPathField.getText().trim();
-        if (modelCodeField != null) {
-          modelCode = modelCodeField.getText().trim();
-        }
-      } else {
-        momlPath = null;
-        modelCode = null;
-      }
-      super.buttonPressed(buttonId);
-    }
-
-    /**
-     * Tries to resolve the contents of the moml path field to an IPath, and returns it. If the field contains a relative path it will be resolved relative to
-     * the Eclipse workspace folder.
-     *
-     * @return the absolute IPath to the MOML file, or null
-     */
-    protected IPath getAbsoluteMomlPath() {
-      if (momlPath != null && momlPath.length() > 0) {
-        return getAbsolutePath(new Path(momlPath));
-      } else {
-        return null;
-      }
-    }
-
-    protected String getRepositoryNode() {
-      return modelCode;
-    }
-
-    private IPath getAbsolutePath(IPath path) {
-      if (!path.isAbsolute()) {
-        // relative paths are relative to the Eclipse workspace
-        path = ResourcesPlugin.getWorkspace().getRoot().getLocation().append(path);
-      }
-      return path;
-    }
-
-    /**
-     * Sets up a dialog box allowing the user to browse the file system and select a file.
-     *
-     * @param path
-     *          the path to be investigated
-     * @return the chosen path from the dialog box
-     */
-    private IPath browse(IPath path) {
-      FileDialog dialog = new FileDialog(getShell());
-      // TODO check if these file extensions work as expected on our supported platforms
-      // (win,lin,mac)
-      dialog.setFilterExtensions(new String[] { "*.moml;*.xml" });
-      if (path != null) {
-        if (path.segmentCount() > 1)
-          dialog.setFilterPath(path.toOSString());
-      }
-      String result = dialog.open();
-      if (result == null)
-        return null;
-      return new Path(result);
-    }
-
-    private String selectModelCode(WorkflowRepositoryService repoSvc) {
-      ElementListSelectionDialog dialog = new ElementListSelectionDialog(getShell(), new LabelProvider());
-      dialog.setTitle("Repository import location");
-      dialog.setMessage("Select the model's location in the repository (* = any string, ? = any char):");
-      dialog.setElements(repoSvc.getAllModelCodes());
-      dialog.open();
-      return (String) dialog.getFirstResult();
+      return handle;
     }
   }
 }

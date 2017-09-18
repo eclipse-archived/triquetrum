@@ -10,8 +10,12 @@
  *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.palette;
 
-
-import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.*;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.CLASS;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.DISPLAY_NAME;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.ICON;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.ICON_TYPE;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.PRIORITY;
+import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.PROVIDER;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,7 +63,12 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
 
   @Override
   protected PaletteRoot createPaletteRoot() {
-    TriqPaletteRoot result = new TriqPaletteRoot(getDiagramTypeProvider());
+    TriqPaletteRoot palette = new TriqPaletteRoot(getDiagramTypeProvider());
+    fillPalette(palette);
+    return palette;
+  }
+
+  private void fillPalette(TriqPaletteRoot result) {
     IExtensionPoint extPoint = Platform.getExtensionRegistry().getExtensionPoint(PALETTE_CONTRIBUTION_EXTENSION_ID);
     IExtension[] extensions = extPoint.getExtensions();
     for (IExtension ext : extensions) {
@@ -68,7 +77,6 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
         handlePaletteEntry(result, null, cfgElem);
       }
     }
-    return result;
   }
 
   @SuppressWarnings("unchecked")
@@ -82,6 +90,7 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
       // just ignore this and take the default value 0
     }
     String label = cfgElem.getAttribute(DISPLAY_NAME);
+
     String iconType = cfgElem.getAttribute(ICON_TYPE);
     iconType = StringUtils.isBlank(iconType) ? TriqFeatureProvider.ICONTYPE_IMG : iconType;
     String iconResource = cfgElem.getAttribute(ICON);
@@ -112,40 +121,12 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
       break;
     }
     case "group": {
-      // We assume the nr of entries on each level in the palette will be limited
-      // so a straightforward iteration to look for existing groups should not be an issue.
-      PaletteTreeNode pg = null;
-      for (Object pe : parent.getChildren()) {
-        if (pe instanceof PaletteTreeNode && ((PaletteTreeNode) pe).getLabel().equals(label)) {
-          pg = (PaletteTreeNode) pe;
-          // We're a bit limited to determine the real desired priority
-          // when a group is used in different palette contributions
-          // as we have no control on the order in which the contributions
-          // are handled.
-          // So we always go for the highest priority across all contributions.
-          // (but remember that we store them as negative values)
-          if (pg.getPriority() > priority) {
-            pg.setPriority(priority);
-          }
-          break;
-        }
-      }
-      if (pg == null) {
-        pg = new PaletteTreeNode(label);
-        pg.setSmallIcon(imgDescriptor);
-        pg.setPriority(priority);
-        parent.add(pg);
-      }
-      for (IConfigurationElement child : cfgElem.getChildren()) {
-        handlePaletteEntry(pg, cfgElem, child);
-      }
-
       String providerClazz = cfgElem.getAttribute(PROVIDER);
       if (providerClazz != null) {
         try {
           PaletteEntryProvider pep = (PaletteEntryProvider) cfgElem.createExecutableExtension(PROVIDER);
           for (IConfigurationElement child : pep.getPaletteEntries()) {
-            handlePaletteEntry(pg, cfgElem, child);
+            handlePaletteEntry(parent, cfgElem, child);
           }
         } catch (CoreException e) {
           // TODO Auto-generated catch block
@@ -154,8 +135,35 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
+      } else {
+        // We assume the nr of entries on each level in the palette will be limited
+        // so a straightforward iteration to look for existing groups should not be an issue.
+        PaletteTreeNode pg = null;
+        for (Object pe : parent.getChildren()) {
+          if (pe instanceof PaletteTreeNode && ((PaletteTreeNode) pe).getLabel().equals(label)) {
+            pg = (PaletteTreeNode) pe;
+            // We're a bit limited to determine the real desired priority
+            // when a group is used in different palette contributions
+            // as we have no control on the order in which the contributions
+            // are handled.
+            // So we always go for the highest priority across all contributions.
+            // (but remember that we store them as negative values)
+            if (pg.getPriority() > priority) {
+              pg.setPriority(priority);
+            }
+            break;
+          }
+        }
+        if (pg == null) {
+          pg = (LibraryManager.USER_LIBRARY_NAME.equals(label)) ? new UserLibraryTreeNode(LibraryManager.USER_LIBRARY_NAME) : new PaletteTreeNode(label);
+          pg.setSmallIcon(imgDescriptor);
+          pg.setPriority(priority);
+          parent.add(pg);
+        }
+        for (IConfigurationElement child : cfgElem.getChildren()) {
+          handlePaletteEntry(pg, cfgElem, child);
+        }
       }
-
     }
     }
     Collections.sort(parent.getChildren(), new PaletteEntryComparator());

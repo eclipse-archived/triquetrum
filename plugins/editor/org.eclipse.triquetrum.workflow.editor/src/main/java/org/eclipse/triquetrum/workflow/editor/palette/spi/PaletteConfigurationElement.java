@@ -38,6 +38,7 @@ public class PaletteConfigurationElement implements IConfigurationElement {
   private final String name;
   private IContributor contributor;
   private final Map<String, String> attributes = new HashMap<>();
+  private Map<String, IConfigurationElement> children = new HashMap<>();
 
   /**
    * Constructor for manually creating a PaletteConfigurationElement.
@@ -85,7 +86,7 @@ public class PaletteConfigurationElement implements IConfigurationElement {
 
   @Override
   public IConfigurationElement[] getChildren() throws InvalidRegistryObjectException {
-    return new IConfigurationElement[0];
+    return children.values().toArray(new IConfigurationElement[0]);
   }
 
   @Override
@@ -141,5 +142,9 @@ public class PaletteConfigurationElement implements IConfigurationElement {
   @Override
   public boolean isValid() {
     return true;
+  }
+
+  public void addChild(String name, PaletteConfigurationElement pce) {
+    children.put(name, pce);
   }
 }

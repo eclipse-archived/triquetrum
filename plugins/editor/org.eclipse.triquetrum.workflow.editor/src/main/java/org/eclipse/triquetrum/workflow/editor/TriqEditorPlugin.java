@@ -18,6 +18,7 @@ import java.util.Hashtable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emfforms.spi.common.report.ReportService;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService;
@@ -29,6 +30,7 @@ import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.service.event.EventAdmin;
 import org.osgi.service.event.EventHandler;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -118,6 +120,17 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
     log(IStatus.ERROR, message, t);
   }
 
+  /**
+   * Returns an image descriptor for the image file at the given
+   * plug-in relative path
+   *
+   * @param path the path
+   * @return the image descriptor
+   */
+  public static ImageDescriptor getImageDescriptor(String path) {
+    return imageDescriptorFromPlugin(getID(), path);
+  }
+
   public WorkflowExecutionService getWorkflowExecutionService() {
     return executionService;
   }
@@ -125,6 +138,12 @@ public class TriqEditorPlugin extends AbstractUIPlugin {
   public ReportService getReportService() {
     final BundleContext bundleContext = getBundle().getBundleContext();
     final ServiceReference<ReportService> serviceReference = bundleContext.getServiceReference(ReportService.class);
+    return bundleContext.getService(serviceReference);
+  }
+  
+  public EventAdmin getEventAdminService() {
+    final BundleContext bundleContext = getBundle().getBundleContext();
+    final ServiceReference<EventAdmin> serviceReference = bundleContext.getServiceReference(EventAdmin.class);
     return bundleContext.getService(serviceReference);
   }
 

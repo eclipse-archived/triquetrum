@@ -53,7 +53,7 @@ public class PaletteTreeNode extends PaletteDrawer {
     super(label, icon);
     // setType(PALETTE_TYPE_NODE);
   }
-
+  
   /**
    *
    * @return the priority of this node in its container
@@ -82,4 +82,10 @@ public class PaletteTreeNode extends PaletteDrawer {
     return true;
   }
 
+  @Override
+  public void add(PaletteEntry entry) {
+    super.add(entry);
+    // children get the same editing permissions as their parent node.
+    entry.setUserModificationPermission(getUserModificationPermission());
+  }
 }

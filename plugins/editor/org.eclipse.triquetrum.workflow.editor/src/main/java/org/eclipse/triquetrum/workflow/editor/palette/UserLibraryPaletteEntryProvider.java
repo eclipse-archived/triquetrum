@@ -14,7 +14,6 @@ import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigur
 import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.DISPLAY_NAME;
 import static org.eclipse.triquetrum.workflow.editor.palette.spi.PaletteConfigurationElement.TYPE;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,19 +31,39 @@ public class UserLibraryPaletteEntryProvider implements PaletteEntryProvider {
 
   @Override
   public IConfigurationElement[] getPaletteEntries() {
-    List<IConfigurationElement> resultsList = new ArrayList<>();
     LibraryManager libraryManager = LibraryManager.getActiveInstance();
-    EntityLibrary userLibrary = libraryManager!=null ? libraryManager.getUserLibrary() : null;
+    EntityLibrary userLibrary = libraryManager != null ? libraryManager.getUserLibrary() : null;
     if (userLibrary != null) {
-      for (Entity<?> actor : (List<Entity<?>>) userLibrary.entityList()) {
-        Map<String, String> attributes = new HashMap<>();
-        attributes.put(CLASS, actor.getClassName());
-        attributes.put(DISPLAY_NAME, actor.getDisplayName());
-        attributes.put(TYPE, (actor instanceof CompositeEntity) ? BoCategory.CompositeActor.name() : BoCategory.Actor.name());
-        PaletteConfigurationElement pce = new PaletteConfigurationElement("entry", "org.eclipse.triquetrum.workflow.editor", attributes);
-        resultsList.add(pce);
+      Map<String, String> attributes = new HashMap<>();
+      attributes.put(DISPLAY_NAME, LibraryManager.USER_LIBRARY_NAME);
+      PaletteConfigurationElement pce = new PaletteConfigurationElement("group", "org.eclipse.triquetrum.workflow.editor", attributes);
+      buildEntriesForLibrary(pce, (List<Entity<?>>) userLibrary.entityList());
+      return new IConfigurationElement[] {pce};
+    } else {
+      return new IConfigurationElement[0];
+    }
+  }
+
+  private void buildEntriesForLibrary(PaletteConfigurationElement parentPCE, List<Entity<?>> libraryEntries) {
+    for (Entity<?> entity : libraryEntries) {
+      Map<String, String> attributes = new HashMap<>();
+      String pceType = "entry";
+      List<Entity<?>> children = null;
+      attributes.put(DISPLAY_NAME, entity.getDisplayName());
+      if (entity instanceof EntityLibrary) {
+        pceType = "group";
+        children = (List<Entity<?>>) ((EntityLibrary)entity).entityList();
+      } else {
+        attributes.put(CLASS, entity.getClassName());
+        attributes.put(TYPE, (entity instanceof CompositeEntity) ? BoCategory.CompositeActor.name() : BoCategory.Actor.name());
+      }
+      PaletteConfigurationElement pce = new PaletteConfigurationElement(pceType, "org.eclipse.triquetrum.workflow.editor", attributes);
+      if(children!=null) {
+        buildEntriesForLibrary(pce, children);
+      }
+      if(parentPCE!=null) {
+        parentPCE.addChild(entity.getDisplayName(), pce);
       }
     }
-    return resultsList.toArray(new IConfigurationElement[0]);
   }
 }

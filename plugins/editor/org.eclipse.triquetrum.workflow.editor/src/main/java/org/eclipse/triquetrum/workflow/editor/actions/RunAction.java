@@ -25,9 +25,9 @@ import org.eclipse.triquetrum.workflow.WorkflowExecutionService.StartMode;
 import org.eclipse.triquetrum.workflow.editor.ImageConstants;
 import org.eclipse.triquetrum.workflow.editor.TriqDiagramTypeProvider;
 import org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin;
-import org.eclipse.triquetrum.workflow.editor.util.EclipseUtils;
 import org.eclipse.triquetrum.workflow.model.CompositeActor;
 import org.eclipse.triquetrum.workflow.model.NamedObj;
+import org.eclipse.triquetrum.workflow.rcp.EclipseUtils;
 
 public class RunAction extends Action {
 

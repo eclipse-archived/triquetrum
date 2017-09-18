@@ -13,24 +13,46 @@ package org.eclipse.triquetrum.workflow.editor.palette.ui;
 import java.util.List;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPartListener;
+import org.eclipse.gef.palette.PaletteContainer;
 import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 
+/**
+ * Based on org.eclipse.gef.ui.palette.customize.PaletteTreeProvider. (which is not visible for reuse.)
+ *
+ */
 public class PaletteTreeProvider implements ITreeContentProvider {
 
-  /**
-   * @see org.eclipse.jface.viewers.IContentProvider#dispose()
-   */
-  @Override
-  public void dispose() {
+  private TreeViewer viewer;
+  private PaletteTreeNodeEditPart root;
+  private EditPartListener modelListener = new EditPartListener.Stub() {
+    @Override
+    public void childAdded(EditPart child, int index) {
+      traverseModel(child, true);
+      viewer.refresh(child.getParent());
+    }
+    @Override
+    public void removingChild(EditPart child, int index) {
+      traverseModel(child, false);
+      // this doesn't work here, as the method is called BEFORE the child has been removed,
+      // so the refresh doesn't see that yet...
+//      viewer.refresh(child.getParent());
+    }
+  };
+
+  public PaletteTreeProvider(TreeViewer treeviewer) {
+    this.viewer = treeviewer;
   }
 
-  /**
-   * If the given element does not have any children, this method should return <code>null</code>. This fixes the problem where a "+" sign is incorrectly placed
-   * next to an empty container in the tree.
-   *
-   * @see org.eclipse.jface.viewers.ITreeContentProvider#getChildren(Object)
-   */
+  @Override
+  public void dispose() {
+    if (root != null) {
+      traverseModel(root, false);
+    }
+  }
+
   @Override
   public Object[] getChildren(Object parentElement) {
     if (parentElement instanceof List) {
@@ -42,22 +64,20 @@ public class PaletteTreeProvider implements ITreeContentProvider {
         return children.toArray();
       }
     }
+    if (parentElement instanceof PaletteContainer) {
+      List children = ((PaletteContainer) parentElement).getChildren();
+      if (!children.isEmpty()) {
+        return children.toArray();
+      }
+    }
     return null;
   }
 
-  /**
-   * @see org.eclipse.jface.viewers.ITreeContentProvider#hasChildren(Object)
-   */
   @Override
   public boolean hasChildren(Object element) {
     return getChildren(element) != null;
   }
 
-  /**
-   * This method should not return <code>null</code>.
-   *
-   * @see org.eclipse.jface.viewers.IStructuredContentProvider#getElements(Object)
-   */
   @Override
   public Object[] getElements(Object inputElement) {
     Object[] elements = getChildren(inputElement);
@@ -67,18 +87,32 @@ public class PaletteTreeProvider implements ITreeContentProvider {
     return elements;
   }
 
-  /**
-   * @see org.eclipse.jface.viewers.ITreeContentProvider#getParent(Object)
-   */
   @Override
   public Object getParent(Object element) {
     return ((EditPart) element).getParent();
   }
 
-  /**
-   * @see org.eclipse.jface.viewers.IContentProvider#inputChanged(Viewer, Object, Object)
-   */
   @Override
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+    if (root != null)
+      traverseModel(root, false);
+    if (newInput != null) {
+      root = (PaletteTreeNodeEditPart) newInput;
+      traverseModel(root, true);
+    }
+  }
+
+  private void traverseModel(EditPart entry, boolean isHook) {
+    if (isHook) {
+      entry.addEditPartListener(modelListener);
+    } else {
+      entry.removeEditPartListener(modelListener);
+    }
+    Object[] children = getChildren(entry);
+    if (children != null) {
+      for (int i = 0; i < children.length; i++) {
+        traverseModel((EditPart) children[i], isHook);
+      }
+    }
   }
 }

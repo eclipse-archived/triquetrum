@@ -48,6 +48,17 @@ public class PaletteTreeNodeEditPart extends PaletteEntryEditPart {
       }
     }
   }
+  
+  public EditPart addChild(Object model) {
+    EditPart newChild = super.createChild(model);
+    addChild(newChild, -1);
+    return newChild;
+  }
+  
+  @Override
+  public void removeChild(EditPart child) {
+    super.removeChild(child);
+  }
 
   @Override
   @SuppressWarnings({ "rawtypes", "unchecked" })
