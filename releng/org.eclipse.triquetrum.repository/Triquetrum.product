@@ -159,6 +159,7 @@
       <property name="introBrandingImage" value="product:triquetrum.png" />
       <property name="introBrandingImageText" value="Eclipse Triquetrum (Incubation)" />
       <property name="introTitle" value="Welcome to Triquetrum" />
+      <property name="org.eclipse.ui.intro/INTRO_START_PAGE" value="overview" />
    </configurations>
 
    <repositories>
