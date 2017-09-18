@@ -25,6 +25,7 @@
    <windowImages i16="eclipse16.png" i32="eclipse32.png" i48="eclipse48.png"/>
 
    <splash
+      location="org.eclipse.triquetrum.workflow.editor"
       startupProgressRect="2,290,448,10"
       startupMessageRect="7,265,320,20"
       startupForegroundColor="9c9696" />
@@ -39,6 +40,7 @@
    <vm>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
+
 
    <plugins>
    </plugins>
@@ -162,6 +164,10 @@
    </configurations>
 
    <repositories>
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
    </repositories>
 
