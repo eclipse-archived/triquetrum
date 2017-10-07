@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.triquetrum.workflow.rcp.feature"
       label="%featureName"
-      version="0.2.0.qualifier"
+      version="0.2.0"
       provider-name="%providerName"
       plugin="org.eclipse.triquetrum.workflow.editor">
 

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Default Triquetrum editor palette (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.editor.palette;singleton:=true
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.2.0
 Require-Bundle: org.eclipse.triquetrum.workflow.editor
 Import-Package: ptolemy.actor;version="11.0.0",
  ptolemy.actor.lib;version="11.0.0",
