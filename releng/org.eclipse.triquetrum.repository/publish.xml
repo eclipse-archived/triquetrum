@@ -96,6 +96,11 @@ sites. This includes:
 	      <include name="*.zip"/>
 	    </fileset>
         </copy>
+        <copy todir="${targetDir}">
+            <fileset dir="${sourceDir}">
+          <include name="*.tar.gz"/>
+        </fileset>
+        </copy>
     </target>
 
 
