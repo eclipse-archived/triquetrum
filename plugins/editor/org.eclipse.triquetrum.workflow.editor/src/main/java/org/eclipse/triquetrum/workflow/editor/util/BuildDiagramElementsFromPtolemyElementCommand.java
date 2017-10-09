@@ -60,16 +60,23 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
   private Map<String, Anchor> anchorMap = new HashMap<>();
   private Map<String, Relation> relationMap = new HashMap<>();
 
+  private String iconType;
+  private String iconResource;
+
   /**
    *
    * @param diagram
    *          a Triq diagram that will be extended with new model elements
    * @param ptolemyElement
    *          the model that must be imported into the diagram
+   * @param iconResource 
+   * @param iconType 
    */
-  public BuildDiagramElementsFromPtolemyElementCommand(Diagram diagram, NamedObj ptolemyElement) {
+  public BuildDiagramElementsFromPtolemyElementCommand(Diagram diagram, NamedObj ptolemyElement, String iconType, String iconResource) {
     this.diagram = diagram;
     this.ptolemyElement = ptolemyElement;
+    this.iconType = iconType;
+    this.iconResource = iconResource;
   }
 
   public void execute() {
@@ -79,41 +86,42 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
     // get the root compositeactor of the diagram, where we must add the extra ptolemy element
     CompositeActor model = (CompositeActor) featureProvider.getBusinessObjectForPictogramElement(diagram);
 
-    if (ptolemyElement instanceof ptolemy.actor.CompositeActor) {
-      ptolemy.actor.CompositeActor compPtElem = (ptolemy.actor.CompositeActor) ptolemyElement;
-      // Get the director as a first trial to add a new diagram element from ptolemy model elements
-      Director director = compPtElem.getDirector();
-      createModelElement(model, featureProvider, director, model);
-
-      for (IORelation rel : (List<IORelation>) compPtElem.relationList()) {
-        relationMap.put(rel.getFullName(), createRelation(model, featureProvider, rel));
-      }
-
-      for (IOPort p : (List<IOPort>) compPtElem.portList()) {
-        createModelElement(model, featureProvider, p, model);
-      }
-
-      for (Entity entity : compPtElem.entityList(Entity.class)) {
-        createModelElement(model, featureProvider, entity, model);
-      }
-
-      // we don't import all attributes as lots of them are ptolemy-internal
-      // TODO find something to resolve errors related to the order of adding parameters
-      // that contain expressions with references to other parameters that may be later in the list.
-
-      // First we take parameters ...
-      for (Parameter p : ptolemyElement.attributeList(Parameter.class)) {
-        createModelElement(model, featureProvider, p, model);
-      }
-      // ... and annotations (i.e. TextAttributes)
-      for (TextAttribute a : ptolemyElement.attributeList(TextAttribute.class)) {
-        createModelElement(model, featureProvider, a, model);
-      }
-
-      linkRelations(compPtElem, model, featureProvider);
-    } else {
+//    if (ptolemyElement instanceof ptolemy.actor.CompositeActor) {
+//      ptolemy.actor.CompositeActor compPtElem = (ptolemy.actor.CompositeActor) ptolemyElement;
+//      // Get the director as a first trial to add a new diagram element from ptolemy model elements
+//      Director director = compPtElem.getDirector();
+//      createModelElement(model, featureProvider, director, model);
+//
+//      
+//      for (IORelation rel : (List<IORelation>) compPtElem.relationList()) {
+//        relationMap.put(rel.getFullName(), createRelation(model, featureProvider, rel));
+//      }
+//
+//      for (IOPort p : (List<IOPort>) compPtElem.portList()) {
+//        createModelElement(model, featureProvider, p, model);
+//      }
+//
+//      for (Entity entity : compPtElem.entityList(Entity.class)) {
+//        createModelElement(model, featureProvider, entity, model);
+//      }
+//
+//      // we don't import all attributes as lots of them are ptolemy-internal
+//      // TODO find something to resolve errors related to the order of adding parameters
+//      // that contain expressions with references to other parameters that may be later in the list.
+//
+//      // First we take parameters ...
+//      for (Parameter p : ptolemyElement.attributeList(Parameter.class)) {
+//        createModelElement(model, featureProvider, p, model);
+//      }
+//      // ... and annotations (i.e. TextAttributes)
+//      for (TextAttribute a : ptolemyElement.attributeList(TextAttribute.class)) {
+//        createModelElement(model, featureProvider, a, model);
+//      }
+//
+//      linkRelations(compPtElem, model, featureProvider);
+//    } else {
       createModelElement(model, featureProvider, ptolemyElement, model);
-    }
+//    }
   }
 
   public Map<String, Anchor> getAnchorMap() {
@@ -153,7 +161,7 @@ public class BuildDiagramElementsFromPtolemyElementCommand {
       // seems to be about a model element for which no preconfigured ModelElementCreateFeature was found
       BoCategory meCategory = BoCategory.valueOf(ptObject.getClass());
       if (meCategory != null) {
-        ModelElementCreateFeature mecf = new ModelElementCreateFeature(featureProvider, null, meCategory, ptObject.getName());
+        ModelElementCreateFeature mecf = new ModelElementCreateFeature(featureProvider, null, meCategory, ptObject.getName(), null, iconResource, iconType, null);
         mecf.setWrappedObject(ptObject);
         result = (org.eclipse.triquetrum.workflow.model.NamedObj) mecf.create(context)[0];
       } else {

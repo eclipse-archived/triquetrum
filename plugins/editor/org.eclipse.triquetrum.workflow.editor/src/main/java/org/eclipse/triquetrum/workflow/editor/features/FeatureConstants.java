@@ -17,4 +17,7 @@ public interface FeatureConstants {
 
   String BO_CLASS = "__BO_CLASS";
   String BO_NAME = "__BO_NAME";
+  
+  String ICON = "__ICON";
+  String ICON_TYPE = "__ICON_TYPE";
 }
