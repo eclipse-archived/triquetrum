@@ -66,7 +66,7 @@ public class CompositeActorAddFeature extends ActorAddFeature {
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
     IGaService gaService = Graphiti.getGaService();
     ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
-    link(containerShape, addedActor, BoCategory.CompositeActor);
+    link(context, containerShape, addedActor, BoCategory.CompositeActor);
 
     GraphicsAlgorithm invisibleRectangle = null;
     invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
@@ -79,10 +79,10 @@ public class CompositeActorAddFeature extends ActorAddFeature {
     switch (iconType) {
     case TriqFeatureProvider.ICONTYPE_SVG:
     case TriqFeatureProvider.ICONTYPE_PTOLEMY:
-      actorShapeGA = buildExternallyDefinedShape(gaService, invisibleRectangle, containerShape, iconType, iconResource);
+      actorShapeGA = buildExternallyDefinedShape(context, gaService, invisibleRectangle, containerShape, iconType, iconResource);
       break;
     default:
-      actorShapeGA = buildDefaultShape(gaService, invisibleRectangle, containerShape, addedActor, iconResource);
+      actorShapeGA = buildDefaultShape(context, gaService, invisibleRectangle, containerShape, addedActor, iconResource);
     }
 
     int width = actorShapeGA.getWidth();
@@ -94,7 +94,8 @@ public class CompositeActorAddFeature extends ActorAddFeature {
     return containerShape;
   }
 
-  protected GraphicsAlgorithm buildDefaultShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape, Entity addedActor,
+  @Override
+  protected GraphicsAlgorithm buildDefaultShape(IAddContext context, IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape, Entity addedActor,
       String iconResource) {
 
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
@@ -117,7 +118,7 @@ public class CompositeActorAddFeature extends ActorAddFeature {
         gaService.setLocationAndSize(image, ACTOR_ICON_X_MARGIN, ACTOR_ICON_Y_MARGIN, ACTOR_ICON_SIZE, ACTOR_ICON_SIZE);
 
         // create link and wire it
-        link(shape, addedActor, BoCategory.Actor);
+        link(context, shape, addedActor, BoCategory.Actor);
       } catch (Exception e) {
         LOGGER.error(ErrorCode.MODEL_CONFIGURATION_ERROR + " - Error trying to add actor icon for " + addedActor, e);
       }
@@ -134,7 +135,7 @@ public class CompositeActorAddFeature extends ActorAddFeature {
       polyline.setLineWidth(2);
 
       // create link and wire it
-      link(shape, addedActor, BoCategory.Actor);
+      link(context, shape, addedActor, BoCategory.Actor);
     }
 
     // SHAPE WITH actor name as TEXT
@@ -151,7 +152,7 @@ public class CompositeActorAddFeature extends ActorAddFeature {
       gaService.setLocationAndSize(text, ACTOR_TEXT_X_MARGIN, ACTOR_Y_MARGIN, ACTOR_TEXT_WIDTH, ACTOR_TEXT_HEIGHT);
 
       // create link and wire it
-      link(shape, addedActor, BoCategory.CompositeActor);
+      link(context, shape, addedActor, BoCategory.CompositeActor);
 
       // provide information to support direct-editing directly
       // after object creation (must be activated additionally)

@@ -118,6 +118,13 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
           addCtxt.setTargetContainer(getDiagram());
           getFeatureProvider().addIfPossible(new AddContext(addCtxt, clonedChild));
         } else if (sourceBO instanceof NamedObj) {
+          // Handling the icon spec in this way is OK for making sure custom icons are maintained
+          // for copy/pasted model elements, on their top level only.
+          // I.e. once we must be able to look inside composite hierarchies, this is no longer sufficient.
+          // The basis of this limitation is the current approach to clone from the Ptolemy objects,
+          // meaning that we don't pass along all graphical info contained in the Graphiti model objects.
+          String iconType = Graphiti.getPeService().getPropertyValue(sourcePE, FeatureConstants.ICON_TYPE);
+          String iconResource = Graphiti.getPeService().getPropertyValue(sourcePE, FeatureConstants.ICON);
           NamedObj sourceNO = (NamedObj) sourceBO;
           // This fails due to the order in which contained things get initialized,
           // before the parent has received its copied container, or something like that.
@@ -127,7 +134,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
           // and then construct the Graphiti/EMF copies from there.
           ptolemy.kernel.util.NamedObj sourcePtNO = sourceNO.getWrappedObject();
           try {
-            cloneModelElement(targetModel, targetPtModel, sourcePtNO, newLocation, oldNewElementNames, anchorMap);
+            cloneModelElement(targetModel, targetPtModel, sourcePtNO, iconType, iconResource, newLocation, oldNewElementNames, anchorMap);
           } catch (Exception e) {
             // TODO how to fix/report paste errors that are not about missing elements?
             LOGGER.error("Error pasting model elements", e);
@@ -163,7 +170,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
   }
 
   private void cloneModelElement(CompositeActor targetModel, ptolemy.kernel.util.NamedObj targetPtModel, ptolemy.kernel.util.NamedObj sourcePtNO,
-      double[] newLocation, Map<String, String> oldNewElementNames, Map<String, Anchor> anchorMap)
+      String iconType, String iconResource, double[] newLocation, Map<String, String> oldNewElementNames, Map<String, Anchor> anchorMap)
       throws CloneNotSupportedException, IllegalActionException, NameDuplicationException {
     ptolemy.kernel.util.NamedObj clonedPtNO = (ptolemy.kernel.util.NamedObj) sourcePtNO.clone(targetPtModel.workspace());
     try {
@@ -194,7 +201,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
         }
       }
     }
-    BuildDiagramElementsFromPtolemyElementCommand cmd = new BuildDiagramElementsFromPtolemyElementCommand(getDiagram(), clonedPtNO);
+    BuildDiagramElementsFromPtolemyElementCommand cmd = new BuildDiagramElementsFromPtolemyElementCommand(getDiagram(), clonedPtNO, iconType, iconResource);
     cmd.execute();
     anchorMap.putAll(cmd.getAnchorMap());
   }
@@ -231,7 +238,7 @@ public class ModelElementPasteFeature extends AbstractPasteFeature {
 
         try {
           // In Ptolemy II this is done via MoML change requests, but we're not using that (yet) in Triquetrum
-          cloneModelElement(model, ptModel, node, null, oldNewElementNames, anchorMap);
+          cloneModelElement(model, ptModel, node, null, null, null, oldNewElementNames, anchorMap);
 
           // Rerun the validation in case there are other problem variables.
           continueValidation = true;

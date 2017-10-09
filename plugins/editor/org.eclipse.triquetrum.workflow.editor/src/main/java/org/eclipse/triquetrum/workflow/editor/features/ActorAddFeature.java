@@ -23,6 +23,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.graphiti.features.IDirectEditingInfo;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IAddContext;
+import org.eclipse.graphiti.features.context.IContext;
 import org.eclipse.graphiti.features.impl.AbstractAddShapeFeature;
 import org.eclipse.graphiti.mm.MmFactory;
 import org.eclipse.graphiti.mm.Property;
@@ -69,7 +70,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
    * @param businessObject
    * @param categories
    */
-  protected void link(PictogramElement pe, Object businessObject, Category... categories) {
+  protected void link(IContext context, PictogramElement pe, Object businessObject, Category... categories) {
     super.link(pe, businessObject);
     // add property on the graphical model element, identifying the associated triq model element
     // so we can easily distinguish and identify them later on for updates etc
@@ -78,6 +79,14 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     }
     if (businessObject instanceof NamedObj) {
       Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_NAME, ((NamedObj) businessObject).getName());
+      String iconResource = (String) context.getProperty("icon");
+      if(iconResource!=null) {
+        Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.ICON, iconResource);
+      }
+      String iconType = (String) context.getProperty("iconType");
+      if(iconType!=null) {
+        Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.ICON_TYPE, iconType);
+      }
     }
     Graphiti.getPeService().setPropertyValue(pe, FeatureConstants.BO_CLASS, businessObject.getClass().getName());
   }
@@ -107,7 +116,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
     IGaService gaService = Graphiti.getGaService();
     ContainerShape containerShape = peCreateService.createContainerShape(targetContainer, true);
-    link(containerShape, addedActor, BoCategory.Actor);
+    link(context, containerShape, addedActor, BoCategory.Actor);
 
     GraphicsAlgorithm invisibleRectangle = null;
     invisibleRectangle = gaService.createInvisibleRectangle(containerShape);
@@ -120,10 +129,10 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
     switch (iconType) {
     case TriqFeatureProvider.ICONTYPE_SVG:
     case TriqFeatureProvider.ICONTYPE_PTOLEMY:
-      actorShapeGA = buildExternallyDefinedShape(gaService, invisibleRectangle, containerShape, iconType, iconResource);
+      actorShapeGA = buildExternallyDefinedShape(context, gaService, invisibleRectangle, containerShape, iconType, iconResource);
       break;
     default:
-      actorShapeGA = buildDefaultShape(gaService, invisibleRectangle, containerShape, addedActor, iconResource);
+      actorShapeGA = buildDefaultShape(context, gaService, invisibleRectangle, containerShape, addedActor, iconResource);
     }
 
     int width = actorShapeGA.getWidth();
@@ -151,7 +160,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
    * @param iconResource
    * @return
    */
-  protected GraphicsAlgorithm buildDefaultShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape, Entity addedActor,
+  protected GraphicsAlgorithm buildDefaultShape(IAddContext context, IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape, Entity addedActor,
       String iconResource) {
 
     IPeCreateService peCreateService = Graphiti.getPeCreateService();
@@ -174,7 +183,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
         gaService.setLocationAndSize(image, ACTOR_ICON_X_MARGIN, ACTOR_ICON_Y_MARGIN, ACTOR_ICON_SIZE, ACTOR_ICON_SIZE);
 
         // create link and wire it
-        link(shape, addedActor, BoCategory.Actor);
+        link(context, shape, addedActor, BoCategory.Actor);
       } catch (Exception e) {
         LOGGER.error(ErrorCode.MODEL_CONFIGURATION_ERROR + " - Error trying to add actor icon for " + addedActor, e);
       }
@@ -191,7 +200,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       polyline.setLineWidth(2);
 
       // create link and wire it
-      link(shape, addedActor, BoCategory.Actor);
+      link(context, shape, addedActor, BoCategory.Actor);
     }
 
     // SHAPE WITH actor name as TEXT
@@ -208,7 +217,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       gaService.setLocationAndSize(text, ACTOR_TEXT_X_MARGIN, ACTOR_Y_MARGIN, ACTOR_TEXT_WIDTH, ACTOR_TEXT_HEIGHT);
 
       // create link and wire it
-      link(shape, addedActor, BoCategory.Actor);
+      link(context, shape, addedActor, BoCategory.Actor);
 
       // provide information to support direct-editing directly
       // after object creation (must be activated additionally)
@@ -234,7 +243,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
    * @param iconResource
    * @return
    */
-  protected GraphicsAlgorithm buildExternallyDefinedShape(IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape,
+  protected GraphicsAlgorithm buildExternallyDefinedShape(IAddContext context, IGaService gaService, GraphicsAlgorithm invisibleRectangle, ContainerShape containerShape,
       String iconType, String iconResource) {
 
     GraphicsAlgorithm extFigure = Graphiti.getGaCreateService().createPlatformGraphicsAlgorithm(invisibleRectangle, iconType);
@@ -270,7 +279,7 @@ public class ActorAddFeature extends AbstractAddShapeFeature {
       Port p = portList.get(i);
       Anchor anchor = PortShapes.createAnchor(containerShape, direction, p, i, portCount);
       PortShapes.createPortShape(getDiagram(), anchor, direction, p);
-      link(anchor, p, BoCategory.Port, PortCategory.valueOf(direction));
+      link(context, anchor, p, BoCategory.Port, PortCategory.valueOf(direction));
       if (anchorMap != null) {
         anchorMap.put(p.getFullName(), anchor);
       }
