@@ -27,7 +27,7 @@ location "http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repos
 //	org.eclipse.triquetrum.ptolemy.feature.feature.group lazy
 //}
 
-location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-2/" {
+location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-3/" {
 	org.ptolemy.tycho.feature.feature.group lazy
 }
 
