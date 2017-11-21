@@ -90,12 +90,6 @@ public class TriqPaletteBehavior extends DefaultPaletteBehavior {
       // just ignore this and take the default value 0
     }
     String label = cfgElem.getAttribute(DISPLAY_NAME);
-    
-    // FIXME : hack to remove SineWave temporarily from Ptolemy's palette  (cfr issue #291)
-    if(label != null && label.equals("Sinewave")) {
-      return;
-    }
-
     String iconType = cfgElem.getAttribute(ICON_TYPE);
     iconType = StringUtils.isBlank(iconType) ? TriqFeatureProvider.ICONTYPE_IMG : iconType;
     String iconResource = cfgElem.getAttribute(ICON);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="Triquetrum" uid="org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.0" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="0.2.0" useFeatures="true" includeLaunchers="true">
+<product name="Triquetrum" uid="org.eclipse.triquetrum.workflow.editor.rcp.incubation-0.2.1.qualifier" id="org.eclipse.platform.ide" application="org.eclipse.ui.ide.workbench" version="0.2.1.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="eclipse_lg.png"/>
@@ -41,12 +41,11 @@
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
 
-
    <plugins>
    </plugins>
 
    <features>
-      <feature id="org.eclipse.triquetrum.rcp.feature" version="0.2.0"/>
+      <feature id="org.eclipse.triquetrum.rcp.feature" version="0.2.1.qualifier"/>
       <feature id="org.eclipse.triquetrum.workflow.actor.plot.feature" version="0.2.0"/>
       <feature id="org.eclipse.triquetrum.python.feature" version="0.2.0"/>
       <feature id="org.eclipse.core.runtime.feature"/>
