@@ -7,7 +7,7 @@ Element-Version: 3.0
 External-Reference: 
 Id: _PqtUwFnDEeelRaB1ByN9rA
 Runtime-Version: 2.3.0.201706232317
-Save-Time: 6/25/17 7:01 PM
+Save-Time: 11/22/17 7:59 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
@@ -24,10 +24,7 @@ with [get-editor hello] {
   with [get-diagram -index 1 | get-edit-part -name hello] {
     drag-enter 433 117 -detail move
     drag-over 227 186 -detail copy
-    with [get-edit-part -text Constant] {
-      get-figure -path 3 | drag-over 12 18
-      get-figure -path 2 | drag-over 29 1
-    }
+    
     drag-over 72 295 -detail copy
     drag-exit
     drag-accept 72 295 -detail copy
