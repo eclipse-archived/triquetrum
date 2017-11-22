@@ -6,118 +6,120 @@ Element-Version: 3.0
 External-Reference: 
 Id: _fjq48Fj8EeelRaB1ByN9rA
 Runtime-Version: 2.3.0.201706232317
-Save-Time: 6/25/17 6:19 PM
+Save-Time: 11/22/17 8:39 PM
 Testcase-Type: ecl
 
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac
 Content-Type: text/ecl
 Entry-Name: .content
 
-get-eclipse-window | get-object | invoke setLocation 100 100
-get-eclipse-window | get-object | invoke setSize 800 800
-
 get-view "Project Explorer" | get-tree | get-menu -path "New/Project..." | click
 with [get-window "New Project"] {
-  get-tree | select "General/Project"
   get-button "Next >" | click
   get-editbox -after [get-label "Project name:"] | set-text test
   get-button Finish | click
 }
 get-view "Project Explorer" | get-tree | select test | get-menu -path "New/Other..." | click
-with [get-window New] {
-  get-tree | select "Workflows/Triquetrum workflow model"
-  get-button "Next >" | click
-}
+get-window New | get-button "Next >" | click
 with [get-window "New Diagram"] {
-  get-combo -after [get-label "Diagram Type"] | select "Triquetrum workflow"
   get-button "Next >" | click
   get-editbox -after [get-label "Diagram Name"] | set-text hello
   get-button Finish | click
 }
-
-
-
 with [get-editor hello] {
   with [get-tree] {
     select "Directors/SDF director"
-    get-item -path "Directors/SDF director" | drag-start 16 5
+    get-item -path "Directors/SDF director" | drag-start 5 11
   }
   with [get-diagram -index 1 | get-edit-part -name hello] {
-    drag-enter 394 108 -detail move
-    drag-over 102 40 -detail copy
+    drag-enter 588 107 -detail move
+    drag-over 305 67 -detail copy
     drag-exit
-    drag-accept 102 40 -detail copy
+    drag-accept 305 67 -detail copy
   }
   get-tree | drag-set-data
-  get-diagram -index 1 | get-edit-part -name hello | drop 102 40 -detail copy
+  get-diagram -index 1 | get-edit-part -name hello | drop 305 67 -detail copy
   get-tree | drag-end -detail move
-  get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text "SDF director" | mouse-move 28 25 -height 60 
+  get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text "SDF director" | mouse-move 92 8 -height 60 
     -width 100
   with [get-tree] {
-    select "Sources/Constant"
-    get-item -path "Sources/Constant" | drag-start 17 8
+    select "Ptolemy Actors/Sources/Generic Sources/Const"
+    get-item -path "Ptolemy Actors/Sources/Generic Sources/Const" | drag-start 11 9
   }
   with [get-diagram -index 1 | get-edit-part -name hello] {
-    drag-enter 426 162 -detail move
-    drag-over 75 178 -detail copy
+    drag-enter 669 185 -detail move
+    drag-over 222 192 -detail copy
     drag-exit
-    drag-accept 75 178 -detail copy
+    drag-accept 222 192 -detail copy
   }
   get-tree | drag-set-data
-  get-diagram -index 1 | get-edit-part -name hello | drop 75 178 -detail copy
-  get-editbox -index 1 | set-focus
-  get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text Constant | activate-direct-edit
+  get-diagram -index 1 | get-edit-part -name hello | drop 222 192 -detail copy
   get-tree | drag-end -detail move
-  get-diagram -index 1 | commit-direct-edit
-}
-with [get-editor hello] {
+  get-diagram -index 1 | get-edit-part -name hello | get-edit-part -className ContainerShapeEditPart -index 1 
+    | mouse-move 61 14 -height 41 -width 81
   with [get-tree] {
-    select "Sinks/Visualization/Display"
-    get-item -path "Sinks/Visualization/Display" | drag-start 23 11
+    select "Ptolemy Actors/Sinks/Generic Sinks/Display"
+    get-item -path "Ptolemy Actors/Sinks/Generic Sinks/Display" | drag-start 13 7
   }
   with [get-diagram -index 1 | get-edit-part -name hello] {
-    drag-enter 434 256 -detail move
-    drag-over 330 285 -detail copy
+    drag-enter 682 303 -detail move
+    drag-over 537 265 -detail copy
     drag-exit
-    drag-accept 330 285 -detail copy
+    drag-accept 537 265 -detail copy
   }
   get-tree | drag-set-data
-  get-diagram -index 1 | get-edit-part -name hello | drop 330 285 -detail copy
-  get-editbox -index 1 | set-focus
-  get-diagram -index 1 | get-edit-part -name hello | get-edit-part -text Display | activate-direct-edit
+  get-diagram -index 1 | get-edit-part -name hello | drop 537 265 -detail copy
   get-tree | drag-end -detail move
   with [get-diagram -index 1] {
-    mouse-move 196 337 button1 -height 386 -width 455
-    mouse-press 196 337 button1 -height 386 -width 455
-    commit-direct-edit
-    mouse-release 196 337 button1 524288 -height 386 -width 455
-    mouse-hover 168 222 -height 386 -width 455
-    with [get-edit-part -name hello | get-edit-part -text Constant | get-edit-part -className AdvancedAnchorEditPart] {
-      mouse-hover 10 6 -height 13 -width 13
-      mouse-move 10 6 button1 -height 13 -width 13
-      mouse-press 10 6 button1 -height 13 -width 13
-      mouse-move 12 6 -mask 524288 -height 13 -width 13
+    with [get-edit-part -name hello | get-edit-part -className ContainerShapeEditPart -index 1 | get-edit-part 
+      -className AdvancedAnchorEditPart -index 1] {
+      mouse-move 6 5 button1 -height 13 -width 13
+      mouse-press 6 5 button1 -height 13 -width 13
+      mouse-move 8 5 -mask 524288 -height 13 -width 13
     }
-    mouse-drag 176 226 -mask 524288 -height 386 -width 455
-    with [get-edit-part -name hello | get-edit-part -text Display | get-edit-part -className AdvancedAnchorEditPart] {
-      mouse-drag 7 6 button1 524288 -height 13 -width 13
-      mouse-release 7 6 button1 524288 -height 13 -width 13
-      mouse-hover 7 6 -height 13 -width 13
+    mouse-drag 301 215 -mask 524288 -height 417 -width 689
+    with [get-edit-part -name hello | get-edit-part -className ContainerShapeEditPart -index 2 | get-edit-part 
+      -className AdvancedAnchorEditPart] {
+      mouse-drag 3 6 button1 524288 -height 13 -width 13
+      mouse-release 3 6 button1 524288 -height 13 -width 13
+      with [get-target-connection -path 0] {
+        mouse-hover 250 75 -height 75 -width 249
+        mouse-press 250 75 button1 -height 75 -width 249
+        mouse-release 250 75 button1 524288 -height 75 -width 249
+        mouse-hover 250 75 -height 75 -width 249
+      }
     }
-    mouse-move 275 328 button1 -height 386 -width 455
-    mouse-press 275 328 button1 -height 386 -width 455
-    mouse-release 275 328 button1 524288 -height 386 -width 455
-    mouse-hover 272 328 -height 386 -width 455
-    key-type "M1+s"
+    mouse-hover 367 322 -height 417 -width 689
+    mouse-move 367 322 button1 -height 417 -width 689
+    mouse-press 367 322 button1 -height 417 -width 689
+    mouse-release 367 322 button1 524288 -height 417 -width 689
+    mouse-hover 367 322 -height 417 -width 689
+    get-edit-part -name hello | get-edit-part -className ContainerShapeEditPart -index 2 | mouse-move 18 13 -height 51 
+      -width 61
   }
 }
 with [get-editor hello | get-diagram -index 1 | get-edit-part -name hello] {
-  with [get-edit-part -text Display | get-edit-part -className AdvancedAnchorEditPart | get-target-connection -path 0] {
+  with [get-edit-part -className ContainerShapeEditPart -index 2 | get-edit-part -className AdvancedAnchorEditPart 
+    | get-target-connection -path 0] {
     get-property "start.link.businessObjects.Port[0].name" | equals output | verify-true
+    get-property "start.link.businessObjects.Port[0].wrappedObject" 
+      | equals "ptolemy.actor.TypedIOPort {..Const.output}" | verify-true
     get-property "end.link.businessObjects.Port[0].name" | equals input | verify-true
+    get-property "end.link.businessObjects.Port[0].wrappedObject" 
+      | equals "ptolemy.actor.TypedIOPort {..Display.input}" | verify-true
   }
-  get-edit-part -text Constant | get-figure -path 3 | get-property text | equals Constant | verify-true
-  get-edit-part -text Display | get-figure -path 3 | get-property text | equals Display | verify-true
-  get-edit-part -text "SDF director" | get-figure -path 3 | get-property text | equals "SDF director" | verify-true
+  with [get-edit-part -className ContainerShapeEditPart -index 1 | get-edit-part -className AdvancedAnchorEditPart 
+    -index 1] {
+    get-property "link.businessObjects.Port[0].linkedRelations.Relation[0].linkedPorts.Port[0].wrappedObject" 
+      | equals "ptolemy.actor.TypedIOPort {..Const.output}" | verify-true
+    get-property "link.businessObjects.Port[0].linkedRelations.Relation[0].linkedPorts.Port[1].wrappedObject" 
+      | equals "ptolemy.actor.TypedIOPort {..Display.input}" | verify-true
+  }
+  with [get-edit-part -className ContainerShapeEditPart -index 2 | get-edit-part -className AdvancedAnchorEditPart] {
+    get-property "link.businessObjects.Port[0].linkedRelations.Relation[0].linkedPorts.Port[0].wrappedObject" 
+      | equals "ptolemy.actor.TypedIOPort {..Const.output}" | verify-true
+    get-property "link.businessObjects.Port[0].linkedRelations.Relation[0].linkedPorts.Port[1].wrappedObject" 
+      | equals "ptolemy.actor.TypedIOPort {..Display.input}" | verify-true
+  }
 }
 ------=_.content-0a7243a0-75d3-3d5f-9791-539de0e5b7ac--
