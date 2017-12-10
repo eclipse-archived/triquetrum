@@ -121,7 +121,6 @@
       <feature id="org.eclipse.emf.ecore.editor"/>
       <feature id="org.eclipse.emf.mapping.ecore.editor"/>
       <feature id="org.eclipse.equinox.core.feature"/>
-      <feature id="org.ptolemy.tycho.feature"/>
       <feature id="org.eclipse.emf.ecp.e3.feature"/>
       <feature id="org.eclipse.emf.ecp.emfforms.runtime.feature"/>
       <feature id="org.eclipse.emf.ecp.view.template.feature"/>
