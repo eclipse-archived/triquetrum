@@ -25,6 +25,8 @@
             <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//NamedObj/attributes"/>
           </domainModelReference>
         </domainModelReference>
+        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_p1SGkO_1EeeD8PPv-i-9PA" columnDomainReference="_RynNcOepEea6NtatxyB-pg" weight="30" minWidth="80"/>
+        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_wrNckO_1EeeD8PPv-i-9PA" columnDomainReference="_VCAhpOepEea6NtatxyB-pg" weight="70" minWidth="100"/>
       </composite>
     </categorizations>
     <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Category" xmi:id="_o502EOeoEea6NtatxyB-pg" name="Ports">
@@ -49,6 +51,11 @@
             <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//Entity/ports"/>
           </domainModelReference>
         </domainModelReference>
+        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_sn3RAO_3EeeD8PPv-i-9PA" columnDomainReference="_hoIxIOeoEea6NtatxyB-pg" weight="30" minWidth="50"/>
+        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_wkKugO_3EeeD8PPv-i-9PA" columnDomainReference="_hoIxJeeoEea6NtatxyB-pg" weight="15" minWidth="30"/>
+        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_1w4rAO_3EeeD8PPv-i-9PA" columnDomainReference="_hoIxJueoEea6NtatxyB-pg" weight="15" minWidth="30"/>
+        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_3aPOcO_3EeeD8PPv-i-9PA" columnDomainReference="_hoIxJ-eoEea6NtatxyB-pg" weight="20" minWidth="30"/>
+        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_5WhU8O_3EeeD8PPv-i-9PA" columnDomainReference="_zi1NgANyEeepkJB16JWj2w" weight="20" minWidth="30"/>
       </composite>
     </categorizations>
   </children>
