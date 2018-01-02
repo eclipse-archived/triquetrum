@@ -5,7 +5,7 @@ target "Triq" with allEnvironments configurePhase
 // out, not sure what the best resolution is
 include "org.eclipse.triquetrum.python.rpc.platform.tpd"
 
-location "http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repository" {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository" {
   org.slf4j.api.source [1.7.2,1.7.3)
 	org.slf4j.impl.log4j12.source [1.7.2,1.7.3)
 	org.apache.commons.io.source
@@ -20,12 +20,6 @@ location "http://download.eclipse.org/tools/orbit/R-builds/R20170516192513/repos
 //	org.apache.commons.lang
 //	org.apache.log4j
 }
-
-// Leave the previous site commented out until the new site is definitely working
-//location "http://users.telenet.be/triquetrum-ptolemy-p2/" {
-//	org.eclipse.triquetrum.ptolemy.feature.source.feature.group lazy
-//	org.eclipse.triquetrum.ptolemy.feature.feature.group lazy
-//}
 
 location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-3/" {
 	org.ptolemy.tycho.feature.feature.group lazy
@@ -71,7 +65,7 @@ location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.graphiti.sdk.plus.feature.feature.group
 }
 
-location "http://download.eclipse.org/ecp/releases/releases_113/" {
+location "http://download.eclipse.org/ecp/releases/releases_115/" {
 	org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group
 	org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group
 }
