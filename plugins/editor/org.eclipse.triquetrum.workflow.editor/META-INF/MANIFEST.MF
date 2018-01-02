@@ -49,6 +49,7 @@ Import-Package: org.apache.batik.bridge;version="1.6.0",
  org.eclipse.emf.ecp.view.spi.model;version="1.8.0",
  org.eclipse.emf.ecp.view.spi.renderer;version="1.8.0",
  org.eclipse.emf.ecp.view.spi.swt.reporting;version="1.8.0",
+ org.eclipse.emf.ecp.view.spi.table.model;version="1.15.0",
  org.eclipse.emf.ecp.view.spi.util.swt;version="1.8.0",
  org.eclipse.emf.ecp.view.template.model;version="1.8.0",
  org.eclipse.emf.edit.command,
@@ -109,6 +110,6 @@ Import-Package: org.apache.batik.bridge;version="1.6.0",
  ptolemy.vergil.icon;version="11.0.0",
  ptolemy.vergil.kernel.attributes;version="11.0.0"
 Bundle-Activator: org.eclipse.triquetrum.workflow.editor.TriqEditorPlugin
-Service-Component: OSGI-INF/colorRendererService.xml,OSGI-INF/attributesRendererService.xml
+Service-Component: OSGI-INF/colorRendererService.xml
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.triquetrum.workflow.editor.palette.spi
