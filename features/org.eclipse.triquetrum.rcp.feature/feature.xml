@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.triquetrum.rcp.feature"
       label="%featureName"
-      version="0.2.1.qualifier"
+      version="0.2.1"
       provider-name="%providerName">
 
    <description url="https://wiki.eclipse.org/Triquetrum">
