@@ -19,7 +19,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.eclipse.triquetrum</groupId>
-	<version>0.2.1-SNAPSHOT</version>
+	<version>0.2.1</version>
 
 	<!-- Changed artifactId to org.eclipse.triquetrum.build -->
 	<!-- <artifactId>triquetrum</artifactId> -->
@@ -150,7 +150,7 @@
 						<artifact>
 							<groupId>org.eclipse.triquetrum</groupId>
 							<artifactId>org.eclipse.triquetrum.target.platform</artifactId>
-							<version>0.2.1-SNAPSHOT</version>
+							<version>0.2.1</version>
 						</artifact>
 					</target>
 				</configuration>

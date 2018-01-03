@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.triquetrum.workflow.rcp.feature"
       label="%featureName"
-      version="0.2.1.qualifier"
+      version="0.2.1"
       provider-name="%providerName"
       plugin="org.eclipse.triquetrum.workflow.editor">
 
@@ -29,14 +29,13 @@
    </license>
 
    <url>
-      <discovery label="Orbit" url="http://download.eclipse.org/tools/orbit/downloads/drops/S20160916162009/repository/"/>
+      <discovery label="Orbit" url="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository"/>
       <discovery label="Eclipse Oxygen" url="http://download.eclipse.org/releases/oxygen/"/>
    </url>
 
    <requires>
-      <import feature="org.eclipse.rcp" version="4.5.1.v20150904-0015"/>
-      <import feature="org.eclipse.triquetrum.core.feature" version="0.2.0.qualifier"/>
-      <import feature="org.eclipse.triquetrum.workflow.core.feature" version="0.2.0.qualifier"/>
+      <import feature="org.eclipse.triquetrum.core.feature" version="0.2.0"/>
+      <import feature="org.eclipse.triquetrum.workflow.core.feature" version="0.2.0"/>
       <import feature="org.eclipse.graphiti.feature" version="0.13.0.v20160608-1043"/>
       <import feature="org.eclipse.gmf.runtime.thirdparty" version="1.10.0.201606071959"/>
       <import feature="org.eclipse.emf" version="2.12.0.v20160526-0356"/>
@@ -57,10 +56,11 @@
       <import feature="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature" version="1.8.0.20160216-1319"/>
       <import feature="org.eclipse.graphiti.export.feature" version="0.13.0.v20160608-1043"/>
       <import feature="org.eclipse.graphiti.feature.tools" version="0.13.0.v20160608-1043"/>
-      <import feature="org.eclipse.ocl" version="3.6.0.v20160523-1914"/>
       <import feature="org.eclipse.net4j" version="4.5.0.v20160607-1254"/>
       <import feature="org.eclipse.net4j.util" version="4.5.0.v20160607-1254"/>
       <import feature="org.eclipse.net4j.util.ui" version="4.5.0.v20160607-1254"/>
+      <import feature="org.eclipse.rcp" version="4.7.2.v20171130-0510"/>
+      <import plugin="org.eclipse.ocl"/>
    </requires>
 
    <plugin
