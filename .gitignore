@@ -1,1 +1,3 @@
 org.eclipse.triquetrum.commands.api
+target/
+bin/

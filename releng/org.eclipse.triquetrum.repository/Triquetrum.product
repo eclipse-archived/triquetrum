@@ -14,6 +14,8 @@
    </configIni>
 
    <launcherArgs>
+      <programArgs>-console
+      </programArgs>
       <programArgsMac>-data /tmp
       </programArgsMac>
       <vmArgs>-Dosgi.requiredJavaVersion=1.8 -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
@@ -45,7 +47,7 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.triquetrum.rcp.feature" version="0.2.1.qualifier"/>
+      <feature id="org.eclipse.triquetrum.rcp.feature" version="0.2.1"/>
       <feature id="org.eclipse.triquetrum.workflow.actor.plot.feature" version="0.2.0"/>
       <feature id="org.eclipse.triquetrum.python.feature" version="0.2.0"/>
       <feature id="org.eclipse.core.runtime.feature"/>
@@ -162,10 +164,6 @@
    </configurations>
 
    <repositories>
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
    </repositories>
 

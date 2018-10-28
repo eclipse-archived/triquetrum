@@ -10,7 +10,7 @@ Import-Package: org.eclipse.triquetrum;version="0.1.0",
  org.eclipse.triquetrum.processing.model.impl;version="0.1.0",
  org.eclipse.triquetrum.processing.service;version="0.1.0",
  org.eclipse.triquetrum.processing.service.impl;version="0.1.0",
- org.eclipse.triquetrum.workflow.model;version="0.1.0",
  org.osgi.service.component;version="1.2.2"
 Require-Bundle: org.junit
 Bundle-Vendor: Eclipse Triquetrum
+Export-Package: org.eclipse.triquetrum.processing.test
