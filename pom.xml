@@ -50,6 +50,7 @@
 		<!-- Don't include the javadoc module, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=492412 -->
 		<!-- <module>javadoc</module> -->
 		<module>features</module>
+		<module>tests</module>
 		<module>examples</module>
 		<module>releng/org.eclipse.triquetrum.repository</module>
 		<module>releng/org.eclipse.triquetrum.update</module>
