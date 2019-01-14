@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+     Copyright (c) 2018 Erwin De Ley.
+     All rights reserved. This program and the accompanying materials
+     are made available under the terms of the Eclipse Public License v1.0
+     which accompanies this distribution, and is available at
+     http://www.eclipse.org/legal/epl-v10.html
+
+     Contributors:
+        Erwin De Ley - initial API and implementation and/or initial documentation
+ -->
+<features name="triquetrum-workflow-core-${project.version}"
+	xmlns="http://karaf.apache.org/xmlns/features/v1.3.0">
+	<feature name="triquetrum-workflow-core"
+		description="Triquetrum Workflow core bundles"
+		version="${project.version}">
+        <bundle dependency="true">mvn:org.slf4j/slf4j-api/1.7.12</bundle>
+        <bundle dependency="true">mvn:commons-lang/commons-lang/2.6</bundle>
+        <bundle dependency="true">mvn:commons-io/commons-io/2.2</bundle>
+		<bundle dependency="true">mvn:org.eclipse.emf/org.eclipse.emf.common/2.15.0</bundle>
+		<bundle dependency="true">mvn:org.eclipse.emf/org.eclipse.emf.ecore/2.15.0</bundle>
+		<bundle dependency="true">mvn:org.eclipse.emf/org.eclipse.emf.ecore.change/2.13.0</bundle>
+		<bundle dependency="true">mvn:org.eclipse.emf/org.eclipse.emf.edit/2.14.0</bundle>
+		<bundle dependency="true">mvn:org.eclipse.platform/org.eclipse.equinox.preferences/3.7.200</bundle>
+		<bundle dependency="true">mvn:org.eclipse.platform/org.eclipse.equinox.common/3.10.100</bundle>
+		<bundle>mvn:org.eclipse.triquetrum.plugins/org.eclipse.triquetrum.workflow.aoc.repository/0.2.0</bundle>
+		<bundle>mvn:org.eclipse.triquetrum.plugins/org.eclipse.triquetrum.workflow.api/0.2.0</bundle>
+		<bundle>mvn:org.eclipse.triquetrum.plugins/org.eclipse.triquetrum.workflow.model/0.2.0</bundle>
+		<bundle>mvn:org.eclipse.triquetrum.plugins/org.eclipse.triquetrum.workflow.execution.impl/0.2.0</bundle>
+		<bundle>mvn:org.eclipse.triquetrum.plugins/org.eclipse.triquetrum.workflow.repository.impl.filesystem/0.2.0</bundle>
+	</feature>
+</features>
+
+        
