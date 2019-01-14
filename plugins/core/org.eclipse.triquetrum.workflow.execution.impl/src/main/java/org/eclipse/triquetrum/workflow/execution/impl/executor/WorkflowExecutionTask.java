@@ -20,14 +20,17 @@ import java.util.concurrent.RunnableFuture;
 
 import org.eclipse.triquetrum.EventListener;
 import org.eclipse.triquetrum.ProcessingStatus;
+import org.eclipse.triquetrum.TriqException;
 import org.eclipse.triquetrum.processing.ProcessingException;
 import org.eclipse.triquetrum.workflow.ErrorCode;
 import org.eclipse.triquetrum.workflow.ModelHandle;
 import org.eclipse.triquetrum.workflow.ProcessEvent;
 import org.eclipse.triquetrum.workflow.WorkflowExecutionService.StartMode;
+import org.eclipse.triquetrum.workflow.execution.impl.ModelHandleImpl;
 import org.eclipse.triquetrum.workflow.execution.impl.debug.ActorBreakpointListener;
 import org.eclipse.triquetrum.workflow.execution.impl.debug.PortBreakpointListener;
 import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
+import org.ptolemy.testsupport.TestUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,9 +50,8 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
 
   private final static Map<State, ProcessingStatus> STATUS_MAPPING = new HashMap<>();
 
-  private final ModelHandle modelHandle;
+  private final ModelHandleImpl modelHandle;
   private final StartMode mode;
-  private final Map<String, String> parameterOverrides;
   private final Set<String> breakpointNames;
   private final String processId;
   private volatile ProcessingStatus status;
@@ -65,10 +67,13 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
     this.mode = mode;
     if (modelHandle == null)
       throw new IllegalArgumentException("ModelHandle can not be null");
-    this.modelHandle = modelHandle;
+    try {
+      this.modelHandle = new ModelHandleImpl(WorkflowUtils.applyParameterSettings(modelHandle, processId, parameterOverrides));
+    } catch (TriqException e) {
+      throw new IllegalArgumentException("Invalid model handle for execution", e);
+    }
     this.processId = processId;
     status = ProcessingStatus.IDLE;
-    this.parameterOverrides = (parameterOverrides != null) ? new HashMap<>(parameterOverrides) : null;
     this.breakpointNames = (breakpointNames != null) ? new HashSet<>(Arrays.asList(breakpointNames)) : null;
     this.listener = listener;
   }
@@ -103,8 +108,9 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
     try {
       boolean debug = false;
       synchronized (this) {
-        CompositeActor model = WorkflowUtils.applyParameterSettings(modelHandle, processId, parameterOverrides);
+        CompositeActor model = modelHandle.getModel();
         if (StartMode.DEBUG.equals(mode)) {
+          TestUtilities.enableStatistics(model);
           debug = setBreakpoints(modelHandle, model, breakpointNames);
         }
         manager = new Manager(model.workspace(), processId);

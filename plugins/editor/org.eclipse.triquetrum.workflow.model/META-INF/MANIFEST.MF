@@ -4,8 +4,7 @@ Bundle-Name: Workflow Model (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.model;singleton:=true
 Bundle-Version: 0.2.0
 Bundle-ClassPath: .
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport
+Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-Localization: plugin
@@ -14,12 +13,6 @@ Export-Package: org.eclipse.triquetrum.workflow.model;version="0.1.0",
  org.eclipse.triquetrum.workflow.model.impl;version="0.1.0",
  org.eclipse.triquetrum.workflow.model.util;version="0.1.0"
 Import-Package: com.microstar.xml;version="10.1.0",
- org.eclipse.graphiti.mm;version="0.12.1",
- org.eclipse.graphiti.mm.algorithms;version="0.12.1",
- org.eclipse.graphiti.mm.algorithms.impl;version="0.12.1",
- org.eclipse.graphiti.mm.algorithms.styles;version="0.12.1",
- org.eclipse.graphiti.mm.algorithms.styles.impl;version="0.12.1",
- org.eclipse.graphiti.mm.pictograms;version="0.12.1",
  org.ptolemy.classloading;version="11.0.0",
  org.ptolemy.commons;version="10.1.0",
  org.slf4j;version="1.7.2",
