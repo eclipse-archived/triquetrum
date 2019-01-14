@@ -22,6 +22,7 @@
   <modules>
     <module>org.eclipse.triquetrum.processing.test</module>
     <module>org.eclipse.triquetrum.scisoft.analysis.rpc.test</module>
+    <module>org.eclipse.triquetrum.workflow.execution.test</module>
   </modules>
 	
 </project>
