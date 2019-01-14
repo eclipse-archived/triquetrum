@@ -23,7 +23,7 @@ import ptolemy.actor.CompositeActor;
  * This is an internal ModelHandle implementation, for usage in the workflow execution service.
  *
  */
-class ModelHandleImpl implements ModelHandle {
+public class ModelHandleImpl implements ModelHandle {
   private static final long serialVersionUID = 1L;
 
   private URI resourceLocator;
