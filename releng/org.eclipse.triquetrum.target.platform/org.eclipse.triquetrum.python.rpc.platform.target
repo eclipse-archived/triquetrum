@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
-<!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Python-RPC" sequenceNumber="1514910414">
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
+<target name="Python-RPC" sequenceNumber="1561343470">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.apache.commons.lang" version="2.6.0.v201404270220"/>
@@ -28,8 +28,8 @@
       <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.4.1.v20170928-1321"/>
-      <repository location="http://download.eclipse.org/releases/oxygen/"/>
+      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.9.0.v20190517-1309"/>
+      <repository location="http://download.eclipse.org/releases/2019-06/"/>
     </location>
   </locations>
 </target>

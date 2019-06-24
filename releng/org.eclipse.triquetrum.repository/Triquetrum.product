@@ -16,7 +16,7 @@
    <launcherArgs>
       <programArgsMac>-data /tmp
       </programArgsMac>
-      <vmArgs>-Dosgi.requiredJavaVersion=1.8 -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
+      <vmArgs>-Dosgi.requiredJavaVersion=12 -Xms256m -Xmx1024m -Djava.net.preferIPv4Stack=true
       </vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
       </vmArgsMac>
@@ -38,6 +38,7 @@
    <intro introId="org.eclipse.ui.intro.universal"/>
 
    <vm>
+      <macos include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-12</macos>
       <windows include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</windows>
    </vm>
 

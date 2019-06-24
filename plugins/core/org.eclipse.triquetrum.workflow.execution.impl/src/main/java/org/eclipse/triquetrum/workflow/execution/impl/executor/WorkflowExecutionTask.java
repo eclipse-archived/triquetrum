@@ -30,7 +30,7 @@ import org.eclipse.triquetrum.workflow.execution.impl.ModelHandleImpl;
 import org.eclipse.triquetrum.workflow.execution.impl.debug.ActorBreakpointListener;
 import org.eclipse.triquetrum.workflow.execution.impl.debug.PortBreakpointListener;
 import org.eclipse.triquetrum.workflow.util.WorkflowUtils;
-import org.ptolemy.testsupport.TestUtilities;
+//import org.ptolemy.testsupport.TestUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +110,7 @@ public class WorkflowExecutionTask implements CancellableTask<ProcessingStatus>,
       synchronized (this) {
         CompositeActor model = modelHandle.getModel();
         if (StartMode.DEBUG.equals(mode)) {
-          TestUtilities.enableStatistics(model);
+          //TestUtilities.enableStatistics(model);
           debug = setBreakpoints(modelHandle, model, breakpointNames);
         }
         manager = new Manager(model.workspace(), processId);
