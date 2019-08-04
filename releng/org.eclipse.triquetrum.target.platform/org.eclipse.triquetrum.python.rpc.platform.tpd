@@ -1,6 +1,7 @@
 target "Python-RPC" with source allEnvironments configurePhase
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository" {
+// location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository" {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository" {
 	org.apache.commons.lang
 	org.apache.commons.codec
 	org.apache.commons.logging
@@ -24,6 +25,6 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2017091920193
 	javax.servlet
 }
 
-location "http://download.eclipse.org/releases/oxygen/" {
+location "http://download.eclipse.org/releases/2019-06/" {
 	org.eclipse.equinox.core.feature.feature.group
 }
