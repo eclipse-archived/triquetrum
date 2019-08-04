@@ -147,4 +147,9 @@ public class PaletteConfigurationElement implements IConfigurationElement {
   public void addChild(String name, PaletteConfigurationElement pce) {
     children.put(name, pce);
   }
+
+  @Override
+  public int getHandleId() {
+	throw new UnsupportedOperationException();
+  }
 }
