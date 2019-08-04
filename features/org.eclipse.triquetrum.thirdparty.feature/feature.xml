@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.triquetrum.thirdparty.feature"
       label="%featureName"
-      version="0.2.0"
+      version="0.3.0"
       provider-name="%providerName">
 
    <description url="https://wiki.eclipse.org/Triquetrum">
@@ -83,7 +83,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.apache.xalan"
          download-size="0"
