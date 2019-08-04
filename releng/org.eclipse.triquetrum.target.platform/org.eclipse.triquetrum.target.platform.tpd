@@ -5,9 +5,11 @@ target "Triq" with allEnvironments configurePhase
 // out, not sure what the best resolution is
 include "org.eclipse.triquetrum.python.rpc.platform.tpd"
 
-location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository" {
-  org.slf4j.api.source [1.7.2,1.7.3)
+//location "http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository" {
+location "http://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository" {
+	org.slf4j.api.source [1.7.2,1.7.3)
 	org.slf4j.impl.log4j12.source [1.7.2,1.7.3)
+	org.apache.xalan
 	org.apache.commons.io.source
 	org.apache.log4j.source
 	org.apache.commons.io
@@ -21,7 +23,7 @@ location "http://download.eclipse.org/tools/orbit/downloads/drops/R2017091920193
 //	org.apache.log4j
 }
 
-location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-3/" {
+location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-4/" {
 	org.ptolemy.tycho.feature.feature.group lazy
 }
 
@@ -29,14 +31,18 @@ location "http://archive.eclipse.org/nebula/Q22016/release/" {
 	org.eclipse.nebula.visualization.feature.feature.group
 }
 
-location "http://download.eclipse.org/releases/oxygen/" {
+location "https://download.eclipse.org/rt/ecf/latest/site.p2" {
+	org.eclipse.ecf.filetransfer.httpclient4.ssl.feature.feature.group
+	org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group
+}
+
+location "http://download.eclipse.org/releases/2019-06/" {
 	org.eclipse.ecf.core.feature.feature.group
 	org.eclipse.emf.validation.feature.group
 	org.eclipse.platform.source.feature.group
 	org.eclipse.equinox.sdk.feature.group
 	org.eclipse.ecf.filetransfer.ssl.feature.feature.group
 	org.eclipse.equinox.core.sdk.feature.group
-	org.eclipse.ecf.filetransfer.httpclient4.ssl.feature.feature.group
 	org.eclipse.platform.feature.group
 	org.eclipse.rcp.feature.group
 	org.eclipse.ocl.all.feature.group
@@ -60,7 +66,6 @@ location "http://download.eclipse.org/releases/oxygen/" {
 	org.eclipse.net4j.util.ui.feature.group
 	org.eclipse.equinox.p2.sdk.feature.group
 	org.eclipse.net4j.ui.feature.group
-	org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group
 	org.eclipse.gmf.runtime.notation.feature.group
 	org.eclipse.graphiti.sdk.plus.feature.feature.group
 }
