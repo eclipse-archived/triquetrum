@@ -35,14 +35,11 @@ import org.eclipse.triquetrum.workflow.model.Vertex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ptolemy.actor.Director;
 import ptolemy.actor.IOPort;
 import ptolemy.actor.IORelation;
-import ptolemy.data.expr.Parameter;
 import ptolemy.kernel.CompositeEntity;
 import ptolemy.kernel.Entity;
 import ptolemy.kernel.util.NamedObj;
-import ptolemy.vergil.kernel.attributes.TextAttribute;
 
 /**
  * This command can visit the model element tree of a Ptolemy II NamedObj to add the corresponding diagram elements in a new Triquetrum workflow Diagram. If the
