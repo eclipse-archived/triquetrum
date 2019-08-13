@@ -22,3 +22,4 @@ Import-Package: org.apache.commons.io;version="2.2.0",
 Bundle-Activator: org.eclipse.triquetrum.workflow.repository.impl.filesystem.activator.Activator
 Export-Package: org.eclipse.triquetrum.workflow.repository.impl.filesystem;version="0.2.0"
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.eclipse.triquetrum.workflow.repository.impl.filesystem

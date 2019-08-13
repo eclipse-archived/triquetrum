@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: File-based WorkflowRepositoryService  UI (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.repository.impl.filesystem.ui;singleton:=true
+Automatic-Module-Name: org.eclipse.triquetrum.workflow.repository.impl.filesystem.ui
 Bundle-Version: 0.2.0
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

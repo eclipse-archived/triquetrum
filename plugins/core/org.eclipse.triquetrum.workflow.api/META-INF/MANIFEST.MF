@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum Workflow Execution Api (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.api
+Automatic-Module-Name: org.eclipse.triquetrum.workflow.api
 Bundle-Version: 0.2.0
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
