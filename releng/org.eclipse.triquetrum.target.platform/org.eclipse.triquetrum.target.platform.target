@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Triq" sequenceNumber="1564855650">
+<target name="Triq" sequenceNumber="1565734543">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.slf4j.api.source" version="1.7.2.v20121108-1250"/>
@@ -36,7 +36,7 @@
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.ptolemy.tycho.feature.feature.group" version="0.0.0"/>
-      <repository location="http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-4/"/>
+      <repository location="http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-5/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.eclipse.nebula.visualization.feature.feature.group" version="1.0.0.201605182147"/>
