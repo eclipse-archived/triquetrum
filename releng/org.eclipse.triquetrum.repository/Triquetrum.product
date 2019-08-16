@@ -52,8 +52,7 @@
       <feature id="org.eclipse.ecf.core.feature"/>
       <feature id="org.eclipse.ecf.core.ssl.feature"/>
       <feature id="org.eclipse.ecf.filetransfer.feature"/>
-      <feature id="org.eclipse.ecf.filetransfer.httpclient4.feature"/>
-      <feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature"/>
+      <feature id="org.eclipse.ecf.filetransfer.httpclient45.feature"/>
       <feature id="org.eclipse.ecf.filetransfer.ssl.feature"/>
       <feature id="org.eclipse.emf.common"/>
       <feature id="org.eclipse.emf.common.ui"/>
@@ -162,6 +161,11 @@
    </configurations>
 
    <repositories>
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
+      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />

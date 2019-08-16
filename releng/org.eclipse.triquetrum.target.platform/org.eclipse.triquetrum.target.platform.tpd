@@ -32,8 +32,7 @@ location "http://archive.eclipse.org/nebula/Q22016/release/" {
 }
 
 location "https://download.eclipse.org/rt/ecf/latest/site.p2" {
-	org.eclipse.ecf.filetransfer.httpclient4.ssl.feature.feature.group
-	org.eclipse.ecf.filetransfer.httpclient4.feature.feature.group
+	org.eclipse.ecf.filetransfer.httpclient45.feature.feature.group
 }
 
 location "http://download.eclipse.org/releases/2019-06/" {
