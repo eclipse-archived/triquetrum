@@ -45,7 +45,6 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.triquetrum.rcp.feature" version="0.2.1.qualifier"/>
       <feature id="org.eclipse.triquetrum.workflow.actor.plot.feature" version="0.2.0"/>
       <feature id="org.eclipse.triquetrum.python.feature" version="0.2.0"/>
       <feature id="org.eclipse.core.runtime.feature"/>
@@ -125,6 +124,7 @@
       <feature id="org.eclipse.emf.ecp.view.template.feature"/>
       <feature id="org.eclipse.emf.ecp.viewmodel.feature"/>
       <feature id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature"/>
+      <feature id="org.eclipse.triquetrum.rcp.feature"/>
    </features>
 
    <configurations>
@@ -161,15 +161,6 @@
    </configurations>
 
    <repositories>
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
-      <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
       <repository location="http://download.eclipse.org/triquetrum/update" enabled="true" />
    </repositories>
 
