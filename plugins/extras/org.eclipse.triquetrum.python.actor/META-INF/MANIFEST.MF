@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Python Actor bundle (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.python.actor
+Automatic-Module-Name: org.eclipse.triquetrum.python.actor
 Bundle-Version: 0.2.0
 Bundle-Activator: org.eclipse.triquetrum.python.actor.activator.Activator
 Bundle-Vendor: Eclipse Triquetrum

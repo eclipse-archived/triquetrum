@@ -15,7 +15,6 @@ import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.IDeleteContext;
 import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
-import org.eclipse.graphiti.ui.features.DefaultDeleteFeature;
 import org.eclipse.triquetrum.workflow.model.Relation;
 
 public class ConnectionDeleteFeature extends TriqDefaultDeleteFeature {

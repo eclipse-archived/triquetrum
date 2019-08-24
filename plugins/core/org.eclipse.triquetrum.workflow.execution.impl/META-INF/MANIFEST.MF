@@ -2,7 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum Workflow Execution Impl (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.execution.impl
-Bundle-Version: 0.2.0
+Automatic-Module-Name: org.eclipse.triquetrum.workflow.execution.impl
+Bundle-Version: 0.3.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
 Import-Package: org.apache.commons.lang.builder;version="2.6.0",
@@ -12,7 +13,6 @@ Import-Package: org.apache.commons.lang.builder;version="2.6.0",
  org.eclipse.triquetrum.workflow;version="0.1.0",
  org.eclipse.triquetrum.workflow.util;version="0.1.0",
  org.ptolemy.commons;version="10.1.0",
- org.ptolemy.testsupport;version="11.0.0",
  org.slf4j;version="1.7.2",
  ptolemy.actor;version="10.1.0",
  ptolemy.kernel;version="10.1.0",

@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum process model API (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.processing.api
+Automatic-Module-Name: org.eclipse.triquetrum.processing.api
 Bundle-Version: 0.2.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
@@ -13,3 +14,4 @@ Import-Package: org.eclipse.triquetrum;version="0.1.0",
 Export-Package: org.eclipse.triquetrum.processing;version="0.1.0",
  org.eclipse.triquetrum.processing.model;version="0.1.0",
  org.eclipse.triquetrum.processing.service;version="0.1.0"
+

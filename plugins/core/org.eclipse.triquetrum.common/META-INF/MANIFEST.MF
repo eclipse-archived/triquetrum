@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum Common (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.common
+Automatic-Module-Name: org.eclipse.triquetrum.common
 Bundle-Version: 0.2.0
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

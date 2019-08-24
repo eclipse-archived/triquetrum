@@ -123,17 +123,7 @@
 						<environment>
 							<os>linux</os>
 							<ws>gtk</ws>
-							<arch>x86</arch>
-						</environment>
-						<environment>
-							<os>linux</os>
-							<ws>gtk</ws>
 							<arch>x86_64</arch>
-						</environment>
-						<environment>
-							<os>win32</os>
-							<ws>win32</ws>
-							<arch>x86</arch>
 						</environment>
 						<environment>
 							<os>win32</os>
@@ -169,25 +159,20 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<!-- FindBugs To invoke, run mvn findbugs:findbugs To bring up the FindBugs 
-					gui for each bundle, run: mvn findbugs:gui docs: http://gleclaire.github.io/findbugs-maven-plugin/ -->
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>3.0.3</version>
-				<configuration>
-					<effort>Max</effort>
-					<findbugsXmlOutput>true</findbugsXmlOutput>
-					<failOnError>false</failOnError>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+
+                        <plugin>
+                          <groupId>com.github.spotbugs</groupId>
+                          <artifactId>spotbugs-maven-plugin</artifactId>
+                          <version>3.1.12</version>
+                          <dependencies>
+                            <!-- overwrite dependency on spotbugs if you want to specify the version of spotbugs -->
+                            <dependency>
+                              <groupId>com.github.spotbugs</groupId>
+                              <artifactId>spotbugs</artifactId>
+                              <version>4.0.0-beta3</version>
+                            </dependency>
+                          </dependencies>
+                        </plugin>
 		</plugins>
 	</build>
 	<profiles>

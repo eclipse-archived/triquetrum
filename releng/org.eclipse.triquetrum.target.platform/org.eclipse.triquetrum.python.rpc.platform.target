@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
-<!-- generated with https://github.com/mbarbero/fr.obeo.releng.targetplatform -->
-<target name="Python-RPC" sequenceNumber="1514910414">
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
+<target name="Python-RPC" sequenceNumber="1564834924">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.apache.commons.lang" version="2.6.0.v201404270220"/>
-      <unit id="org.apache.commons.codec" version="1.9.0.v20170208-1614"/>
-      <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
+      <unit id="org.apache.commons.codec" version="1.10.0.v20180409-1845"/>
+      <unit id="org.apache.commons.logging" version="1.2.0.v20180409-1502"/>
       <unit id="org.apache.commons.httpclient" version="3.1.0.v201012070820"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
       <unit id="org.apache.ws.commons.util" version="1.0.2.v20160817-1930"/>
       <unit id="org.apache.xmlrpc.client" version="3.1.3.v20160817-1930"/>
-      <unit id="org.apache.xmlrpc.common" version="3.1.3.v20160817-1930"/>
-      <unit id="org.apache.xmlrpc.server" version="3.1.3.v20160817-1930"/>
-      <unit id="org.hamcrest.core" version="1.3.0.v201303031735"/>
+      <unit id="org.apache.xmlrpc.common" version="3.1.3.v20181004-1955"/>
+      <unit id="org.apache.xmlrpc.server" version="3.1.3.v20181004-1955"/>
+      <unit id="org.hamcrest.core" version="1.3.0.v20180420-1519"/>
       <unit id="org.hamcrest.generator" version="1.3.0.v201305210900"/>
       <unit id="org.hamcrest.integration" version="1.3.0.v201305210900"/>
-      <unit id="org.hamcrest.library" version="1.3.0.v201505072020"/>
+      <unit id="org.hamcrest.library" version="1.3.0.v20180524-2246"/>
       <unit id="org.junit" version="4.12.0.v201504281640"/>
       <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
       <unit id="org.slf4j.impl.log4j12" version="1.7.2.v20131105-2200"/>
@@ -25,11 +25,11 @@
       <unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
       <unit id="javax.activation" version="1.1.0.v201211130549"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.4.1.v20170928-1321"/>
-      <repository location="http://download.eclipse.org/releases/oxygen/"/>
+      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.9.0.v20190517-1309"/>
+      <repository location="http://download.eclipse.org/releases/2019-06/"/>
     </location>
   </locations>
 </target>

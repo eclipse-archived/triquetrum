@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum Repository UI  (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.repository.ui;singleton:=true
+Automatic-Module-Name: org.eclipse.triquetrum.workflow.repository.ui
 Bundle-Version: 0.2.0
 Bundle-Activator: org.eclipse.triquetrum.workflow.repository.ui.RepositoryPlugin
 Bundle-Vendor: Eclipse Triquetrum

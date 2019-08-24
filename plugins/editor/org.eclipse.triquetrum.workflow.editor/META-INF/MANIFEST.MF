@@ -2,7 +2,8 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum Workflow Editor (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.editor;singleton:=true
-Bundle-Version: 0.2.1
+Automatic-Module-Name: org.eclipse.triquetrum.workflow.editor
+Bundle-Version: 0.3.0
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
 Require-Bundle: org.eclipse.graphiti;bundle-version="0.12.0",
