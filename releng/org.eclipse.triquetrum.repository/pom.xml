@@ -12,7 +12,7 @@ Contributors: Erwin De Ley - initial API and implementation and/or initial docum
 <parent>
   <groupId>org.eclipse.triquetrum</groupId>
   <artifactId>org.eclipse.triquetrum.build</artifactId>
-  <version>0.2.1</version>
+  <version>0.3.0</version>
   <relativePath>../../pom.xml</relativePath>
 </parent>
 <modelVersion>4.0.0</modelVersion>
