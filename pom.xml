@@ -12,7 +12,7 @@
 		<eclipse-repo.url>https://repo.eclipse.org/content/repositories/cbi/</eclipse-repo.url>
 		<maven-repo.url>https://repo1.maven.org/maven2/</maven-repo.url>
 		<maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
-		<releaseName>0.2.1</releaseName>
+		<releaseName>0.3.0</releaseName>
 		<tycho-extras-version>${tycho-version}</tycho-extras-version>
 		<tycho-version>1.4.0</tycho-version>
 	</properties>
