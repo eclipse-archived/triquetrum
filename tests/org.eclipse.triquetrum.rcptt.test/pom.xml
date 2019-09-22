@@ -15,7 +15,7 @@
   <artifactId>org.eclipse.triquetrum.rcptt.test</artifactId>
   <!-- Set group id based on application under test name -->
   <groupId>org.eclipse.triquetrum</groupId>
-  <version>0.2.0-SNAPSHOT</version>
+  <version>0.3.0-SNAPSHOT</version>
   <!-- RCPTT Maven Plugin provides this packaging type -->
   <packaging>rcpttTest</packaging>
 

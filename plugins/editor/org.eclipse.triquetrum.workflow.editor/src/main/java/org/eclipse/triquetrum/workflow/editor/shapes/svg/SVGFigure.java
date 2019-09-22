@@ -1,16 +1,15 @@
-/**
- * Copyright (c) 2008, 2016 Borland Software Corporation,
- * 2016 iSencia Belgium NV
+/*******************************************************************************
+ * Copyright (c) 2016,2019 iSencia Belgium NV.
+ *  
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
- *    Dmitry Stadnik - initial API and implementation
- *    Erwin De Ley - extract from GMF & simplify for usage in Triquetrum
- */
+ *     Erwin De Ley - initial API and implementation and/or initial documentation
+ *******************************************************************************/
 package org.eclipse.triquetrum.workflow.editor.shapes.svg;
 
 import java.awt.RenderingHints;
