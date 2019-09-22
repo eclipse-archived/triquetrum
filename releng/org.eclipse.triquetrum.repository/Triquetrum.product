@@ -45,8 +45,8 @@
    </plugins>
 
    <features>
-      <feature id="org.eclipse.triquetrum.workflow.actor.plot.feature" version="0.2.0"/>
-      <feature id="org.eclipse.triquetrum.python.feature" version="0.2.0"/>
+      <feature id="org.eclipse.triquetrum.workflow.actor.plot.feature"/>
+      <feature id="org.eclipse.triquetrum.python.feature"/>
       <feature id="org.eclipse.core.runtime.feature"/>
       <feature id="org.eclipse.ecf.core.feature"/>
       <feature id="org.eclipse.ecf.core.ssl.feature"/>
