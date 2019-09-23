@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: DLS Analysis RPC subset for passerelle (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.scisoft.analysis.rpc
 Automatic-Module-Name: org.eclipse.triquetrum.scisoft.analysis.rpc
-Bundle-Version: 0.2.0
+Bundle-Version: 0.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.triquetrum.scisoft.analysis.rpc,
  org.eclipse.triquetrum.scisoft.analysis.rpc.flattening,

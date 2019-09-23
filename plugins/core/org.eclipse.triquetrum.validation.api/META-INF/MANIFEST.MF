@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum Validation Api (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.validation.api
 Automatic-Module-Name: org.eclipse.triquetrum.validation.api
-Bundle-Version: 0.2.0
+Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.triquetrum.validation;version="0.1.0",
