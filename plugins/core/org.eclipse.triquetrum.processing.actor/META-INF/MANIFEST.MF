@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Processing Actor implementations (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.processing.actor
 Automatic-Module-Name: org.eclipse.triquetrum.processing.actor
-Bundle-Version: 0.2.0
+Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: org.eclipse.triquetrum.processing.actor.activator.Activator
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Workflow repository on the file system (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.repository.impl.filesystem
 Automatic-Module-Name: org.eclipse.triquetrum.workflow.repository.impl.filesystem
-Bundle-Version: 0.2.0
+Bundle-Version: 0.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
 Import-Package: org.apache.commons.io;version="2.2.0",

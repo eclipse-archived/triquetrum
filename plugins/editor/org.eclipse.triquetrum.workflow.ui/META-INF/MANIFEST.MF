@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Workflow UI integration (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.ui
 Automatic-Module-Name: org.eclipse.triquetrum.workflow.ui
-Bundle-Version: 0.2.0
+Bundle-Version: 0.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
 Import-Package: org.eclipse.swt,

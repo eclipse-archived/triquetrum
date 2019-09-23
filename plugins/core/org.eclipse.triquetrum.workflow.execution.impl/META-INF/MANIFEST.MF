@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Triquetrum Workflow Execution Impl (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.workflow.execution.impl
 Automatic-Module-Name: org.eclipse.triquetrum.workflow.execution.impl
-Bundle-Version: 0.3.0
+Bundle-Version: 0.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
 Import-Package: org.apache.commons.lang.builder;version="2.6.0",
