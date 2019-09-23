@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.eclipse.triquetrum.workflow.model.viewmodel;singleton:=
 Bundle-Version: 0.3.0.qualifier
 Require-Bundle: org.eclipse.emf.ecp.view.model.provider.xmi
 Bundle-Vendor: Eclipse Triquetrum
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

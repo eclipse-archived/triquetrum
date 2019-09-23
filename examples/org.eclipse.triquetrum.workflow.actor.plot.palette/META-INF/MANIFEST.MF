@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.eclipse.triquetrum.workflow.actor.plot.palette;singleto
 Bundle-Version: 0.2.0.qualifier
 Require-Bundle: org.eclipse.triquetrum.workflow.editor;bundle-version="0.1.0"
 Bundle-Vendor: Eclipse Triquetrum
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

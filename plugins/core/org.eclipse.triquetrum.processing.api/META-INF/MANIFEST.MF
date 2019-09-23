@@ -14,4 +14,4 @@ Import-Package: org.eclipse.triquetrum;version="0.1.0",
 Export-Package: org.eclipse.triquetrum.processing;version="0.1.0",
  org.eclipse.triquetrum.processing.model;version="0.1.0",
  org.eclipse.triquetrum.processing.service;version="0.1.0"
-
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

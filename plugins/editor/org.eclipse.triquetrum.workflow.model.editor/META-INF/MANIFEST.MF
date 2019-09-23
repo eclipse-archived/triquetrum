@@ -18,3 +18,4 @@ Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-Activator: org.eclipse.triquetrum.workflow.model.presentation.T
  riquetrumEditorPlugin$Implementation
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

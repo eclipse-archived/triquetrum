@@ -12,3 +12,4 @@ Service-Component: OSGI-INF/component.xml
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
 Require-Bundle: org.eclipse.equinox.common
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

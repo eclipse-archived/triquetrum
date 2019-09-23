@@ -17,3 +17,4 @@ Import-Package: org.eclipse.triquetrum;version="0.1.0",
 Service-Component: OSGI-INF/TaskProcessingBroker.xml
 Export-Package: org.eclipse.triquetrum.processing.service.impl;version="0.1.0"
 Bundle-ActivationPolicy: lazy
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

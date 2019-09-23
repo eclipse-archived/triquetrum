@@ -19,3 +19,4 @@ Import-Package: org.apache.commons.lang.builder;version="2.6.0",
  ptolemy.kernel.util;version="11.0.0"
 Service-Component: OSGI-INF/WorkflowExecutionService.xml
 Bundle-ActivationPolicy: lazy
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

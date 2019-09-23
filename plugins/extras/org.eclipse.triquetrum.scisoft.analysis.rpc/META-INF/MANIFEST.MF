@@ -21,3 +21,4 @@ Import-Package: org.apache.commons.lang,
  org.apache.xmlrpc.webserver,
  org.slf4j;version="1.6.0"
 Bundle-Vendor: Eclipse Triquetrum
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

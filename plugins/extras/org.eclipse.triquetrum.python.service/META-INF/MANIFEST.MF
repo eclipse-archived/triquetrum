@@ -14,3 +14,4 @@ Eclipse-BundleShape: dir
 Require-Bundle: org.eclipse.equinox.common
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-ActivationPolicy: lazy
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

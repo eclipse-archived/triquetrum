@@ -10,3 +10,4 @@ Export-Package: org.eclipse.triquetrum.validation;version="0.1.0",
  org.eclipse.triquetrum.validation.service;version="0.1.0"
 Import-Package: org.eclipse.triquetrum;version="0.1.0",
  ptolemy.kernel.util;version="10.1.0"
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

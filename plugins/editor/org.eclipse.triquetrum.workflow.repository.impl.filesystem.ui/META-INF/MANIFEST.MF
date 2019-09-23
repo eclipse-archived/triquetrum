@@ -19,3 +19,4 @@ Import-Package: org.eclipse.core.commands.common,
  org.osgi.framework;version="1.8.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.triquetrum.workflow.repository.impl.filesystem.preferences.ui.WorkflowRepositoryUIPlugin
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

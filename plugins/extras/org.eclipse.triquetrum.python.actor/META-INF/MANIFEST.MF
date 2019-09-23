@@ -20,3 +20,4 @@ Import-Package: org.eclipse.triquetrum.python.service;version="0.1.0",
  ptolemy.kernel;version="11.0.0",
  ptolemy.kernel.util;version="11.0.0"
 Bundle-ActivationPolicy: lazy
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

@@ -15,3 +15,4 @@ Import-Package: org.eclipse.triquetrum;version="0.1.0",
 Service-Component: OSGI-INF/AocProviderFromRepository.xml
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Eclipse Triquetrum
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

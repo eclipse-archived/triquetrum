@@ -15,3 +15,4 @@ Import-Package: org.eclipse.triquetrum;version="0.1.0",
  org.osgi.service.component;version="1.2.2"
 Require-Bundle: org.junit
 Bundle-Vendor: Eclipse Triquetrum
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git
