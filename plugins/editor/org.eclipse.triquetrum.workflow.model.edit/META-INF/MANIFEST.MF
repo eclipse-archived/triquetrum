@@ -15,3 +15,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.edit;visibility:=reexport,
  org.eclipse.ui.intro.universal
 Bundle-ActivationPolicy: lazy
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

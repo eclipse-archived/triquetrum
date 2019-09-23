@@ -28,3 +28,4 @@ Import-Package: org.apache.commons.lang;version="2.6.0",
  ptolemy.util;version="11.0.0"
 Export-Package: org.eclipse.triquetrum.workflow.actor.plot;version="0.1.0"
 Bundle-ActivationPolicy: lazy
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

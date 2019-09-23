@@ -12,3 +12,4 @@ Import-Package: org.eclipse.triquetrum;version="0.1.0",
 Bundle-Vendor: Eclipse Triquetrum
 Service-Component: OSGI-INF/MathsProcessingService.xml
 Export-Package: org.eclipse.triquetrum.processing.service.impl.example
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

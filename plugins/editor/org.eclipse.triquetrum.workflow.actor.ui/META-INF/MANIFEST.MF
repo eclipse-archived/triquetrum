@@ -22,4 +22,5 @@ Import-Package: org.eclipse.swt,
 Bundle-Activator: org.eclipse.triquetrum.workflow.actor.ui.activator.Activator
 Require-Bundle: org.eclipse.triquetrum.workflow.ui;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
-
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git
+  

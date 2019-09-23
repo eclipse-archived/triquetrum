@@ -11,3 +11,4 @@ Import-Package: ptolemy.actor;version="11.0.0",
  ptolemy.vergil.kernel.attributes;version="11.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Vendor: Eclipse Triquetrum
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

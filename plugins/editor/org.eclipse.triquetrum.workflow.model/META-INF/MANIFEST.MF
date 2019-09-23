@@ -26,3 +26,4 @@ Import-Package: com.microstar.xml;version="10.1.0",
  ptolemy.moml;version="11.0.0",
  ptolemy.moml.filter;version="11.0.0",
  ptolemy.vergil.kernel.attributes;version="11.0.0"
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

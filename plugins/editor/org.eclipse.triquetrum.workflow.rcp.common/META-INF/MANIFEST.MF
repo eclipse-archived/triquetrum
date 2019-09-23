@@ -10,3 +10,4 @@ Export-Package: org.eclipse.triquetrum.workflow.rcp;version="0.2.0"
 Import-Package: org.eclipse.swt.dnd,
  org.eclipse.triquetrum.workflow;version="0.2.0"
 Require-Bundle: org.eclipse.ui;bundle-version="3.109.0"
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git

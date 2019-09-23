@@ -15,3 +15,4 @@ Export-Package: org.eclipse.triquetrum.scisoft.analysis.rpc,
  org.eclipse.triquetrum.scisoft.analysis.rpc.staticdispatchertypes,
  org.eclipse.triquetrum.scisoft.analysis.rpc.test
 Eclipse-BundleShape: dir
+Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git
