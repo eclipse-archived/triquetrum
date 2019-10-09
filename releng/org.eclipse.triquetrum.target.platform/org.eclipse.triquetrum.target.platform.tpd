@@ -22,7 +22,7 @@ location "https://download.eclipse.org/tools/orbit/downloads/drops/R201908271527
 //	org.apache.log4j
 }
 
-location "http://chess.eecs.berkeley.edu/triq/p2/osgi-2-0-5/" {
+location "https://ptolemy.berkeley.edu/projects/chess/triq/p2/osgi-2-0-5/" {
 	org.ptolemy.tycho.feature.feature.group lazy
 }
 
