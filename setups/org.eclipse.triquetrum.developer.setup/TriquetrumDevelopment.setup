@@ -162,33 +162,18 @@
     <repository
         url="http://download.eclipse.org/cbi/tpd/3.0.0-SNAPSHOT/"/>
     <repository
-        url="http://download.eclipse.org/technology/epp/packages/oxygen"/>
+        url="http://download.eclipse.org/technology/epp/packages/2019-09"/>
     <repository
-        url="http://download.eclipse.org/releases/oxygen"/>
+        url="http://download.eclipse.org/releases/2019-09"/>
     <repository
-        url="http://download.eclipse.org/ecp/releases/releases_113/"/>
+        url="https://download.eclipse.org/ecp/releases/releases_122/1220/"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
       xsi:type="git:GitCloneTask"
       id="git.clone.triquetrum"
       filter=""
-      remoteURI="eclipse/triquetrum">
-    <annotation
-        source="http://www.eclipse.org/oomph/setup/InducedChoices">
-      <detail
-          key="inherit">
-        <value>github.remoteURIs</value>
-      </detail>
-      <detail
-          key="label">
-        <value>${scope.project.label} Github repository</value>
-      </detail>
-      <detail
-          key="target">
-        <value>remoteURI</value>
-      </detail>
-    </annotation>
+      remoteURI="https://${github.user.id}@github.com/eclipse/triquetrum">
     <description>${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -240,7 +225,7 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="eclipse.target.platform"
-        defaultValue="Oxygen"
+        defaultValue="2019-09"
         storageURI="scope://Workspace"
         label=""/>
     <setupTask
@@ -248,6 +233,18 @@
         version="JavaSE-1.8"
         location="${jre.location-1.8}">
       <description>Define the JRE needed to compile and run the Java projects of ${scope.project.label}</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        name="github.user.id"
+        label="Github user name (for cloning and issues)">
+      <description></description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        type="PASSWORD"
+        name="github.user.password"
+        label="Github password">
     </setupTask>
   </stream>
   <logicalProjectContainer
