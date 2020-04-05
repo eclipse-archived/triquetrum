@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Python-RPC" sequenceNumber="1586051592">
+<target name="Python-RPC" sequenceNumber="1586055782">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.apache.commons.lang" version="2.6.0.v201404270220"/>
-      <unit id="org.apache.commons.codec" version="1.10.0.v20180409-1845"/>
+      <unit id="org.apache.commons.codec" version="1.13.0.v20200108-0001"/>
       <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
       <unit id="org.apache.commons.httpclient" version="3.1.0.v201012070820"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
@@ -17,7 +17,7 @@
       <unit id="org.hamcrest.generator" version="1.3.0.v201305210900"/>
       <unit id="org.hamcrest.integration" version="1.3.0.v201305210900"/>
       <unit id="org.hamcrest.library" version="1.3.0.v20180524-2246"/>
-      <unit id="org.junit" version="4.12.0.v201504281640"/>
+      <unit id="org.junit" version="4.13.0.v20200204-1500"/>
       <unit id="org.slf4j.api" version="1.7.2.v20121108-1250"/>
       <unit id="org.slf4j.impl.log4j12" version="1.7.2.v20131105-2200"/>
       <unit id="javax.xml" version="1.3.4.v201005080400"/>
@@ -25,11 +25,11 @@
       <unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
       <unit id="javax.activation" version="1.1.0.v201211130549"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.11.0.v20191114-1701"/>
-      <repository location="http://download.eclipse.org/releases/2019-12/"/>
+      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.11.100.v20200214-1600"/>
+      <repository location="http://download.eclipse.org/releases/2020-03/"/>
     </location>
   </locations>
 </target>

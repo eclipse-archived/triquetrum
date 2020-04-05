@@ -5,7 +5,7 @@ target "Triq" with allEnvironments configurePhase
 // out, not sure what the best resolution is
 include "org.eclipse.triquetrum.python.rpc.platform.tpd"
 
-location "https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository" {
+location "https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository" {
 	org.slf4j.api.source [1.7.2,1.7.3)
 	org.slf4j.impl.log4j12.source [1.7.2,1.7.3)
 	org.apache.xalan
@@ -34,7 +34,7 @@ location "https://download.eclipse.org/rt/ecf/latest/site.p2" {
 	org.eclipse.ecf.filetransfer.httpclient45.feature.feature.group
 }
 
-location "http://download.eclipse.org/releases/2019-12/" {
+location "http://download.eclipse.org/releases/2020-03/" {
 	org.eclipse.ecf.core.feature.feature.group
 	org.eclipse.emf.validation.feature.group
 	org.eclipse.platform.source.feature.group
