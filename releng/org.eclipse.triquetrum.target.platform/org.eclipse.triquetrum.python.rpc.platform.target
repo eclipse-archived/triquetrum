@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Python-RPC" sequenceNumber="1568926621">
+<target name="Python-RPC" sequenceNumber="1586051592">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.apache.commons.lang" version="2.6.0.v201404270220"/>
       <unit id="org.apache.commons.codec" version="1.10.0.v20180409-1845"/>
-      <unit id="org.apache.commons.logging" version="1.2.0.v20180409-1502"/>
+      <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
       <unit id="org.apache.commons.httpclient" version="3.1.0.v201012070820"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
       <unit id="org.apache.ws.commons.util" version="1.0.2.v20160817-1930"/>
@@ -25,11 +25,11 @@
       <unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
       <unit id="javax.activation" version="1.1.0.v201211130549"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20191126223242/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.10.0.v20190830-1434"/>
-      <repository location="http://download.eclipse.org/releases/2019-09/"/>
+      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.11.0.v20191114-1701"/>
+      <repository location="http://download.eclipse.org/releases/2019-12/"/>
     </location>
   </locations>
 </target>
