@@ -3,13 +3,14 @@ Bundle-ManifestVersion: 2
 Bundle-Name: DLS Analysis RPC subset for passerelle (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.scisoft.analysis.rpc
 Automatic-Module-Name: org.eclipse.triquetrum.scisoft.analysis.rpc
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.triquetrum.scisoft.analysis.rpc,
  org.eclipse.triquetrum.scisoft.analysis.rpc.flattening,
  org.eclipse.triquetrum.scisoft.analysis.rpc.flattening.helpers,
  org.eclipse.triquetrum.scisoft.analysis.rpc.internal
 Import-Package: org.apache.commons.lang,
+ org.apache.commons.logging;version="1.1.1",
  org.apache.ws.commons.serialize;version="1.0.1",
  org.apache.ws.commons.util;version="1.0.1",
  org.apache.xmlrpc,
@@ -22,3 +23,4 @@ Import-Package: org.apache.commons.lang,
  org.slf4j;version="1.6.0"
 Bundle-Vendor: Eclipse Triquetrum
 Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git
+Require-Bundle: org.apache.commons.logging;bundle-version="1.1.1"

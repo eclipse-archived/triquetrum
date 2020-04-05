@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Python RPC Service (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.python.service
 Automatic-Module-Name: org.eclipse.triquetrum.python.service
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.3.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.eclipse.triquetrum.python.service;version="1.0.4",
  org.eclipse.triquetrum.python.service.util;version="1.0.4"

@@ -3,11 +3,12 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Python Actor bundle (Incubation)
 Bundle-SymbolicName: org.eclipse.triquetrum.python.actor
 Automatic-Module-Name: org.eclipse.triquetrum.python.actor
-Bundle-Version: 0.2.0.qualifier
+Bundle-Version: 0.3.0.qualifier
 Bundle-Activator: org.eclipse.triquetrum.python.actor.activator.Activator
 Bundle-Vendor: Eclipse Triquetrum
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package: org.eclipse.triquetrum.python.service;version="0.1.0",
+Import-Package: org.apache.commons.logging;version="1.1.1",
+ org.eclipse.triquetrum.python.service;version="0.1.0",
  org.osgi.framework;version="1.8.0",
  org.ptolemy.classloading;version="11.0.0",
  org.ptolemy.classloading.osgi;version="11.0.0",
@@ -21,3 +22,4 @@ Import-Package: org.eclipse.triquetrum.python.service;version="0.1.0",
  ptolemy.kernel.util;version="11.0.0"
 Bundle-ActivationPolicy: lazy
 Eclipse-SourceReference: scm:git:https://github.com/eclipse/triquetrum.git
+Require-Bundle: org.apache.commons.logging;bundle-version="1.1.1"
