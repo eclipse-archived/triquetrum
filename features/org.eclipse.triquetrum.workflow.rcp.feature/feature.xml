@@ -31,8 +31,8 @@
    </license>
 
    <url>
-      <discovery label="Orbit" url="http://download.eclipse.org/tools/orbit/downloads/drops/R20170919201930/repository"/>
-      <discovery label="Eclipse Oxygen" url="http://download.eclipse.org/releases/oxygen/"/>
+      <discovery label="Orbit" url="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository"/>
+      <discovery label="Eclipse" url="http://download.eclipse.org/releases/2020-06/"/>
    </url>
 
    <requires>
@@ -42,7 +42,6 @@
       <import feature="org.eclipse.gmf.runtime.thirdparty" version="1.10.0.201606071959"/>
       <import feature="org.eclipse.emf" version="2.12.0.v20160526-0356"/>
       <import feature="org.eclipse.emf.ecp.emfforms.runtime.feature" version="1.8.0.20160216-1319"/>
-      <import feature="org.eclipse.emf.ecp.feature" version="1.8.0.20160216-1319"/>
       <import feature="org.eclipse.emf.edit" version="2.12.0.v20160526-0356"/>
       <import feature="org.eclipse.emf.edit.ui" version="2.12.0.v20160526-0356"/>
       <import feature="org.eclipse.emf.transaction" version="1.10.0.201606071900"/>
@@ -54,7 +53,6 @@
       <import feature="org.eclipse.draw2d" version="3.10.100.201606061308"/>
       <import feature="org.eclipse.emf.databinding" version="1.4.0.v20160526-0356"/>
       <import plugin="org.eclipse.jface"/>
-      <import feature="org.eclipse.emf.ecp.e3.feature" version="1.8.0.20160216-1319"/>
       <import feature="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature" version="1.8.0.20160216-1319"/>
       <import feature="org.eclipse.graphiti.export.feature" version="0.13.0.v20160608-1043"/>
       <import feature="org.eclipse.graphiti.feature.tools" version="0.13.0.v20160608-1043"/>
