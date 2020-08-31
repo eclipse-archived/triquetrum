@@ -25,7 +25,10 @@
 		<releaseName>0.4.0</releaseName>
                 
 		<tycho-extras-version>${tycho-version}</tycho-extras-version>
-		<tycho-version>1.6.0</tycho-version>
+
+                <!-- For the most recent version of tycho, see
+                     https://wiki.eclipse.org/Tycho/Release_Notes -->
+		<tycho-version>1.7.0</tycho-version>
 	</properties>
 
 	<modelVersion>4.0.0</modelVersion>
