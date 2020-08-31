@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Triq" sequenceNumber="1598204779">
+<target name="Triq" sequenceNumber="1598803855">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.slf4j.api.source" version="1.7.2.v20121108-1250"/>
@@ -82,9 +82,9 @@
       <repository location="http://download.eclipse.org/releases/2020-06/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group" version="1.15.0.20171220-1057"/>
-      <unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="1.15.0.20171220-1057"/>
-      <repository location="http://download.eclipse.org/ecp/releases/releases_115/"/>
+      <unit id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group" version="1.24.0.20200303-1319"/>
+      <unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="1.24.0.20200303-1319"/>
+      <repository location="https://download.eclipse.org/ecp/releases/releases_124"/>
     </location>
   </locations>
 </target>
