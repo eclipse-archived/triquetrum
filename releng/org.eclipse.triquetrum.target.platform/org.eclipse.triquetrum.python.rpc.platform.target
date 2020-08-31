@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Python-RPC" sequenceNumber="1586055782">
+<target name="Python-RPC" sequenceNumber="1598204773">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.apache.commons.lang" version="2.6.0.v201404270220"/>
@@ -25,11 +25,11 @@
       <unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
       <unit id="javax.activation" version="1.1.0.v201211130549"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200224183213/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="true" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.11.100.v20200214-1600"/>
-      <repository location="http://download.eclipse.org/releases/2020-03/"/>
+      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.11.200.v20200525-1407"/>
+      <repository location="http://download.eclipse.org/releases/2020-06/"/>
     </location>
   </locations>
 </target>
