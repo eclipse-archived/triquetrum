@@ -13,22 +13,22 @@
  -->
 
 <site>
-   <feature url="features/org.eclipse.triquetrum.core.feature_0.3.0.qualifier.jar" id="org.eclipse.triquetrum.core.feature" version="0.3.0.qualifier">
+   <feature url="features/org.eclipse.triquetrum.core.feature_0.4.0.qualifier.jar" id="org.eclipse.triquetrum.core.feature" version="0.4.0.qualifier">
       <category name="org.eclipse.triquetrum"/>
    </feature>
    <feature url="features/org.eclipse.triquetrum.ptolemy.feature_0.2.1.qualifier.jar" id="org.eclipse.triquetrum.ptolemy.feature" version="0.2.1.qualifier">
       <category name="org.eclipse.triquetrum"/>
    </feature>
-   <feature url="features/org.eclipse.triquetrum.rcp.feature_0.3.0.qualifier.jar" id="org.eclipse.triquetrum.rcp.feature" version="0.3.0.qualifier">
+   <feature url="features/org.eclipse.triquetrum.rcp.feature_0.4.0.qualifier.jar" id="org.eclipse.triquetrum.rcp.feature" version="0.4.0.qualifier">
       <category name="org.eclipse.triquetrum"/>
    </feature>
-   <feature url="features/org.eclipse.triquetrum.thirdparty.feature_0.3.0.qualifier.jar" id="org.eclipse.triquetrum.thirdparty.feature" version="0.3.0.qualifier">
+   <feature url="features/org.eclipse.triquetrum.thirdparty.feature_0.4.0.qualifier.jar" id="org.eclipse.triquetrum.thirdparty.feature" version="0.4.0.qualifier">
       <category name="org.eclipse.triquetrum"/>
    </feature>
-   <feature url="features/org.eclipse.triquetrum.workflow.core.feature_0.3.0.qualifier.jar" id="org.eclipse.triquetrum.workflow.core.feature" version="0.3.0.qualifier">
+   <feature url="features/org.eclipse.triquetrum.workflow.core.feature_0.4.0.qualifier.jar" id="org.eclipse.triquetrum.workflow.core.feature" version="0.4.0.qualifier">
       <category name="org.eclipse.triquetrum"/>
    </feature>
-   <feature url="features/org.eclipse.triquetrum.workflow.rcp.feature_0.3.0.qualifier.jar" id="org.eclipse.triquetrum.workflow.rcp.feature" version="0.3.0.qualifier">
+   <feature url="features/org.eclipse.triquetrum.workflow.rcp.feature_0.4.0.qualifier.jar" id="org.eclipse.triquetrum.workflow.rcp.feature" version="0.4.0.qualifier">
       <category name="org.eclipse.triquetrum"/>
    </feature>
    <category-def name="org.eclipse.triquetrum" label="Triquetrum">
