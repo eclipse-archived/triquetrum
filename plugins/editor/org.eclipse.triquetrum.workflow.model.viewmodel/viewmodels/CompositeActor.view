@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.categorization.model="http://org/eclipse/emf/ecp/view/categorization/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_QzDAEHgaEea67uXRjYsTug" name="CompositeActor" ecorePath="/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.categorization.model="http://org/eclipse/emf/ecp/view/categorization/model" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmlns:org.eclipse.emf.ecp.view.table.model="http://org/eclipse/emf/ecp/view/table/model/150" xmi:id="_QzDAEHgaEea67uXRjYsTug" name="CompositeActor">
   <rootEClass href="http://www.eclipse.org/triquetrum#//CompositeActor"/>
+  <ecorePaths>/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore</ecorePaths>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_QzIfoHgaEea67uXRjYsTug" name="Control name">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_QzIfoXgaEea67uXRjYsTug">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
@@ -25,8 +26,6 @@
             <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//NamedObj/attributes"/>
           </domainModelReference>
         </domainModelReference>
-        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_CNUhEO_5EeeD8PPv-i-9PA" columnDomainReference="_eZArMHg1EeazTohzH_5Zgg" weight="30" minWidth="80"/>
-        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_CNUhEe_5EeeD8PPv-i-9PA" columnDomainReference="_1QTVIHg1EeazTohzH_5Zgg" weight="70" minWidth="100"/>
       </composite>
     </categorizations>
     <categorizations xsi:type="org.eclipse.emf.ecp.view.categorization.model:Category" xmi:id="_TCjDUPHFEea-ftJAJNG5Kw" name="Ports">
@@ -51,11 +50,6 @@
             <domainModelEFeature xsi:type="ecore:EReference" href="http://www.eclipse.org/triquetrum#//Entity/ports"/>
           </domainModelReference>
         </domainModelReference>
-        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_AkuyoO_5EeeD8PPv-i-9PA" columnDomainReference="_IskXcHg2EeazTohzH_5Zgg" weight="30" minWidth="50"/>
-        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_Akuyoe_5EeeD8PPv-i-9PA" columnDomainReference="_J-hukHg2EeazTohzH_5Zgg" weight="15" minWidth="30"/>
-        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_Akuyou_5EeeD8PPv-i-9PA" columnDomainReference="_K6IbMHg2EeazTohzH_5Zgg" weight="15" minWidth="30"/>
-        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_Akuyo-_5EeeD8PPv-i-9PA" columnDomainReference="_L56dMHg2EeazTohzH_5Zgg" weight="20" minWidth="30"/>
-        <columnConfigurations xsi:type="org.eclipse.emf.ecp.view.table.model:WidthConfiguration" xmi:id="_AkuypO_5EeeD8PPv-i-9PA" columnDomainReference="_811fAO_4EeeD8PPv-i-9PA" weight="20" minWidth="30"/>
       </composite>
     </categorizations>
   </children>
