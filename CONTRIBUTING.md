@@ -11,7 +11,7 @@ Please also read [Contributing via Git](http://wiki.eclipse.org/Development_Reso
 
 In order for any contributions to be accepted you MUST do the following things.
 
-* Sign the [Eclipse Foundation Contributor License Agreement](http://www.eclipse.org/legal/CLA.php).
+* Sign the [Eclipse Contributor Agreement](https://www.eclipse.org/legal/ECA.php).
 To sign the Eclipse CLA you need to:
 
   * Obtain an Eclipse Foundation userid. Anyone who currently uses Eclipse Bugzilla or Gerrit systems already has one of those.
