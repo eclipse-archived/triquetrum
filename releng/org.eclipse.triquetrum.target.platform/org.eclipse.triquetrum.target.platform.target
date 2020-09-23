@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="Triq" sequenceNumber="1598803855">
+<target name="Triq" sequenceNumber="1600894195">
   <locations>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.slf4j.api.source" version="1.7.2.v20121108-1250"/>
@@ -12,7 +12,7 @@
       <unit id="org.apache.commons.io" version="2.6.0.v20190123-2029"/>
       <unit id="org.apache.commons.lang.source" version="2.6.0.v201404270220"/>
       <unit id="org.apache.commons.lang" version="2.6.0.v201404270220"/>
-      <unit id="org.apache.commons.codec" version="1.13.0.v20200108-0001"/>
+      <unit id="org.apache.commons.codec" version="1.14.0.v20200818-1422"/>
       <unit id="org.apache.commons.logging" version="1.1.1.v201101211721"/>
       <unit id="org.apache.commons.httpclient" version="3.1.0.v201012070820"/>
       <unit id="org.apache.log4j" version="1.2.15.v201012070815"/>
@@ -32,7 +32,7 @@
       <unit id="javax.xml.stream" version="1.0.1.v201004272200"/>
       <unit id="javax.activation" version="1.1.0.v201211130549"/>
       <unit id="javax.servlet" version="3.1.0.v201410161800"/>
-      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200529191137/repository"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20200831200620/repository"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
       <unit id="org.ptolemy.tycho.feature.feature.group" version="0.0.0"/>
@@ -47,44 +47,44 @@
       <repository location="https://download.eclipse.org/rt/ecf/latest/site.p2"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.ecf.core.feature.feature.group" version="1.5.600.v20200317-1602"/>
-      <unit id="org.eclipse.emf.validation.feature.group" version="1.12.1.201812070911"/>
-      <unit id="org.eclipse.platform.source.feature.group" version="4.16.0.v20200604-0951"/>
-      <unit id="org.eclipse.equinox.sdk.feature.group" version="3.20.200.v20200528-0603"/>
-      <unit id="org.eclipse.ecf.filetransfer.ssl.feature.feature.group" version="1.1.300.v20200317-1602"/>
-      <unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.19.300.v20200525-1407"/>
-      <unit id="org.eclipse.platform.feature.group" version="4.16.0.v20200604-0951"/>
-      <unit id="org.eclipse.rcp.feature.group" version="4.16.0.v20200604-0951"/>
+      <unit id="org.eclipse.ecf.core.feature.feature.group" version="1.5.700.v20200812-2314"/>
+      <unit id="org.eclipse.emf.validation.feature.group" version="1.12.2.202008210805"/>
+      <unit id="org.eclipse.platform.source.feature.group" version="4.17.0.v20200902-1800"/>
+      <unit id="org.eclipse.equinox.sdk.feature.group" version="3.20.300.v20200828-1034"/>
+      <unit id="org.eclipse.ecf.filetransfer.ssl.feature.feature.group" version="1.1.400.v20200812-2314"/>
+      <unit id="org.eclipse.equinox.core.sdk.feature.group" version="3.20.0.v20200828-1034"/>
+      <unit id="org.eclipse.platform.feature.group" version="4.17.0.v20200902-1800"/>
+      <unit id="org.eclipse.rcp.feature.group" version="4.17.0.v20200902-1800"/>
       <unit id="org.eclipse.ocl.all.feature.group" version="5.12.0.v20200608-1555"/>
-      <unit id="org.eclipse.rcp.source.feature.group" version="4.16.0.v20200604-0951"/>
-      <unit id="org.eclipse.emf.cdo.epp.feature.group" version="4.10.0.v20200610-0352"/>
-      <unit id="org.eclipse.pde.source.feature.group" version="3.14.400.v20200604-0540"/>
+      <unit id="org.eclipse.rcp.source.feature.group" version="4.17.0.v20200902-1800"/>
+      <unit id="org.eclipse.emf.cdo.epp.feature.group" version="4.11.0.v20200902-0811"/>
+      <unit id="org.eclipse.pde.source.feature.group" version="3.14.500.v20200902-1800"/>
       <unit id="org.eclipse.gef.sdk.feature.group" version="3.11.0.201606061308"/>
-      <unit id="org.eclipse.core.runtime.feature.feature.group" version="1.2.900.v20200525-1407"/>
+      <unit id="org.eclipse.core.runtime.feature.feature.group" version="1.2.1000.v20200828-1034"/>
       <unit id="org.eclipse.emf.transaction.sdk.feature.group" version="1.12.0.201805140824"/>
       <unit id="org.eclipse.graphiti.feature.feature.group" version="0.17.0.202005151449"/>
       <unit id="org.eclipse.gmf.runtime.notation.source.feature.group" version="1.13.0.202004160913"/>
-      <unit id="org.eclipse.ecf.filetransfer.feature.feature.group" version="3.14.800.v20200317-1602"/>
-      <unit id="org.eclipse.emf.sdk.feature.group" version="2.22.0.v20200519-1135"/>
+      <unit id="org.eclipse.ecf.filetransfer.feature.feature.group" version="3.14.1400.v20200812-2314"/>
+      <unit id="org.eclipse.emf.sdk.feature.group" version="2.23.0.v20200822-0801"/>
       <unit id="org.eclipse.gmf.source.feature.group" version="1.13.0.202004160913"/>
       <unit id="org.eclipse.graphiti.export.feature.feature.group" version="0.17.0.202005151449"/>
       <unit id="org.eclipse.graphiti.feature.tools.feature.group" version="0.17.0.202005151449"/>
-      <unit id="org.eclipse.jdt.source.feature.group" version="3.18.400.v20200604-0540"/>
+      <unit id="org.eclipse.jdt.source.feature.group" version="3.18.500.v20200902-1800"/>
       <unit id="org.eclipse.graphiti.sdk.feature.feature.group" version="0.17.0.202005151449"/>
-      <unit id="org.eclipse.ecf.core.ssl.feature.feature.group" version="1.1.400.v20200317-1602"/>
+      <unit id="org.eclipse.ecf.core.ssl.feature.feature.group" version="1.1.500.v20200812-2314"/>
       <unit id="org.eclipse.gmf.feature.group" version="1.13.0.202004160913"/>
-      <unit id="org.eclipse.net4j.util.ui.feature.group" version="4.10.0.v20200610-0352"/>
-      <unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.11.800.v20200602-1138"/>
+      <unit id="org.eclipse.net4j.util.ui.feature.group" version="4.11.0.v20200901-0616"/>
+      <unit id="org.eclipse.equinox.p2.sdk.feature.group" version="3.11.900.v20200828-0839"/>
       <unit id="org.eclipse.net4j.ui.feature.group" version="4.3.0.v20200311-1912"/>
       <unit id="org.eclipse.gmf.runtime.notation.feature.group" version="1.13.0.202004160913"/>
       <unit id="org.eclipse.graphiti.sdk.plus.feature.feature.group" version="0.17.0.202005151449"/>
-      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.11.200.v20200525-1407"/>
-      <repository location="http://download.eclipse.org/releases/2020-06/"/>
+      <unit id="org.eclipse.equinox.core.feature.feature.group" version="1.12.0.v20200828-1034"/>
+      <repository location="http://download.eclipse.org/releases/2020-09/"/>
     </location>
     <location includeMode="slicer" includeAllPlatforms="true" includeSource="false" includeConfigurePhase="true" type="InstallableUnit">
-      <unit id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group" version="1.24.0.20200303-1319"/>
-      <unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="1.24.0.20200303-1319"/>
-      <repository location="https://download.eclipse.org/ecp/releases/releases_124"/>
+      <unit id="org.eclipse.emf.ecp.view.table.celleditor.rcp.feature.source.feature.group" version="1.25.0.20200916-0800"/>
+      <unit id="org.eclipse.emf.ecp.emfforms.sdk.feature.feature.group" version="1.25.0.20200916-0800"/>
+      <repository location="https://download.eclipse.org/ecp/releases/releases_125/1250"/>
     </location>
   </locations>
 </target>
