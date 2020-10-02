@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
-<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/170" xmi:id="_ggoQUJH5EeWbG5rKBOcOIw" name="Parameter" ecorePath="/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore">
+<org.eclipse.emf.ecp.view.model:View xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:org.eclipse.emf.ecp.view.model="http://org/eclipse/emf/ecp/view/model/1180" xmi:id="_ggoQUJH5EeWbG5rKBOcOIw" name="Parameter">
   <rootEClass href="http://www.eclipse.org/triquetrum#//Parameter"/>
+  <ecorePaths>/org.eclipse.triquetrum.workflow.model/model/triquetrum.ecore</ecorePaths>
   <children xsi:type="org.eclipse.emf.ecp.view.model:Control" xmi:id="_ggxaQJH5EeWbG5rKBOcOIw" name="Control name">
     <domainModelReference xsi:type="org.eclipse.emf.ecp.view.model:FeaturePathDomainModelReference" xmi:id="_ggxaQZH5EeWbG5rKBOcOIw">
       <domainModelEFeature xsi:type="ecore:EAttribute" href="http://www.eclipse.org/triquetrum#//NamedObj/name"/>
