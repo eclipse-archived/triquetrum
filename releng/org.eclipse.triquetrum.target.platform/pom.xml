@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.eclipse.triquetrum</groupId>
     <artifactId>org.eclipse.triquetrum.build</artifactId>
-    <version>0.4.0</version>
+    <version>0.4.1</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
